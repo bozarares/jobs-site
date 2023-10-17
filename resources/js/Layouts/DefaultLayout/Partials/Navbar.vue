@@ -52,6 +52,7 @@ watch(
                 <DropdownMenu align="right" class="w-[20em] mt-4">
                     <template v-slot:dropdownMenuButton>
                         <Avatar
+                            id="user-toggle"
                             size="small"
                             :name="
                                 $page.props.auth.user
@@ -61,7 +62,11 @@ watch(
                         />
                     </template>
                     <Login v-if="!$page.props.auth.user" />
-                    <div v-else class="flex flex-col gap-4 p-4 w-full">
+                    <div
+                        v-else
+                        id="navbar-user"
+                        class="flex flex-col gap-4 p-4 w-full"
+                    >
                         <DropdownHeader>
                             {{ $page.props.auth.user.name }}
                         </DropdownHeader>

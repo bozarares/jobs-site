@@ -29,6 +29,7 @@ const submit = () => {
 
 <template>
     <form
+        id="connect-register"
         @submit.prevent="submit"
         class="container flex flex-col max-w-md px-4 py-2 gap-4"
     >

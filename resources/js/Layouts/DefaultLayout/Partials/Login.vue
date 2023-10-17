@@ -24,7 +24,11 @@ const submit = () => {
 };
 </script>
 <template>
-    <form @submit.prevent="submit" class="flex flex-col gap-4 p-4 w-full">
+    <form
+        id="navbar-login"
+        @submit.prevent="submit"
+        class="flex flex-col gap-4 p-4 w-full"
+    >
         <DropdownHeader>Login</DropdownHeader>
         <Input
             v-model="form.email"

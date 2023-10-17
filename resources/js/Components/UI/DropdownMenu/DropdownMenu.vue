@@ -1,6 +1,6 @@
 <script setup>
 import { cva } from 'class-variance-authority';
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 
 const props = defineProps({
     label: String,
@@ -31,6 +31,10 @@ const closeMenu = () => {
     }
 };
 
+onBeforeUnmount(() => {
+    document.removeEventListener('click', handleOutsideClick);
+});
+
 const menuClass = computed(() => {
     return cva(
         'absolute z-10 mt-2 flex flex-col items-center rounded-lg border-2 border-gray-700/20 bg-white shadow-sm',
@@ -46,11 +50,11 @@ const menuClass = computed(() => {
 });
 
 const handleOutsideClick = (event) => {
-    const dropdownElement = menuRef.value;
-    const buttonElement = buttonRef.value;
+    if (!menuRef.value || !buttonRef.value) return; // Early return if refs are null
+
     if (
-        !dropdownElement.contains(event.target) &&
-        !buttonElement.contains(event.target)
+        !menuRef.value.contains(event.target) &&
+        !buttonRef.value.contains(event.target)
     ) {
         toggleMenu();
     }
