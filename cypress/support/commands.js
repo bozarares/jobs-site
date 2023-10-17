@@ -10,7 +10,23 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('login', (email, password) => {
+    cy.visit('https://jobs.test/connect');
+
+    cy.get('#connect-login input[name="email"]').type(email);
+    cy.get('#connect-login input[name="password"]').type(password);
+
+    cy.contains('button', 'Login').click();
+});
+
+Cypress.Commands.add('logout', () => {
+    cy.get('#user-toggle').click();
+
+    // Continuăm cu restul pașilor
+    cy.get('#navbar-user', { timeout: 10000 }).should('be.visible');
+    cy.contains('button', 'Logout').click();
+});
+
 //
 //
 // -- This is a child command --

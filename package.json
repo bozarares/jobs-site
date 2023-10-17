@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite --https",
         "build": "vite build",
-        "cypress:open": "cypress open"
+        "cypress:open": "cypress open",
+        "cypress:run": "cypress run"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",

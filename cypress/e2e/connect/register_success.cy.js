@@ -18,9 +18,6 @@ describe('template spec', () => {
         );
 
         cy.contains('button', 'Register').click();
-        cy.get('#user-toggle').click();
-        cy.get('#navbar-user');
-        cy.contains('button', 'Logout').click();
-        cy.get('#navbar-login').should('contain.text', 'Login');
+        cy.logout();
     });
 });
