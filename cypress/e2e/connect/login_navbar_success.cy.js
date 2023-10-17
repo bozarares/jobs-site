@@ -4,8 +4,10 @@ describe('template spec', () => {
         cy.get('#user-toggle').click();
         cy.get('#navbar-login').should('contain.text', 'Login');
 
-        cy.get('input[type="email"]').type('test@example.com');
-        cy.get('input[type="password"]').type('password');
+        cy.fixture('userData').then((user) => {
+            cy.get('input[type="email"]').type(user.email);
+            cy.get('input[type="password"]').type(user.password);
+        });
         cy.contains('button', 'Login').click();
 
         cy.get('#navbar-user');
