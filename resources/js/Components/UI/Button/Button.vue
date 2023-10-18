@@ -25,6 +25,7 @@ const options = computed(() => {
         leftIcon: null,
         rightIcon: null,
         color: 'gray',
+        shape: 'rounded',
     };
     return { ...defaultOptions, ...props.options };
 });
@@ -42,7 +43,7 @@ const onlyLeftIcon = computed(() => {
 });
 const buttonClass = computed(() => {
     return cva(
-        'inline-flex min-h-[35px] select-none items-center justify-center rounded-md px-3 py-0.5 font-semibold tracking-wider transition-colors duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition',
+        'inline-flex min-h-[35px] select-none items-center justify-center px-3 py-0.5 font-semibold tracking-wider transition-colors duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition',
         {
             variants: {
                 color: {
@@ -56,9 +57,18 @@ const buttonClass = computed(() => {
                 disabled: {
                     true: '!cursor-not-allowed bg-gray-300 text-gray-500 hover:bg-gray-300 focus:ring-gray-200',
                 },
+                shape: {
+                    pill: 'rounded-full',
+                    square: 'rounded-none',
+                    rounded: 'rounded-md',
+                },
             },
         },
-    )({ color: options.value.color, disabled: props.disabled });
+    )({
+        color: options.value.color,
+        disabled: props.disabled,
+        shape: options.value.shape,
+    });
 });
 </script>
 

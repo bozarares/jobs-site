@@ -5,6 +5,10 @@ window.Pusher = Pusher;
 let laravelEcho = null;
 
 function broadcastListen(id) {
+    if (laravelEcho) {
+        laravelEcho.disconnect();
+        laravelEcho = null;
+    }
     laravelEcho = new Echo({
         broadcaster: 'pusher',
         key: 12345,

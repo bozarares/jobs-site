@@ -8,9 +8,9 @@ describe('template spec', () => {
             cy.get('input[type="email"]').type(user.email);
             cy.get('input[type="password"]').type(user.password);
         });
-        cy.get('#user-toggle').click();
 
         cy.contains('button', 'Login').click();
+        cy.get('#user-toggle').click();
         cy.logout(true);
     });
 });

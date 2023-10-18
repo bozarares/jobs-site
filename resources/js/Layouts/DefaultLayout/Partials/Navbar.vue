@@ -19,10 +19,11 @@ const page = usePage();
 watch(
     () => page.props.auth.user,
     (newValue, oldValue) => {
-        if (newValue !== null) {
+        if (newValue !== oldValue && newValue) {
+            broadcastDisconnect();
             broadcastListen(page.props.auth.user.id);
             console.log('Listening to user ' + page.props.auth.user.id);
-        } else {
+        } else if (newValue === null) {
             broadcastDisconnect();
             console.log('Disconnecting from user ' + oldValue.id);
         }
@@ -43,6 +44,9 @@ watch(
                 />
             </Link>
             <div class="flex gap-6 items-center">
+                <Link :href="route('companies.create')" class="text-sm"
+                    >Try recruiting</Link
+                >
                 <DropdownMenu align="right" class="w-[20em] mt-6">
                     <template v-slot:dropdownMenuButton>
                         <BellIcon class="h-6 w-6" />
