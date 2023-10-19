@@ -35,7 +35,6 @@ const props = defineProps({
             v-for="company in companies"
             :key="company.id"
             :company="company"
-            view-button="true"
         />
     </div>
 </template>

@@ -24,7 +24,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = ['password', 'remember_token', 'isHeadRecruiter'];
+    protected $hidden = ['password', 'remember_token', 'isOwner'];
 
     /**
      * The attributes that should be cast.
@@ -38,10 +38,10 @@ class User extends Authenticatable
 
     public function companies()
     {
-        return $this->hasMany(Company::class, 'head_recruiter');
+        return $this->hasMany(Company::class, 'owner');
     }
 
-    public function getIsHeadRecruiterAttribute()
+    public function getIsOwnerAttribute()
     {
         return $this->companies()->count() > 0;
     }

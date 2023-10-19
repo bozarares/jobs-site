@@ -1,5 +1,6 @@
 <script setup>
 import Button from '@/Components/UI/Button/Button.vue';
+import { SparklesIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     class: {
@@ -18,6 +19,15 @@ const props = defineProps({
             Owner Panel
         </h2>
         <div class="flex flex-col items-center gap-3 mt-3 w-[10em] md:w-full">
+            <Button
+                class="w-full"
+                :options="{
+                    shape: 'pill',
+                    color: 'gold',
+                    leftIcon: SparklesIcon,
+                }"
+                >Feature</Button
+            >
             <Button
                 class="w-full"
                 :options="{

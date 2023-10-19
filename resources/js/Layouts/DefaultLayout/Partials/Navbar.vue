@@ -15,9 +15,9 @@ import { BellIcon } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 
 const page = usePage();
-const isHeadRecruiter = computed(() => {
+const isOwner = computed(() => {
     if (page.props.auth.user) {
-        return page.props.auth.user.isHeadRecruiter;
+        return page.props.auth.user.isOwner;
     }
     return false;
 });
@@ -57,7 +57,7 @@ watch(
                     as="a"
                     :is="Link"
                     :href="route('companies.index')"
-                    v-if="isHeadRecruiter"
+                    v-if="isOwner"
                     :options="{ shape: 'pill', color: 'green' }"
                     >Businesses</Button
                 >

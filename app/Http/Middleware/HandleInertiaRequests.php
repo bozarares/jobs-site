@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
 
         // Adăugăm sau suprascriem valorile necesare
         if ($user) {
-            $userData['isHeadRecruiter'] = $user->isHeadRecruiter;
+            $userData['isOwner'] = $user->isOwner;
         }
 
         return [

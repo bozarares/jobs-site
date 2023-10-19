@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('slug');
             $table->string('name');
             $table->string('code');
             $table->string('phone_number');
@@ -22,9 +23,9 @@ return new class extends Migration {
             $table->string('address');
             $table->string('logo');
             $table->text('description');
-            $table->unsignedBigInteger('head_recruiter');
+            $table->unsignedBigInteger('owner');
             $table
-                ->foreign('head_recruiter')
+                ->foreign('owner')
                 ->references('id')
                 ->on('users');
             $table->timestamps();

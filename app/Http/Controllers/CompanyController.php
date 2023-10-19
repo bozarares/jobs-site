@@ -61,7 +61,7 @@ class CompanyController extends Controller
             $request_validated['description']
         );
         Log::info($request_validated['description']);
-        $request_validated['head_recruiter'] = $user->id;
+        $request_validated['owner'] = $user->id;
 
         Company::create($request_validated);
 
@@ -75,7 +75,7 @@ class CompanyController extends Controller
     {
         return Inertia::render('Companies/Show', [
             'company' => $company,
-            'isHeadRecruiter' => $company->head_recruiter == Auth::id(),
+            'isOwner' => $company->owner == Auth::id(),
         ]);
     }
 

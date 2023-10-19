@@ -18,10 +18,6 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    viewButton: {
-        type: Boolean,
-        default: false,
-    },
 });
 </script>
 <template>
@@ -74,11 +70,10 @@ const props = defineProps({
                     >Share</Button
                 >
                 <Button
-                    v-if="viewButton"
                     class="w-full"
                     as="a"
                     :is="Link"
-                    :href="route('companies.show', company.id)"
+                    :href="route('companies.show', company.slug)"
                     :options="{
                         shape: 'pill',
                         color: 'green',
