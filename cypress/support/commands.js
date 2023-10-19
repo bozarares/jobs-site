@@ -1,3 +1,6 @@
+import '@4tw/cypress-drag-drop';
+import 'cypress-file-upload';
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -17,6 +20,8 @@ Cypress.Commands.add('login', (email, password) => {
     cy.get('#connect-login input[name="password"]').type(password);
 
     cy.contains('button', 'Login').click();
+    cy.get('#user-toggle').click();
+    cy.get('#navbar-user').should('contain.text', 'Logout');
 });
 
 Cypress.Commands.add('logout', () => {

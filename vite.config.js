@@ -5,7 +5,7 @@ export default defineConfig({
     // server: {
     //     https: true,
     // },
-
+    optimizeDeps: {},
     plugins: [
         // mkcert(),
         laravel({

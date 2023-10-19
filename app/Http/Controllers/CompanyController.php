@@ -18,7 +18,12 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $companies = $user->companies()->get();
+        return Inertia::render('Companies/Index', [
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -68,7 +73,10 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return Inertia::render('Companies/Show', [
+            'company' => $company,
+            'isHeadRecruiter' => $company->head_recruiter == Auth::id(),
+        ]);
     }
 
     /**

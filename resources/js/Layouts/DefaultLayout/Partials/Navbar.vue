@@ -12,22 +12,31 @@ import { watch } from 'vue';
 import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import { BellIcon } from '@heroicons/vue/24/outline';
+import { computed } from 'vue';
 
 const page = usePage();
-
+const isHeadRecruiter = computed(() => {
+    if (page.props.auth.user) {
+        return page.props.auth.user.isHeadRecruiter;
+    }
+    return false;
+});
 // If you want to use watch
 watch(
     () => page.props.auth.user,
     (newValue, oldValue) => {
-        if (newValue !== oldValue && newValue) {
-            broadcastDisconnect();
-            broadcastListen(page.props.auth.user.id);
-            console.log('Listening to user ' + page.props.auth.user.id);
-        } else if (newValue === null) {
+        // Dacă un utilizator nou este autentificat și vechiul utilizator nu a fost autentificat
+        if (newValue && !oldValue) {
+            broadcastListen(newValue.id);
+            console.log('Listening to user ' + newValue.id);
+        }
+        // Dacă nu există niciun utilizator autentificat și anterior a fost un utilizator autentificat
+        else if (!newValue && oldValue) {
             broadcastDisconnect();
             console.log('Disconnecting from user ' + oldValue.id);
         }
     },
+    { deep: true }, // Pentru a urmări schimbările adânci în proprietatea user
 );
 </script>
 
@@ -44,7 +53,15 @@ watch(
                 />
             </Link>
             <div class="flex gap-6 items-center">
-                <Link :href="route('companies.create')" class="text-sm"
+                <Button
+                    as="a"
+                    :is="Link"
+                    :href="route('companies.index')"
+                    v-if="isHeadRecruiter"
+                    :options="{ shape: 'pill', color: 'green' }"
+                    >Businesses</Button
+                >
+                <Link v-else :href="route('companies.create')" class="text-sm"
                     >Try recruiting</Link
                 >
                 <DropdownMenu align="right" class="w-[20em] mt-6">

@@ -1,11 +1,11 @@
 <script setup>
-import { Button, Input } from '@/Components/UI';
+import { Button, Input, SearchInput } from '@/Components/UI';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { onBeforeUnmount, ref } from 'vue';
+import { onBeforeUnmount, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import vueFilePond from 'vue-filepond';
-import { watch } from 'vue';
+import axios from 'axios';
 
 import 'filepond/dist/filepond.min.css';
 
@@ -13,6 +13,103 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import {
+    AtSymbolIcon,
+    BuildingOfficeIcon,
+    CheckIcon,
+    GlobeEuropeAfricaIcon,
+    MapPinIcon,
+    PhoneIcon,
+    RectangleGroupIcon,
+    RectangleStackIcon,
+    XMarkIcon,
+} from '@heroicons/vue/24/outline';
+import { computed } from 'vue';
+
+const countries = ref([]);
+const states = ref([]);
+const towns = ref([]);
+
+const selectedCountry = ref('');
+const selectedState = ref('');
+const selectedTown = ref('');
+
+const selectedCountryValid = ref(false);
+const selectedStateValid = ref(false);
+const selectedTownValid = ref(false);
+
+const addressValid = computed(() => {
+    return (
+        selectedCountryValid.value &&
+        selectedStateValid.value &&
+        selectedTownValid.value
+    );
+});
+
+watch(
+    () => selectedCountry.value,
+    (_1, _2) => {
+        states.value = [];
+        towns.value = [];
+        selectedState.value = '';
+        selectedTown.value = '';
+    },
+);
+
+watch(
+    () => selectedState.value,
+    (_1, _2) => {
+        towns.value = [];
+        selectedTown.value = '';
+    },
+);
+
+axios
+    .get('https://countriesnow.space/api/v0.1/countries/flag/unicode')
+    .then((response) => {
+        countries.value = response.data.data;
+    })
+    .catch((error) => {
+        console.log('error', error);
+    });
+
+const getStates = () => {
+    axios
+        .post(
+            'https://countriesnow.space/api/v0.1/countries/states',
+            { country: selectedCountry.value },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+        )
+        .then((response) => {
+            states.value = response.data.data.states;
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+};
+
+const getTowns = () => {
+    axios
+        .post(
+            'https://countriesnow.space/api/v0.1/countries/state/cities',
+            { country: selectedCountry.value, state: selectedState.value },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+        )
+        .then((response) => {
+            towns.value = response.data.data;
+        })
+        .catch((error) => {
+            console.log('error', error);
+        });
+};
 
 // Create component
 const FilePond = vueFilePond(
@@ -30,7 +127,12 @@ const submited = ref(false);
 const form = useForm({
     name: '',
     code: '',
-    location: '',
+    country: '',
+    state: '',
+    town: '',
+    address: '',
+    phone_number: '',
+    email: '',
     description: '',
     logo: null,
 });
@@ -46,16 +148,31 @@ watch(filePondRef, (newValue, oldValue) => {
 const submit = () => {
     const htmlContent = quillRef.value.getHTML();
     form.description = htmlContent;
+    form.country = selectedCountry.value;
+    form.state = selectedState.value;
+    form.town = selectedTown.value;
     form.post(route('companies.store'), {
-        onFinish: () => {
+        onStart: () => {
             submited.value = true;
+        },
+        onError: () => {
+            submited.value = false;
+        },
+        onFinish: () => {
             form.reset('name', 'code', 'location', 'description');
         },
     });
 };
 
+watch(
+    () => submited.value,
+    (newValue, oldValue) => {
+        console.log(newValue);
+    },
+);
+
 onBeforeUnmount(() => {
-    if (!submited.value) {
+    if (submited.value === false) {
         if (filePondRef.value) {
             const files = filePondRef.value.getFiles();
             if (files.length > 0) {
@@ -84,10 +201,124 @@ const onProcessFile = (error, file) => {
             Before recruiting you need to add your company
         </h3>
         <div class="flex flex-col gap-4 items-center max-w-lg w-full">
-            <Input v-model="form.name" label="Company name" />
-            <Input v-model="form.code" label="Unique registration code" />
-            <Input v-model="form.location" label="Location" />
+            <Input
+                name="Company name"
+                v-model="form.name"
+                label="Company name"
+                :error="form.errors.name"
+                :options="{ leftIcon: BuildingOfficeIcon }"
+            />
+
+            <Input
+                name="Company code"
+                v-model="form.code"
+                label="Unique registration code"
+                :error="form.errors.code"
+                :options="{ leftIcon: RectangleStackIcon }"
+            />
+            <Input
+                name="Phone number"
+                v-model="form.phone_number"
+                label="Contact phone number"
+                :error="form.errors.phone_number"
+                :options="{ leftIcon: PhoneIcon }"
+            />
+            <Input
+                name="Contact email"
+                v-model="form.email"
+                label="Contact email"
+                :error="form.errors.email"
+                :options="{ leftIcon: AtSymbolIcon }"
+            />
+            <SearchInput
+                v-model="selectedCountry"
+                label="Country"
+                type="text"
+                name="Company country"
+                :options="{
+                    leftIcon: GlobeEuropeAfricaIcon,
+                    borderStyle: 'bordered',
+                    xMarkIcon: XMarkIcon,
+                    noResultMessage: 'No results found! 😢',
+                }"
+                :search="{
+                    items: countries,
+                    searchField: 'name',
+                    keys: ['name', 'iso2', 'iso3'],
+                    maxResults: 20,
+                    hotReload: true,
+                }"
+                :validity-check="true"
+                :on-validity-change="
+                    (newValue) => {
+                        if (newValue) getStates();
+                        selectedCountryValid = newValue;
+                    }
+                "
+            />
+            <SearchInput
+                v-model="selectedState"
+                :disabled="states.length === 0"
+                label="County/State"
+                type="text"
+                name="Company state"
+                :options="{
+                    leftIcon: GlobeEuropeAfricaIcon,
+                    borderStyle: 'bordered',
+                    xMarkIcon: XMarkIcon,
+                    noResultMessage: 'No results found! 😢',
+                }"
+                :search="{
+                    items: states,
+                    searchField: 'name',
+                    keys: ['name'],
+                    maxResults: 20,
+                    hotReload: true,
+                }"
+                :validity-check="true"
+                :on-validity-change="
+                    (newValue) => {
+                        if (newValue) getTowns();
+                        selectedStateValid = newValue;
+                    }
+                "
+            />
+            <SearchInput
+                v-model="selectedTown"
+                :disabled="towns.length === 0"
+                label="Town"
+                type="text"
+                name="Company town"
+                :options="{
+                    leftIcon: GlobeEuropeAfricaIcon,
+                    borderStyle: 'bordered',
+                    xMarkIcon: XMarkIcon,
+                    noResultMessage: 'No results found! 😢',
+                }"
+                :search="{
+                    items: towns,
+                    searchField: 'name',
+                    keys: ['name'],
+                    maxResults: 20,
+                    hotReload: true,
+                }"
+                :validity-check="true"
+                :on-validity-change="
+                    (newValue) => (selectedTownValid = newValue)
+                "
+            />
+            <Input
+                name="Company address"
+                :disabled="
+                    selectedTown.length === 0 || selectedTownValid === false
+                "
+                :options="{ leftIcon: MapPinIcon }"
+                v-model="form.address"
+                label="Address"
+                :error="form.errors.address"
+            />
             <FilePond
+                id="logo-upload"
                 @processfile="onProcessFile"
                 :server="{
                     process: route('uploads.process'),
@@ -104,10 +335,27 @@ const onProcessFile = (error, file) => {
                 label-idle="Drop the company logo here..."
                 accepted-file-types="image/jpeg, image/png"
             />
+            <p
+                v-if="form.errors.logo"
+                class="w-full px-1 pt-1 text-sm font-medium text-red-500"
+            >
+                {{ form.errors.logo }}
+            </p>
             <p class="text-center text-lg">Add a description to your company</p>
             <div>
-                <QuillEditor ref="quillRef" toolbar="essential" theme="snow" />
+                <QuillEditor
+                    name="Company description"
+                    ref="quillRef"
+                    toolbar="essential"
+                    theme="snow"
+                />
             </div>
+            <p
+                v-if="form.errors.description"
+                class="w-full px-1 pt-1 text-sm font-medium text-red-500"
+            >
+                {{ form.errors.description }}
+            </p>
             <div class="flex w-full justify-center gap-4">
                 <Button
                     @click="

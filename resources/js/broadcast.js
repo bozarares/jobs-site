@@ -6,8 +6,7 @@ let laravelEcho = null;
 
 function broadcastListen(id) {
     if (laravelEcho) {
-        laravelEcho.disconnect();
-        laravelEcho = null;
+        return;
     }
     laravelEcho = new Echo({
         broadcaster: 'pusher',

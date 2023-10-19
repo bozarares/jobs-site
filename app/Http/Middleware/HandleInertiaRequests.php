@@ -30,13 +30,23 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
+        // Convertim modelul $user într-un array
+        $userData = $user ? $user->toArray() : null;
+
+        // Adăugăm sau suprascriem valorile necesare
+        if ($user) {
+            $userData['isHeadRecruiter'] = $user->isHeadRecruiter;
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $userData,
             ],
-            'ziggy' => fn () => [
-                ...(new Ziggy)->toArray(),
+            'ziggy' => fn() => [
+                ...(new Ziggy())->toArray(),
                 'location' => $request->url(),
             ],
         ];

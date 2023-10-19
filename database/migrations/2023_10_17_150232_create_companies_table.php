@@ -14,7 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->string('location');
+            $table->string('phone_number');
+            $table->string('email');
+            $table->string('country');
+            $table->string('state');
+            $table->string('town');
+            $table->string('address');
             $table->string('logo');
             $table->text('description');
             $table->unsignedBigInteger('head_recruiter');

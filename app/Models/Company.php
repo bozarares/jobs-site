@@ -14,8 +14,13 @@ class Company extends Model
         'code',
         'logo',
         'description',
-        'location',
+        'country',
+        'state',
+        'town',
+        'address',
         'head_recruiter',
+        'phone_number',
+        'email',
     ];
 
     public function headRecruiter()
