@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -13,10 +14,7 @@ use Mews\Purifier\Facades\Purifier;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): \Inertia\Response
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -25,10 +23,6 @@ class CompanyController extends Controller
             'companies' => $companies,
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return Inertia::render('Companies/Create');
@@ -37,7 +31,7 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCompanyRequest $request)
+    public function store(StoreCompanyRequest $request): RedirectResponse
     {
         $request_validated = $request->validated();
 
@@ -47,7 +41,6 @@ class CompanyController extends Controller
         $filename = $request_validated['logo'];
         $filePath = storage_path('app/tmp/' . $filename);
 
-        // Verifica și creează directorul dacă nu există
         $targetDirectory = storage_path('app/public/logos/companies');
         if (!File::exists($targetDirectory)) {
             File::makeDirectory($targetDirectory, 0755, true);
@@ -67,11 +60,7 @@ class CompanyController extends Controller
 
         return redirect()->route('welcome');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Company $company)
+    public function show(Company $company): \Inertia\Response
     {
         return Inertia::render('Companies/Show', [
             'company' => $company,
@@ -79,17 +68,6 @@ class CompanyController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Company $company)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         $request_validated = $request->validated();
@@ -113,9 +91,6 @@ class CompanyController extends Controller
         $company->update($request_validated);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Company $company)
     {
         //
