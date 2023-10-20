@@ -21,6 +21,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    edit: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const showModal = ref(false);
@@ -38,6 +42,7 @@ function openModal(type) {
     >
         <!-- Logo and Company Name -->
         <Button
+            v-if="edit"
             class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
             @click="openModal('logo')"
             :options="{ leftIcon: PencilSquareIcon }"

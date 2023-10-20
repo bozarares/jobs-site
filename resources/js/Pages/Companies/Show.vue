@@ -21,6 +21,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    isOwner: {
+        type: Boolean,
+        default: false,
+    },
 });
 const mapStyles = ref([
     {
@@ -233,7 +237,7 @@ const openModal = (type) => {
     >
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex flex-col gap-4 w-full md:w-auto">
-            <CompanyCard :company="company" />
+            <CompanyCard :edit="isOwner" :company="company" />
             <RecruiterCard></RecruiterCard>
         </div>
 
@@ -245,6 +249,7 @@ const openModal = (type) => {
                 class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
                 <Button
+                    v-if="isOwner"
                     @click="openModal('description')"
                     class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"
@@ -266,6 +271,7 @@ const openModal = (type) => {
                 class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
                 <Button
+                    v-if="isOwner"
                     @click="openModal('details')"
                     class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"

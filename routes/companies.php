@@ -16,8 +16,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{company}', [CompanyController::class, 'show'])->name(
         'companies.show'
     );
-    Route::patch('/company/{company}', [
-        CompanyController::class,
-        'update',
-    ])->name('companies.update');
+    Route::middleware('can.edit.company')->group(function () {
+        Route::patch('/company/{company}', [
+            CompanyController::class,
+            'update',
+        ])->name('companies.update');
+    });
 });
