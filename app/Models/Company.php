@@ -23,6 +23,7 @@ class Company extends Model
     {
         return 'slug';
     }
+    protected $guarded = ['name', 'code'];
 
     protected $fillable = [
         'name',

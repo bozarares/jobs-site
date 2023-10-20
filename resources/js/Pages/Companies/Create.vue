@@ -16,11 +16,9 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import {
     AtSymbolIcon,
     BuildingOfficeIcon,
-    CheckIcon,
     GlobeEuropeAfricaIcon,
     MapPinIcon,
     PhoneIcon,
-    RectangleGroupIcon,
     RectangleStackIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline';

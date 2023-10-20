@@ -21,7 +21,6 @@ describe('template spec', () => {
 
         cy.get('input[name="Company name"]').type(companyName);
         cy.get('input[name="Company code"]').type(companyCode);
-        cy.get('input[name="Company address"]').type(address);
         cy.get('input[name="Contact email"]').type(email);
         cy.get('input[name="Phone number"]').type(phone);
         cy.get('div .ql-editor').type(description);
@@ -36,6 +35,7 @@ describe('template spec', () => {
         });
         cy.wait('@uploadRequest').its('response.statusCode').should('eq', 200);
         cy.wait(2000);
+        cy.get('input[name="Company address"]').type(address);
         cy.contains('button', 'Create').click();
     });
 });

@@ -16,4 +16,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/company/{company}', [CompanyController::class, 'show'])->name(
         'companies.show'
     );
+    Route::patch('/company/{company}', [
+        CompanyController::class,
+        'update',
+    ])->name('companies.update');
 });

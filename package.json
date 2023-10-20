@@ -29,6 +29,7 @@
         "@floating-ui/vue": "^1.0.2",
         "@formkit/auto-animate": "^0.8.0",
         "@heroicons/vue": "^2.0.18",
+        "@tinymce/tinymce-vue": "^5.1.1",
         "@vitejs/plugin-basic-ssl": "^1.0.1",
         "@vueup/vue-quill": "^1.2.0",
         "class-variance-authority": "^0.7.0",
@@ -39,6 +40,7 @@
         "fuse.js": "^6.6.2",
         "loadash": "^1.0.0",
         "pinia": "^2.1.7",
+        "tinymce": "^6.7.1",
         "vite-plugin-mkcert": "^1.16.0",
         "vue-filepond": "^7.0.4",
         "vue3-google-map": "^0.18.0"

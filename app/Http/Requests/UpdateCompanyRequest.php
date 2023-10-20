@@ -11,7 +11,7 @@ class UpdateCompanyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'logo' => 'string',
+            'description' => 'string|max:1000',
+            'country' => 'string|max:255',
+            'state' => 'string|max:255',
+            'town' => 'string|max:255',
+            'address' => 'string|max:255',
+            'phone_number' => 'string|max:20',
+            'email' => 'string|email|max:255',
         ];
     }
 }

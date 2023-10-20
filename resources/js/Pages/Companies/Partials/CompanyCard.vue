@@ -5,9 +5,12 @@ import {
     EyeIcon,
     HeartIcon,
     MapPinIcon,
+    PencilSquareIcon,
     ShareIcon,
 } from '@heroicons/vue/24/outline';
 import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import EditModal from './EditModal.vue';
 
 const props = defineProps({
     company: {
@@ -19,14 +22,27 @@ const props = defineProps({
         default: '',
     },
 });
+
+const showModal = ref(false);
+const modalType = ref('');
+
+function openModal(type) {
+    modalType.value = type;
+    showModal.value = true;
+}
 </script>
 <template>
     <div
         :class="class"
-        class="group relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden"
+        class="relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden group"
     >
         <!-- Logo and Company Name -->
-        <div class="flex flex-col items-center gap-2">
+        <Button
+            class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+            @click="openModal('logo')"
+            :options="{ leftIcon: PencilSquareIcon }"
+        ></Button>
+        <div class="flex flex-col items-center gap-2 relative">
             <img
                 @error="
                     (e) => {
@@ -93,4 +109,11 @@ const props = defineProps({
             </div>
         </div>
     </div>
+    <EditModal
+        v-if="showModal"
+        :type="modalType"
+        :company="company"
+        :show="showModal"
+        @update:show="showModal = $event"
+    />
 </template>

@@ -36,14 +36,6 @@ const props = defineProps({
                 }"
                 >Create job</Button
             >
-            <Button
-                class="w-full"
-                :options="{
-                    shape: 'pill',
-                    color: 'green',
-                }"
-                >Edit company</Button
-            >
         </div>
     </div>
 </template>

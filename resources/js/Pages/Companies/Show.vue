@@ -1,11 +1,17 @@
 <script setup>
-import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
+import {
+    AtSymbolIcon,
+    MapPinIcon,
+    PencilSquareIcon,
+    PhoneIcon,
+} from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
 import RecruiterCard from './Partials/RecruiterCard.vue';
 import { ref } from 'vue';
-import { computed } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { onMounted } from 'vue';
+import { Button } from '@/Components/UI';
+import EditModal from './Partials/EditModal.vue';
 
 const location = ref(null);
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -212,6 +218,13 @@ onMounted(() => {
         `${props.company.address}, ${props.company.town}, ${props.company.country}, ${props.company.state}`,
     );
 });
+
+const showModal = ref(false);
+const modalType = ref('');
+const openModal = (type) => {
+    modalType.value = type;
+    showModal.value = true;
+};
 </script>
 
 <template>
@@ -229,8 +242,13 @@ onMounted(() => {
             class="flex-grow w-full md:w-3/4 flex flex-col justify-start gap-4"
         >
             <div
-                class="container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
+                <Button
+                    @click="openModal('description')"
+                    class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+                    :options="{ leftIcon: PencilSquareIcon }"
+                />
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Description
                 </h2>
@@ -245,8 +263,13 @@ onMounted(() => {
                 </p>
             </div>
             <div
-                class="container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
+                <Button
+                    @click="openModal('details')"
+                    class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+                    :options="{ leftIcon: PencilSquareIcon }"
+                />
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Contact
                 </h2>
@@ -301,4 +324,11 @@ onMounted(() => {
             </div>
         </div>
     </div>
+    <EditModal
+        v-if="showModal"
+        :company="company"
+        :show="showModal"
+        :type="modalType"
+        @update:show="showModal = $event"
+    />
 </template>
