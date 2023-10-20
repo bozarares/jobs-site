@@ -28,9 +28,6 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
         $request_validated = $request->validated();
