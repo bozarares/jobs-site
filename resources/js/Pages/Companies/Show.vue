@@ -6,12 +6,12 @@ import {
     PhoneIcon,
 } from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
-import RecruiterCard from './Partials/RecruiterCard.vue';
 import { ref } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { onMounted } from 'vue';
 import { Button } from '@/Components/UI';
 import EditModal from './Partials/EditModal.vue';
+import OwnerCard from './Partials/OwnerCard.vue';
 
 const location = ref(null);
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -238,7 +238,7 @@ const openModal = (type) => {
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex flex-col gap-4 w-full md:w-auto">
             <CompanyCard :edit="isOwner" :company="company" />
-            <RecruiterCard></RecruiterCard>
+            <OwnerCard v-if="isOwner" />
         </div>
 
         <!-- Div-ul cu descrierea companiei -->
