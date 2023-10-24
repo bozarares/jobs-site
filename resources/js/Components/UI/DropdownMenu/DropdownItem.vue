@@ -1,5 +1,6 @@
 <template>
     <component
+        @click="props.autoClose ? triggerClose() : null"
         :method="props.method"
         :as="props.as"
         :is="props.is"
@@ -22,7 +23,9 @@
 
 <script setup>
 import { cva } from 'class-variance-authority';
-import { computed } from 'vue';
+import { inject } from 'vue';
+import { onMounted } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     leftIcon: {
@@ -50,6 +53,15 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    autoClose: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const triggerClose = ref();
+onMounted(() => {
+    triggerClose.value = inject('closeDropdown');
 });
 
 const dropdownItemClass = computed(() => {

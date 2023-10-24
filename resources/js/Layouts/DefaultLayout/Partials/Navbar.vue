@@ -1,7 +1,6 @@
 <script setup>
 import {
     Avatar,
-    Checkbox,
     DropdownHeader,
     DropdownItem,
     DropdownLabel,
@@ -11,7 +10,7 @@ import {
 import Button from '@/Components/UI/Button/Button.vue';
 
 import { Link, usePage } from '@inertiajs/vue3';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import {
@@ -21,6 +20,9 @@ import {
     UserIcon,
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
+import { onMounted } from 'vue';
+import { inject } from 'vue';
+import { onBeforeMount } from 'vue';
 
 const page = usePage();
 const isOwner = computed(() => {
@@ -49,9 +51,9 @@ watch(
 </script>
 
 <template>
-    <header class="sticky z-50 py-2 items-center shadow bg-white">
+    <header class="sticky z-50 items-center bg-white py-2 shadow">
         <div
-            class="container flex justify-between mx-auto px-4 max-w-screen-lg"
+            class="container mx-auto flex max-w-screen-lg justify-between px-4"
         >
             <Link href="/">
                 <img
@@ -60,7 +62,7 @@ watch(
                     alt="Logo"
                 />
             </Link>
-            <div class="flex gap-6 items-center">
+            <div class="flex items-center gap-6">
                 <Button
                     as="a"
                     :is="Link"
@@ -72,13 +74,13 @@ watch(
                 <Link v-else :href="route('companies.create')" class="text-sm"
                     >Try recruiting</Link
                 >
-                <DropdownMenu align="right" class="w-[20em] mt-6">
+                <DropdownMenu align="right" class="mt-6 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <BellIcon class="h-6 w-6" />
                     </template>
                     <DropdownHeader>Notification Centre</DropdownHeader>
                 </DropdownMenu>
-                <DropdownMenu align="right" class="w-[20em] mt-4">
+                <DropdownMenu align="right" class="mt-4 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <Avatar
                             :src="
@@ -101,10 +103,10 @@ watch(
                     <div
                         v-else
                         id="navbar-user"
-                        class="flex flex-col gap-4 p-4 w-full"
+                        class="flex w-full flex-col gap-4 p-4"
                     >
                         <DropdownHeader>
-                            <div class="flex justify-between items-center">
+                            <div class="flex items-center justify-between">
                                 <Avatar
                                     :src="
                                         $page.props.auth.user &&
@@ -136,7 +138,7 @@ watch(
                             <DropdownItem
                                 :is="Link"
                                 :href="route('profile.show')"
-                                class="font-bold text-sm"
+                                class="text-sm font-bold"
                                 :leftIcon="UserIcon"
                                 >Profile</DropdownItem
                             >
@@ -145,7 +147,7 @@ watch(
                                 >User controlls</DropdownLabel
                             >
                             <DropdownItem
-                                class="font-bold text-sm"
+                                class="text-sm font-bold"
                                 :leftIcon="Cog8ToothIcon"
                                 >Settings</DropdownItem
                             >
@@ -153,7 +155,7 @@ watch(
                                 :is="Link"
                                 :href="route('logout')"
                                 method="POST"
-                                class="font-bold text-sm"
+                                class="text-sm font-bold"
                                 :leftIcon="ArrowRightOnRectangleIcon"
                                 >Logout</DropdownItem
                             >

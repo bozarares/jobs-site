@@ -8,6 +8,14 @@ import {
     UserIcon,
 } from '@heroicons/vue/24/outline';
 import { Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { onMounted } from 'vue';
+import { inject } from 'vue';
+
+const triggerClose = ref();
+onMounted(() => {
+    triggerClose.value = inject('closeDropdown');
+});
 
 const form = useForm({
     email: '',
@@ -17,6 +25,9 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('login'), {
+        onSuccess: () => {
+            triggerClose.value();
+        },
         onFinish: () => {
             form.reset('password');
         },
@@ -27,7 +38,7 @@ const submit = () => {
     <form
         id="navbar-login"
         @submit.prevent="submit"
-        class="flex flex-col gap-4 p-4 w-full"
+        class="flex w-full flex-col gap-4 p-4"
     >
         <DropdownHeader>Login</DropdownHeader>
         <Input
@@ -57,10 +68,14 @@ const submit = () => {
         <Checkbox label="Remember me" color="gray" v-model="form.remember" />
         <Button type="submit">Login</Button>
         <div class="flex flex-col items-center gap-1 text-sm">
-            <Link href="/" class="text-blue-600 hover:text-blue-800"
+            <Link
+                @click.prevent="triggerClose()"
+                href="/"
+                class="text-blue-600 hover:text-blue-800"
                 >Forgot your password?</Link
             >
             <Link
+                @click.prevent="triggerClose()"
                 :href="route('connect')"
                 class="text-blue-600 hover:text-blue-800"
                 >I want an account!</Link

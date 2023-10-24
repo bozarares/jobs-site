@@ -1,5 +1,7 @@
 <script setup>
 import { cva } from 'class-variance-authority';
+import { onBeforeMount } from 'vue';
+import { provide } from 'vue';
 import { computed, onBeforeUnmount, ref } from 'vue';
 
 const props = defineProps({
@@ -30,6 +32,7 @@ const closeMenu = () => {
         document.removeEventListener('click', handleOutsideClick);
     }
 };
+provide('closeDropdown', closeMenu);
 
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleOutsideClick);
@@ -68,10 +71,10 @@ const handleOutsideClick = (event) => {
         </div>
         <Transition
             enter-from-class="scale-90 opacity-0"
-            enter-active-class="transition-all duration-100"
+            enter-active-class="transition-all duration-75"
             enter-to-class="scale-100 opacity-100"
             leave-from-class="scale-100 opacity-100"
-            leave-active-class="transition-all duration-100"
+            leave-active-class="transition-all duration-75"
             leave-to-class="scale-90 opacity-0"
             mode="out-in"
         >
