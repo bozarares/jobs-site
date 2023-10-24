@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\JobHistoryController;
 use App\Http\Controllers\ProfileController;
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
         ProfileController::class,
         'updateDescription',
     ])->name('profile.update.description');
+
     Route::post('/profile/update/jobHistory', [
         JobHistoryController::class,
         'addJobHistory',
@@ -71,6 +73,20 @@ Route::middleware('auth')->group(function () {
         JobHistoryController::class,
         'deleteJobHistory',
     ])->name('profile.update.jobHistory');
+
+    Route::post('/profile/update/educationHistory', [
+        EducationHistoryController::class,
+        'addeducationHistory',
+    ])->name('profile.update.educationHistory');
+    Route::put('/profile/update/educationHistory', [
+        EducationHistoryController::class,
+        'editeducationHistory',
+    ])->name('profile.update.educationHistory');
+    Route::delete('/profile/update/educationHistory', [
+        EducationHistoryController::class,
+        'deleteeducationHistory',
+    ])->name('profile.update.educationHistory');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name(
         'profile.update'
     );

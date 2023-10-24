@@ -9,6 +9,7 @@ import ModalWrapper from './Partials/ModalWrapper.vue';
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { watch } from 'vue';
+import SettingsCard from './Partials/SettingsCard.vue';
 const props = defineProps({
     user: {
         type: Object,
@@ -22,6 +23,7 @@ const openModal = (modalName) => {
     if (modal.value === null) modal.value = modalName;
 };
 const jobHistoryTimeline = ref([]); // initial este un array gol
+const educationHistoryTimeline = ref([]);
 
 watch(
     () => props.user.job_history,
@@ -38,23 +40,26 @@ watch(
     },
     { immediate: true },
 );
+watch(
+    () => props.user.education_history,
+    (newValue, oldValue) => {
+        educationHistoryTimeline.value = newValue.map((item) => {
+            return {
+                start: new Date(item.start_date),
+                end: item.end_date ? new Date(item.end_date) : undefined,
+                title: item.institution,
+                subtitle: item.degree,
+                description: item.field_of_study,
+            };
+        });
+    },
+    { immediate: true },
+);
 
 const edit = ref(false);
 </script>
 
 <template>
-    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
-        <h1 class="text-center text-2xl font-semibold text-gray-800">
-            Profile
-        </h1>
-        <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
-            <div class="flex gap-2">
-                <Button @click="edit = !edit" :options="{ shape: 'pill' }"
-                    >{{ edit ? 'Stop edit' : 'Edit' }} Profile</Button
-                >
-            </div>
-        </div>
-    </div>
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
@@ -75,6 +80,13 @@ const edit = ref(false);
                 :open-modal="
                     (type) => {
                         openModal(type);
+                    }
+                "
+            />
+            <SettingsCard
+                :toggle-edit="
+                    (value) => {
+                        edit = value;
                     }
                 "
             />
@@ -116,6 +128,7 @@ const edit = ref(false);
                 class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
+                    @click="openModal('education')"
                     v-if="edit"
                     class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
@@ -123,8 +136,7 @@ const edit = ref(false);
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Education
                 </h2>
-                <div>University 1</div>
-                <div>University 2</div>
+                <Timeline :items="educationHistoryTimeline" />
             </div>
             <div
                 class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"

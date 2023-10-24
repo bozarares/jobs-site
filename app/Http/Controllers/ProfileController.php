@@ -19,10 +19,8 @@ class ProfileController extends Controller
     public function show(): Response
     {
         $user = Auth::user();
-        $jobHistory = $user->jobHistory;
         return Inertia::render('Profile/Show', [
             'user' => $user, //! We can use $user->only
-            'jobHistory' => $jobHistory,
         ]);
     }
 

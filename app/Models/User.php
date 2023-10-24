@@ -47,6 +47,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $with = ['jobHistory', 'educationHistory'];
+
     public function companies()
     {
         return $this->hasMany(Company::class, 'owner');
@@ -60,5 +62,10 @@ class User extends Authenticatable
     public function jobHistory()
     {
         return $this->hasMany(JobHistory::class);
+    }
+
+    public function educationHistory()
+    {
+        return $this->hasMany(EducationHistory::class);
     }
 }

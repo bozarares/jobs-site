@@ -17,14 +17,14 @@ const props = defineProps({
 });
 
 const page = usePage();
-const jobHistory = ref(page.props.user.job_history);
+const educationHistory = ref(page.props.user.education_history);
 
 const toDate = ref(false);
 const form = useForm({
     id: null,
-    company: '',
-    title: '',
-    description: '',
+    institution: '',
+    degree: '',
+    field_of_study: '',
     start_date: null,
     end_date: null,
 });
@@ -39,9 +39,9 @@ const resetForm = () => {
 };
 
 const submitAdd = () => {
-    form.post(route('profile.update.jobHistory'), {
+    form.post(route('profile.update.educationHistory'), {
         onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
+            educationHistory.value = page.props.user.education_history;
             resetForm();
         },
         onFinish: () => {
@@ -51,10 +51,9 @@ const submitAdd = () => {
 };
 
 const submitEdit = () => {
-    form.put(route('profile.update.jobHistory'), {
+    form.put(route('profile.update.educationHistory'), {
         onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
-            editMode.value = false;
+            educationHistory.value = page.props.user.education_history;
             resetForm();
         },
         onFinish: () => {
@@ -64,10 +63,9 @@ const submitEdit = () => {
 };
 
 const submitDelete = () => {
-    form.delete(route('profile.update.jobHistory'), {
+    form.delete(route('profile.update.educationHistory'), {
         onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
-            editMode.value = false;
+            educationHistory.value = page.props.user.education_history;
             resetForm();
         },
     });
@@ -120,22 +118,26 @@ const endDateComputed = computed({
                 class="container relative flex max-h-[calc(100vh-2rem)] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
             >
                 <div
-                    v-if="jobHistory.length !== 0"
-                    v-for="job in jobHistory"
-                    :key="job.id"
+                    v-if="educationHistory.length !== 0"
+                    v-for="education in educationHistory"
+                    :key="education.id"
                     class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
                 >
                     <div>
                         <div class="text-lg font-bold">
-                            {{ job.company }}
+                            {{ education.institution }}
                             <span class="text-base text-gray-600">{{
-                                job.title
+                                education.degree
                             }}</span>
                         </div>
-                        <div>{{ job.description }}</div>
+                        <div>{{ education.field_of_study }}</div>
                         <div class="text-sm text-gray-600">
-                            {{ job.start_date }} -
-                            {{ job.end_date ? job.end_date : 'To date' }}
+                            {{ education.start_date }} -
+                            {{
+                                education.end_date
+                                    ? education.end_date
+                                    : 'To date'
+                            }}
                         </div>
                     </div>
                     <div class="flex gap-2">
@@ -143,12 +145,13 @@ const endDateComputed = computed({
                             @click="
                                 () => {
                                     editMode = true;
-                                    form.id = job.id;
-                                    form.company = job.company;
-                                    form.title = job.title;
-                                    form.description = job.description;
-                                    startDateComputed = job.start_date;
-                                    endDateComputed = job.end_date;
+                                    form.id = education.id;
+                                    form.institution = education.institution;
+                                    form.degree = education.degree;
+                                    form.field_of_study =
+                                        education.field_of_study;
+                                    startDateComputed = education.start_date;
+                                    endDateComputed = education.end_date;
 
                                     // startDateComputed = new Date(1998, 0, 1);
                                     // endDateComputed = new Date(1998, 0, 1);
@@ -161,7 +164,7 @@ const endDateComputed = computed({
                         <Button
                             @click="
                                 () => {
-                                    form.id = job.id;
+                                    form.id = education.id;
                                     submitDelete();
                                 }
                             "
@@ -172,41 +175,41 @@ const endDateComputed = computed({
                     </div>
                 </div>
                 <div v-else class="font-bold text-gray-600">
-                    You don't have a job history
+                    You don't have an education history
                 </div>
             </div>
             <div
                 class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
             >
                 <h2 class="text-lg font-bold uppercase text-black/60">
-                    Edit Job History
+                    Edit Education History
                 </h2>
 
                 <div class="flex flex-col gap-4 overflow-visible">
                     <div class="flex gap-4">
                         <Input
-                            v-model="form.company"
-                            :error="form.errors.company"
-                            label="Company"
+                            v-model="form.institution"
+                            :error="form.errors.institution"
+                            label="institution"
                             type="text"
-                            name="company"
+                            name="institution"
                             :options="{ leftIcon: PhoneIcon, size: 'small' }"
                         />
                         <Input
-                            v-model="form.title"
-                            :error="form.errors.title"
-                            label="Title"
+                            v-model="form.degree"
+                            :error="form.errors.degree"
+                            label="Degree"
                             type="text"
-                            name="title"
+                            name="degree"
                             :options="{ leftIcon: UserIcon, size: 'small' }"
                         />
                     </div>
                     <Input
-                        v-model="form.description"
-                        :error="form.errors.description"
-                        label="Description"
+                        v-model="form.field_of_study"
+                        :error="form.errors.field_of_study"
+                        label="Field of study"
                         type="text"
-                        name="description"
+                        name="field_of_study"
                         :options="{ leftIcon: UserIcon, size: 'small' }"
                     />
                     <DateTime
@@ -251,9 +254,9 @@ const endDateComputed = computed({
                         @click="
                             () => {
                                 editMode = false;
-                                form.company = '';
-                                form.title = '';
-                                form.description = '';
+                                form.institution = '';
+                                form.degree = '';
+                                form.field_of_study = '';
                                 startDateComputed = null;
                                 endDateComputed = null;
                                 toDate = false;

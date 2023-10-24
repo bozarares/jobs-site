@@ -1,6 +1,7 @@
 <script setup>
 import UpdateAvatar from './Modals/UpdateAvatar.vue';
 import UpdateDescription from './Modals/UpdateDescription.vue';
+import UpdateEducationHistory from './Modals/UpdateEducationHistory.vue';
 import UpdateJobHistory from './Modals/UpdateJobHistory.vue';
 import UpdateSocials from './Modals/UpdateSocials.vue';
 import UpdateUser from './Modals/UpdateUser.vue';
@@ -59,6 +60,15 @@ watchEffect(() => {
     />
     <UpdateJobHistory
         v-if="modal === 'jobs'"
+        :close-modal="
+            () => {
+                modal = null;
+                closeModal();
+            }
+        "
+    />
+    <UpdateEducationHistory
+        v-if="modal === 'education'"
         :close-modal="
             () => {
                 modal = null;
