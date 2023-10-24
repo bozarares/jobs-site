@@ -43,17 +43,17 @@ function openModal(type) {
     <div
         :class="class"
         :id="`company-card-${company.name}`"
-        class="relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden group"
+        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <!-- Logo and Company Name -->
         <Button
             :id="`edit-logo-button-${company.name}`"
             v-if="edit"
-            class="absolute top-0 right-0 scale-75"
+            class="absolute right-0 top-0 scale-75"
             @click="openModal('logo')"
             :options="{ leftIcon: PencilSquareIcon }"
         ></Button>
-        <div class="flex flex-col items-center gap-2 relative">
+        <div class="relative flex flex-col items-center gap-2">
             <img
                 @error="
                     (e) => {
@@ -66,26 +66,26 @@ function openModal(type) {
             />
 
             <!-- Job Title -->
-            <h2 class="text-lg uppercase font-bold mb-2 text-center">
+            <h2 class="mb-2 text-center text-lg font-bold uppercase">
                 {{ company.name }}
             </h2>
             <div class="flex flex-col items-center">
                 <h2
-                    class="text-sm flex flex-row gap-1 items-center font-semibold text-center"
+                    class="flex flex-row items-center gap-1 text-center text-sm font-semibold"
                 >
-                    <span class="w-4 h-4"><MapPinIcon /></span
+                    <span class="h-4 w-4"><MapPinIcon /></span
                     >{{ company.state }},
                     {{ company.country }}
                 </h2>
                 <h2
-                    class="text-sm flex flex-row gap-1 items-center font-semibold mb-2 text-center"
+                    class="mb-2 flex flex-row items-center gap-1 text-center text-sm font-semibold"
                 >
                     {{ company.town }}
                 </h2>
             </div>
             <RatingStars :rating.number="3.5"></RatingStars>
             <div
-                class="flex flex-col items-center gap-3 mt-3 w-[10em] md:w-full"
+                class="mt-3 flex w-[10em] flex-col items-center gap-3 md:w-full"
             >
                 <Button
                     class="w-full"

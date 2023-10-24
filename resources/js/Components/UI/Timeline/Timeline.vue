@@ -30,34 +30,34 @@ const formatDate = (start, end) => {
         <div
             v-for="item in itemsSorted"
             :key="item.date"
-            class="flex gap-6 group"
+            class="group flex gap-6"
         >
             <div
-                class="flex-shrink-0 text-gray-500 text-sm min-w-[10em] font-bold hidden md:block"
+                class="hidden min-w-[10em] flex-shrink-0 text-sm font-bold text-gray-500 md:block"
             >
                 {{ formatDate(item.start, item.end) }}
             </div>
             <!-- Middle -->
-            <div class="relative flex items-center flex-col w-5">
-                <div class="absolute w-0.5 h-full bg-gray-500"></div>
+            <div class="relative flex w-5 flex-col items-center">
+                <div class="absolute h-full w-0.5 bg-gray-500"></div>
                 <div
-                    class="absolute w-6 h-6 bg-blue-500 rounded-full border-4 border-white"
+                    class="absolute h-6 w-6 rounded-full border-4 border-white bg-blue-500"
                 ></div>
             </div>
-            <div class="relative mb-10 group-last:mb-0 items-center w-full">
+            <div class="relative mb-10 w-full items-center group-last:mb-0">
                 <div class="rounded-lg bg-white">
                     <div
-                        class="text-lg font-semibold text-gray-700 flex items-center gap-2"
+                        class="flex items-center gap-2 text-lg font-semibold text-gray-700"
                     >
                         {{ item.title }}
                         <div class="text-sm text-gray-500 md:hidden">
                             {{ formatDate(item.start, item.end) }}
                         </div>
                     </div>
-                    <p class="text-gray-500 font-bold text-justify">
+                    <p class="text-justify font-bold text-gray-500">
                         {{ item.subtitle }}
                     </p>
-                    <p class="mt-2 text-gray-600 text-justify">
+                    <p class="mt-2 text-justify text-gray-600">
                         {{ item.description }}
                     </p>
                 </div>

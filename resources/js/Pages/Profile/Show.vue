@@ -43,11 +43,11 @@ const edit = ref(false);
 </script>
 
 <template>
-    <div class="flex flex-col items-center w-full space-y-4 bg-gray-50 p-6">
-        <h1 class="text-2xl font-semibold text-gray-800 text-center">
+    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
+        <h1 class="text-center text-2xl font-semibold text-gray-800">
             Profile
         </h1>
-        <div class="flex md:flex-row flex-col items-center gap-2 md:gap-4">
+        <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <div class="flex gap-2">
                 <Button @click="edit = !edit" :options="{ shape: 'pill' }"
                     >{{ edit ? 'Stop edit' : 'Edit' }} Profile</Button
@@ -56,10 +56,10 @@ const edit = ref(false);
         </div>
     </div>
     <div
-        class="flex flex-wrap md:flex-nowrap justify-center gap-8 w-full mt-12 p-6 max-w-screen-lg"
+        class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
         <!-- Left side -->
-        <div class="flex flex-col gap-4 w-full md:w-auto">
+        <div class="flex w-full flex-col gap-4 md:w-auto">
             <UserCard
                 :edit="edit"
                 :user="user"
@@ -82,15 +82,15 @@ const edit = ref(false);
 
         <!-- Right side -->
         <div
-            class="flex-grow w-full md:w-3/4 flex flex-col justify-start gap-4"
+            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
             <div
-                class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     @click="openModal('description')"
                     v-if="edit"
-                    class="absolute top-0 right-0 m-4"
+                    class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -99,12 +99,12 @@ const edit = ref(false);
                 <div v-html="user.description" />
             </div>
             <div
-                class="relative container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     @click="openModal('jobs')"
                     v-if="edit"
-                    class="absolute top-0 right-0 m-4"
+                    class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -113,11 +113,11 @@ const edit = ref(false);
                 <Timeline :items="jobHistoryTimeline" />
             </div>
             <div
-                class="relative container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     v-if="edit"
-                    class="absolute top-0 right-0 m-4"
+                    class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -127,11 +127,11 @@ const edit = ref(false);
                 <div>University 2</div>
             </div>
             <div
-                class="relative container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     v-if="edit"
-                    class="absolute top-0 right-0 m-4"
+                    class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -141,11 +141,11 @@ const edit = ref(false);
                 <div>Vue.js</div>
             </div>
             <div
-                class="relative container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     v-if="edit"
-                    class="absolute top-0 right-0 m-4"
+                    class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>

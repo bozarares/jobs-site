@@ -11,11 +11,11 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="flex flex-col items-center w-full space-y-4 bg-gray-50 p-6">
-        <h1 class="text-2xl font-semibold text-gray-800 text-center">
+    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
+        <h1 class="text-center text-2xl font-semibold text-gray-800">
             Businesses Center
         </h1>
-        <div class="flex md:flex-row flex-col items-center gap-2 md:gap-4">
+        <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <div class="flex gap-2">
                 <Button
                     as="a"
@@ -28,11 +28,11 @@ const props = defineProps({
         </div>
     </div>
     <div
-        class="flex gap-2 flex-wrap justify-center w-full pt-6 bg-gray-100 max-w-screen-lg"
+        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
     >
         <CompanyCard
             :viewButton="true"
-            class="transition hover:scale-[1.02] duration-300 hover:shadow-lg cursor-pointer"
+            class="cursor-pointer transition duration-300 hover:scale-[1.02] hover:shadow-lg"
             v-for="company in companies"
             :key="company.id"
             :company="company"

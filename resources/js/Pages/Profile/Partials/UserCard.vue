@@ -19,15 +19,15 @@ const props = defineProps({
 
 <template>
     <div
-        class="relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden group"
+        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <Button
             v-if="edit"
-            class="absolute top-0 right-0 m-4 z-10"
+            class="absolute right-0 top-0 z-10 m-4"
             :options="{ leftIcon: PencilSquareIcon }"
             @click="openModal('avatar')"
         ></Button>
-        <div class="flex flex-col items-center gap-2 relative">
+        <div class="relative flex flex-col items-center gap-2">
             <Avatar
                 size="2xl"
                 :src="
@@ -36,11 +36,11 @@ const props = defineProps({
                         : null
                 "
             />
-            <h2 class="text-lg uppercase font-bold text-center">
+            <h2 class="text-center text-lg font-bold uppercase">
                 {{ user.name }}
             </h2>
             <div class="flex items-center">
-                <h2 class="font-bold text-center text-black/60">
+                <h2 class="text-center font-bold text-black/60">
                     {{ user.tag }}
                 </h2>
                 <Button

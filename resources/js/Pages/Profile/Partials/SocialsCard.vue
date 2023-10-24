@@ -22,30 +22,30 @@ const props = defineProps({
 
 <template>
     <div
-        class="relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden group"
+        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <Button
             @click="openModal('socials')"
             v-if="edit"
-            class="absolute top-0 right-0 m-4 z-10"
+            class="absolute right-0 top-0 z-10 m-4"
             :options="{ leftIcon: PencilSquareIcon }"
         ></Button>
-        <div class="flex flex-col items-center gap-2 relative">
+        <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">Socials</h2>
-            <h2 class="font-bold text-center text-black/60">
+            <h2 class="text-center font-bold text-black/60">
                 {{ user.email }}
             </h2>
             <h2
                 v-if="user.phone_number"
-                class="font-bold text-center text-black/60"
+                class="text-center font-bold text-black/60"
             >
                 {{ user.phone_number }}
             </h2>
-            <div class="flex flex-col gap-2 mt-4">
+            <div class="mt-4 flex flex-col gap-2">
                 <a
                     :href="`https://linkedin.com/in/${user.social_linkedin}`"
                     v-if="user.social_linkedin"
-                    class="font-bold text-center text-black/60 flex items-center gap-2"
+                    class="flex items-center gap-2 text-center font-bold text-black/60"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -55,7 +55,7 @@ const props = defineProps({
                 <a
                     :href="`https://github.com/${user.social_github}`"
                     v-if="user.social_github"
-                    class="font-bold text-center text-black/60 flex items-center gap-2"
+                    class="flex items-center gap-2 text-center font-bold text-black/60"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -66,7 +66,7 @@ const props = defineProps({
                 <a
                     :href="`https://facebook.com/${user.social_facebook}`"
                     v-if="user.social_facebook"
-                    class="font-bold text-center text-black/60 flex items-center gap-2"
+                    class="flex items-center gap-2 text-center font-bold text-black/60"
                     target="_blank"
                     rel="noopener noreferrer"
                 >

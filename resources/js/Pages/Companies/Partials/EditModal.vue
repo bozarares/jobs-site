@@ -182,7 +182,7 @@ const onProcessFile = (error, file) => {
         <Teleport to="body">
             <div
                 v-if="show"
-                class="fixed inset-0 flex items-center justify-center z-50"
+                class="fixed inset-0 z-50 flex items-center justify-center"
             >
                 <!-- Backdrop -->
                 <div
@@ -192,7 +192,7 @@ const onProcessFile = (error, file) => {
 
                 <!-- Modal Content -->
                 <div
-                    class="relative container flex flex-col gap-8 bg-white p-8 rounded shadow max-w-lg mx-auto overflow-auto max-h-[35em]"
+                    class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
                 >
                     <h2 class="text-lg font-bold uppercase text-black/60">
                         Edit {{ type }}
@@ -230,7 +230,7 @@ const onProcessFile = (error, file) => {
                         </div>
                     </template>
                     <template v-if="type === 'details'">
-                        <div class="overflow-auto flex flex-col gap-4">
+                        <div class="flex flex-col gap-4 overflow-auto">
                             <Input
                                 name="Phone number"
                                 v-model="form.phone_number"

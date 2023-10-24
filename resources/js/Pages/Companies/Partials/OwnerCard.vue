@@ -20,12 +20,12 @@ const edit = ref(false);
 <template>
     <div
         :class="class"
-        class="group relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden items-center"
+        class="group container relative flex w-full flex-col items-center justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
-        <h2 class="text-lg uppercase font-bold mb-2 text-center">
+        <h2 class="mb-2 text-center text-lg font-bold uppercase">
             Owner Panel
         </h2>
-        <div class="flex flex-col items-center gap-3 mt-3 w-[10em] md:w-full">
+        <div class="mt-3 flex w-[10em] flex-col items-center gap-3 md:w-full">
             <Button
                 class="w-full"
                 :options="{

@@ -192,13 +192,13 @@ const onProcessFile = (error, file) => {
 
 <template>
     <div
-        class="container max-w-screen-md mt-24 bg-white p-4 rounded-md shadow-md flex flex-col items-center"
+        class="container mt-24 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
     >
         <h2 class="text-2xl font-bold">Thank you for trusting us!</h2>
-        <h3 class="text-lg font-semibold text-gray-700 mb-4">
+        <h3 class="mb-4 text-lg font-semibold text-gray-700">
             Before recruiting you need to add your company
         </h3>
-        <div class="flex flex-col gap-4 items-center max-w-lg w-full">
+        <div class="flex w-full max-w-lg flex-col items-center gap-4">
             <Input
                 name="Company name"
                 v-model="form.name"
@@ -361,7 +361,7 @@ const onProcessFile = (error, file) => {
                             submit();
                         }
                     "
-                    class="w-24 mt-4"
+                    class="mt-4 w-24"
                     :options="{ color: 'green' }"
                     >Create</Button
                 >

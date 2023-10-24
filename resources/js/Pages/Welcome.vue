@@ -10,11 +10,11 @@ import {
 </script>
 
 <template>
-    <div class="flex flex-col items-center w-full space-y-4 bg-gray-50 p-6">
-        <h1 class="text-2xl font-semibold text-gray-800 text-center">
+    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
+        <h1 class="text-center text-2xl font-semibold text-gray-800">
             Welcome to Joben, the ultimate job finding solution!
         </h1>
-        <div class="flex md:flex-row flex-col items-center gap-2 md:gap-4">
+        <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Input
                 label="Search for jobs"
                 :options="{ size: 'small', leftIcon: MagnifyingGlassIcon }"
@@ -30,7 +30,7 @@ import {
         </div>
     </div>
     <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center w-full p-6 bg-gray-100 gap-2 max-w-screen-lg justify-items-center"
+        class="grid w-full max-w-screen-lg grid-cols-1 items-center justify-items-center gap-2 bg-gray-100 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
     >
         <JobCard />
         <JobCard />

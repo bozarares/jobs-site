@@ -22,9 +22,9 @@ const submit = () => {
     <form
         id="connect-login"
         @submit.prevent="submit"
-        class="container flex flex-col max-w-md px-4 py-2 gap-4"
+        class="container flex max-w-md flex-col gap-4 px-4 py-2"
     >
-        <h2 class="w-full text-2xl text-gray-700 font-bold">
+        <h2 class="w-full text-2xl font-bold text-gray-700">
             I have an account
         </h2>
         <Input

@@ -8,15 +8,15 @@ const featured = ref(false);
 
 <template>
     <div
-        class="group relative container bg-white w-full h-[20em] sm:w-[18em] sm:h-[25em] md:w-[15em] md:h-[20em] flex flex-col justify-between p-6 rounded-lg shadow-md hover:shadow-lg transition overflow-hidden hover:scale-[1.02] duration-300 cursor-pointer"
+        class="group container relative flex h-[20em] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg bg-white p-6 shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg sm:h-[25em] sm:w-[18em] md:h-[20em] md:w-[15em]"
         :class="
             featured
-                ? 'outline-yellow-500 outline outline-2'
+                ? 'outline outline-2 outline-yellow-500'
                 : 'outline outline-gray-200'
         "
     >
         <!-- Logo and Company Name -->
-        <div class="flex flex-col items-center mb-4">
+        <div class="mb-4 flex flex-col items-center">
             <img
                 class="h-8 fill-current object-contain text-gray-500"
                 src="/images/logo/logo-black.png"
@@ -25,28 +25,28 @@ const featured = ref(false);
             <div class="text-sm text-gray-500">Interactive Software SRL</div>
             <RatingStars :rating.number="3.5"></RatingStars>
             <!-- Job Title -->
-            <h2 class="text-xl font-bold mb-2 mt-8 text-center">
+            <h2 class="mb-2 mt-8 text-center text-xl font-bold">
                 Programator .net senior
             </h2>
         </div>
 
         <!-- Location and Salary -->
-        <div class="flex items-center justify-between mt-4">
-            <div class="text-sm flex flex-col items-center">
+        <div class="mt-4 flex items-center justify-between">
+            <div class="flex flex-col items-center text-sm">
                 <span class="font-bold">LOCATE </span> București
             </div>
-            <div class="text-sm flex flex-col items-center">
+            <div class="flex flex-col items-center text-sm">
                 <span class="font-bold">SALARIU</span> 2750 - 3000 €
             </div>
         </div>
         <div
-            class="absolute bottom-0 left-0 w-full h-18 bg-white flex items-center justify-center border-t-2 rounded-b-md translate-y-24 group-hover:translate-y-0 transition-transform duration-300"
+            class="h-18 absolute bottom-0 left-0 flex w-full translate-y-24 items-center justify-center rounded-b-md border-t-2 bg-white transition-transform duration-300 group-hover:translate-y-0"
         >
-            <div class="flex gap-4 items-center justify-center">
+            <div class="flex items-center justify-center gap-4">
                 <Button :options="{ shape: 'pill', color: 'green' }"
                     >Apply</Button
                 >
-                <div class="h-20 w-20 flex items-center gap-4">
+                <div class="flex h-20 w-20 items-center gap-4">
                     <HandThumbDownIcon />
                     <HandThumbUpIcon />
                 </div>

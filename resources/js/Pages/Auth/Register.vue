@@ -33,20 +33,20 @@ const submit = () => {
 <template>
     <Head title="Register" />
     <div
-        class="min-h-screen flex flex-col items-center pt-2 sm:pt-8 bg-gray-100"
+        class="flex min-h-screen flex-col items-center bg-gray-100 pt-2 sm:pt-8"
     >
         <form
             @submit.prevent="submit"
-            class="relative shadow-sm bg-white flex flex-col w-[30rem] items-center gap-8 pb-4 border-2 rounded-md overflow-hidden"
+            class="relative flex w-[30rem] flex-col items-center gap-8 overflow-hidden rounded-md border-2 bg-white pb-4 shadow-sm"
         >
-            <div class="w-full relative">
+            <div class="relative w-full">
                 <img
-                    class="w-full h-40 object-cover select-none pointer-events-none"
+                    class="pointer-events-none h-40 w-full select-none object-cover"
                     src="/images/register.jpg"
                     alt="Login image"
                 />
                 <div
-                    class="absolute flex items-center gap-2 justify-center select-none pointer-events-none w-1/2 text-center top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-bold text-xl fill-white bg-white bg-opacity-90 px-2 py-1 rounded shadow-lg"
+                    class="pointer-events-none absolute left-1/2 top-1/4 flex w-1/2 -translate-x-1/2 -translate-y-1/2 transform select-none items-center justify-center gap-2 rounded bg-white bg-opacity-90 fill-white px-2 py-1 text-center text-xl font-bold shadow-lg"
                 >
                     Sign up to
                     <img
@@ -56,7 +56,7 @@ const submit = () => {
                     />
                 </div>
             </div>
-            <div class="w-full px-8 flex flex-col items-center gap-8">
+            <div class="flex w-full flex-col items-center gap-8 px-8">
                 <Input
                     v-model="form.name"
                     label="Name"
@@ -100,7 +100,7 @@ const submit = () => {
                         passwordIcon: { show: EyeIcon, hide: EyeSlashIcon },
                     }"
                 ></Input>
-                <Button class="w-full h-6 px-4 py-6" :loading="!!loading"
+                <Button class="h-6 w-full px-4 py-6" :loading="!!loading"
                     >Sign up with email</Button
                 >
                 <Link :href="route('login')"

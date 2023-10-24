@@ -236,10 +236,10 @@ const openModal = (type) => {
 
 <template>
     <div
-        class="flex flex-wrap md:flex-nowrap justify-center gap-8 w-full mt-12 p-6 max-w-screen-lg"
+        class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
         <!-- Div-ul cu detaliile companiei -->
-        <div class="flex flex-col gap-4 w-full md:w-auto">
+        <div class="flex w-full flex-col gap-4 md:w-auto">
             <CompanyCard :edit="isOwner && edit" :company="company" />
             <OwnerCard
                 v-if="isOwner"
@@ -253,17 +253,17 @@ const openModal = (type) => {
 
         <!-- Div-ul cu descrierea companiei -->
         <div
-            class="flex-grow w-full md:w-3/4 flex flex-col justify-start gap-4"
+            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
             <div
                 :id="`description-${company.name}`"
-                class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     :id="`edit-description-button-${company.name}`"
                     v-if="isOwner && edit"
                     @click="openModal('description')"
-                    class="absolute top-0 right-0 scale-75"
+                    class="absolute right-0 top-0 scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"
                 />
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -272,21 +272,21 @@ const openModal = (type) => {
                 <div v-html="company.description"></div>
             </div>
             <div
-                class="container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="container flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <h2 class="text-lg font-bold uppercase text-black/60">Jobs</h2>
-                <p class="font-bold text-sm">
+                <p class="text-sm font-bold">
                     There are no jobs available at the moment
                 </p>
             </div>
             <div
-                class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
                     :id="`edit-contact-button-${company.name}`"
                     v-if="isOwner && edit"
                     @click="openModal('details')"
-                    class="absolute top-0 right-0 scale-75"
+                    class="absolute right-0 top-0 scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"
                 />
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -295,36 +295,36 @@ const openModal = (type) => {
                 <div class="flex flex-col items-start gap-2">
                     <div class="flex flex-col gap-2">
                         <h2
-                            class="text-sm flex flex-row gap-1 items-center font-bold"
+                            class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="w-4 h-4"><MapPinIcon /></span
+                            <span class="h-4 w-4"><MapPinIcon /></span
                             >{{ company.town }}, {{ company.country }} ({{
                                 company.state
                             }})
                         </h2>
                         <h2
-                            class="text-sm flex flex-row gap-1 items-center font-bold"
+                            class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="w-4 h-4"><MapPinIcon /></span
+                            <span class="h-4 w-4"><MapPinIcon /></span
                             >{{ company.address }}
                         </h2>
                         <h2
-                            class="text-sm flex flex-row gap-1 items-center font-bold"
+                            class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="w-4 h-4"><PhoneIcon /></span
+                            <span class="h-4 w-4"><PhoneIcon /></span
                             >{{ company.phone_number }}
                         </h2>
                         <h2
-                            class="text-sm flex flex-row gap-1 items-center font-bold"
+                            class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="w-4 h-4"><AtSymbolIcon /></span
+                            <span class="h-4 w-4"><AtSymbolIcon /></span
                             >{{ company.email }}
                         </h2>
                     </div>
                     <GoogleMap
                         v-if="center.lat !== 0 && center.lng !== 0"
                         :api-key="apiKey"
-                        class="w-full h-96 rounded"
+                        class="h-96 w-full rounded"
                         :styles="mapStyles"
                         :streetViewControl="false"
                         :mapTypeControl="false"
