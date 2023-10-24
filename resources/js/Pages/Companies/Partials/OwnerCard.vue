@@ -1,13 +1,20 @@
 <script setup>
 import Button from '@/Components/UI/Button/Button.vue';
 import { SparklesIcon } from '@heroicons/vue/24/outline';
+import { ref } from 'vue';
 
 const props = defineProps({
     class: {
         type: String,
         default: '',
     },
+    toggleEdit: {
+        type: Function,
+        default: () => {},
+    },
 });
+
+const edit = ref(false);
 </script>
 
 <template>
@@ -27,6 +34,20 @@ const props = defineProps({
                     leftIcon: SparklesIcon,
                 }"
                 >Feature</Button
+            >
+            <Button
+                id="edit-company-button"
+                @click="
+                    () => {
+                        edit = !edit;
+                        toggleEdit(edit);
+                    }
+                "
+                class="w-full"
+                :options="{
+                    shape: 'pill',
+                }"
+                >Edit Company</Button
             >
             <Button
                 class="w-full"

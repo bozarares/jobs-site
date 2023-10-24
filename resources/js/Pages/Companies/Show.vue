@@ -26,6 +26,9 @@ const props = defineProps({
         default: false,
     },
 });
+
+const edit = ref(false);
+
 const mapStyles = ref([
     {
         featureType: 'all',
@@ -237,8 +240,15 @@ const openModal = (type) => {
     >
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex flex-col gap-4 w-full md:w-auto">
-            <CompanyCard :edit="isOwner" :company="company" />
-            <OwnerCard v-if="isOwner" />
+            <CompanyCard :edit="isOwner && edit" :company="company" />
+            <OwnerCard
+                v-if="isOwner"
+                :toggle-edit="
+                    (value) => {
+                        edit = value;
+                    }
+                "
+            />
         </div>
 
         <!-- Div-ul cu descrierea companiei -->
@@ -246,12 +256,14 @@ const openModal = (type) => {
             class="flex-grow w-full md:w-3/4 flex flex-col justify-start gap-4"
         >
             <div
+                :id="`description-${company.name}`"
                 class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
                 <Button
-                    v-if="isOwner"
+                    :id="`edit-description-button-${company.name}`"
+                    v-if="isOwner && edit"
                     @click="openModal('description')"
-                    class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+                    class="absolute top-0 right-0 scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"
                 />
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -271,9 +283,10 @@ const openModal = (type) => {
                 class="relative group container p-6 bg-white rounded shadow-md flex flex-col gap-4 w-full"
             >
                 <Button
-                    v-if="isOwner"
+                    :id="`edit-contact-button-${company.name}`"
+                    v-if="isOwner && edit"
                     @click="openModal('details')"
-                    class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+                    class="absolute top-0 right-0 scale-75"
                     :options="{ leftIcon: PencilSquareIcon }"
                 />
                 <h2 class="text-lg font-bold uppercase text-black/60">

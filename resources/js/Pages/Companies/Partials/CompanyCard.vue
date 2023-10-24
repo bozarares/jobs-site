@@ -42,12 +42,14 @@ function openModal(type) {
 <template>
     <div
         :class="class"
+        :id="`company-card-${company.name}`"
         class="relative container bg-white w-full md:w-[15em] flex flex-col justify-between p-6 rounded shadow-md overflow-hidden group"
     >
         <!-- Logo and Company Name -->
         <Button
+            :id="`edit-logo-button-${company.name}`"
             v-if="edit"
-            class="absolute top-0 right-0 group-hover:opacity-100 opacity-0 transition-opacity scale-75"
+            class="absolute top-0 right-0 scale-75"
             @click="openModal('logo')"
             :options="{ leftIcon: PencilSquareIcon }"
         ></Button>
@@ -95,6 +97,7 @@ function openModal(type) {
                     >Share</Button
                 >
                 <Button
+                    :id="`company-view-${company.name}`"
                     v-if="viewButton"
                     class="w-full"
                     as="a"
