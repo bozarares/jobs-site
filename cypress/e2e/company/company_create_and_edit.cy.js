@@ -16,7 +16,8 @@ describe('template spec', () => {
         ).as('getTowns');
 
         cy.visit('https://jobs.test/try-recruiting');
-        // cy.contains('a', 'Try recruiting').click();
+
+        // Create Company
         const companyName = faker.person.firstName();
         const companyCode = `RO${Math.floor(Math.random() * 10000)}`;
 
@@ -41,6 +42,7 @@ describe('template spec', () => {
         const description = `<p>Test Description ${faker.lorem.paragraph()}</p>`;
         const editDescription = `<p>Test Description ${faker.lorem.paragraph()}</p>`;
 
+        // Attach logo
         cy.get('input[type=file]').attachFile('logo-black.png', {
             force: true,
         });
@@ -53,11 +55,14 @@ describe('template spec', () => {
 
         cy.get('input[name="Company country"]').type(country);
         cy.wait('@getStates').its('response.statusCode').should('eq', 200);
+
         cy.get('input[name="Company state"]').type(state);
         cy.wait('@getTowns').its('response.statusCode').should('eq', 200);
+
         cy.get('input[name="Company town"]', { wait: 1000 }).type(town);
         cy.get('input[name="Company address"]').type(address);
         cy.contains('button', 'Create').click();
+
         cy.wait('@createSuccess').its('response.statusCode').should('eq', 200);
         cy.wait(500);
 
