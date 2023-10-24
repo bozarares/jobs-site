@@ -3,6 +3,7 @@ import UpdateAvatar from './Modals/UpdateAvatar.vue';
 import UpdateDescription from './Modals/UpdateDescription.vue';
 import UpdateEducationHistory from './Modals/UpdateEducationHistory.vue';
 import UpdateJobHistory from './Modals/UpdateJobHistory.vue';
+import UpdateSkills from './Modals/UpdateSkills.vue';
 import UpdateSocials from './Modals/UpdateSocials.vue';
 import UpdateUser from './Modals/UpdateUser.vue';
 const props = defineProps({
@@ -69,6 +70,15 @@ watchEffect(() => {
     />
     <UpdateEducationHistory
         v-if="modal === 'education'"
+        :close-modal="
+            () => {
+                modal = null;
+                closeModal();
+            }
+        "
+    />
+    <UpdateSkills
+        v-if="modal === 'skills'"
         :close-modal="
             () => {
                 modal = null;

@@ -4,6 +4,7 @@ use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\JobHistoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SkillController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -86,6 +87,14 @@ Route::middleware('auth')->group(function () {
         EducationHistoryController::class,
         'deleteeducationHistory',
     ])->name('profile.update.educationHistory');
+
+    Route::post('/profile/update/skills', [
+        SkillController::class,
+        'editSkills',
+    ])->name('profile.update.skills');
+    Route::post('/get/skills', [SkillController::class, 'search'])->name(
+        'get.skills'
+    );
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name(
         'profile.update'

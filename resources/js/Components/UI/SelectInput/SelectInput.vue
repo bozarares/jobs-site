@@ -1,12 +1,12 @@
 <script setup>
-import CheckIcon from "../Icons/CheckIcon.vue";
-import XMarkIcon from "../Icons/XMarkIcon.vue";
-import ChevronUpIcon from "../Icons/ChevronUpIcon.vue";
-import ChevronDownIcon from "../Icons/ChevronDownIcon.vue";
-import { computed, onMounted, onUnmounted, ref, watch, nextTick } from "vue";
-import { cva } from "class-variance-authority";
-import Fuse from "fuse.js";
-import { useFloating } from "@floating-ui/vue";
+import CheckIcon from '../Icons/CheckIcon.vue';
+import XMarkIcon from '../Icons/XMarkIcon.vue';
+import ChevronUpIcon from '../Icons/ChevronUpIcon.vue';
+import ChevronDownIcon from '../Icons/ChevronDownIcon.vue';
+import { computed, onMounted, onUnmounted, ref, watch, nextTick } from 'vue';
+import { cva } from 'class-variance-authority';
+import Fuse from 'fuse.js';
+import { useFloating } from '@floating-ui/vue';
 
 const props = defineProps({
     label: {
@@ -22,11 +22,15 @@ const props = defineProps({
     },
     disabled: Boolean,
     modelValue: Array,
+    getTextValue: {
+        type: Function,
+        default: () => {},
+    },
 });
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(['update:modelValue']);
 
 // Initialize reactive references for various state variables.
-const inputTextValue = ref("");
+const inputTextValue = ref('');
 const selectArray = ref(props.modelValue || []);
 const inputFieldType = ref(props.type);
 const isLabelFloating = ref(false);
@@ -40,21 +44,28 @@ const fuseSearchInstance = ref(null);
 
 const options = computed(() => {
     const defaultOptions = {
-        borderStyle: "bordered",
+        borderStyle: 'bordered',
         leftIcon: null,
         xMarkIcon: XMarkIcon,
         chevronUpIcon: ChevronUpIcon,
         chevronDownIcon: ChevronDownIcon,
-        noResultMessage: "No results found",
+        noResultMessage: 'No results found',
     };
     return { ...defaultOptions, ...props.options };
 });
 
 watch(
+    () => inputTextValue.value,
+    (newValue, oldValue) => {
+        props.getTextValue(newValue);
+    },
+);
+
+watch(
     () => selectArray.value,
     (newValue, _1) => {
-        emits("update:modelValue", newValue);
-    }
+        emits('update:modelValue', newValue);
+    },
 );
 
 // Calculate bottom of the element for the search and select using floating-ui
@@ -62,21 +73,21 @@ const { floatingStyles: searchFloatingStyles } = useFloating(
     containerElementRef,
     searchElementRef,
     {
-        placement: "bottom",
-    }
+        placement: 'bottom',
+    },
 );
 const { floatingStyles: selectFloatingStyles } = useFloating(
     containerElementRef,
     selectElementRef,
     {
-        placement: "bottom-start",
-    }
+        placement: 'bottom-start',
+    },
 );
 
 // On search item click add selection to the selectArray
 const addSelection = (selection) => {
     selectArray.value.push(selection);
-    inputTextValue.value = "";
+    inputTextValue.value = '';
     inputElementRef.value.focus();
     isLabelFloating.value = true;
 };
@@ -89,12 +100,12 @@ onMounted(() => {
             includeScore: true,
         });
     }
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
 });
 
 // On component unmount, remove the mousedown event listener.
 onUnmounted(() => {
-    document.removeEventListener("mousedown", handleOutsideClick);
+    document.removeEventListener('mousedown', handleOutsideClick);
 });
 
 // Function to handle clicks outside of the search element.
@@ -111,8 +122,8 @@ watch(
     () => inputTextValue.value,
     (newValue, _2) => {
         isSearchVisible.value = true;
-        if (newValue !== "") isLabelFloating.value = true;
-    }
+        if (newValue !== '') isLabelFloating.value = true;
+    },
 );
 
 // Global variable for maxResults
@@ -121,10 +132,10 @@ const maxResults = props.search.maxResults || 5;
 // Function for replacing the charachers "ăâțșî"
 const replaceSpecialCharacters = (str) => {
     return str
-        .replace(/[ăâ]/g, "a")
-        .replace(/[ț]/g, "t")
-        .replace(/[ș]/g, "s")
-        .replace(/[î]/g, "i");
+        .replace(/[ăâ]/g, 'a')
+        .replace(/[ț]/g, 't')
+        .replace(/[ș]/g, 's')
+        .replace(/[î]/g, 'i');
 };
 
 const splitResult = (item, query) => {
@@ -132,7 +143,7 @@ const splitResult = (item, query) => {
     const lowerCaseQuery = replaceSpecialCharacters(query.toLowerCase());
     const index = lowerCaseItemName.indexOf(lowerCaseQuery);
     if (index === -1) {
-        return { beforeMatch: item, match: "", afterMatch: "" };
+        return { beforeMatch: item, match: '', afterMatch: '' };
     }
     const beforeMatch = item.slice(0, index);
     const match = item.slice(index, index + query.length);
@@ -142,7 +153,7 @@ const splitResult = (item, query) => {
 
 // Create a map from item to index
 const itemToIndex = new Map(
-    props.search.items.map((item, index) => [item, index])
+    props.search.items.map((item, index) => [item, index]),
 );
 
 // Computed property for searchResults
@@ -150,10 +161,10 @@ const searchResults = computed(() => {
     if (!fuseSearchInstance) return [];
 
     // If inputTextValue is empty, return all items up to maxResults
-    if (inputTextValue.value === "") {
+    if (inputTextValue.value === '') {
         let results = props.search.items.slice(
             0,
-            maxResults + selectArray.value.length
+            maxResults + selectArray.value.length,
         );
         return results
             .map((item) => {
@@ -183,7 +194,7 @@ const searchResults = computed(() => {
     });
 
     const resultsWithoutSelectedItems = resultsWithSplit.filter(
-        (item) => !selectArray.value.includes(item.item)
+        (item) => !selectArray.value.includes(item.item),
     );
     return resultsWithoutSelectedItems;
 });
@@ -198,47 +209,47 @@ const isExactMatchFound = computed(() => {
 });
 
 // Generate a unique id for the input element.
-const uniqueInputId = computed(() => props.name + "-" + crypto.randomUUID());
+const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 
 // Compute classes for the input based on the borderStyle and disabled props.
 const inputClass = computed(() =>
-    cva("text-md w-full px-12 tracking-wider caret-gray-700 outline-none", {
+    cva('text-md w-full px-12 tracking-wider caret-gray-700 outline-none', {
         variants: {
             borderStyle: {
-                bordered: "rounded-sm border-2 py-3",
-                "border-bottom": "border-b-2 py-3",
-                "no-border": "py-3",
+                bordered: 'rounded-sm border-2 py-3',
+                'border-bottom': 'border-b-2 py-3',
+                'no-border': 'py-3',
             },
             disabled: {
-                true: "!cursor-not-allowed !bg-gray-100 !text-gray-400 ",
+                true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
             },
         },
-    })({ borderStyle: options.value.borderStyle, disabled: props.disabled })
+    })({ borderStyle: options.value.borderStyle, disabled: props.disabled }),
 );
 
 // Compute the aria label for the input.
 const inputAriaLabel = computed(() => {
-    return (props.name ? props.name : props.type) + " input";
+    return (props.name ? props.name : props.type) + ' input';
 });
 
 // Functions to handle focus, blur and reset actions on the input.
 const handleInputFocus = () => {
-    if (inputTextValue.value === "")
+    if (inputTextValue.value === '')
         isLabelFloating.value = !isLabelFloating.value;
     isSearchVisible.value = true;
     // isSelectVisible.value = true;
 };
 const handleInputBlur = () => {
-    if (inputTextValue.value === "")
+    if (inputTextValue.value === '')
         isLabelFloating.value = !isLabelFloating.value;
 };
 const resetInputField = () => {
-    inputTextValue.value = "";
+    inputTextValue.value = '';
     isLabelFloating.value = false;
     isSearchVisible.value = false;
 };
 const resetInputOnEscape = () => {
-    inputTextValue.value = "";
+    inputTextValue.value = '';
     isLabelFloating.value = true;
     isSearchVisible.value = false;
 };
@@ -316,7 +327,7 @@ const resetInputOnEscape = () => {
                     inputTextValue.length
                 "
                 @mousedown.prevent
-                class="absolute left-0 top-0 z-20 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400"
+                class="scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 absolute left-0 top-0 z-20 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white"
                 :style="searchFloatingStyles"
             >
                 <component

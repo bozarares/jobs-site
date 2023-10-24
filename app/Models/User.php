@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public static function boot()
+    {
+        parent::boot();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +52,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['jobHistory', 'educationHistory'];
+    protected $with = ['jobHistory', 'educationHistory', 'skills'];
 
     public function companies()
     {
@@ -67,5 +72,13 @@ class User extends Authenticatable
     public function educationHistory()
     {
         return $this->hasMany(EducationHistory::class);
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(
+            Skill::class,
+            'user_skill'
+        )->withTimestamps();
     }
 }

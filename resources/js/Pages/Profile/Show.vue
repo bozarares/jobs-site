@@ -142,6 +142,7 @@ const edit = ref(false);
                 class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
+                    @click="openModal('skills')"
                     v-if="edit"
                     class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
@@ -149,8 +150,15 @@ const edit = ref(false);
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Skills
                 </h2>
-                <div>Laravel</div>
-                <div>Vue.js</div>
+                <div class="flex flex-wrap gap-4">
+                    <div
+                        v-for="skill in user.skills"
+                        :key="skill.id"
+                        class="rounded bg-gray-800 px-2 py-1 text-white"
+                    >
+                        {{ skill.name }}
+                    </div>
+                </div>
             </div>
             <div
                 class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
