@@ -28,9 +28,10 @@ const props = defineProps({
         </div>
     </div>
     <div
-        class="flex gap-2 flex-wrap justify-center w-full p-6 bg-gray-100 max-w-screen-lg"
+        class="flex gap-2 flex-wrap justify-center w-full pt-6 bg-gray-100 max-w-screen-lg"
     >
         <CompanyCard
+            :viewButton="true"
             class="transition hover:scale-[1.02] duration-300 hover:shadow-lg cursor-pointer"
             v-for="company in companies"
             :key="company.id"

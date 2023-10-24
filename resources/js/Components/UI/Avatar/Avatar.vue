@@ -21,7 +21,7 @@ const props = defineProps({
     },
     size: {
         type: String,
-        validator: (val) => ['small', 'normal', 'big'].includes(val),
+        validator: (val) => ['small', 'normal', 'big', '2xl'].includes(val),
         default: 'normal',
     },
     border: {
@@ -55,6 +55,7 @@ const avatarClass = computed(() => {
                     small: 'min-h-10 min-w-10 h-10 w-10 text-xl',
                     normal: 'min-h-12 min-w-12 h-12 w-12 text-2xl',
                     big: 'min-h-16 min-w-16 h-16 w-16 text-2xl',
+                    '2xl': 'min-h-24 min-w-24 h-24 w-24 text-3xl',
                 },
                 border: {
                     square: 'rounded-none',

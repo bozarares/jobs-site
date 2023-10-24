@@ -3,7 +3,10 @@ import {
     Avatar,
     Checkbox,
     DropdownHeader,
+    DropdownItem,
+    DropdownLabel,
     DropdownMenu,
+    DropdownSeparator,
 } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 
@@ -11,7 +14,12 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { watch } from 'vue';
 import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
-import { BellIcon } from '@heroicons/vue/24/outline';
+import {
+    ArrowRightOnRectangleIcon,
+    BellIcon,
+    Cog8ToothIcon,
+    UserIcon,
+} from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 
 const page = usePage();
@@ -73,6 +81,13 @@ watch(
                 <DropdownMenu align="right" class="w-[20em] mt-4">
                     <template v-slot:dropdownMenuButton>
                         <Avatar
+                            :src="
+                                $page.props.auth.user &&
+                                $page.props.auth.user.avatar
+                                    ? '/avatars/users/' +
+                                      $page.props.auth.user.avatar
+                                    : null
+                            "
                             id="user-toggle"
                             size="small"
                             :name="
@@ -89,17 +104,60 @@ watch(
                         class="flex flex-col gap-4 p-4 w-full"
                     >
                         <DropdownHeader>
-                            {{ $page.props.auth.user.name }}
+                            <div class="flex justify-between items-center">
+                                <Avatar
+                                    :src="
+                                        $page.props.auth.user &&
+                                        $page.props.auth.user.avatar
+                                            ? '/avatars/users/' +
+                                              $page.props.auth.user.avatar
+                                            : null
+                                    "
+                                    id="user-toggle"
+                                    size="big"
+                                    :name="
+                                        $page.props.auth.user
+                                            ? $page.props.auth.user.name
+                                            : null
+                                    "
+                                />
+                                <div class="flex flex-col items-center">
+                                    <p class="text-xl font-bold text-black">
+                                        {{ $page.props.auth.user.name }}
+                                    </p>
+                                    <p class="text-sm font-bold text-black/50">
+                                        {{ $page.props.auth.user.email }}
+                                    </p>
+                                </div>
+                            </div>
                         </DropdownHeader>
-                        <Button
-                            class="w-full"
-                            method="post"
-                            :href="route('logout')"
-                            as="button"
-                            :is="Link"
-                        >
-                            Logout
-                        </Button>
+                        <div class="flex flex-col">
+                            <DropdownSeparator />
+                            <DropdownItem
+                                :is="Link"
+                                :href="route('profile.show')"
+                                class="font-bold text-sm"
+                                :leftIcon="UserIcon"
+                                >Profile</DropdownItem
+                            >
+                            <DropdownSeparator />
+                            <DropdownLabel align="left"
+                                >User controlls</DropdownLabel
+                            >
+                            <DropdownItem
+                                class="font-bold text-sm"
+                                :leftIcon="Cog8ToothIcon"
+                                >Settings</DropdownItem
+                            >
+                            <DropdownItem
+                                :is="Link"
+                                :href="route('logout')"
+                                method="POST"
+                                class="font-bold text-sm"
+                                :leftIcon="ArrowRightOnRectangleIcon"
+                                >Logout</DropdownItem
+                            >
+                        </div>
                     </div>
                 </DropdownMenu>
             </div>

@@ -25,6 +25,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    viewButton: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const showModal = ref(false);
@@ -91,6 +95,7 @@ function openModal(type) {
                     >Share</Button
                 >
                 <Button
+                    v-if="viewButton"
                     class="w-full"
                     as="a"
                     :is="Link"

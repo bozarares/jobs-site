@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\JobHistoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,9 +40,37 @@ Route::get('/dashboard', function () {
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name(
-        'profile.edit'
+    Route::get('/profile', [ProfileController::class, 'show'])->name(
+        'profile.show'
     );
+    Route::post('/profile/update/avatar', [
+        ProfileController::class,
+        'updateAvatar',
+    ])->name('profile.update.avatar');
+    Route::post('/profile/update/user', [
+        ProfileController::class,
+        'updateUser',
+    ])->name('profile.update.user');
+    Route::post('/profile/update/socials', [
+        ProfileController::class,
+        'updateSocials',
+    ])->name('profile.update.socials');
+    Route::post('/profile/update/description', [
+        ProfileController::class,
+        'updateDescription',
+    ])->name('profile.update.description');
+    Route::post('/profile/update/jobHistory', [
+        JobHistoryController::class,
+        'addJobHistory',
+    ])->name('profile.update.jobHistory');
+    Route::put('/profile/update/jobHistory', [
+        JobHistoryController::class,
+        'editJobHistory',
+    ])->name('profile.update.jobHistory');
+    Route::delete('/profile/update/jobHistory', [
+        JobHistoryController::class,
+        'deleteJobHistory',
+    ])->name('profile.update.jobHistory');
     Route::patch('/profile', [ProfileController::class, 'update'])->name(
         'profile.update'
     );

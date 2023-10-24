@@ -17,7 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone_number',
+        'tag',
+        'description',
+        'avatar',
+        'social_linkedin',
+        'social_github',
+        'social_facebook',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +55,10 @@ class User extends Authenticatable
     public function getIsOwnerAttribute()
     {
         return $this->companies()->count() > 0;
+    }
+
+    public function jobHistory()
+    {
+        return $this->hasMany(JobHistory::class);
     }
 }

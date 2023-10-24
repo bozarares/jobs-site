@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-import { cva } from "class-variance-authority";
-import { computed } from "vue";
+import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 const props = defineProps({
     leftIcon: {
@@ -33,29 +33,35 @@ const props = defineProps({
     },
     is: {
         type: [String, Object],
-        default: "button",
+        default: 'button',
     },
     as: {
         type: [String],
-        default: "button",
+        default: 'button',
     },
     method: { type: String },
     size: {
         type: String,
-        default: "normal",
-        validator: (val) => ["normal", "xl", "xxl"].includes(val),
+        default: 'normal',
+        validator: (val) => ['normal', 'xl', 'xxl'].includes(val),
     },
     href: String,
+    class: {
+        type: String,
+        default: '',
+    },
 });
 
 const dropdownItemClass = computed(() => {
     return cva(
-        "relative flex w-full cursor-pointer select-none items-center tracking-wider transition-colors hover:bg-gray-200",
+        'relative flex w-full cursor-pointer select-none items-center tracking-wider transition-colors hover:bg-gray-200' +
+            ' ' +
+            props.class,
         {
             variants: {
-                size: { normal: "h-[2.5em]", xl: "h-[3em]", xxl: "h-[4em]" },
+                size: { normal: 'h-[2.5em]', xl: 'h-[3em]', xxl: 'h-[4em]' },
             },
-        }
+        },
     )({ size: props.size });
 });
 </script>

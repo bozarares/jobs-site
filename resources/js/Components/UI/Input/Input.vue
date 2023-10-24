@@ -73,6 +73,9 @@ watch(
         if (newValue === '' && isFocused.value === false) {
             isLabelFloating.value = false;
         }
+        if (newValue !== '') {
+            isLabelFloating.value = true;
+        }
     },
 );
 

@@ -1,16 +1,17 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-import { useFloating } from "@floating-ui/vue";
-import { cva } from "class-variance-authority";
-import dayjs from "dayjs";
-import localeData from "dayjs/plugin/localeData";
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { useFloating } from '@floating-ui/vue';
+import { cva } from 'class-variance-authority';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
 
 dayjs.extend(localeData);
-dayjs.locale("en");
+dayjs.locale('en');
 
 const props = defineProps({
     label: String,
     name: String,
+    disabled: Boolean,
     dateOptions: {
         type: Object,
         default: () => {},
@@ -23,10 +24,13 @@ const props = defineProps({
         type: String,
         default: null,
     },
-    modelValue: Date || Array || null || undefined,
+    modelValue: {
+        type: [Date, Array, null, undefined],
+        default: null,
+    },
 });
 
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(['update:modelValue']);
 
 // Used for computing the blank spaces before 1 of each month
 let firstDayOfMonth = ref(0);
@@ -35,6 +39,13 @@ let daysOfMonth = ref([]);
 const isDateMode = ref(true);
 
 const selectedDate = ref(props.modelValue ? dayjs(props.modelValue) : null);
+
+watch(
+    () => props.modelValue,
+    (newValue, oldValue) => {
+        selectedDate.value = newValue ? dayjs(newValue) : null;
+    },
+);
 const selectedTime = ref(dayjs());
 const selectedMonth = ref(dayjs().month());
 const selectedYear = ref(dayjs().year());
@@ -57,7 +68,7 @@ const dateElementRef = ref(null);
 // Computed property used for setting defaults and overwriting for options prop
 const options = computed(() => {
     const defaultOptions = {
-        borderStyle: "bordered",
+        borderStyle: 'bordered',
         leftIcon: null,
     };
     return { ...defaultOptions, ...props.options };
@@ -68,7 +79,7 @@ const dateOptions = computed(() => {
     const defaultOptions = {
         maxDate: null,
         minDate: null,
-        type: "date",
+        type: 'date',
         time: false,
     };
     return { ...defaultOptions, ...props.dateOptions };
@@ -78,10 +89,10 @@ watch(
     () => selectedTime.value,
     (newValue, oldValue) => {
         const dt = selectedDate.value
-            .set("hour", newValue.hour())
-            .set("minute", newValue.minute());
+            .set('hour', newValue.hour())
+            .set('minute', newValue.minute());
         selectedDate.value = dt;
-    }
+    },
 );
 
 watch(
@@ -92,7 +103,7 @@ watch(
             .minute(newValue.minute());
         startDate.value = dtStart;
         selectedDate.value = [startDate.value, endDate.value];
-    }
+    },
 );
 
 watch(
@@ -103,7 +114,7 @@ watch(
             .minute(newValue.minute());
         endDate.value = dtEnd;
         selectedDate.value = [startDate.value, endDate.value];
-    }
+    },
 );
 
 watch(
@@ -117,38 +128,42 @@ watch(
             const endDate = newValue[1].toDate
                 ? newValue[1].toDate()
                 : newValue[1];
-            emits("update:modelValue", [startDate, endDate]);
+            emits('update:modelValue', [startDate, endDate]);
         } else {
             // handle a single date
             emits(
-                "update:modelValue",
-                newValue.toDate ? newValue.toDate() : newValue
+                'update:modelValue',
+                newValue === null
+                    ? null
+                    : newValue.toDate
+                    ? newValue.toDate()
+                    : newValue,
             );
         }
-    }
+    },
 );
 
 // Returns the formatted dates for the input value
 const formattedDate = computed(() => {
-    if (!selectedDate.value) return "";
+    if (!selectedDate.value) return '';
 
-    if (dateOptions.value.type === "range") {
-        let tempMessage = "";
+    if (dateOptions.value.type === 'range') {
+        let tempMessage = '';
         if (startDate.value)
-            tempMessage += `${dayjs(startDate.value).format("DD.MM.YYYY")}`;
+            tempMessage += `${dayjs(startDate.value).format('DD.MM.YYYY')}`;
         if (endDate.value)
-            tempMessage += ` - ${dayjs(endDate.value).format("DD.MM.YYYY")}`;
+            tempMessage += ` - ${dayjs(endDate.value).format('DD.MM.YYYY')}`;
         return tempMessage;
     }
 
     if (dateOptions.value.time === true) {
-        return dayjs(selectedDate.value).format("DD.MM.YYYY HH:mm");
+        return dayjs(selectedDate.value).format('DD.MM.YYYY HH:mm');
     }
-    return dayjs(selectedDate.value).format("DD.MM.YYYY");
+    return dayjs(selectedDate.value).format('DD.MM.YYYY');
 });
 
 const isLabelFloating = computed(() => {
-    if (formattedDate.value === "") return false;
+    if (formattedDate.value === '') return false;
     return true;
 });
 
@@ -156,27 +171,27 @@ const { floatingStyles: dateFloatingStyles } = useFloating(
     containerElementRef,
     dateElementRef,
     {
-        placement: "bottom",
-    }
+        placement: 'bottom',
+    },
 );
 
 // Generate a unique id for the input element.
-const uniqueInputId = computed(() => props.name + "-" + crypto.randomUUID());
+const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 
 // CVA instance for input style
 const inputClass = computed(() =>
-    cva("text-md w-full px-12 tracking-wider caret-gray-700 outline-none", {
+    cva('text-md w-full px-12 tracking-wider caret-gray-700 outline-none', {
         variants: {
             borderStyle: {
-                bordered: "rounded-sm border-2 py-3",
-                "border-bottom": "border-b-2 py-3",
-                "no-border": "py-3",
+                bordered: 'rounded-sm border-2 py-3',
+                'border-bottom': 'border-b-2 py-3',
+                'no-border': 'py-3',
             },
             disabled: {
-                true: "!cursor-not-allowed !bg-gray-100 !text-gray-400 ",
+                true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
             },
         },
-    })({ borderStyle: options.value.borderStyle, disabled: props.disabled })
+    })({ borderStyle: options.value.borderStyle, disabled: props.disabled }),
 );
 
 const dayClass = (day) => {
@@ -185,52 +200,52 @@ const dayClass = (day) => {
         .month(selectedMonth.value)
         .date(day);
 
-    if (dateOptions.value.type === "date") {
+    if (dateOptions.value.type === 'date') {
         if (
             selectedDate.value &&
             dayjs(selectedDate.value).date() === day &&
             dayjs(selectedDate.value).month() === selectedMonth.value &&
             dayjs(selectedDate.value).year() === selectedYear.value
         )
-            return "bg-blue-500 text-white";
+            return 'bg-blue-500 text-white';
     }
 
-    if (dateOptions.value.type === "range") {
+    if (dateOptions.value.type === 'range') {
         if (
             startDate.value &&
             dayjs(startDate.value).date() === day &&
             dayjs(startDate.value).month() === selectedMonth.value &&
             dayjs(startDate.value).year() === selectedYear.value
         )
-            return "bg-blue-500 rounded-r-none text-white pointer-events-none";
+            return 'bg-blue-500 rounded-r-none text-white pointer-events-none';
         if (
             endDate.value &&
             dayjs(endDate.value).date() === day &&
             dayjs(endDate.value).month() === selectedMonth.value &&
             dayjs(endDate.value).year() === selectedYear.value
         )
-            return "bg-blue-500 rounded-l-none text-white pointer-events-none";
+            return 'bg-blue-500 rounded-l-none text-white pointer-events-none';
         if (
             startDate.value &&
             endDate.value &&
             tempDate.isBefore(dayjs(endDate.value)) &&
             tempDate.isAfter(dayjs(startDate.value))
         )
-            return "bg-blue-300 rounded-none text-gray-100";
+            return 'bg-blue-300 rounded-none text-gray-100';
     }
-    return "";
+    return '';
 };
 
 // On component mount add event listenter for handle outsideClick
 // Set the calendar month and days as the current date
 onMounted(() => {
     updateDaysOfMonth(dayjs());
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
 });
 
 // On component unmount, remove the mousedown event listener.
 onUnmounted(() => {
-    document.removeEventListener("mousedown", handleOutsideClick);
+    document.removeEventListener('mousedown', handleOutsideClick);
 });
 
 // Function to handle clicks outside of the search element.
@@ -257,7 +272,7 @@ watch(
             .month(selectedMonth.value)
             .year(selectedYear.value);
         updateDaysOfMonth(newDate);
-    }
+    },
 );
 
 // Watcher for selected year for updating the blank spaces
@@ -266,15 +281,15 @@ watch(
     (newValue) => {
         const newDate = dayjs().month(selectedMonth.value).year(newValue);
         updateDaysOfMonth(newDate);
-    }
+    },
 );
 
 const updateDaysOfMonth = (date) => {
-    const endDate = date.endOf("month");
+    const endDate = date.endOf('month');
     const days = Array.from({ length: endDate.date() }, (_, i) => i + 1);
     daysOfMonth.value = days;
 
-    const firstDay = date.startOf("month").day();
+    const firstDay = date.startOf('month').day();
     firstDayOfMonth.value = firstDay === -1 ? 6 : firstDay;
 };
 
@@ -302,7 +317,7 @@ const selectDay = (day) => {
     }
 
     // Range selection
-    if (dateOptions.value.type === "range") {
+    if (dateOptions.value.type === 'range') {
         if (!startDate.value) startDate.value = tempDate;
         else if (!endDate.value) {
             endDate.value = tempDate;
@@ -335,21 +350,21 @@ const selectDay = (day) => {
 let yearGrid = ref(
     Array.from(
         { length: 12 },
-        (_, i) => dayjs().year() - (dayjs().year() % 10) - 1 + i
-    )
+        (_, i) => dayjs().year() - (dayjs().year() % 10) - 1 + i,
+    ),
 );
 
 const selectYear = (year) => {
     const firstYearInGrid = dayjs().year(yearGrid.value[0]);
-    if (year === "<") {
+    if (year === '<') {
         yearGrid.value = Array.from(
             { length: 12 },
-            (_, i) => firstYearInGrid.subtract(10, "year").year() + i
+            (_, i) => firstYearInGrid.subtract(10, 'year').year() + i,
         );
-    } else if (year === ">") {
+    } else if (year === '>') {
         yearGrid.value = Array.from(
             { length: 12 },
-            (_, i) => firstYearInGrid.add(10, "year").year() + i
+            (_, i) => firstYearInGrid.add(10, 'year').year() + i,
         );
     } else {
         selectedYear.value = year;
@@ -358,7 +373,7 @@ const selectYear = (year) => {
 };
 
 var getMonth = function (idx) {
-    return dayjs().month(idx).format("MMMM"); // obținem numele lunii pentru un index dat
+    return dayjs().month(idx).format('MMMM'); // obținem numele lunii pentru un index dat
 };
 
 const days = dayjs().localeData().weekdaysShort();
@@ -386,7 +401,12 @@ const days = dayjs().localeData().weekdaysShort();
             :name="props.name"
             readonly
             v-model="formattedDate"
-            @click.prevent="isDatePickerVisible = !isDatePickerVisible"
+            @click.prevent="
+                () => {
+                    if (disabled === false)
+                        isDatePickerVisible = !isDatePickerVisible;
+                }
+            "
         />
 
         <!-- Floating Label -->
@@ -426,14 +446,14 @@ const days = dayjs().localeData().weekdaysShort();
                     class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
                     :class="[
                         dayjs(
-                            `${selectedYear}-${selectedMonth + 1}-01`
+                            `${selectedYear}-${selectedMonth + 1}-01`,
                         ).isBefore(dateOptions.minDate)
                             ? 'pointer-events-none bg-gray-100'
                             : '',
                     ]"
                     @click.prevent="selectedMonth--"
                 >
-                    {{ "<" }}
+                    {{ '<' }}
                 </button>
                 <div>
                     <button
@@ -463,14 +483,14 @@ const days = dayjs().localeData().weekdaysShort();
                     class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
                     :class="[
                         dayjs(
-                            `${selectedYear}-${selectedMonth + 1}-01`
+                            `${selectedYear}-${selectedMonth + 1}-01`,
                         ).isAfter(dateOptions.maxDate)
                             ? 'pointer-events-none bg-gray-100'
                             : '',
                     ]"
                     @click.prevent="selectedMonth++"
                 >
-                    {{ ">" }}
+                    {{ '>' }}
                 </button>
             </div>
 
@@ -589,7 +609,7 @@ const days = dayjs().localeData().weekdaysShort();
                     @click.prevent="selectYear('<')"
                 >
                     <div class="select-none">
-                        {{ "<" }}
+                        {{ '<' }}
                     </div>
                 </div>
                 <div
@@ -615,7 +635,7 @@ const days = dayjs().localeData().weekdaysShort();
                     @click.prevent="selectYear('>')"
                 >
                     <div class="select-none">
-                        {{ ">" }}
+                        {{ '>' }}
                     </div>
                 </div>
             </div>
@@ -744,8 +764,8 @@ const days = dayjs().localeData().weekdaysShort();
 </template>
 
 <style scoped>
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
