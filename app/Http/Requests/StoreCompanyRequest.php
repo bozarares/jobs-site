@@ -25,6 +25,7 @@ class StoreCompanyRequest extends FormRequest
             'name' => 'required|string|max:255|unique:companies,name',
             'code' => 'required|string|max:100|unique:companies,code',
             'logo' => 'required|string',
+            'logo_extension' => 'required|string|in:png,jpg,jpeg,PNG,JPG,JPEG',
             'description' => 'required|string|max:1000',
             'country' => 'required|string|max:255',
             'state' => 'required|string|max:255',

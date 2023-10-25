@@ -30,6 +30,7 @@ class User extends Authenticatable
         'tag',
         'description',
         'avatar',
+        'avatar_extension',
         'social_linkedin',
         'social_github',
         'social_facebook',
@@ -52,7 +53,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['jobHistory', 'educationHistory', 'skills'];
+    protected $with = ['jobHistory', 'educationHistory', 'skills', 'files'];
 
     public function companies()
     {
@@ -80,5 +81,10 @@ class User extends Authenticatable
             Skill::class,
             'user_skill'
         )->withTimestamps();
+    }
+
+    public function files()
+    {
+        return $this->hasMany(UserFile::class);
     }
 }

@@ -29,6 +29,7 @@ class Company extends Model
         'name',
         'code',
         'logo',
+        'logo_extension',
         'description',
         'country',
         'state',

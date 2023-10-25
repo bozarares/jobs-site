@@ -5,6 +5,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\JobHistoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\UserFilesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -92,6 +93,16 @@ Route::middleware('auth')->group(function () {
         SkillController::class,
         'editSkills',
     ])->name('profile.update.skills');
+
+    Route::post('/profile/update/files', [
+        UserFilesController::class,
+        'addFile',
+    ])->name('profile.update.files');
+
+    Route::delete('/profile/update/files', [
+        UserFilesController::class,
+        'deleteFile',
+    ])->name('profile.update.files');
     Route::post('/get/skills', [SkillController::class, 'search'])->name(
         'get.skills'
     );
@@ -102,6 +113,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
         'profile.destroy'
     );
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/users/files/{path}', [
+        UserFilesController::class,
+        'show',
+    ])->name('users.files.show');
+    Route::get('/users/files/{path}/download', [
+        UserFilesController::class,
+        'download',
+    ])->name('users.files.download');
 });
 
 require __DIR__ . '/companies.php';

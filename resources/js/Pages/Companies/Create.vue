@@ -5,6 +5,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { onBeforeUnmount, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import vueFilePond from 'vue-filepond';
+import filePondServer from '@/filePondConfig';
 import axios from 'axios';
 
 import 'filepond/dist/filepond.min.css';
@@ -133,13 +134,13 @@ const form = useForm({
     email: '',
     description: '',
     logo: null,
+    logo_extension: null,
 });
 
 watch(filePondRef, (newValue, oldValue) => {
     const files = newValue.getFiles();
     if (files.length > 0) {
         form.logo = files[0].file;
-        console.log(form.logo);
     }
 });
 
@@ -186,6 +187,7 @@ const onProcessFile = (error, file) => {
         return;
     } else {
         form.logo = file.serverId;
+        form.logo_extension = file.fileExtension;
     }
 };
 </script>
@@ -318,16 +320,9 @@ const onProcessFile = (error, file) => {
             <FilePond
                 id="logo-upload"
                 @processfile="onProcessFile"
-                :server="{
-                    process: route('uploads.process'),
-                    revert: {
-                        url: route('uploads.destroy'),
-                        method: 'DELETE',
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                    },
-                }"
+                :server="
+                    filePondServer(csrfToken, form.logo, form.logo_extension)
+                "
                 ref="filePondRef"
                 class="w-full"
                 label-idle="Drop the company logo here..."

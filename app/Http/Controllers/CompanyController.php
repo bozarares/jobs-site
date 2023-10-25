@@ -16,7 +16,6 @@ class CompanyController extends Controller
 {
     public function index(): \Inertia\Response
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
         $companies = $user->companies()->get();
         return Inertia::render('Companies/Index', [
@@ -32,10 +31,12 @@ class CompanyController extends Controller
     {
         $request_validated = $request->validated();
 
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        $filename = $request_validated['logo'];
+        $filename =
+            $request_validated['logo'] .
+            '.' .
+            $request_validated['logo_extension'];
         $filePath = storage_path('app/tmp/' . $filename);
 
         $targetDirectory = storage_path('app/public/logos/companies');

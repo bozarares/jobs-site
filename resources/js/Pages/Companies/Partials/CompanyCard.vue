@@ -61,7 +61,12 @@ function openModal(type) {
                     }
                 "
                 class="h-12 fill-current object-contain text-gray-500"
-                :src="'/logos/companies/' + company.logo"
+                :src="
+                    '/logos/companies/' +
+                    company.logo +
+                    '.' +
+                    company.logo_extension
+                "
                 alt="Logo"
             />
 

@@ -23,6 +23,7 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'logo' => 'string',
+            'logo_extension' => 'string|in:png,jpg,jpeg,PNG,JPG,JPEG',
             'description' => 'string|max:1000',
             'country' => 'string|max:255',
             'state' => 'string|max:255',

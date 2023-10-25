@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class FileUploadController extends Controller
 {
@@ -46,12 +45,16 @@ class FileUploadController extends Controller
         );
 
         Log::info('File path: ' . $file_path);
-        return $hashedName . '.' . $file->getClientOriginalExtension();
+        return $hashedName;
     }
 
     public function destroy(Request $request)
     {
-        $filename = $request->getContent();
+        $request->validate([
+            'filename' => 'required|string',
+            'extension' => 'required|string',
+        ]);
+        $filename = $request->filename . '.' . $request->extension;
         Log::info('Deleting file: ' . $filename);
         if (!$filename) {
             return response()->json(['message' => 'File not provided'], 400);

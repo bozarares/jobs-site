@@ -21,7 +21,10 @@ return new class extends Migration {
             $table->string('state');
             $table->string('town');
             $table->string('address');
+
             $table->string('logo');
+            $table->string('logo_extension');
+
             $table->text('description');
             $table->unsignedBigInteger('owner');
             $table

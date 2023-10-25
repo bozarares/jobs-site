@@ -10,6 +10,7 @@ const props = defineProps({
     to: String,
     disabled: Boolean,
     method: String,
+    target: String,
     options: {
         type: Object,
         default: () => ({
@@ -81,6 +82,7 @@ const buttonClass = computed(() => {
         :disabled="props.disabled"
         :class="buttonClass"
         :href="props.href"
+        :target="props.target"
         :to="props.to"
         :method="props.method"
     >

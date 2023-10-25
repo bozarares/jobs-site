@@ -3,7 +3,11 @@ import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
 import { Button, Timeline } from '@/Components/UI';
 import { ref } from 'vue';
-import { PencilSquareIcon } from '@heroicons/vue/24/outline';
+import {
+    ArrowDownTrayIcon,
+    EyeIcon,
+    PencilSquareIcon,
+} from '@heroicons/vue/24/outline';
 import UpdateAvatar from './Partials/Modals/UpdateAvatar.vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
 import { computed } from 'vue';
@@ -164,12 +168,52 @@ const edit = ref(false);
                 class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
                 <Button
+                    @click="openModal('files')"
                     v-if="edit"
                     class="absolute right-0 top-0 m-4"
                     :options="{ leftIcon: PencilSquareIcon }"
                 ></Button>
                 <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>
-                <div>CV_FirstName_LastName</div>
+                <div class="flex flex-wrap items-center gap-4">
+                    <div
+                        v-for="file in user.files"
+                        :key="file.id"
+                        class="flex items-center gap-4 rounded border px-4 py-2 text-black"
+                    >
+                        {{ file.name }}
+                        <div class="flex items-center gap-1">
+                            <Button
+                                as="a"
+                                is="a"
+                                target="_blank"
+                                :href="
+                                    route('users.files.show', file.servername)
+                                "
+                                :options="{
+                                    leftIcon: EyeIcon,
+                                    color: 'green',
+                                    shape: 'pill',
+                                }"
+                            />
+                            <Button
+                                as="a"
+                                is="a"
+                                target="_blank"
+                                :href="
+                                    route(
+                                        'users.files.download',
+                                        file.servername,
+                                    )
+                                "
+                                :options="{
+                                    leftIcon: ArrowDownTrayIcon,
+
+                                    shape: 'pill',
+                                }"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

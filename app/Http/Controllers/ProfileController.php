@@ -28,15 +28,28 @@ class ProfileController extends Controller
     {
         $request_validated = $request->validate([
             'avatar' => ['required', 'string', 'max:255'],
+            'extension' => [
+                'required',
+                'string',
+                'in:png,jpg,jpeg,JPEG,PNG,JPG',
+            ],
         ]);
 
         $user = $request->user();
-        $filename = $request_validated['avatar'];
+        $filename =
+            $request_validated['avatar'] .
+            '.' .
+            $request_validated['extension'];
         $filePath = storage_path('app/tmp/' . $filename);
-        $targetDirectory = storage_path('app/public/avatars/users');
+        $targetDirectory = storage_path('app/public/users/avatars');
 
         if ($user->avatar) {
-            $currentAvatarPath = $targetDirectory . '/' . $user->avatar;
+            $currentAvatarPath =
+                $targetDirectory .
+                '/' .
+                $user->avatar .
+                '.' .
+                $user->avatar_extension;
             if (File::exists($currentAvatarPath)) {
                 File::delete($currentAvatarPath);
             }
@@ -48,7 +61,8 @@ class ProfileController extends Controller
         if (File::exists($filePath)) {
             File::move($filePath, $targetDirectory . '/' . $filename);
         }
-        $user->avatar = $filename;
+        $user->avatar = $request_validated['avatar'];
+        $user->avatar_extension = $request_validated['extension'];
 
         $user->save();
 

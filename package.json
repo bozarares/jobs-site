@@ -40,6 +40,7 @@
         "filepond-plugin-image-preview": "^4.6.11",
         "fuse.js": "^6.6.2",
         "loadash": "^1.0.0",
+        "lodash": "^4.17.21",
         "pinia": "^2.1.7",
         "tinymce": "^6.7.1",
         "vite-plugin-mkcert": "^1.16.0",

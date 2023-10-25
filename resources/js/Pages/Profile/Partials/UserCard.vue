@@ -32,7 +32,10 @@ const props = defineProps({
                 size="2xl"
                 :src="
                     $page.props.auth.user.avatar
-                        ? '/avatars/users/' + $page.props.auth.user.avatar
+                        ? '/users/avatars/' +
+                          $page.props.auth.user.avatar +
+                          '.' +
+                          $page.props.auth.user.avatar_extension
                         : null
                 "
             />

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('tag')->nullable();
             $table->text('description')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('avatar_extension')->nullable();
 
             $table->string('social_linkedin')->nullable();
             $table->string('social_github')->nullable();

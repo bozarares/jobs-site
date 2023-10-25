@@ -1,4 +1,5 @@
 <script setup>
+//! Add filepond reset on beforeunload
 import { QuillEditor } from '@vueup/vue-quill';
 import { ref, defineProps, defineEmits, watch } from 'vue';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -9,6 +10,7 @@ import axios from 'axios';
 import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import filePondServer from '@/filePondConfig';
 
 import { Input, SearchInput, Button } from '@/Components/UI';
 import {
@@ -74,6 +76,7 @@ const form = useForm({
     email: props.company.email,
     description: props.company.description,
     logo: props.company.logo,
+    logo_extension: props.company.logo_extension,
 });
 
 const submit = () => {
@@ -173,6 +176,7 @@ const onProcessFile = (error, file) => {
         return;
     } else {
         form.logo = file.serverId;
+        form.logo_extension = file.fileExtension;
     }
 };
 </script>
@@ -212,16 +216,13 @@ const onProcessFile = (error, file) => {
                             <FilePond
                                 id="logo-upload"
                                 @processfile="onProcessFile"
-                                :server="{
-                                    process: route('uploads.process'),
-                                    revert: {
-                                        url: route('uploads.destroy'),
-                                        method: 'DELETE',
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': csrfToken,
-                                    },
-                                }"
+                                :server="
+                                    filePondServer(
+                                        csrfToken,
+                                        form.logo,
+                                        form.logo_extension,
+                                    )
+                                "
                                 ref="filePondRef"
                                 class="w-full"
                                 label-idle="Drop the company logo here..."

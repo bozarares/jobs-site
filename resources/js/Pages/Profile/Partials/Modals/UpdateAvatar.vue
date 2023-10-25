@@ -5,6 +5,7 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
+import filePondServer from '@/filePondConfig';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -18,6 +19,7 @@ const filePondRef = ref(null);
 
 const form = useForm({
     avatar: null,
+    extension: null,
 });
 
 const submited = ref(false);
@@ -39,20 +41,22 @@ const onProcessFile = (error, file) => {
         console.log(error);
         return;
     }
+    console.log(file);
     form.avatar = file.serverId;
+    form.extension = file.fileExtension;
 };
 </script>
 
 <template>
     <Teleport to="body">
-        <div class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="fixed inset-0 z-50 flex items-center justify-center">
             <!-- Backdrop -->
             <div
                 @click="closeModal()"
                 class="absolute inset-0 bg-black opacity-50"
             ></div>
             <div
-                class="relative container flex flex-col gap-8 bg-white p-8 rounded shadow max-w-lg mx-auto overflow-auto max-h-[35em]"
+                class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
             >
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Edit Avatar
@@ -62,16 +66,13 @@ const onProcessFile = (error, file) => {
                     <FilePond
                         id="avatar-upload"
                         @processfile="onProcessFile"
-                        :server="{
-                            process: route('uploads.process'),
-                            revert: {
-                                url: route('uploads.destroy'),
-                                method: 'DELETE',
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                            },
-                        }"
+                        :server="
+                            filePondServer(
+                                csrfToken,
+                                form.avatar,
+                                form.extension,
+                            )
+                        "
                         ref="filePondRef"
                         class="w-full"
                         label-idle="Drop the avatar here..."

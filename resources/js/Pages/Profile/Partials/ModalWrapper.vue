@@ -2,6 +2,7 @@
 import UpdateAvatar from './Modals/UpdateAvatar.vue';
 import UpdateDescription from './Modals/UpdateDescription.vue';
 import UpdateEducationHistory from './Modals/UpdateEducationHistory.vue';
+import UpdateFiles from './Modals/UpdateFiles.vue';
 import UpdateJobHistory from './Modals/UpdateJobHistory.vue';
 import UpdateSkills from './Modals/UpdateSkills.vue';
 import UpdateSocials from './Modals/UpdateSocials.vue';
@@ -79,6 +80,15 @@ watchEffect(() => {
     />
     <UpdateSkills
         v-if="modal === 'skills'"
+        :close-modal="
+            () => {
+                modal = null;
+                closeModal();
+            }
+        "
+    />
+    <UpdateFiles
+        v-if="modal === 'files'"
         :close-modal="
             () => {
                 modal = null;
