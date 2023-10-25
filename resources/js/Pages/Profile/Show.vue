@@ -101,56 +101,98 @@ const edit = ref(false);
             class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
             <div
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('description');
+                        }
+                    }
+                "
                 class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                :class="{
+                    'cursor-pointer': edit,
+                }"
             >
-                <Button
-                    @click="openModal('description')"
+                <h2
                     v-if="edit"
-                    class="absolute right-0 top-0 m-4"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
+                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
+
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Description
                 </h2>
                 <div v-html="user.description" />
             </div>
             <div
-                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('jobs');
+                        }
+                    }
+                "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
-                <Button
-                    @click="openModal('jobs')"
+                <h2
                     v-if="edit"
-                    class="absolute right-0 top-0 m-4"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
+                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Job history
                 </h2>
                 <Timeline :items="jobHistoryTimeline" />
             </div>
             <div
-                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('education');
+                        }
+                    }
+                "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
-                <Button
-                    @click="openModal('education')"
+                <h2
                     v-if="edit"
-                    class="absolute right-0 top-0 m-4"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
+                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
+
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Education
                 </h2>
                 <Timeline :items="educationHistoryTimeline" />
             </div>
             <div
-                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('skills');
+                        }
+                    }
+                "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
-                <Button
-                    @click="openModal('skills')"
+                <h2
                     v-if="edit"
-                    class="absolute right-0 top-0 m-4"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
+                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Skills
                 </h2>
@@ -165,14 +207,25 @@ const edit = ref(false);
                 </div>
             </div>
             <div
-                class="container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('files');
+                        }
+                    }
+                "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
-                <Button
-                    @click="openModal('files')"
+                <h2
                     v-if="edit"
-                    class="absolute right-0 top-0 m-4"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
+                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
+
                 <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>
                 <div class="flex flex-wrap items-center gap-4">
                     <div

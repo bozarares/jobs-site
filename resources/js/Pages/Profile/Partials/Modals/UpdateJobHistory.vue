@@ -109,7 +109,7 @@ const endDateComputed = computed({
 <template>
     <Teleport to="body">
         <div
-            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto md:flex-row"
+            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto"
         >
             <!-- Backdrop -->
             <div
@@ -117,7 +117,7 @@ const endDateComputed = computed({
                 class="absolute inset-0 h-full bg-black opacity-50"
             ></div>
             <div
-                class="container relative flex max-h-[calc(100vh-2rem)] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+                class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
             >
                 <div
                     v-if="jobHistory.length !== 0"

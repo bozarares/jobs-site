@@ -4,9 +4,9 @@ import { ref } from 'vue';
 import { Button, Checkbox, DateTime, Timeline } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
 import {
+    AcademicCapIcon,
     CalendarDaysIcon,
-    PhoneIcon,
-    UserIcon,
+    DocumentIcon,
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
@@ -107,7 +107,7 @@ const endDateComputed = computed({
 <template>
     <Teleport to="body">
         <div
-            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto md:flex-row"
+            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto"
         >
             <!-- Backdrop -->
             <div
@@ -115,7 +115,7 @@ const endDateComputed = computed({
                 class="absolute inset-0 h-full bg-black opacity-50"
             ></div>
             <div
-                class="container relative flex max-h-[calc(100vh-2rem)] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+                class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
             >
                 <div
                     v-if="educationHistory.length !== 0"
@@ -190,10 +190,13 @@ const endDateComputed = computed({
                         <Input
                             v-model="form.institution"
                             :error="form.errors.institution"
-                            label="institution"
+                            label="Institution"
                             type="text"
                             name="institution"
-                            :options="{ leftIcon: PhoneIcon, size: 'small' }"
+                            :options="{
+                                leftIcon: AcademicCapIcon,
+                                size: 'small',
+                            }"
                         />
                         <Input
                             v-model="form.degree"
@@ -201,7 +204,7 @@ const endDateComputed = computed({
                             label="Degree"
                             type="text"
                             name="degree"
-                            :options="{ leftIcon: UserIcon, size: 'small' }"
+                            :options="{ leftIcon: DocumentIcon, size: 'small' }"
                         />
                     </div>
                     <Input
@@ -210,7 +213,7 @@ const endDateComputed = computed({
                         label="Field of study"
                         type="text"
                         name="field_of_study"
-                        :options="{ leftIcon: UserIcon, size: 'small' }"
+                        :options="{ leftIcon: AcademicCapIcon, size: 'small' }"
                     />
                     <DateTime
                         v-model="startDateComputed"
@@ -246,7 +249,7 @@ const endDateComputed = computed({
                         "
                         class="w-full"
                         :options="{ color: 'green', shape: 'pill' }"
-                        >Add Job</Button
+                        >Add Education</Button
                     >
                 </div>
                 <div v-else class="flex w-full items-center gap-4">

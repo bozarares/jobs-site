@@ -22,14 +22,25 @@ const props = defineProps({
 
 <template>
     <div
+        @click="
+            () => {
+                if (edit) {
+                    openModal('socials');
+                }
+            }
+        "
         class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
+        :class="{
+            'cursor-pointer': edit,
+        }"
     >
-        <Button
-            @click="openModal('socials')"
+        <h2
             v-if="edit"
-            class="absolute right-0 top-0 z-10 m-4"
-            :options="{ leftIcon: PencilSquareIcon }"
-        ></Button>
+            class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+        >
+            Click field to edit
+        </h2>
+
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">Socials</h2>
             <h2 class="text-center font-bold text-black/60">

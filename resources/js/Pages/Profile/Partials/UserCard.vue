@@ -19,17 +19,36 @@ const props = defineProps({
 
 <template>
     <div
+        @click="
+            () => {
+                if (edit) {
+                    openModal('user');
+                }
+            }
+        "
         class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
+        :class="{
+            'cursor-pointer': edit,
+        }"
     >
-        <Button
+        <h2
             v-if="edit"
-            class="absolute right-0 top-0 z-10 m-4"
-            :options="{ leftIcon: PencilSquareIcon }"
-            @click="openModal('avatar')"
-        ></Button>
+            class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+        >
+            Click field to edit
+        </h2>
         <div class="relative flex flex-col items-center gap-2">
             <Avatar
                 size="2xl"
+                class=""
+                :edit-mode="edit"
+                :edit-click="
+                    () => {
+                        if (edit) {
+                            openModal('avatar');
+                        }
+                    }
+                "
                 :src="
                     $page.props.auth.user.avatar
                         ? '/users/avatars/' +
@@ -39,19 +58,13 @@ const props = defineProps({
                         : null
                 "
             />
-            <h2 class="text-center text-lg font-bold uppercase">
-                {{ user.name }}
-            </h2>
-            <div class="flex items-center">
+            <div class="flex flex-col items-center">
+                <h2 class="text-center text-lg font-bold uppercase">
+                    {{ user.name }}
+                </h2>
                 <h2 class="text-center font-bold text-black/60">
                     {{ user.tag }}
                 </h2>
-                <Button
-                    @click="openModal('user')"
-                    v-if="edit"
-                    class="m-1 scale-75"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                ></Button>
             </div>
         </div>
     </div>

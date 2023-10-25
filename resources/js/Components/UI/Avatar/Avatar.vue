@@ -1,5 +1,5 @@
 <script setup>
-import { UserIcon } from '@heroicons/vue/24/outline';
+import { PencilSquareIcon, UserIcon } from '@heroicons/vue/24/outline';
 import { cva } from 'class-variance-authority';
 import { computed } from 'vue';
 const props = defineProps({
@@ -31,6 +31,14 @@ const props = defineProps({
     },
     as: { type: [String, Object], default: 'button' },
     href: String,
+    editMode: {
+        type: Boolean,
+        default: false,
+    },
+    editClick: {
+        type: Function,
+        default: () => {},
+    },
 });
 const getAcronym = computed(() => {
     if (!props.name) return;
@@ -48,7 +56,7 @@ const getAcronym = computed(() => {
 });
 const avatarClass = computed(() => {
     return cva(
-        'flex items-center justify-center overflow-hidden border-2 border-gray-500 bg-gradient-to-br from-gray-300 to-gray-200 font-bold tracking-normal text-gray-700 shadow-sm duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition',
+        'pointer-events-none flex cursor-default items-center justify-center overflow-hidden border-2 border-gray-500 bg-gradient-to-br from-gray-300 to-gray-200 font-bold tracking-normal text-gray-700 shadow-sm duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition',
         {
             variants: {
                 size: {
@@ -69,34 +77,42 @@ const avatarClass = computed(() => {
 </script>
 
 <template>
-    <component
-        :is="props.as"
-        :href="props.href"
-        :class="avatarClass"
-        :id="props.id"
-    >
-        <img
-            class="h-full w-full scale-125 object-cover"
-            v-if="props.src"
-            :src="props.src"
-            alt=""
-        />
-        <div
-            v-else-if="props.name"
-            class="pointer-events-none select-none leading-10"
-        >
-            {{ getAcronym }}
-        </div>
-        <div
-            v-else-if="props.acronym"
-            class="pointer-events-none select-none leading-10"
-        >
-            {{ props.acronym }}
-        </div>
+    <div class="relative">
         <component
-            v-else
-            class="pointer-events-none w-2/3"
-            :is="UserIcon"
-        ></component>
-    </component>
+            :is="props.as"
+            :href="props.href"
+            :class="avatarClass"
+            :id="props.id"
+        >
+            <img
+                class="h-full w-full scale-125 object-cover"
+                v-if="props.src"
+                :src="props.src"
+                alt=""
+            />
+            <div
+                v-else-if="props.name"
+                class="pointer-events-none select-none leading-10"
+            >
+                {{ getAcronym }}
+            </div>
+            <div
+                v-else-if="props.acronym"
+                class="pointer-events-none select-none leading-10"
+            >
+                {{ props.acronym }}
+            </div>
+            <component
+                v-else
+                class="pointer-events-none w-2/3"
+                :is="UserIcon"
+            ></component>
+            <component
+                @click="editClick"
+                :is="PencilSquareIcon"
+                v-if="editMode"
+                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-gray-900 p-2 text-white"
+            ></component>
+        </component>
+    </div>
 </template>
