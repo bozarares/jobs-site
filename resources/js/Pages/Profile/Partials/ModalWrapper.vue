@@ -7,29 +7,44 @@ import UpdateJobHistory from './Modals/UpdateJobHistory.vue';
 import UpdateSkills from './Modals/UpdateSkills.vue';
 import UpdateSocials from './Modals/UpdateSocials.vue';
 import UpdateUser from './Modals/UpdateUser.vue';
+import { watchEffect } from 'vue';
+
 const props = defineProps({
     modal: { type: String, default: null },
     closeModal: { type: Function, default: () => {} },
 });
 function disableScroll() {
-    // Get the current page scroll position
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-    window.onscroll = function () {
-        window.scrollTo(scrollLeft, scrollTop);
-    };
+    document.body.addEventListener('mousewheel', preventScroll, {
+        passive: false,
+    });
+    document.body.addEventListener('touchmove', preventScroll, {
+        passive: false,
+    });
+}
+function enableScroll() {
+    document.body.removeEventListener('mousewheel', preventScroll, {
+        passive: false,
+    });
+    document.body.removeEventListener('touchmove', preventScroll, {
+        passive: false,
+    });
 }
 
-function enableScroll() {
-    window.onscroll = function () {};
+function preventScroll(e) {
+    e.preventDefault();
 }
-import { watchEffect } from 'vue';
 
 watchEffect(() => {
     if (props.modal) {
         disableScroll();
+        document.body.style.position = 'fixed';
+        document.body.style.inlineSize = '100%';
+        document.body.style.overflowY = 'scroll';
     } else {
         enableScroll();
+        document.body.style.position = 'relative';
+        document.body.style.inlineSize = 'auto';
+        document.body.style.overflowY = 'auto';
     }
 });
 
@@ -68,7 +83,7 @@ const leaveToClass = 'opacity-0';
             >
                 <div
                     @click="closeModal()"
-                    class="absolute inset-0 bg-black opacity-50"
+                    class="absolute inset-0 bg-black opacity-20"
                 ></div>
                 <component
                     :is="componentMap[modal]"
