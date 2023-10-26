@@ -3,15 +3,9 @@ import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
 import { Button, Timeline } from '@/Components/UI';
 import { ref } from 'vue';
-import {
-    ArrowDownTrayIcon,
-    EyeIcon,
-    PencilSquareIcon,
-} from '@heroicons/vue/24/outline';
-import UpdateAvatar from './Partials/Modals/UpdateAvatar.vue';
+import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import ModalWrapper from './Partials/ModalWrapper.vue';
-import { computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+
 import { watch } from 'vue';
 import SettingsCard from './Partials/SettingsCard.vue';
 const props = defineProps({
@@ -123,7 +117,7 @@ const edit = ref(false);
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Description
                 </h2>
-                <div class="prose" v-html="user.description" />
+                <div class="ql-editor prose" v-html="user.description" />
             </div>
             <div
                 @click="

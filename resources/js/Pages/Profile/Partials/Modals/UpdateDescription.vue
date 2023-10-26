@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 import { Button } from '@/Components/UI';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import toolbarOptions from '@/quillToolBarConfig';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -33,15 +34,15 @@ onMounted(() => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-hidden rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-2xl flex-col gap-8 rounded bg-white p-8 shadow"
     >
         <h2 class="text-lg font-bold uppercase text-black/60">Edit User</h2>
 
-        <div class="flex flex-col overflow-hidden">
+        <div class="flex h-auto max-h-[30em] flex-col overflow-hidden pb-20">
             <QuillEditor
                 name="Company description"
                 ref="quillRef"
-                toolbar="essential"
+                :toolbar="toolbarOptions"
                 theme="snow"
             />
         </div>
@@ -53,3 +54,14 @@ onMounted(() => {
         >
     </div>
 </template>
+
+<style>
+/* .ql-container {
+    margin-bottom: 20px !important;
+} */
+.ql-editor {
+    margin-bottom: 20px !important;
+    overflow: auto !important;
+    min-height: 20em !important;
+}
+</style>

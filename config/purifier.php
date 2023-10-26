@@ -26,11 +26,11 @@ return [
         'default' => [
             'HTML.Doctype' => 'HTML 4.01 Transitional',
             'HTML.Allowed' =>
-                'div,b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]',
+                'div[class],b,strong[style],i[style],em,u,a[href|title|style],ul,ol,li[class],p[style|class],br,span[style|class],h2[style|class],h3[style|class],h4[style|class],h5[style|class],h6[style|class], blockquote[style]',
             'CSS.AllowedProperties' =>
                 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align',
-            'AutoFormat.AutoParagraph' => true,
-            'AutoFormat.RemoveEmpty' => true,
+            'AutoFormat.AutoParagraph' => false,
+            'AutoFormat.RemoveEmpty' => false,
         ],
         'test' => [
             'Attr.EnableID' => 'true',
