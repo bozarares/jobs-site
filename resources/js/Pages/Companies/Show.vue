@@ -256,7 +256,7 @@ onMounted(() => {
             class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
             <div
-                :id="`description-${company.name}`"
+                :id="edit ? 'company-description-edit' : ''"
                 class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
                 :class="{
                     'cursor-pointer': edit,
@@ -289,6 +289,7 @@ onMounted(() => {
                 </p>
             </div>
             <div
+                :id="edit ? 'company-contact-edit' : ''"
                 @click="
                     () => {
                         if (edit) {

@@ -20,6 +20,7 @@ const props = defineProps({
 
 <template>
     <div
+        :id="edit ? 'profile-socials-edit' : ''"
         @click="
             () => {
                 if (edit) {

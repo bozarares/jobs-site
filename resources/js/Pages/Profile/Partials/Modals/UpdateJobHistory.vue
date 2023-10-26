@@ -102,6 +102,7 @@ const endDateComputed = computed({
 
 <template>
     <div
+        id="job-history-modal"
         class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
     >
         <div
@@ -202,6 +203,7 @@ const endDateComputed = computed({
                 v-model="startDateComputed"
                 class=""
                 label="Start Date"
+                name="start_date"
                 :dateOptions="{
                     minDate: new Date(1900, 0, 0),
                     maxDate: new Date(2025, 0, 0),
@@ -214,6 +216,7 @@ const endDateComputed = computed({
                     :disabled="toDate"
                     class=""
                     label="End Date"
+                    name="end_date"
                     :dateOptions="{
                         minDate: new Date(1900, 0, 0),
                         maxDate: new Date(2025, 0, 0),

@@ -19,6 +19,7 @@ const edit = ref(false);
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">Settings</h2>
             <Button
+                id="edit-profile-button"
                 @click="
                     () => {
                         edit = !edit;

@@ -38,6 +38,7 @@ onMounted(() => {
 
 <template>
     <div
+        id="company-description-edit-modal"
         class="container relative mx-auto flex max-h-[35em] max-w-2xl flex-col gap-8 rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">

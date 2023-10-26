@@ -2,7 +2,7 @@
 import { Button, Input, SearchInput } from '@/Components/UI';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import vueFilePond from 'vue-filepond';
 import filePondServer from '@/filePondConfig';
@@ -123,6 +123,8 @@ const filePondRef = ref(null);
 const quillRef = ref(null);
 
 const submited = ref(false);
+const uploaded = ref(false);
+
 const form = useForm({
     name: '',
     code: '',
@@ -152,6 +154,7 @@ const submit = () => {
     form.town = selectedTown.value;
     form.post(route('companies.store'), {
         onStart: () => {
+            uploaded.value = false;
             submited.value = true;
         },
         onError: () => {
@@ -186,10 +189,39 @@ const onProcessFile = (error, file) => {
         console.log(error);
         return;
     } else {
+        uploaded.value = true;
         form.logo = file.serverId;
         form.logo_extension = file.fileExtension;
     }
 };
+
+const revertFiles = () => {
+    if (uploaded.value === true && filePondRef.value) {
+        const filepondFile = filePondRef.value.getFile();
+        if (filepondFile) {
+            axios.delete(route('uploads.destroy'), {
+                data: {
+                    filename: filepondFile.serverId,
+                    extension: filepondFile.fileExtension,
+                },
+            });
+            filePondRef.value.removeFile(filepondFile);
+        }
+    }
+};
+
+const beforeUnload = () => {
+    revertFiles();
+};
+
+onMounted(() => {
+    window.addEventListener('beforeunload', beforeUnload);
+});
+
+onBeforeUnmount(() => {
+    revertFiles();
+    window.removeEventListener('beforeunload', beforeUnload);
+});
 </script>
 
 <template>

@@ -2,11 +2,12 @@
 import { useForm, usePage } from '@inertiajs/vue3';
 import VueFilePond from 'vue-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { onBeforeUnmount } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -24,14 +25,19 @@ const form = useForm({
 });
 
 const submited = ref(false);
+const uploaded = ref(false);
 
 const submit = () => {
+    if (uploaded.value === false) {
+        return;
+    }
     submited.value = true;
     form.post(route('profile.update.avatar'), {
         onError: () => {
             submited.value = false;
         },
         onFinish: () => {
+            uploaded.value = false;
             props.closeModal();
         },
     });
@@ -39,13 +45,40 @@ const submit = () => {
 
 const onProcessFile = (error, file) => {
     if (error) {
-        console.log(error);
         return;
     }
-    console.log(file);
+    uploaded.value = true;
     form.avatar = file.serverId;
     form.extension = file.fileExtension;
 };
+
+const revertFiles = () => {
+    if (uploaded.value === true && filePondRef.value) {
+        const filepondFile = filePondRef.value.getFile();
+        if (filepondFile) {
+            axios.delete(route('uploads.destroy'), {
+                data: {
+                    filename: filepondFile.serverId,
+                    extension: filepondFile.fileExtension,
+                },
+            });
+            filePondRef.value.removeFile(filepondFile);
+        }
+    }
+};
+
+const beforeUnload = () => {
+    revertFiles();
+};
+
+onMounted(() => {
+    window.addEventListener('beforeunload', beforeUnload);
+});
+
+onBeforeUnmount(() => {
+    revertFiles();
+    window.removeEventListener('beforeunload', beforeUnload);
+});
 </script>
 
 <template>

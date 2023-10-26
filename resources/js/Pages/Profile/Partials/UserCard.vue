@@ -41,6 +41,7 @@ const props = defineProps({
                 size="2xl"
                 class=""
                 :edit-mode="edit"
+                :edit-button-id="'edit-avatar-button'"
                 :edit-click="
                     () => {
                         if (edit) {

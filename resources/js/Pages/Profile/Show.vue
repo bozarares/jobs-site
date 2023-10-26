@@ -93,6 +93,7 @@ const edit = ref(false);
             class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
             <div
+                :id="edit ? 'profile-description-edit' : ''"
                 @click="
                     () => {
                         if (edit) {
@@ -118,6 +119,7 @@ const edit = ref(false);
                 <div class="ql-editor prose" v-html="user.description" />
             </div>
             <div
+                :id="edit ? 'profile-jobs-edit' : ''"
                 @click="
                     () => {
                         if (edit) {

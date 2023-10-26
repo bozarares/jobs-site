@@ -38,6 +38,7 @@ const submit = () => {
             submited.value = false;
         },
         onFinish: () => {
+            uploaded.value = false;
             props.closeModal();
         },
     });
@@ -48,7 +49,6 @@ const onProcessFile = (error, file) => {
         return;
     }
     uploaded.value = true;
-
     form.logo = file.serverId;
     form.extension = file.fileExtension;
 };
@@ -56,7 +56,6 @@ const onProcessFile = (error, file) => {
 const revertFiles = () => {
     if (uploaded.value === true && filePondRef.value) {
         const filepondFile = filePondRef.value.getFile();
-        console.log(filepondFile.serverId, filepondFile.fileExtension);
         if (filepondFile) {
             axios.delete(route('uploads.destroy'), {
                 data: {

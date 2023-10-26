@@ -34,14 +34,15 @@ const props = defineProps({
 </script>
 <template>
     <div
-        :class="class"
         :id="`company-card-${company.name}`"
+        :class="class"
         class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <!-- Logo and Company Name -->
 
         <div class="relative flex flex-col items-center gap-2">
             <img
+                :id="edit ? 'company-logo-edit' : ''"
                 @click="
                     () => {
                         if (edit) {

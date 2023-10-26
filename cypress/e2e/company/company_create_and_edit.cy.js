@@ -74,11 +74,13 @@ describe('template spec', () => {
 
         cy.contains('button', 'Edit Company').click();
 
-        cy.get(`#edit-description-button-${companyName}`).click();
-        cy.get('div .ql-editor').clear().type(editDescription);
+        cy.get(`#company-description-edit`).click();
+        cy.get('#company-description-edit-modal div .ql-editor')
+            .clear()
+            .type(editDescription);
         cy.contains('button', 'Save').click();
 
-        cy.get(`#edit-contact-button-${companyName}`).click();
+        cy.get(`#company-contact-edit`).click();
         cy.get('input[name="Contact email"]').clear().type(newEmail);
         cy.get('input[name="Phone number"]').clear().type(newPhone);
 
@@ -92,7 +94,7 @@ describe('template spec', () => {
         cy.get('input[name="Company address"]').type(newAddress);
         cy.contains('button', 'Save').click();
 
-        cy.get(`#edit-logo-button-${companyName}`).click();
+        cy.get(`#company-logo-edit`).click();
         cy.get('input[type=file]').attachFile('logo-black.png', {
             force: true,
         });
