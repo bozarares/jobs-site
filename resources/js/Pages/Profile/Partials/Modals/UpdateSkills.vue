@@ -69,93 +69,78 @@ onMounted(() => {
 </script>
 
 <template>
-    <Teleport to="body">
+    <div
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+    >
         <div
-            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto"
+            v-if="skills.length !== 0"
+            v-for="skill in skills"
+            :key="skill.id"
+            class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
         >
-            <!-- Backdrop -->
+            <div>{{ skill }}</div>
+            <XMarkIcon
+                class="w-5"
+                @click="
+                    () => {
+                        skills = skills.filter((item) => item !== skill);
+                    }
+                "
+            />
+        </div>
+        <div v-else class="font-bold text-gray-600">
+            You don't have selected skills
+        </div>
+    </div>
+    <div
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+    >
+        <h2 class="text-lg font-bold uppercase text-black/60">Edit Skills</h2>
+
+        <div class="flex gap-2 overflow-auto">
+            <Input label="Skills" v-model="inputTextValue" />
+            <Button
+                @click="
+                    () => {
+                        skills.push(inputTextValue);
+                        inputTextValue = '';
+                    }
+                "
+                >Add</Button
+            >
+        </div>
+        <div class="flex gap-2">
             <div
-                @click="closeModal()"
-                class="absolute inset-0 bg-black opacity-50"
-            ></div>
-            <div
-                class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+                v-for="skill in filteredSkills"
+                :key="skill.id"
+                class="cursor-pointer rounded bg-gray-800 px-2 py-1 text-white hover:bg-gray-700"
             >
                 <div
-                    v-if="skills.length !== 0"
-                    v-for="skill in skills"
-                    :key="skill.id"
-                    class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
-                >
-                    <div>{{ skill }}</div>
-                    <XMarkIcon
-                        class="w-5"
-                        @click="
-                            () => {
-                                skills = skills.filter(
-                                    (item) => item !== skill,
-                                );
-                            }
-                        "
-                    />
-                </div>
-                <div v-else class="font-bold text-gray-600">
-                    You don't have selected skills
-                </div>
-            </div>
-            <div
-                class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
-            >
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Edit Skills
-                </h2>
-
-                <div class="flex gap-2 overflow-auto">
-                    <Input label="Skills" v-model="inputTextValue" />
-                    <Button
-                        @click="
-                            () => {
-                                skills.push(inputTextValue);
-                                inputTextValue = '';
-                            }
-                        "
-                        >Add</Button
-                    >
-                </div>
-                <div class="flex gap-2">
-                    <div
-                        v-for="skill in filteredSkills"
-                        :key="skill.id"
-                        class="cursor-pointer rounded bg-gray-800 px-2 py-1 text-white hover:bg-gray-700"
-                    >
-                        <div
-                            @click="
-                                () => {
-                                    skills.push(skill.name);
-                                }
-                            "
-                        >
-                            {{ skill.name }}
-                        </div>
-                    </div>
-                </div>
-                <Button
                     @click="
                         () => {
-                            if (skills.length === 0) {
-                                return;
-                            }
-                            if (inputTextValue !== '') {
-                                skills.push(inputTextValue);
-                            }
-                            submit();
+                            skills.push(skill.name);
                         }
                     "
-                    class=""
-                    :options="{ color: 'green', shape: 'pill' }"
-                    >Save</Button
                 >
+                    {{ skill.name }}
+                </div>
             </div>
         </div>
-    </Teleport>
+        <Button
+            @click="
+                () => {
+                    if (skills.length === 0) {
+                        return;
+                    }
+                    if (inputTextValue !== '') {
+                        skills.push(inputTextValue);
+                    }
+                    submit();
+                }
+            "
+            class=""
+            :options="{ color: 'green', shape: 'pill' }"
+            >Save</Button
+        >
+    </div>
 </template>

@@ -123,7 +123,7 @@ const edit = ref(false);
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Description
                 </h2>
-                <div v-html="user.description" />
+                <div class="prose" v-html="user.description" />
             </div>
             <div
                 @click="

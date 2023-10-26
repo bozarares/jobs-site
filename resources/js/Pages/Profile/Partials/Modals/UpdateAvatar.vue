@@ -48,44 +48,27 @@ const onProcessFile = (error, file) => {
 </script>
 
 <template>
-    <Teleport to="body">
-        <div class="fixed inset-0 z-50 flex items-center justify-center">
-            <!-- Backdrop -->
-            <div
-                @click="closeModal()"
-                class="absolute inset-0 bg-black opacity-50"
-            ></div>
-            <div
-                class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
-            >
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Edit Avatar
-                </h2>
+    <div
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+    >
+        <h2 class="text-lg font-bold uppercase text-black/60">Edit Avatar</h2>
 
-                <div class="overflow-auto">
-                    <FilePond
-                        id="avatar-upload"
-                        @processfile="onProcessFile"
-                        :server="
-                            filePondServer(
-                                csrfToken,
-                                form.avatar,
-                                form.extension,
-                            )
-                        "
-                        ref="filePondRef"
-                        class="w-full"
-                        label-idle="Drop the avatar here..."
-                        accepted-file-types="image/jpeg, image/png"
-                    />
-                </div>
-                <Button
-                    @click="submit"
-                    class=""
-                    :options="{ color: 'green', shape: 'pill' }"
-                    >Save</Button
-                >
-            </div>
+        <div class="overflow-auto">
+            <FilePond
+                id="avatar-upload"
+                @processfile="onProcessFile"
+                :server="filePondServer(csrfToken, form.avatar, form.extension)"
+                ref="filePondRef"
+                class="w-full"
+                label-idle="Drop the avatar here..."
+                accepted-file-types="image/jpeg, image/png"
+            />
         </div>
-    </Teleport>
+        <Button
+            @click="submit"
+            class=""
+            :options="{ color: 'green', shape: 'pill' }"
+            >Save</Button
+        >
+    </div>
 </template>

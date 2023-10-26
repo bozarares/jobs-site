@@ -1,7 +1,7 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Button, Checkbox, DateTime, Timeline } from '@/Components/UI';
+import { Button, Checkbox, DateTime } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
 import {
     CalendarDaysIcon,
@@ -10,7 +10,6 @@ import {
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
-import { onMounted } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -44,9 +43,7 @@ const submitAdd = () => {
             jobHistory.value = page.props.user.job_history;
             resetForm();
         },
-        onFinish: () => {
-            // props.closeModal();
-        },
+        onFinish: () => {},
     });
 };
 
@@ -57,9 +54,7 @@ const submitEdit = () => {
             editMode.value = false;
             resetForm();
         },
-        onFinish: () => {
-            // props.closeModal();
-        },
+        onFinish: () => {},
     });
 };
 
@@ -107,174 +102,161 @@ const endDateComputed = computed({
 </script>
 
 <template>
-    <Teleport to="body">
+    <div
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+    >
         <div
-            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-auto"
+            v-if="jobHistory.length !== 0"
+            v-for="job in jobHistory"
+            :key="job.id"
+            class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
         >
-            <!-- Backdrop -->
-            <div
-                @click="closeModal()"
-                class="absolute inset-0 h-full bg-black opacity-50"
-            ></div>
-            <div
-                class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
-            >
-                <div
-                    v-if="jobHistory.length !== 0"
-                    v-for="job in jobHistory"
-                    :key="job.id"
-                    class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
-                >
-                    <div>
-                        <div class="text-lg font-bold">
-                            {{ job.company }}
-                            <span class="text-base text-gray-600">{{
-                                job.title
-                            }}</span>
-                        </div>
-                        <div>{{ job.description }}</div>
-                        <div class="text-sm text-gray-600">
-                            {{ job.start_date }} -
-                            {{ job.end_date ? job.end_date : 'To date' }}
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <Button
-                            @click="
-                                () => {
-                                    editMode = true;
-                                    form.id = job.id;
-                                    form.company = job.company;
-                                    form.title = job.title;
-                                    form.description = job.description;
-                                    startDateComputed = job.start_date;
-                                    endDateComputed = job.end_date;
-
-                                    // startDateComputed = new Date(1998, 0, 1);
-                                    // endDateComputed = new Date(1998, 0, 1);
-                                }
-                            "
-                            class="text-sm"
-                            :options="{ color: 'blue', shape: 'pill' }"
-                            >Edit</Button
-                        >
-                        <Button
-                            @click="
-                                () => {
-                                    form.id = job.id;
-                                    submitDelete();
-                                }
-                            "
-                            class="text-sm"
-                            :options="{ color: 'red', shape: 'pill' }"
-                            >Delete</Button
-                        >
-                    </div>
+            <div>
+                <div class="text-lg font-bold">
+                    {{ job.company }}
+                    <span class="text-base text-gray-600">{{ job.title }}</span>
                 </div>
-                <div v-else class="font-bold text-gray-600">
-                    You don't have a job history
+                <div>{{ job.description }}</div>
+                <div class="text-sm text-gray-600">
+                    {{ job.start_date }} -
+                    {{ job.end_date ? job.end_date : 'To date' }}
                 </div>
             </div>
-            <div
-                class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
-            >
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Edit Job History
-                </h2>
+            <div class="flex gap-2">
+                <Button
+                    @click="
+                        () => {
+                            editMode = true;
+                            form.id = job.id;
+                            form.company = job.company;
+                            form.title = job.title;
+                            form.description = job.description;
+                            startDateComputed = job.start_date;
+                            endDateComputed = job.end_date;
 
-                <div class="flex flex-col gap-4 overflow-visible">
-                    <div class="flex gap-4">
-                        <Input
-                            v-model="form.company"
-                            :error="form.errors.company"
-                            label="Company"
-                            type="text"
-                            name="company"
-                            :options="{ leftIcon: PhoneIcon, size: 'small' }"
-                        />
-                        <Input
-                            v-model="form.title"
-                            :error="form.errors.title"
-                            label="Title"
-                            type="text"
-                            name="title"
-                            :options="{ leftIcon: UserIcon, size: 'small' }"
-                        />
-                    </div>
-                    <Input
-                        v-model="form.description"
-                        :error="form.errors.description"
-                        label="Description"
-                        type="text"
-                        name="description"
-                        :options="{ leftIcon: UserIcon, size: 'small' }"
-                    />
-                    <DateTime
-                        v-model="startDateComputed"
-                        class=""
-                        label="Start Date"
-                        :dateOptions="{
-                            minDate: new Date(1900, 0, 0),
-                            maxDate: new Date(2025, 0, 0),
-                        }"
-                        :options="{ leftIcon: CalendarDaysIcon }"
-                    ></DateTime>
-                    <div class="flex flex-col items-center justify-center">
-                        <DateTime
-                            v-model="endDateComputed"
-                            :disabled="toDate"
-                            class=""
-                            label="End Date"
-                            :dateOptions="{
-                                minDate: new Date(1900, 0, 0),
-                                maxDate: new Date(2025, 0, 0),
-                            }"
-                            :options="{ leftIcon: CalendarDaysIcon }"
-                        />
-                        <Checkbox v-model="toDate" label="To date" />
-                    </div>
-                </div>
-                <div v-if="!editMode" class="flex w-full items-center">
-                    <Button
-                        @click="
-                            () => {
-                                editMode ? submitEdit() : submitAdd();
-                            }
-                        "
-                        class="w-full"
-                        :options="{ color: 'green', shape: 'pill' }"
-                        >Add Job</Button
-                    >
-                </div>
-                <div v-else class="flex w-full items-center gap-4">
-                    <Button
-                        @click="
-                            () => {
-                                editMode = false;
-                                form.company = '';
-                                form.title = '';
-                                form.description = '';
-                                startDateComputed = null;
-                                endDateComputed = null;
-                                toDate = false;
-                            }
-                        "
-                        class="w-full"
-                        :options="{ color: 'red', shape: 'pill' }"
-                        >Cancel</Button
-                    >
-                    <Button
-                        @click="
-                            () => {
-                                editMode ? submitEdit() : submitAdd();
-                            }
-                        "
-                        class="w-full"
-                        :options="{ color: 'green', shape: 'pill' }"
-                        >Edit Job</Button
-                    >
-                </div>
+                            // startDateComputed = new Date(1998, 0, 1);
+                            // endDateComputed = new Date(1998, 0, 1);
+                        }
+                    "
+                    class="text-sm"
+                    :options="{ color: 'blue', shape: 'pill' }"
+                    >Edit</Button
+                >
+                <Button
+                    @click="
+                        () => {
+                            form.id = job.id;
+                            submitDelete();
+                        }
+                    "
+                    class="text-sm"
+                    :options="{ color: 'red', shape: 'pill' }"
+                    >Delete</Button
+                >
             </div>
         </div>
-    </Teleport>
+        <div v-else class="font-bold text-gray-600">
+            You don't have a job history
+        </div>
+    </div>
+    <div
+        class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
+    >
+        <h2 class="text-lg font-bold uppercase text-black/60">
+            Edit Job History
+        </h2>
+
+        <div class="flex flex-col gap-4 overflow-visible">
+            <div class="flex gap-4">
+                <Input
+                    v-model="form.company"
+                    :error="form.errors.company"
+                    label="Company"
+                    type="text"
+                    name="company"
+                    :options="{ leftIcon: PhoneIcon, size: 'small' }"
+                />
+                <Input
+                    v-model="form.title"
+                    :error="form.errors.title"
+                    label="Title"
+                    type="text"
+                    name="title"
+                    :options="{ leftIcon: UserIcon, size: 'small' }"
+                />
+            </div>
+            <Input
+                v-model="form.description"
+                :error="form.errors.description"
+                label="Description"
+                type="text"
+                name="description"
+                :options="{ leftIcon: UserIcon, size: 'small' }"
+            />
+            <DateTime
+                v-model="startDateComputed"
+                class=""
+                label="Start Date"
+                :dateOptions="{
+                    minDate: new Date(1900, 0, 0),
+                    maxDate: new Date(2025, 0, 0),
+                }"
+                :options="{ leftIcon: CalendarDaysIcon }"
+            ></DateTime>
+            <div class="flex flex-col items-center justify-center">
+                <DateTime
+                    v-model="endDateComputed"
+                    :disabled="toDate"
+                    class=""
+                    label="End Date"
+                    :dateOptions="{
+                        minDate: new Date(1900, 0, 0),
+                        maxDate: new Date(2025, 0, 0),
+                    }"
+                    :options="{ leftIcon: CalendarDaysIcon }"
+                />
+                <Checkbox v-model="toDate" label="To date" />
+            </div>
+        </div>
+        <div v-if="!editMode" class="flex w-full items-center">
+            <Button
+                @click="
+                    () => {
+                        editMode ? submitEdit() : submitAdd();
+                    }
+                "
+                class="w-full"
+                :options="{ color: 'green', shape: 'pill' }"
+                >Add Job</Button
+            >
+        </div>
+        <div v-else class="flex w-full items-center gap-4">
+            <Button
+                @click="
+                    () => {
+                        editMode = false;
+                        form.company = '';
+                        form.title = '';
+                        form.description = '';
+                        startDateComputed = null;
+                        endDateComputed = null;
+                        toDate = false;
+                    }
+                "
+                class="w-full"
+                :options="{ color: 'red', shape: 'pill' }"
+                >Cancel</Button
+            >
+            <Button
+                @click="
+                    () => {
+                        editMode ? submitEdit() : submitAdd();
+                    }
+                "
+                class="w-full"
+                :options="{ color: 'green', shape: 'pill' }"
+                >Edit Job</Button
+            >
+        </div>
+    </div>
 </template>

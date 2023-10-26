@@ -33,7 +33,6 @@ const form = useForm({
 
 const submited = ref(false);
 const uploaded = ref(false);
-const error = ref(null);
 
 function sanitizeFilename(filename) {
     return filename.replace(/[^\w\s]/g, '').replace(/\s+/g, '_');
@@ -114,75 +113,55 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <Teleport to="body">
+    <div
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+    >
         <div
-            class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4"
+            v-if="files.length !== 0"
+            v-for="file in files"
+            :key="file.id"
+            class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
         >
-            <!-- Backdrop -->
-            <div
-                @click="closeModal()"
-                class="absolute inset-0 bg-black opacity-50"
-            ></div>
-            <div
-                class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
-            >
-                <div
-                    v-if="files.length !== 0"
-                    v-for="file in files"
-                    :key="file.id"
-                    class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
-                >
-                    <div>{{ file.name }}</div>
-                    <XMarkIcon
-                        class="w-5 cursor-pointer"
-                        @click="removeFile(file.id)"
-                    />
-                </div>
-                <div v-else class="font-bold text-gray-600">
-                    You don't have any files
-                </div>
-            </div>
-            <div
-                class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
-            >
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Edit Files
-                </h2>
-
-                <div class="flex flex-col gap-4 overflow-auto">
-                    <Input v-model="form.name" label="File Name" />
-                    <FilePond
-                        id="avatar-upload"
-                        @processfile="onProcessFile"
-                        @processfileprogress="onProcessFileProgress"
-                        :server="
-                            filePondServer(
-                                csrfToken,
-                                form.servername,
-                                form.extension,
-                            )
-                        "
-                        ref="filePondRef"
-                        class="w-full"
-                        label-idle="Drop the file here..."
-                        accepted-file-types="application/pdf"
-                    />
-                </div>
-                <p
-                    v-if="form.errors.extension"
-                    class="text-sm font-bold text-red-600"
-                >
-                    {{ form.errors.extension }}
-                </p>
-                <div class="flex flex-col gap-2">
-                    <Button
-                        @click="addFile"
-                        class=""
-                        :options="{ color: 'green', shape: 'pill' }"
-                        >Add</Button
-                    >
-                </div>
-            </div>
+            <div>{{ file.name }}</div>
+            <XMarkIcon
+                class="w-5 cursor-pointer"
+                @click="removeFile(file.id)"
+            />
         </div>
-    </Teleport>
+        <div v-else class="font-bold text-gray-600">
+            You don't have any files
+        </div>
+    </div>
+    <div
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+    >
+        <h2 class="text-lg font-bold uppercase text-black/60">Edit Files</h2>
+
+        <div class="flex flex-col gap-4 overflow-auto">
+            <Input v-model="form.name" label="File Name" />
+            <FilePond
+                id="avatar-upload"
+                @processfile="onProcessFile"
+                @processfileprogress="onProcessFileProgress"
+                :server="
+                    filePondServer(csrfToken, form.servername, form.extension)
+                "
+                ref="filePondRef"
+                class="w-full"
+                label-idle="Drop the file here..."
+                accepted-file-types="application/pdf"
+            />
+        </div>
+        <p v-if="form.errors.extension" class="text-sm font-bold text-red-600">
+            {{ form.errors.extension }}
+        </p>
+        <div class="flex flex-col gap-2">
+            <Button
+                @click="addFile"
+                class=""
+                :options="{ color: 'green', shape: 'pill' }"
+                >Add</Button
+            >
+        </div>
+    </div>
 </template>
