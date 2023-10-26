@@ -14,10 +14,18 @@ Route::middleware('auth')->group(function () {
         'companies.index'
     );
     Route::middleware('can.edit.company')->group(function () {
-        Route::patch('/company/{company}', [
+        Route::patch('/company/{company}/update/description', [
             CompanyController::class,
-            'update',
-        ])->name('companies.update');
+            'updateDescription',
+        ])->name('companies.update.description');
+        Route::patch('/company/{company}/update/contact', [
+            CompanyController::class,
+            'updateContact',
+        ])->name('companies.update.contact');
+        Route::patch('/company/{company}/update/logo', [
+            CompanyController::class,
+            'updateLogo',
+        ])->name('companies.update.logo');
     });
 });
 

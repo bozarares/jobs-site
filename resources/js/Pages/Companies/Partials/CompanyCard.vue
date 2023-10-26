@@ -9,8 +9,6 @@ import {
     ShareIcon,
 } from '@heroicons/vue/24/outline';
 import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import EditModal from './EditModal.vue';
 
 const props = defineProps({
     company: {
@@ -25,19 +23,15 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    openModal: {
+        type: Function,
+        default: () => {},
+    },
     viewButton: {
         type: Boolean,
         default: false,
     },
 });
-
-const showModal = ref(false);
-const modalType = ref('');
-
-function openModal(type) {
-    modalType.value = type;
-    showModal.value = true;
-}
 </script>
 <template>
     <div
@@ -46,20 +40,24 @@ function openModal(type) {
         class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <!-- Logo and Company Name -->
-        <Button
-            :id="`edit-logo-button-${company.name}`"
-            v-if="edit"
-            class="absolute right-0 top-0 scale-75"
-            @click="openModal('logo')"
-            :options="{ leftIcon: PencilSquareIcon }"
-        ></Button>
+
         <div class="relative flex flex-col items-center gap-2">
             <img
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('logo');
+                        }
+                    }
+                "
                 @error="
                     (e) => {
                         e.target.src = '/images/logo/broken-image.png';
                     }
                 "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
                 class="h-12 fill-current object-contain text-gray-500"
                 :src="
                     '/logos/companies/' +
@@ -69,7 +67,12 @@ function openModal(type) {
                 "
                 alt="Logo"
             />
-
+            <h2
+                v-if="edit"
+                class="pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+            >
+                Click logo to edit
+            </h2>
             <!-- Job Title -->
             <h2 class="mb-2 text-center text-lg font-bold uppercase">
                 {{ company.name }}
@@ -127,11 +130,4 @@ function openModal(type) {
             </div>
         </div>
     </div>
-    <EditModal
-        v-if="showModal"
-        :type="modalType"
-        :company="company"
-        :show="showModal"
-        @update:show="showModal = $event"
-    />
 </template>

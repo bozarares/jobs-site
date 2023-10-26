@@ -10,8 +10,8 @@ import { ref } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { onMounted } from 'vue';
 import { Button } from '@/Components/UI';
-import EditModal from './Partials/EditModal.vue';
 import OwnerCard from './Partials/OwnerCard.vue';
+import ModalWrapper from './Partials/ModalWrapper.vue';
 
 const location = ref(null);
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -28,6 +28,11 @@ const props = defineProps({
 });
 
 const edit = ref(false);
+const modal = ref(null);
+
+const openModal = (modalName) => {
+    if (modal.value === null) modal.value = modalName;
+};
 
 const mapStyles = ref([
     {
@@ -225,13 +230,6 @@ onMounted(() => {
         `${props.company.address}, ${props.company.town}, ${props.company.country}, ${props.company.state}`,
     );
 });
-
-const showModal = ref(false);
-const modalType = ref('');
-const openModal = (type) => {
-    modalType.value = type;
-    showModal.value = true;
-};
 </script>
 
 <template>
@@ -240,7 +238,15 @@ const openModal = (type) => {
     >
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex w-full flex-col gap-4 md:w-auto">
-            <CompanyCard :edit="isOwner && edit" :company="company" />
+            <CompanyCard
+                :edit="isOwner && edit"
+                :company="company"
+                :open-modal="
+                    (type) => {
+                        openModal(type);
+                    }
+                "
+            />
             <OwnerCard
                 v-if="isOwner"
                 :toggle-edit="
@@ -258,18 +264,27 @@ const openModal = (type) => {
             <div
                 :id="`description-${company.name}`"
                 class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('description');
+                        }
+                    }
+                "
             >
-                <Button
-                    :id="`edit-description-button-${company.name}`"
-                    v-if="isOwner && edit"
-                    @click="openModal('description')"
-                    class="absolute right-0 top-0 scale-75"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                />
+                <h2
+                    v-if="edit"
+                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Description
                 </h2>
-                <div v-html="company.description"></div>
+                <div class="ql-editor prose" v-html="company.description"></div>
             </div>
             <div
                 class="container flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
@@ -280,15 +295,24 @@ const openModal = (type) => {
                 </p>
             </div>
             <div
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('contact');
+                        }
+                    }
+                "
+                :class="{
+                    'cursor-pointer': edit,
+                }"
                 class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
             >
-                <Button
-                    :id="`edit-contact-button-${company.name}`"
-                    v-if="isOwner && edit"
-                    @click="openModal('details')"
-                    class="absolute right-0 top-0 scale-75"
-                    :options="{ leftIcon: PencilSquareIcon }"
-                />
+                <h2
+                    v-if="edit"
+                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Contact
                 </h2>
@@ -321,7 +345,7 @@ const openModal = (type) => {
                             >{{ company.email }}
                         </h2>
                     </div>
-                    <GoogleMap
+                    <!-- <GoogleMap
                         v-if="center.lat !== 0 && center.lng !== 0"
                         :api-key="apiKey"
                         class="h-96 w-full rounded"
@@ -338,16 +362,17 @@ const openModal = (type) => {
                                 label: company.name[0],
                             }"
                         />
-                    </GoogleMap>
+                    </GoogleMap> -->
                 </div>
             </div>
         </div>
     </div>
-    <EditModal
-        v-if="showModal"
-        :company="company"
-        :show="showModal"
-        :type="modalType"
-        @update:show="showModal = $event"
+    <ModalWrapper
+        :modal="modal"
+        :close-modal="
+            () => {
+                modal = null;
+            }
+        "
     />
 </template>

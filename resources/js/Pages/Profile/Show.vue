@@ -20,7 +20,7 @@ const modal = ref(null);
 const openModal = (modalName) => {
     if (modal.value === null) modal.value = modalName;
 };
-const jobHistoryTimeline = ref([]); // initial este un array gol
+const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
 
 watch(

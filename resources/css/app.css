@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ql-editor {
+    /* margin-bottom: 20em !important; */
+    overflow: auto !important;
+    min-height: 10em !important;
+}
