@@ -56,9 +56,6 @@ onMounted(() => {
 </template>
 
 <style>
-/* .ql-container {
-    margin-bottom: 20px !important;
-} */
 .ql-editor {
     margin-bottom: 20px !important;
     overflow: auto !important;

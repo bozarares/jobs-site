@@ -37,12 +37,10 @@ function preventScroll(e) {
 watchEffect(() => {
     if (props.modal) {
         disableScroll();
-        document.body.style.position = 'fixed';
         document.body.style.inlineSize = '100%';
         document.body.style.overflowY = 'scroll';
     } else {
         enableScroll();
-        document.body.style.position = 'relative';
         document.body.style.inlineSize = 'auto';
         document.body.style.overflowY = 'auto';
     }
