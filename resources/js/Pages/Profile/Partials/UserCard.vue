@@ -1,6 +1,5 @@
 <script setup>
-import { Avatar, Button } from '@/Components/UI';
-import { PencilSquareIcon } from '@heroicons/vue/24/outline';
+import { Avatar } from '@/Components/UI';
 const props = defineProps({
     edit: {
         type: Boolean,

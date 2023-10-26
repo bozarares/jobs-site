@@ -1,11 +1,10 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
-import { Button, Input } from '@/Components/UI';
+import { Button } from '@/Components/UI';
 import {
     EyeIcon,
     HeartIcon,
     MapPinIcon,
-    PencilSquareIcon,
     ShareIcon,
 } from '@heroicons/vue/24/outline';
 import { Link } from '@inertiajs/vue3';

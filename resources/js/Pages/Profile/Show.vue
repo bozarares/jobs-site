@@ -1,13 +1,11 @@
 <script setup>
 import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
-import { Button, Timeline } from '@/Components/UI';
-import { ref } from 'vue';
-import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import ModalWrapper from './Partials/ModalWrapper.vue';
-
-import { watch } from 'vue';
 import SettingsCard from './Partials/SettingsCard.vue';
+import { Button, Timeline } from '@/Components/UI';
+import { ref, watch } from 'vue';
+import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
 const props = defineProps({
     user: {
         type: Object,

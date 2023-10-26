@@ -7,6 +7,7 @@ import {
     AcademicCapIcon,
     CalendarDaysIcon,
     DocumentIcon,
+    XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
@@ -162,9 +163,15 @@ const endDateComputed = computed({
     <div
         class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">
-            Edit Education History
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Education History
+            </h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="flex flex-col gap-4 overflow-visible">
             <div class="flex gap-4">
@@ -258,7 +265,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'green', shape: 'pill' }"
-                >Edit Job</Button
+                >Edit Education</Button
             >
         </div>
     </div>

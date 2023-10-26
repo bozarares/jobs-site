@@ -1,5 +1,5 @@
 <script setup>
-import { Button, Input } from '@/Components/UI';
+import { Button } from '@/Components/UI';
 import { Link } from '@inertiajs/vue3';
 import CompanyCard from './Partials/CompanyCard.vue';
 

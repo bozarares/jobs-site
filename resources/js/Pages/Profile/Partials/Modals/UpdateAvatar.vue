@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -51,7 +52,15 @@ const onProcessFile = (error, file) => {
     <div
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">Edit Avatar</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Avatar
+            </h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="overflow-auto">
             <FilePond

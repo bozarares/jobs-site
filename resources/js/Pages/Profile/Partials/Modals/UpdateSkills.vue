@@ -1,13 +1,10 @@
 <script setup>
+import { onMounted, ref, watch, computed, onBeforeUnmount } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
-import { Button, Input, SelectInput } from '@/Components/UI';
+import { Button, Input } from '@/Components/UI';
 import { debounce } from 'lodash';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { watch } from 'vue';
-import { computed } from 'vue';
-import { onBeforeUnmount } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -95,7 +92,15 @@ onMounted(() => {
     <div
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">Edit Skills</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Skills
+            </h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="flex gap-2 overflow-auto">
             <Input label="Skills" v-model="inputTextValue" />

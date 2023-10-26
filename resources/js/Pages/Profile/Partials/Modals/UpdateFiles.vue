@@ -2,14 +2,11 @@
 import { useForm, usePage } from '@inertiajs/vue3';
 import VueFilePond from 'vue-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import filePondServer from '@/filePondConfig';
-import { Button } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
+import { Button, Input } from '@/Components/UI';
 
-import { onMounted } from 'vue';
-import { onBeforeUnmount } from 'vue';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
@@ -135,7 +132,15 @@ onBeforeUnmount(() => {
     <div
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">Edit Files</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Files
+            </h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="flex flex-col gap-4 overflow-auto">
             <Input v-model="form.name" label="File Name" />

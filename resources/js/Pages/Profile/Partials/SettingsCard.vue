@@ -1,5 +1,5 @@
 <script setup>
-import { Avatar, Button } from '@/Components/UI';
+import { Button } from '@/Components/UI';
 import { ref } from 'vue';
 
 const props = defineProps({

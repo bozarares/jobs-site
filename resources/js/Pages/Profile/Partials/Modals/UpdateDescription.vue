@@ -5,6 +5,7 @@ import { Button } from '@/Components/UI';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import toolbarOptions from '@/quillToolBarConfig';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -36,7 +37,13 @@ onMounted(() => {
     <div
         class="container relative mx-auto flex max-h-[35em] max-w-2xl flex-col gap-8 rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">Edit User</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">Edit User</h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="flex h-auto max-h-[30em] flex-col overflow-hidden pb-20">
             <QuillEditor

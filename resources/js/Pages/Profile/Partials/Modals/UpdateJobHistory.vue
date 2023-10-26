@@ -1,14 +1,13 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { Button, Checkbox, DateTime } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
+import { ref, computed } from 'vue';
+import { Button, Checkbox, DateTime, Input } from '@/Components/UI';
 import {
     CalendarDaysIcon,
     PhoneIcon,
     UserIcon,
+    XMarkIcon,
 } from '@heroicons/vue/24/outline';
-import { computed } from 'vue';
 import dayjs from 'dayjs';
 
 const props = defineProps({
@@ -162,9 +161,15 @@ const endDateComputed = computed({
     <div
         class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
     >
-        <h2 class="text-lg font-bold uppercase text-black/60">
-            Edit Job History
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Job History
+            </h2>
+            <XMarkIcon
+                class="h-6 cursor-pointer text-black/60"
+                @click="closeModal()"
+            />
+        </div>
 
         <div class="flex flex-col gap-4 overflow-visible">
             <div class="flex gap-4">

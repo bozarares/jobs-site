@@ -1,9 +1,7 @@
 <script setup>
-import { Avatar, Button } from '@/Components/UI';
 import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
 import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
 import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
-import { PencilSquareIcon } from '@heroicons/vue/24/outline';
 const props = defineProps({
     edit: {
         type: Boolean,
