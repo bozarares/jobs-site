@@ -144,6 +144,7 @@ const edit = ref(false);
                 <Timeline :items="jobHistoryTimeline" />
             </div>
             <div
+                :id="edit ? 'profile-education-edit' : ''"
                 @click="
                     () => {
                         if (edit) {
@@ -169,6 +170,7 @@ const edit = ref(false);
                 <Timeline :items="educationHistoryTimeline" />
             </div>
             <div
+                :id="edit ? 'profile-skills-edit' : ''"
                 @click="
                     () => {
                         if (edit) {
@@ -201,6 +203,7 @@ const edit = ref(false);
                 </div>
             </div>
             <div
+                :id="edit ? 'profile-files-edit' : ''"
                 @click="
                     () => {
                         if (edit) {

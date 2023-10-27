@@ -1,4 +1,7 @@
 <script setup>
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
 import { useForm, usePage } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import { Button, Checkbox, DateTime, Input } from '@/Components/UI';

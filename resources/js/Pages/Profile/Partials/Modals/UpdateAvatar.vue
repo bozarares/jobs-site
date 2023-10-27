@@ -1,4 +1,7 @@
 <script setup>
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
 import { useForm, usePage } from '@inertiajs/vue3';
 import VueFilePond from 'vue-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';

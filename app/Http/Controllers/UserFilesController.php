@@ -16,11 +16,19 @@ class UserFilesController extends Controller
             'extension' => 'required|string|in:pdf',
         ]);
         $user = $request->user();
-        $user->files()->create([
+        $userFile = $user->files()->create([
             'name' => $request->name,
             'extension' => $request->extension,
             'servername' => $request->servername,
         ]);
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'File added successfully',
+                'file' => $userFile,
+            ],
+            200
+        );
     }
 
     public function deleteFile(Request $request)
@@ -31,6 +39,10 @@ class UserFilesController extends Controller
         $user = $request->user();
         $userFile = $user->files()->findOrFail($request->id);
         $userFile->delete();
+        return response()->json(
+            ['success' => true, 'message' => 'File deleted successfully'],
+            200
+        );
     }
 
     public function show(Request $request, $path)

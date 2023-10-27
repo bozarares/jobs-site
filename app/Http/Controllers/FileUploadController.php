@@ -71,7 +71,7 @@ class FileUploadController extends Controller
                 rmdir($parentDir);
             }
             return response()->json(
-                ['message' => 'File deleted successfully'],
+                ['success' => true, 'message' => 'File deleted successfully'],
                 200
             );
         } else {

@@ -1,4 +1,7 @@
 <script setup>
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
 import { onMounted, ref, watch, computed, onBeforeUnmount } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
@@ -67,6 +70,7 @@ onMounted(() => {
 
 <template>
     <div
+        id="skills-modal"
         class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
     >
         <div
@@ -76,14 +80,17 @@ onMounted(() => {
             class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
         >
             <div>{{ skill }}</div>
-            <XMarkIcon
-                class="w-5"
+            <div
+                class="cursor-pointer"
+                aria-label="Delete button"
                 @click="
                     () => {
                         skills = skills.filter((item) => item !== skill);
                     }
                 "
-            />
+            >
+                <XMarkIcon class="h-5 text-black/60" />
+            </div>
         </div>
         <div v-else class="font-bold text-gray-600">
             You don't have selected skills
@@ -96,14 +103,16 @@ onMounted(() => {
             <h2 class="text-lg font-bold uppercase text-black/60">
                 Edit Skills
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <div>
+                <XMarkIcon
+                    class="h-6 cursor-pointer text-black/60"
+                    @click="closeModal()"
+                />
+            </div>
         </div>
 
         <div class="flex gap-2 overflow-auto">
-            <Input label="Skills" v-model="inputTextValue" />
+            <Input label="Skills" v-model="inputTextValue" name="add_skill" />
             <Button
                 @click="
                     () => {
@@ -134,9 +143,12 @@ onMounted(() => {
         <Button
             @click="
                 () => {
-                    if (skills.length === 0) {
-                        return;
-                    }
+                    // if (
+                    //     JSON.stringify(initialSkills.value) ===
+                    //     JSON.stringify(skills.value)
+                    // ) {
+                    //     return;
+                    // }
                     if (inputTextValue !== '') {
                         skills.push(inputTextValue);
                     }

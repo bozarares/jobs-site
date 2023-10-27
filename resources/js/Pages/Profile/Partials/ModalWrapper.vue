@@ -80,6 +80,7 @@ const leaveToClass = 'opacity-0';
                 class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4"
             >
                 <div
+                    id="modal-overlay"
                     @click="closeModal()"
                     class="absolute inset-0 bg-black opacity-20"
                 ></div>

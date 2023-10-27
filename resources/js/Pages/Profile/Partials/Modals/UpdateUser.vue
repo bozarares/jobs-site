@@ -1,4 +1,7 @@
 <script setup>
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
 import { UserIcon, XMarkIcon } from '@heroicons/vue/24/outline';
@@ -26,6 +29,7 @@ const submit = () => {
 
 <template>
     <div
+        id="user-modal"
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">

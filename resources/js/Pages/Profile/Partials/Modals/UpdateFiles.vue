@@ -1,5 +1,7 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
+
 import VueFilePond from 'vue-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
@@ -21,12 +23,9 @@ const files = ref(page.props.user.files);
 const FilePond = VueFilePond(FilePondPluginFileValidateType);
 const filePondRef = ref(null);
 
-const form = useForm({
-    id: null,
-    name: '',
-    extension: '',
-    servername: '',
-});
+const fileName = ref('');
+const fileExtension = ref('');
+const fileServername = ref('');
 
 const submited = ref(false);
 const uploaded = ref(false);
@@ -37,32 +36,52 @@ function sanitizeFilename(filename) {
 
 const addFile = () => {
     submited.value = true;
-    form.name = sanitizeFilename(form.name);
+    fileName.value = sanitizeFilename(fileName.value);
     if (uploaded.value === false) {
         return;
     }
-    form.post(route('profile.update.files'), {
-        onError: () => {
-            submited.value = false;
-        },
-        onFinish: () => {},
-        onSuccess: (response) => {
-            uploaded.value = false;
-            filePondRef.value.removeFiles();
-            form.reset();
-            files.value = response.props.user.files;
-        },
-    });
+    axios
+        .post(route('profile.update.files'), {
+            name: fileName.value,
+            extension: fileExtension.value,
+            servername: fileServername.value,
+        })
+        .then((response) => {
+            if (response.data.success === true) {
+                router.reload({
+                    preserveState: true,
+                    only: ['user'],
+                });
+                fileName.value = '';
+                fileExtension.value = '';
+                fileServername.value = '';
+                filePondRef.value.removeFiles();
+                files.value.push(response.data.file);
+            }
+        });
 };
 
 const removeFile = (fileId) => {
-    form.id = fileId;
-    form.delete(route('profile.update.files'), {
-        onSuccess: (response) => {
-            files.value = response.props.user.files;
-            form.reset('id');
-        },
-    });
+    axios
+        .delete(route('profile.update.files'), {
+            data: {
+                id: fileId,
+            },
+        })
+        .then((response) => {
+            if (response.data.success === true) {
+                files.value = files.value.filter((file) => {
+                    return file.id !== fileId;
+                });
+                router.reload({
+                    preserveState: true,
+                    only: ['user'],
+                });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
 
 const onProcessFile = (error, file) => {
@@ -71,9 +90,9 @@ const onProcessFile = (error, file) => {
         return;
     }
     console.log(file);
-    form.name = sanitizeFilename(file.filenameWithoutExtension);
-    form.extension = file.fileExtension;
-    form.servername = file.serverId;
+    fileName.value = sanitizeFilename(file.filenameWithoutExtension);
+    fileExtension.value = file.fileExtension;
+    fileServername.value = file.serverId;
 };
 
 const onProcessFileProgress = (file, progress) => {
@@ -88,7 +107,10 @@ const revertFiles = () => {
         const filepondFile = filePondRef.value.getFile();
         if (filepondFile) {
             axios.delete(route('uploads.destroy'), {
-                data: filepondFile.serverId,
+                data: {
+                    filename: filepondFile.serverId,
+                    extension: filepondFile.fileExtension,
+                },
             });
             filePondRef.value.removeFile(filepondFile);
         }
@@ -111,6 +133,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div
+        id="files-modal"
         class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
     >
         <div
@@ -120,10 +143,13 @@ onBeforeUnmount(() => {
             class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
         >
             <div>{{ file.name }}</div>
-            <XMarkIcon
-                class="w-5 cursor-pointer"
+            <div
+                class="cursor-pointer"
+                aria-label="Delete button"
                 @click="removeFile(file.id)"
-            />
+            >
+                <XMarkIcon class="h-5 text-black/60" />
+            </div>
         </div>
         <div v-else class="font-bold text-gray-600">
             You don't have any files
@@ -143,13 +169,13 @@ onBeforeUnmount(() => {
         </div>
 
         <div class="flex flex-col gap-4 overflow-auto">
-            <Input v-model="form.name" label="File Name" />
+            <Input v-model="fileName" label="File Name" name="file_name" />
             <FilePond
                 id="avatar-upload"
                 @processfile="onProcessFile"
                 @processfileprogress="onProcessFileProgress"
                 :server="
-                    filePondServer(csrfToken, form.servername, form.extension)
+                    filePondServer(csrfToken, fileServername, fileExtension)
                 "
                 ref="filePondRef"
                 class="w-full"
@@ -157,9 +183,9 @@ onBeforeUnmount(() => {
                 accepted-file-types="application/pdf"
             />
         </div>
-        <p v-if="form.errors.extension" class="text-sm font-bold text-red-600">
+        <!-- <p v-if="form.errors.extension" class="text-sm font-bold text-red-600">
             {{ form.errors.extension }}
-        </p>
+        </p> -->
         <div class="flex flex-col gap-2">
             <Button
                 @click="addFile"
