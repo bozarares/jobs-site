@@ -28,7 +28,11 @@ class UserFile extends Model
             if (File::exists($currentFilePath)) {
                 File::move(
                     $currentFilePath,
-                    $targetDirectory . '/' . $userFile->servername
+                    $targetDirectory .
+                        '/' .
+                        $userFile->servername .
+                        '.' .
+                        $userFile->extension
                 );
             }
         });

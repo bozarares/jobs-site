@@ -6,6 +6,7 @@ import { GoogleMap, Marker } from 'vue3-google-map';
 import { onMounted } from 'vue';
 import OwnerCard from './Partials/OwnerCard.vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
+import JobCard from './Partials/JobCard.vue';
 
 const location = ref(null);
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -287,6 +288,9 @@ onMounted(() => {
                 <p class="text-sm font-bold">
                     There are no jobs available at the moment
                 </p>
+                <JobCard />
+                <JobCard />
+                <JobCard />
             </div>
             <div
                 :id="edit ? 'company-contact-edit' : ''"

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -54,7 +55,12 @@ class UserFilesController extends Controller
             ->firstOrFail();
 
         $filename = $userFile->name . '.' . $userFile->extension;
-        if (!Storage::disk('userFiles')->exists($userFile->servername)) {
+        $serverFilePath = $path . '.' . $userFile->extension;
+        if (
+            !Storage::disk('userFiles')->exists(
+                $userFile->servername . '.' . $userFile->extension
+            )
+        ) {
             return redirect()->route('welcome');
         }
 
@@ -62,7 +68,11 @@ class UserFilesController extends Controller
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ];
 
-        return Storage::disk('userFiles')->response($path, null, $headers);
+        return Storage::disk('userFiles')->response(
+            $serverFilePath,
+            null,
+            $headers
+        );
     }
     public function download(Request $request, $path)
     {
@@ -71,9 +81,14 @@ class UserFilesController extends Controller
             ->files()
             ->where('servername', $path)
             ->firstOrFail();
+        $serverFilePath = $path . '.' . $userFile->extension;
 
         $filename = $userFile->name . '.' . $userFile->extension;
-        if (!Storage::disk('userFiles')->exists($userFile->servername)) {
+        if (
+            !Storage::disk('userFiles')->exists(
+                $userFile->servername . '.' . $userFile->extension
+            )
+        ) {
             return redirect()->route('welcome');
         }
 
@@ -81,6 +96,10 @@ class UserFilesController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        return Storage::disk('userFiles')->response($path, null, $headers);
+        return Storage::disk('userFiles')->response(
+            $serverFilePath,
+            null,
+            $headers
+        );
     }
 }

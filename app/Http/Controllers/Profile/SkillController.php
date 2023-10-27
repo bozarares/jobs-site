@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,6 @@ class SkillController extends Controller
         $skills = $request->skills;
         $user = $request->user();
 
-        // Dacă array-ul de abilități este gol, șterge toate abilitățile și returnează.
         if (empty($skills)) {
             $user->skills()->detach();
             return redirect()

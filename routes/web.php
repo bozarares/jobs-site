@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\EducationHistoryController;
+use App\Http\Controllers\Profile\EducationHistoryController;
 use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\JobHistoryController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SkillController;
-use App\Http\Controllers\UserFilesController;
+use App\Http\Controllers\Profile\JobHistoryController;
+use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Profile\SkillController;
+use App\Http\Controllers\Profile\UserFilesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,79 +43,6 @@ Route::get('/dashboard', function () {
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name(
-        'profile.show'
-    );
-    Route::post('/profile/update/avatar', [
-        ProfileController::class,
-        'updateAvatar',
-    ])->name('profile.update.avatar');
-    Route::post('/profile/update/user', [
-        ProfileController::class,
-        'updateUser',
-    ])->name('profile.update.user');
-    Route::post('/profile/update/socials', [
-        ProfileController::class,
-        'updateSocials',
-    ])->name('profile.update.socials');
-    Route::post('/profile/update/description', [
-        ProfileController::class,
-        'updateDescription',
-    ])->name('profile.update.description');
-
-    Route::post('/profile/update/jobHistory', [
-        JobHistoryController::class,
-        'addJobHistory',
-    ])->name('profile.update.jobHistory');
-    Route::put('/profile/update/jobHistory', [
-        JobHistoryController::class,
-        'editJobHistory',
-    ])->name('profile.update.jobHistory');
-    Route::delete('/profile/update/jobHistory', [
-        JobHistoryController::class,
-        'deleteJobHistory',
-    ])->name('profile.update.jobHistory');
-
-    Route::post('/profile/update/educationHistory', [
-        EducationHistoryController::class,
-        'addeducationHistory',
-    ])->name('profile.update.educationHistory');
-    Route::put('/profile/update/educationHistory', [
-        EducationHistoryController::class,
-        'editeducationHistory',
-    ])->name('profile.update.educationHistory');
-    Route::delete('/profile/update/educationHistory', [
-        EducationHistoryController::class,
-        'deleteeducationHistory',
-    ])->name('profile.update.educationHistory');
-
-    Route::post('/profile/update/skills', [
-        SkillController::class,
-        'editSkills',
-    ])->name('profile.update.skills');
-
-    Route::post('/profile/update/files', [
-        UserFilesController::class,
-        'addFile',
-    ])->name('profile.update.files');
-
-    Route::delete('/profile/update/files', [
-        UserFilesController::class,
-        'deleteFile',
-    ])->name('profile.update.files');
-    Route::post('/get/skills', [SkillController::class, 'search'])->name(
-        'get.skills'
-    );
-
-    Route::patch('/profile', [ProfileController::class, 'update'])->name(
-        'profile.update'
-    );
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
-        'profile.destroy'
-    );
-});
-
-Route::middleware('auth')->group(function () {
     Route::get('/users/files/{path}', [
         UserFilesController::class,
         'show',
@@ -126,5 +53,6 @@ Route::middleware('auth')->group(function () {
     ])->name('users.files.download');
 });
 
+require __DIR__ . '/profile.php';
 require __DIR__ . '/companies.php';
 require __DIR__ . '/auth.php';
