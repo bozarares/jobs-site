@@ -60,10 +60,6 @@ class SkillController extends Controller
 
         $user->skills()->sync($existingSkills);
 
-        $skillsWithoutUsers = Skill::doesntHave('users')->get();
-        foreach ($skillsWithoutUsers as $skill) {
-            $skill->delete();
-        }
         return redirect()
             ->route('profile.show')
             ->with(
