@@ -1,19 +1,14 @@
 <script setup>
 import { Button, Input, SearchInput } from '@/Components/UI';
-import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import vueFilePond from 'vue-filepond';
 import filePondServer from '@/filePondConfig';
 import axios from 'axios';
 
 import 'filepond/dist/filepond.min.css';
-
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import {
     AtSymbolIcon,
     BuildingOfficeIcon,
@@ -24,6 +19,46 @@ import {
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
+
+const beforeUnload = () => {
+    revertFiles();
+};
+
+const quillRef = ref(null);
+const isClient = ref(false);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+let QuillEditor = null;
+let FilePond = null;
+
+onMounted(async () => {
+    if (isClient.value) {
+        // Dynamic imports for QuillEditor
+        const { QuillEditor: QuillImport } = await import('@vueup/vue-quill');
+        QuillEditor = QuillImport;
+
+        const { default: VueFilePond } = await import('vue-filepond');
+        const FilePondPluginFileValidateType = await import(
+            'filepond-plugin-file-validate-type'
+        );
+        const FilePondPluginImagePreview = await import(
+            'filepond-plugin-image-preview'
+        );
+
+        FilePond = VueFilePond(
+            FilePondPluginFileValidateType.default,
+            FilePondPluginImagePreview.default,
+        );
+    }
+    window.addEventListener('beforeunload', beforeUnload);
+});
+onBeforeUnmount(() => {
+    revertFiles();
+    window.removeEventListener('beforeunload', beforeUnload);
+});
 
 const countries = ref([]);
 const states = ref([]);
@@ -111,16 +146,11 @@ const getTowns = () => {
 };
 
 // Create component
-const FilePond = vueFilePond(
-    FilePondPluginFileValidateType,
-    FilePondPluginImagePreview,
-);
 
 const page = usePage();
 const csrfToken = page.props.csrf;
 
 const filePondRef = ref(null);
-const quillRef = ref(null);
 
 const submited = ref(false);
 const uploaded = ref(false);
@@ -209,19 +239,6 @@ const revertFiles = () => {
         }
     }
 };
-
-const beforeUnload = () => {
-    revertFiles();
-};
-
-onMounted(() => {
-    window.addEventListener('beforeunload', beforeUnload);
-});
-
-onBeforeUnmount(() => {
-    revertFiles();
-    window.removeEventListener('beforeunload', beforeUnload);
-});
 </script>
 
 <template>
@@ -350,6 +367,7 @@ onBeforeUnmount(() => {
                 :error="form.errors.address"
             />
             <FilePond
+                v-if="isClient && FilePond"
                 id="logo-upload"
                 @processfile="onProcessFile"
                 :server="
@@ -369,6 +387,7 @@ onBeforeUnmount(() => {
             <p class="text-center text-lg">Add a description to your company</p>
             <div>
                 <QuillEditor
+                    v-if="isClient && QuillEditor"
                     name="Company description"
                     ref="quillRef"
                     toolbar="essential"

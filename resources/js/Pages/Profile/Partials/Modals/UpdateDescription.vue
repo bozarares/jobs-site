@@ -1,11 +1,7 @@
 <script setup>
-// TODO: Change form with axios
-// TODO: Change controller so it will send a response
-
 import { useForm, usePage } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { Button } from '@/Components/UI';
-import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import toolbarOptions from '@/quillToolBarConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
@@ -31,8 +27,28 @@ const submit = () => {
         },
     });
 };
-onMounted(() => {
-    quillRef.value.setHTML(user.description);
+
+const isClient = ref(false);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+let QuillEditor = ref(null);
+watch(
+    () => quillRef.value,
+    () => {
+        if (quillRef.value) {
+            quillRef.value.setHTML(user.description);
+        }
+    },
+);
+
+onMounted(async () => {
+    if (isClient.value) {
+        const { QuillEditor: QuillImport } = await import('@vueup/vue-quill');
+        QuillEditor.value = QuillImport;
+    }
 });
 </script>
 
@@ -50,6 +66,7 @@ onMounted(() => {
 
         <div class="flex h-auto max-h-[30em] flex-col overflow-hidden pb-20">
             <QuillEditor
+                v-if="isClient && QuillEditor"
                 name="Company description"
                 ref="quillRef"
                 :toolbar="toolbarOptions"

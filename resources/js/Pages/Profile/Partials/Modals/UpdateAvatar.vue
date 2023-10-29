@@ -3,14 +3,32 @@
 // TODO: Change controller so it will send a response
 
 import { useForm, usePage } from '@inertiajs/vue3';
-import VueFilePond from 'vue-filepond';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { onMounted, ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { onBeforeUnmount } from 'vue';
+import { onBeforeMount } from 'vue';
+
+const isClient = ref(false);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+let FilePond = ref(null);
+
+onMounted(async () => {
+    if (isClient.value) {
+        const { default: VueFilePond } = await import('vue-filepond');
+        const FilePondPluginFileValidateType = await import(
+            'filepond-plugin-file-validate-type'
+        );
+
+        FilePond.value = VueFilePond(FilePondPluginFileValidateType.default);
+    }
+});
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -19,7 +37,6 @@ const props = defineProps({
 const page = usePage();
 const csrfToken = page.props.csrf;
 
-const FilePond = VueFilePond(FilePondPluginFileValidateType);
 const filePondRef = ref(null);
 
 const form = useForm({
@@ -100,6 +117,7 @@ onBeforeUnmount(() => {
 
         <div class="overflow-auto">
             <FilePond
+                v-if="isClient && FilePond"
                 id="avatar-upload"
                 @processfile="onProcessFile"
                 :server="filePondServer(csrfToken, form.avatar, form.extension)"

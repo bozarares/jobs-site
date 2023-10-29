@@ -2,8 +2,6 @@
 import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 
-import VueFilePond from 'vue-filepond';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import filePondServer from '@/filePondConfig';
@@ -11,16 +9,34 @@ import { Button, Input } from '@/Components/UI';
 
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { onBeforeMount } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
+});
+
+const isClient = ref(false);
+const FilePond = ref(null);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+onMounted(async () => {
+    if (isClient.value) {
+        const { default: VueFilePond } = await import('vue-filepond');
+        const FilePondPluginFileValidateType = await import(
+            'filepond-plugin-file-validate-type'
+        );
+
+        FilePond.value = VueFilePond(FilePondPluginFileValidateType.default);
+    }
 });
 
 const page = usePage();
 const csrfToken = page.props.csrf;
 const files = ref(page.props.user.files);
 
-const FilePond = VueFilePond(FilePondPluginFileValidateType);
 const filePondRef = ref(null);
 
 const fileName = ref('');
@@ -171,6 +187,7 @@ onBeforeUnmount(() => {
         <div class="flex flex-col gap-4 overflow-auto">
             <Input v-model="fileName" label="File Name" name="file_name" />
             <FilePond
+                v-if="isClient && FilePond"
                 id="avatar-upload"
                 @processfile="onProcessFile"
                 @processfileprogress="onProcessFileProgress"

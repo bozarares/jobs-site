@@ -1,8 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import VueFilePond from 'vue-filepond';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
@@ -13,11 +11,28 @@ const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
+const isClient = ref(false);
+const FilePond = ref(null);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+onMounted(async () => {
+    if (isClient.value) {
+        const { default: VueFilePond } = await import('vue-filepond');
+        const FilePondPluginFileValidateType = await import(
+            'filepond-plugin-file-validate-type'
+        );
+
+        FilePond.value = VueFilePond(FilePondPluginFileValidateType.default);
+    }
+});
+
 const page = usePage();
 const csrfToken = page.props.csrf;
 const company = page.props.company;
 
-const FilePond = VueFilePond(FilePondPluginFileValidateType);
 const filePondRef = ref(null);
 
 const form = useForm({
@@ -96,6 +111,7 @@ onBeforeUnmount(() => {
 
         <div class="overflow-auto">
             <FilePond
+                v-if="isClient && FilePond"
                 id="avatar-upload"
                 @processfile="onProcessFile"
                 :server="filePondServer(csrfToken, form.logo, form.extension)"

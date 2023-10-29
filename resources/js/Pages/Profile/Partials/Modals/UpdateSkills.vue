@@ -5,7 +5,8 @@
 import { onMounted, ref, watch, computed, onBeforeUnmount } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
-import { debounce } from 'lodash';
+import pkg from 'lodash';
+const { debounce } = pkg;
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 
@@ -123,7 +124,7 @@ onMounted(() => {
                 >Add</Button
             >
         </div>
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2">
             <div
                 v-for="skill in filteredSkills"
                 :key="skill.id"

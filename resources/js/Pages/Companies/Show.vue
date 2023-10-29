@@ -1,14 +1,29 @@
 <script setup>
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
-import { ref } from 'vue';
-import { GoogleMap, Marker } from 'vue3-google-map';
-import { onMounted } from 'vue';
+import { ref, onMounted, onBeforeMount } from 'vue';
 import OwnerCard from './Partials/OwnerCard.vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
 import JobCard from './Partials/JobCard.vue';
 
-const location = ref(null);
+const isClient = ref(false);
+const GoogleMap = ref(null);
+const Marker = ref(null);
+
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
+
+onMounted(async () => {
+    if (isClient.value) {
+        const { GoogleMap: GMap, Marker: GMarker } = await import(
+            'vue3-google-map'
+        );
+        GoogleMap.value = GMap;
+        Marker.value = GMarker;
+    }
+});
+
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const center = ref({ lat: 0, lng: 0 });
 const props = defineProps({
@@ -345,7 +360,13 @@ onMounted(() => {
                         </h2>
                     </div>
                     <GoogleMap
-                        v-if="center.lat !== 0 && center.lng !== 0"
+                        v-if="
+                            center.lat !== 0 &&
+                            center.lng !== 0 &&
+                            isClient &&
+                            GoogleMap &&
+                            Marker
+                        "
                         :api-key="apiKey"
                         class="h-96 w-full rounded"
                         :styles="mapStyles"

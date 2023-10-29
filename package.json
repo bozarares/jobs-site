@@ -2,8 +2,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite --https",
+        "dev": "vite --https --config vite.config.js",
         "build": "vite build",
+        "ssr": "vite build && vite build --config vite_ssr.config.js --ssr",
         "cypress:open": "cypress open",
         "cypress:run": "cypress run"
     },
@@ -34,6 +35,7 @@
         "@heroicons/vue": "^2.0.18",
         "@tinymce/tinymce-vue": "^5.1.1",
         "@vitejs/plugin-basic-ssl": "^1.0.1",
+        "@vue/server-renderer": "^3.3.7",
         "@vueup/vue-quill": "^1.2.0",
         "class-variance-authority": "^0.7.0",
         "dayjs": "^1.11.10",

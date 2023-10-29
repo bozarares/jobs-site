@@ -7,7 +7,8 @@ export default defineConfig({
 
     plugins: [
         laravel({
-            input: 'resources/js/app.js',
+            ssr: 'resources/js/ssr.js',
+            input: 'resources/js/app_ssr.js',
             refresh: true,
             detectTls: 'jobs.test',
         }),
@@ -20,4 +21,8 @@ export default defineConfig({
             },
         }),
     ],
+    ssr: {
+        format: 'esm',
+        noExternal: ['@inertiajs/server', '@vueup/vue-quill'],
+    },
 });

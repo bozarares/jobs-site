@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import UpdateAvatar from './Modals/UpdateAvatar.vue';
 import UpdateDescription from './Modals/UpdateDescription.vue';
 import UpdateEducationHistory from './Modals/UpdateEducationHistory.vue';
@@ -8,26 +9,36 @@ import UpdateSkills from './Modals/UpdateSkills.vue';
 import UpdateSocials from './Modals/UpdateSocials.vue';
 import UpdateUser from './Modals/UpdateUser.vue';
 import { watchEffect } from 'vue';
+import { onBeforeMount } from 'vue';
+
+const isClient = ref(false);
+onBeforeMount(() => {
+    isClient.value = typeof window !== 'undefined';
+});
 
 const props = defineProps({
     modal: { type: String, default: null },
     closeModal: { type: Function, default: () => {} },
 });
 function disableScroll() {
-    document.body.addEventListener('mousewheel', preventScroll, {
-        passive: false,
-    });
-    document.body.addEventListener('touchmove', preventScroll, {
-        passive: false,
-    });
+    if (isClient.value) {
+        document.body.addEventListener('mousewheel', preventScroll, {
+            passive: false,
+        });
+        document.body.addEventListener('touchmove', preventScroll, {
+            passive: false,
+        });
+    }
 }
 function enableScroll() {
-    document.body.removeEventListener('mousewheel', preventScroll, {
-        passive: false,
-    });
-    document.body.removeEventListener('touchmove', preventScroll, {
-        passive: false,
-    });
+    if (isClient.value) {
+        document.body.removeEventListener('mousewheel', preventScroll, {
+            passive: false,
+        });
+        document.body.removeEventListener('touchmove', preventScroll, {
+            passive: false,
+        });
+    }
 }
 
 function preventScroll(e) {
@@ -35,14 +46,16 @@ function preventScroll(e) {
 }
 
 watchEffect(() => {
-    if (props.modal) {
-        disableScroll();
-        document.body.style.inlineSize = '100%';
-        document.body.style.overflowY = 'scroll';
-    } else {
-        enableScroll();
-        document.body.style.inlineSize = 'auto';
-        document.body.style.overflowY = 'auto';
+    if (isClient.value) {
+        if (props.modal) {
+            disableScroll();
+            document.body.style.inlineSize = '100%';
+            document.body.style.overflowY = 'scroll';
+        } else {
+            enableScroll();
+            document.body.style.inlineSize = 'auto';
+            document.body.style.overflowY = 'auto';
+        }
     }
 });
 
