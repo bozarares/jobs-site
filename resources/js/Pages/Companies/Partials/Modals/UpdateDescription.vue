@@ -1,6 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
+import { markRaw, onMounted, ref } from 'vue';
 import { Button } from '@/Components/UI';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import toolbarOptions from '@/quillToolBarConfig';
@@ -52,7 +52,7 @@ watch(
 onMounted(async () => {
     if (isClient.value) {
         const { QuillEditor: QuillImport } = await import('@vueup/vue-quill');
-        QuillEditor.value = QuillImport;
+        QuillEditor.value = markRaw(QuillImport);
     }
 });
 </script>

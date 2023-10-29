@@ -40,8 +40,14 @@ class Company extends Model
         'email',
     ];
 
+    protected $with = ['jobs'];
     public function headRecruiter()
     {
         return $this->belongsTo(User::class, 'owner');
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
     }
 }

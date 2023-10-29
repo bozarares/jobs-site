@@ -4,6 +4,7 @@ import UpdateContact from '@/Pages/Companies/Partials/Modals/UpdateContact.vue';
 import UpdateLogo from '@/Pages/Companies/Partials/Modals/UpdateLogo.vue';
 import { onBeforeMount, watchEffect } from 'vue';
 import { ref } from 'vue';
+import AddJob from './Modals/AddJob.vue';
 
 const props = defineProps({
     modal: { type: String, default: null },
@@ -15,41 +16,12 @@ onBeforeMount(() => {
     isClient.value = typeof window !== 'undefined';
 });
 
-function disableScroll() {
-    if (isClient.value) {
-        document.body.addEventListener('mousewheel', preventScroll, {
-            passive: false,
-        });
-        document.body.addEventListener('touchmove', preventScroll, {
-            passive: false,
-        });
-    }
-}
-function enableScroll() {
-    if (isClient.value) {
-        document.body.removeEventListener('mousewheel', preventScroll, {
-            passive: false,
-        });
-        document.body.removeEventListener('touchmove', preventScroll, {
-            passive: false,
-        });
-    }
-}
-
-function preventScroll(e) {
-    e.preventDefault();
-}
-
 watchEffect(() => {
     if (isClient.value) {
         if (props.modal) {
-            disableScroll();
-            document.body.style.inlineSize = '100%';
-            document.body.style.overflowY = 'scroll';
+            document.body.style.overflow = 'hidden';
         } else {
-            enableScroll();
-            document.body.style.inlineSize = 'auto';
-            document.body.style.overflowY = 'auto';
+            document.body.style.overflow = 'auto';
         }
     }
 });
@@ -58,6 +30,7 @@ const componentMap = {
     logo: UpdateLogo,
     description: UpdateDescription,
     contact: UpdateContact,
+    add_job: AddJob,
 };
 
 const enterActiveClass = 'transition-all duration-150 ease-out';

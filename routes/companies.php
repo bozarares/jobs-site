@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -26,6 +27,10 @@ Route::middleware('auth')->group(function () {
             CompanyController::class,
             'updateLogo',
         ])->name('companies.update.logo');
+        Route::post('/company/{company}/add-job', [
+            JobController::class,
+            'store',
+        ])->name('jobs.store');
     });
 });
 

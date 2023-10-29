@@ -20,7 +20,7 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
-    modelValue: String,
+    modelValue: [String, Number],
 });
 
 const emits = defineEmits(['update:modelValue']);
@@ -95,7 +95,7 @@ const inputId = computed(() => props.name + '-' + crypto.randomUUID());
 // A CVA instance for borderStyle variants
 const inputClass = computed(() =>
     cva(
-        'w-full pl-12 tracking-wider caret-gray-700 outline-none flex-shrink-0',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none',
         {
             variants: {
                 borderStyle: {
@@ -110,7 +110,7 @@ const inputClass = computed(() =>
                     true: 'pr-12',
                 },
                 size: {
-                    default: 'py-3 text-md',
+                    default: 'text-md py-3',
                     small: 'py-2 text-sm',
                 },
             },
@@ -157,10 +157,10 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-    <div class="flex flex-col w-full">
+    <div class="flex w-full flex-col">
         <div
             ref="containerElementRef"
-            class="relative flex flex-grow-1 w-full flex-col items-center tracking-wider text-gray-700"
+            class="flex-grow-1 relative flex w-full flex-col items-center tracking-wider text-gray-700"
         >
             <!-- Left Icon -->
             <div

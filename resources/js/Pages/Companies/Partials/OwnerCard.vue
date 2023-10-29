@@ -12,6 +12,10 @@ const props = defineProps({
         type: Function,
         default: () => {},
     },
+    openModal: {
+        type: Function,
+        default: () => {},
+    },
 });
 
 const edit = ref(false);
@@ -55,6 +59,7 @@ const edit = ref(false);
                     shape: 'pill',
                     color: 'green',
                 }"
+                @click="openModal('add_job')"
                 >Create job</Button
             >
         </div>

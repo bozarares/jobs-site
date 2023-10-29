@@ -5,6 +5,7 @@ import { ref, onMounted, onBeforeMount } from 'vue';
 import OwnerCard from './Partials/OwnerCard.vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
 import JobCard from './Partials/JobCard.vue';
+import { markRaw } from 'vue';
 
 const isClient = ref(false);
 const GoogleMap = ref(null);
@@ -19,8 +20,8 @@ onMounted(async () => {
         const { GoogleMap: GMap, Marker: GMarker } = await import(
             'vue3-google-map'
         );
-        GoogleMap.value = GMap;
-        Marker.value = GMarker;
+        GoogleMap.value = markRaw(GMap);
+        Marker.value = markRaw(GMarker);
     }
 });
 
@@ -262,6 +263,11 @@ onMounted(() => {
                 :toggle-edit="
                     (value) => {
                         edit = value;
+                    }
+                "
+                :open-modal="
+                    (type) => {
+                        openModal(type);
                     }
                 "
             />

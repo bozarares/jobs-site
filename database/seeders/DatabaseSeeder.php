@@ -21,5 +21,26 @@ class DatabaseSeeder extends Seeder
         \App\Models\Company::factory()->create([
             'name' => 'Test Company',
         ]);
+        \App\Models\JobExperience::factory()->create([
+            'name' => 'Internship',
+        ]);
+        \App\Models\JobExperience::factory()->create([
+            'name' => 'Junior',
+        ]);
+        \App\Models\JobExperience::factory()->create([
+            'name' => 'Mid',
+        ]);
+        \App\Models\JobExperience::factory()->create([
+            'name' => 'Senior',
+        ]);
+        \App\Models\JobType::factory()->create([
+            'type' => 'Remote',
+        ]);
+        \App\Models\JobType::factory()->create([
+            'type' => 'Hybrid',
+        ]);
+        \App\Models\JobType::factory()->create([
+            'type' => 'On-Site',
+        ]);
     }
 }
