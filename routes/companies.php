@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\Profile\SkillController;
@@ -39,6 +40,12 @@ Route::post('/job/{job}/update/skills', [
     SkillController::class,
     'editJobSkills',
 ])->name('job.update.skills');
+Route::post('/job/{job}/apply', [ApplicationController::class, 'apply'])->name(
+    'job.apply'
+);
+Route::delete('/job/{job}', [JobController::class, 'delete'])->name(
+    'job.delete'
+);
 Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{company}', [CompanyController::class, 'show'])->name(
     'companies.show'

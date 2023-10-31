@@ -106,3 +106,10 @@ Route::middleware('auth')
             'deleteFile',
         ])->name('files');
     });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/applications', [
+        ProfileController::class,
+        'applications',
+    ])->name('profile.applications');
+});

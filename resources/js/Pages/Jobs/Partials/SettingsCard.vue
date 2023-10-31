@@ -7,6 +7,10 @@ const props = defineProps({
         type: Function,
         default: () => {},
     },
+    openModal: {
+        type: Function,
+        default: () => {},
+    },
 });
 
 const edit = ref(false);
@@ -30,7 +34,10 @@ const edit = ref(false);
                 :options="{ shape: 'pill', color: 'green' }"
                 >{{ edit ? 'Stop edit' : 'Edit' }} Profile</Button
             >
-            <Button class="w-full" :options="{ shape: 'pill', color: 'red' }"
+            <Button
+                @click="props.openModal('delete')"
+                class="w-full"
+                :options="{ shape: 'pill', color: 'red' }"
                 >Delete</Button
             >
         </div>

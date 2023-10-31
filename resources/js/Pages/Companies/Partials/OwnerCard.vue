@@ -16,6 +16,10 @@ const props = defineProps({
         type: Function,
         default: () => {},
     },
+    applications: {
+        type: Number,
+        default: 0,
+    },
 });
 
 const edit = ref(false);
@@ -61,6 +65,14 @@ const edit = ref(false);
                 }"
                 @click="openModal('add_job')"
                 >Create job</Button
+            >
+            <Button
+                class="w-full"
+                :options="{
+                    shape: 'pill',
+                    color: 'green',
+                }"
+                >Applications - {{ props.applications }}</Button
             >
         </div>
     </div>

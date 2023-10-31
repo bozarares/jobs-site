@@ -103,6 +103,18 @@ class User extends Authenticatable
         return $this->hasMany(UserFile::class);
     }
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function alreadyApplied(Job $job)
+    {
+        return $this->applications()
+            ->where('job_id', $job->id)
+            ->exists();
+    }
+
     public function getProfileCompletionAttribute()
     {
         $totalFields = 7;

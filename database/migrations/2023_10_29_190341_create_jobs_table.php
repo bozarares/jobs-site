@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('location');
             $table->integer('salary')->nullable();
             $table->text('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

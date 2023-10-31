@@ -4,12 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Job extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, SoftDeletes;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($job) {
+            if ($job->isForceDeleting()) {
+                return;
+            }
+            $applications = $job
+                ->applications()
+                ->where('status', 'open')
+                ->get();
+            foreach ($applications as $application) {
+                $application->update([
+                    'status' => 'closed',
+                    'message' => 'Job was deleted by the company',
+                ]);
+            }
+        });
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -18,7 +40,7 @@ class Job extends Model
                 return $model->company->name . '-' . $model->title;
             })
             ->saveSlugsTo('slug')
-            ->slugsShouldBeNoLongerThan(25);
+            ->slugsShouldBeNoLongerThan(50);
     }
 
     public function getRouteKeyName()
@@ -76,5 +98,10 @@ class Job extends Model
             'skill_id',
             'id'
         )->withTimestamps();
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
     }
 }

@@ -7,7 +7,7 @@ import pkg from 'lodash';
 const { debounce } = pkg;
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { watch } from 'vue';
 
@@ -19,17 +19,33 @@ const page = usePage();
 const user = page.props.auth.user;
 const completion = Math.round(user.profileCompletion);
 const files = ref([]);
-watch(
-    () => files,
-    (newValue, oldValue) => {
-        console.log(newValue);
-    },
-);
+const error = ref('');
+const submit = () => {
+    if (files.value.length === 0) {
+        error.value = 'You must select at least one file';
+        return;
+    }
+    axios
+        .post(route('job.apply', { job: page.props.job.slug }), {
+            files: files.value,
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                router.reload({ preserveState: true });
+                props.closeModal();
+            }
+        })
+        .catch((err) => {
+            error.value = err.response
+                ? err.response.data.message
+                : 'An error occurred';
+        });
+};
 </script>
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">Apply</h2>
@@ -52,7 +68,7 @@ watch(
                     v-if="completion != 100"
                 >
                     <li v-if="user.description === ''">No description</li>
-                    <li v-if="user.avatar === ''">No Avatar</li>
+                    <li v-if="user.avatar === null">No Avatar</li>
                     <li v-if="user.job_history.length === 0">
                         No Job History added
                     </li>
@@ -101,9 +117,15 @@ watch(
                 applying to, for the duration of the application process
             </h2>
         </div>
-
+        <h2 v-if="error" class="text-center text-sm font-bold text-red-500">
+            {{ error }}
+        </h2>
         <Button
-            @click="() => {}"
+            @click="
+                () => {
+                    submit();
+                }
+            "
             class=""
             :options="{ color: 'green', shape: 'pill' }"
             >Apply</Button

@@ -61,6 +61,9 @@ class CompanyController extends Controller
     }
     public function show(Company $company): \Inertia\Response
     {
+        if ($company->owner === Auth::id()) {
+            $company->append('application_number');
+        }
         return Inertia::render('Companies/Show', [
             'company' => $company,
             'isOwner' => $company->owner == Auth::id(),

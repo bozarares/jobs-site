@@ -6,6 +6,7 @@ import OwnerCard from './Partials/OwnerCard.vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
 import JobCard from './Partials/JobCard.vue';
 import { markRaw } from 'vue';
+import { computed } from 'vue';
 
 const isClient = ref(false);
 const GoogleMap = ref(null);
@@ -260,6 +261,7 @@ onMounted(() => {
             />
             <OwnerCard
                 v-if="isOwner"
+                :applications="company.application_number"
                 :toggle-edit="
                     (value) => {
                         edit = value;

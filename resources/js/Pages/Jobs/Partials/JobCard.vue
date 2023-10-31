@@ -14,6 +14,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    alreadyApplied: {
+        type: Boolean,
+        default: false,
+    },
     class: {
         type: String,
         default: '',
@@ -84,6 +88,7 @@ console.log(props.job);
                 </div>
             </div>
             <div
+                v-if="props.alreadyApplied === false"
                 class="mt-3 flex w-[10em] flex-col items-center gap-3 md:w-full"
             >
                 <Button

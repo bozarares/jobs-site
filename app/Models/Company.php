@@ -50,4 +50,17 @@ class Company extends Model
     {
         return $this->hasMany(Job::class);
     }
+
+    public function getApplicationNumberAttribute()
+    {
+        $application_number = 0;
+        foreach ($this->jobs as $job) {
+            foreach ($job->applications as $application) {
+                if ($application->status == 'open') {
+                    $application_number++;
+                }
+            }
+        }
+        return $application_number;
+    }
 }

@@ -3,6 +3,7 @@ import { onBeforeMount, watchEffect } from 'vue';
 import { ref } from 'vue';
 import UpdateSkills from './Modals/UpdateSkills.vue';
 import Apply from './Modals/Apply.vue';
+import Delete from './Modals/Delete.vue';
 
 const props = defineProps({
     modal: { type: String, default: null },
@@ -27,6 +28,7 @@ watchEffect(() => {
 const componentMap = {
     skills: UpdateSkills,
     apply: Apply,
+    delete: Delete,
 };
 
 const enterActiveClass = 'transition-all duration-150 ease-out';

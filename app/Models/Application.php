@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Application extends Model
 {
@@ -14,13 +15,15 @@ class Application extends Model
         parent::boot();
 
         static::updated(function ($application) {
+            Log::info('Application updated');
             if ($application->isDirty('status')) {
+                Log::info('Application status changed');
                 $application->files()->detach();
             }
         });
     }
 
-    protected $fillable = ['status', 'message'];
+    protected $fillable = ['status', 'message', 'job_id', 'user_id'];
     protected $casts = ['status' => 'string'];
     protected $with = ['user', 'job', 'files'];
 

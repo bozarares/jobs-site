@@ -8,14 +8,24 @@ use App\Models\JobExperience;
 use App\Models\JobLevel;
 use App\Models\JobType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class JobController extends Controller
 {
     public function show(Request $request, Job $job)
     {
+        $user = Auth::user();
+        $already_applied = false;
+        if ($user) {
+            $already_applied = $user->alreadyApplied($job);
+        }
+        if ($job->company->owner === $user->id) {
+            $job->load(['applications']);
+        }
         return Inertia::render('Jobs/Show', [
             'job' => $job->load(['company']),
+            'applied' => $already_applied,
         ]);
     }
     public function store(Request $request, Company $company)
@@ -51,5 +61,11 @@ class JobController extends Controller
             ['success' => true, 'message' => 'File deleted successfully'],
             200
         );
+    }
+
+    public function delete(Request $request, Job $job)
+    {
+        $job->delete();
+        return redirect()->route('welcome');
     }
 }

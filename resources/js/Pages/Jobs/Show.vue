@@ -5,6 +5,13 @@ import { ref } from 'vue';
 import ModalWrapper from './Partials/ModalWrapper.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
 
+const props = defineProps({
+    applied: {
+        type: Boolean,
+        default: false,
+    },
+});
+
 const page = usePage();
 const job = page.props.job;
 const edit = ref(false);
@@ -22,6 +29,7 @@ const openModal = (modalName) => {
     >
         <div class="flex w-full flex-col gap-4 md:w-auto">
             <JobCard
+                :alreadyApplied="props.applied"
                 :job="job"
                 :edit="edit"
                 :open-modal="
@@ -31,6 +39,11 @@ const openModal = (modalName) => {
                 "
             />
             <SettingsCard
+                :open-modal="
+                    (modal) => {
+                        openModal(modal);
+                    }
+                "
                 :toggle-edit="
                     (value) => {
                         edit = value;

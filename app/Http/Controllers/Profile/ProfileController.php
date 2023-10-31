@@ -17,6 +17,33 @@ use Mews\Purifier\Facades\Purifier;
 
 class ProfileController extends Controller
 {
+    public function applications(Request $request)
+    {
+        $user = Auth::user();
+        $applications = $user
+            ->applications()
+            ->with([
+                'job' => function ($query) {
+                    $query->withTrashed()->with([
+                        'company' => function ($query) {
+                            $query
+                                ->select(
+                                    'id',
+                                    'slug',
+                                    'name',
+                                    'logo',
+                                    'logo_extension'
+                                )
+                                ->without('jobs');
+                        },
+                    ]);
+                },
+            ])
+            ->get();
+        return Inertia::render('Profile/Applications', [
+            'applications' => $applications,
+        ]);
+    }
     public function show(): Response
     {
         $user = Auth::user();
