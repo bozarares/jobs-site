@@ -21,17 +21,17 @@ class DatabaseSeeder extends Seeder
         \App\Models\Company::factory()->create([
             'name' => 'Test Company',
         ]);
-        \App\Models\JobExperience::factory()->create([
-            'name' => 'Internship',
+        \App\Models\JobLevel::factory()->create([
+            'level' => 'Internship',
         ]);
-        \App\Models\JobExperience::factory()->create([
-            'name' => 'Junior',
+        \App\Models\JobLevel::factory()->create([
+            'level' => 'Junior',
         ]);
-        \App\Models\JobExperience::factory()->create([
-            'name' => 'Mid',
+        \App\Models\JobLevel::factory()->create([
+            'level' => 'Mid',
         ]);
-        \App\Models\JobExperience::factory()->create([
-            'name' => 'Senior',
+        \App\Models\JobLevel::factory()->create([
+            'level' => 'Senior',
         ]);
         \App\Models\JobType::factory()->create([
             'type' => 'Remote',

@@ -7,6 +7,12 @@ import {
     GlobeEuropeAfricaIcon,
     MagnifyingGlassIcon,
 } from '@heroicons/vue/24/outline';
+const props = defineProps({
+    jobs: {
+        type: Array,
+        required: true,
+    },
+});
 </script>
 
 <template>
@@ -30,11 +36,8 @@ import {
         </div>
     </div>
     <div
-        class="grid w-full max-w-screen-lg grid-cols-1 items-center justify-items-center gap-2 bg-gray-100 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
     >
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
+        <JobCard v-for="job in jobs" :key="job.slug" :job="job" />
     </div>
 </template>

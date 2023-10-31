@@ -68,6 +68,8 @@ class User extends Authenticatable
 
     protected $with = ['jobHistory', 'educationHistory', 'skills', 'files'];
 
+    protected $appends = ['profileCompletion'];
+
     public function companies()
     {
         return $this->hasMany(Company::class, 'owner');
@@ -99,5 +101,39 @@ class User extends Authenticatable
     public function files()
     {
         return $this->hasMany(UserFile::class);
+    }
+
+    public function getProfileCompletionAttribute()
+    {
+        $totalFields = 7;
+        $completedFields = 0;
+
+        if ($this->avatar) {
+            $completedFields++;
+        }
+        if (
+            $this->social_linkedin ||
+            $this->social_github ||
+            $this->social_facebook
+        ) {
+            $completedFields++;
+        }
+        if ($this->description) {
+            $completedFields++;
+        }
+        if ($this->jobHistory()->exists()) {
+            $completedFields++;
+        }
+        if ($this->educationHistory()->exists()) {
+            $completedFields++;
+        }
+        if ($this->skills()->exists()) {
+            $completedFields++;
+        }
+        if ($this->files()->exists()) {
+            $completedFields++;
+        }
+
+        return ($completedFields / $totalFields) * 100;
     }
 }

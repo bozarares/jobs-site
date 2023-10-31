@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import { onMounted, onBeforeMount, ref, reactive, markRaw } from 'vue';
 import { Button, Checkbox, Input, Radio } from '@/Components/UI';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
@@ -14,7 +14,7 @@ const company = page.props.company;
 const job = reactive({
     title: '',
     type: 'remote',
-    experience: [],
+    level: [],
     salary: '',
     location: '',
     description: '',
@@ -32,7 +32,8 @@ const submit = () => {
     axios
         .post(route('jobs.store', { company: company.slug }), job)
         .then((res) => {
-            closeModal();
+            router.reload({ preserveState: true, only: ['company'] });
+            props.closeModal();
         });
 };
 
@@ -94,25 +95,25 @@ onMounted(async () => {
                 <Checkbox
                     label="Internship"
                     name="experience"
-                    v-model="job.experience"
+                    v-model="job.level"
                     value="internship"
                 />
                 <Checkbox
                     label="Junior"
                     name="experience"
-                    v-model="job.experience"
+                    v-model="job.level"
                     value="junior"
                 />
                 <Checkbox
                     label="Mid"
                     name="experience"
-                    v-model="job.experience"
+                    v-model="job.level"
                     value="mid"
                 />
                 <Checkbox
                     label="Senior"
                     name="experience"
-                    v-model="job.experience"
+                    v-model="job.level"
                     value="senior"
                 />
             </div>

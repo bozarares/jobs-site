@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\Profile\EducationHistoryController;
 use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\Profile\JobHistoryController;
-use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\Profile\SkillController;
 use App\Http\Controllers\Profile\UserFilesController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,14 +23,7 @@ Route::delete('upload/delete', [FileUploadController::class, 'destroy'])->name(
     'uploads.destroy'
 );
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'show'])->name('welcome');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

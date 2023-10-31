@@ -10,16 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('job_level_job', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table
-                ->foreignId('job_level_id')
+                ->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
             $table
                 ->foreignId('job_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->string('status')->default('open');
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_level_job');
+        Schema::dropIfExists('applications');
     }
 };

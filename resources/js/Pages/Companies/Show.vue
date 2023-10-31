@@ -309,9 +309,7 @@ onMounted(() => {
                 <p class="text-sm font-bold">
                     There are no jobs available at the moment
                 </p>
-                <JobCard />
-                <JobCard />
-                <JobCard />
+                <JobCard v-for="job in company.jobs" :key="job.id" :job="job" />
             </div>
             <div
                 :id="edit ? 'company-contact-edit' : ''"

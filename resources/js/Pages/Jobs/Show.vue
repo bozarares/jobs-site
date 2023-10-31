@@ -1,0 +1,112 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import JobCard from './Partials/JobCard.vue';
+import { ref } from 'vue';
+import ModalWrapper from './Partials/ModalWrapper.vue';
+import SettingsCard from './Partials/SettingsCard.vue';
+
+const page = usePage();
+const job = page.props.job;
+const edit = ref(false);
+
+const modal = ref(null);
+
+const openModal = (modalName) => {
+    if (modal.value === null) modal.value = modalName;
+};
+</script>
+
+<template>
+    <div
+        class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
+    >
+        <div class="flex w-full flex-col gap-4 md:w-auto">
+            <JobCard
+                :job="job"
+                :edit="edit"
+                :open-modal="
+                    (modal) => {
+                        openModal(modal);
+                    }
+                "
+            />
+            <SettingsCard
+                :toggle-edit="
+                    (value) => {
+                        edit = value;
+                    }
+                "
+            />
+        </div>
+        <div
+            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
+        >
+            <div
+                :id="edit ? 'company-description-edit' : ''"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('description');
+                        }
+                    }
+                "
+            >
+                <h2
+                    v-if="edit"
+                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
+                <h2 class="text-lg font-bold uppercase text-black/60">
+                    Description
+                </h2>
+                <div class="ql-editor prose" v-html="job.description"></div>
+            </div>
+            <div
+                :id="edit ? 'company-description-edit' : ''"
+                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+                :class="{
+                    'cursor-pointer': edit,
+                }"
+                @click="
+                    () => {
+                        if (edit) {
+                            openModal('skills');
+                        }
+                    }
+                "
+            >
+                <h2
+                    v-if="edit"
+                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                >
+                    Click field to edit
+                </h2>
+                <h2 class="text-lg font-bold uppercase text-black/60">
+                    Required Skills
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <div
+                        v-for="skill in job.skills"
+                        :key="skill.id"
+                        class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
+                    >
+                        {{ skill.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ModalWrapper
+        :modal="modal"
+        :close-modal="
+            () => {
+                modal = null;
+            }
+        "
+    />
+</template>

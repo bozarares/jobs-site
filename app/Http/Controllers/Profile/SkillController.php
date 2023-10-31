@@ -1,8 +1,9 @@
 <?php
-
+// TODO Add verification for the job owner
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class SkillController extends Controller
 
         return response()->json($skills);
     }
-    public function editSkills(Request $request)
+    public function editUserSkills(Request $request)
     {
         $request->validate([
             'skills' => 'sometimes|array',
@@ -62,6 +63,59 @@ class SkillController extends Controller
 
         return redirect()
             ->route('profile.show')
+            ->with(
+                'message',
+                json_encode([
+                    'title' => 'Skill notification',
+                    'content' => 'Skills edited successfully',
+                    'status' => 'success',
+                ])
+            );
+    }
+    public function editJobSkills(Request $request, Job $job)
+    {
+        $request->validate([
+            'skills' => 'sometimes|array',
+            'skills.*' => 'sometimes|string',
+        ]);
+
+        $skills = $request->skills;
+        $user = $request->user();
+
+        if (empty($skills)) {
+            $job->skills()->detach();
+            return redirect()
+                ->route('profile.show')
+                ->with(
+                    'message',
+                    json_encode([
+                        'title' => 'Skill notification',
+                        'content' => 'All skills removed successfully',
+                        'status' => 'success',
+                    ])
+                );
+        }
+
+        $existingSkills = Skill::whereIn('name', $skills)
+            ->pluck('id')
+            ->all();
+
+        $newSkills = array_diff(
+            $skills,
+            Skill::whereIn('name', $skills)
+                ->pluck('name')
+                ->all()
+        );
+
+        foreach ($newSkills as $skillName) {
+            $skill = Skill::create(['name' => $skillName]);
+            $existingSkills[] = $skill->id;
+        }
+
+        $job->skills()->sync($existingSkills);
+
+        return redirect()
+            ->route('jobs.show', $job->slug)
             ->with(
                 'message',
                 json_encode([

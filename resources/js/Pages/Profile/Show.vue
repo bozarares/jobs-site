@@ -192,11 +192,11 @@ const edit = ref(false);
                 <h2 class="text-lg font-bold uppercase text-black/60">
                     Skills
                 </h2>
-                <div class="flex flex-wrap gap-4">
+                <div class="flex flex-wrap gap-2">
                     <div
                         v-for="skill in user.skills"
                         :key="skill.id"
-                        class="rounded bg-gray-800 px-2 py-1 text-white"
+                        class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
                     >
                         {{ skill.name }}
                     </div>

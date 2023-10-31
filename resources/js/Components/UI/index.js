@@ -15,4 +15,5 @@ export { default as SearchInput } from './SearchInput/SearchInput.vue';
 export { default as Select } from './Select/Select.vue';
 export { default as SelectInput } from './SelectInput/SelectInput.vue';
 export { default as Timeline } from './Timeline/Timeline.vue';
+export { default as Switch } from './Switch/Switch.vue';
 // export { default as Toast } from './Toast/Toast.vue';

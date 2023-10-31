@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\Profile\SkillController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +35,11 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::post('/job/{job}/update/skills', [
+    SkillController::class,
+    'editJobSkills',
+])->name('job.update.skills');
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/company/{company}', [CompanyController::class, 'show'])->name(
     'companies.show'
 );

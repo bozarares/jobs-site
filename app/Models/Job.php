@@ -4,11 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(function ($model) {
+                return $model->company->name . '-' . $model->title;
+            })
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(25);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     protected $fillable = [
         'title',
         'job_type_id',
@@ -18,8 +34,8 @@ class Job extends Model
     ];
 
     protected $hidden = ['id', 'created_at', 'updated_at', 'job_type_id'];
-    protected $with = ['type'];
-    protected $appends = ['experience_names'];
+    protected $with = ['type', 'skills'];
+    protected $appends = ['levels'];
 
     public function type()
     {
@@ -31,21 +47,34 @@ class Job extends Model
         return $this->belongsTo(Company::class, 'company_id');
     }
 
-    public function jobExperiences()
+    public function jobLevels()
     {
         return $this->belongsToMany(
-            JobExperience::class,
-            'job_experience_job',
+            JobLevel::class,
+            'job_level_job',
             'job_id',
-            'job_experience_id',
+            'job_level_id',
             'id'
-        )->withTimestamps();
+        )
+            ->withTimestamps()
+            ->orderBy('job_level_id', 'asc');
     }
 
-    public function getExperienceNamesAttribute()
+    public function getLevelsAttribute()
     {
-        return $this->jobExperiences()
-            ->pluck('name')
+        return $this->jobLevels()
+            ->pluck('level')
             ->toArray();
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(
+            Skill::class,
+            'job_skill',
+            'job_id',
+            'skill_id',
+            'id'
+        )->withTimestamps();
     }
 }

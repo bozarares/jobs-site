@@ -86,7 +86,7 @@ Route::middleware('auth')
 Route::middleware('auth')->group(function () {
     Route::post('/profile/update/skills', [
         SkillController::class,
-        'editSkills',
+        'editUserSkills',
     ])->name('profile.update.skills');
     Route::post('/get/skills', [SkillController::class, 'search'])->name(
         'get.skills'

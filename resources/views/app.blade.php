@@ -15,10 +15,18 @@
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased bg-gray-100 relative">
+    <body class="font-sans antialiased bg-gray-100 relative overflow-x-hidden w-full">
         @inertia
     </body>
     <script>
-
+        window.onscroll = function () {
+  window.scrollLeft = 0;
+}
     </script>
 </html>
+
+<style>
+    html, body {
+    overflow-x: hidden;
+}
+</style>
