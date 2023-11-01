@@ -20,7 +20,7 @@ describe('template spec', () => {
         // Create Company
         const companyName = faker.person.firstName();
         const companyCode = `RO${Math.floor(Math.random() * 10000)}`;
-        const phone = faker.phone.number();
+        const phone = faker.phone.number('+40 7## ### ###');
         const email = faker.internet.email();
         const country = 'Romania';
         const state = 'Constanța County';

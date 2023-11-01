@@ -9,7 +9,10 @@ describe('Profile edit flow', () => {
     });
 
     it('Edit User Success', () => {
-        cy.get(`#profile-user-edit`).click();
+        cy.get(`#profile-user-edit`).click({
+            force: true,
+            position: 'bottomLeft',
+        });
 
         const name = faker.person.fullName();
         const tag = faker.person.jobTitle();
@@ -92,9 +95,9 @@ describe('Profile edit flow', () => {
         cy.get('input[name="title"]').clear().type(title);
         cy.get('input[name="description"]').clear().type(description);
         cy.get('input[name="start_date"]').click();
-        cy.get('.grid > :nth-child(9)').click();
+        cy.get('.grid > :nth-child(25)').click();
         cy.get('input[name="end_date"]').click();
-        cy.get('.grid > :nth-child(13)').click();
+        cy.get('.grid > :nth-child(27)').click({ force: true });
         cy.contains('button', 'Add Job').click();
 
         cy.wait('@postJobHistory').its('response.statusCode').should('eq', 302);
@@ -121,10 +124,10 @@ describe('Profile edit flow', () => {
         cy.get('input[name="title"]').clear().type(newTitle);
         cy.get('input[name="description"]').clear().type(newDescription);
         cy.get('input[name="start_date"]').click();
-        cy.get('.grid > :nth-child(9)').click();
+        cy.get('.grid > :nth-child(25)').click();
         cy.get('input[type="checkbox"]').click();
         cy.get('input[name="end_date"]').click();
-        cy.get('.grid > :nth-child(13)').click();
+        cy.get('.grid > :nth-child(27)').click({ force: true });
         cy.contains('button', 'Edit Job').click();
 
         cy.wait('@putJobHistory').its('response.statusCode').should('eq', 303);
@@ -169,9 +172,9 @@ describe('Profile edit flow', () => {
         cy.get('input[name="degree"]').clear().type(degree);
         cy.get('input[name="field_of_study"]').clear().type(fieldOfStudy);
         cy.get('input[name="start_date"]').click();
-        cy.get('.grid > :nth-child(9)').click();
+        cy.get('.grid > :nth-child(25)').click();
         cy.get('input[name="end_date"]').click();
-        cy.get('.grid > :nth-child(13)').click();
+        cy.get('.grid > :nth-child(27)').click({ force: true });
         cy.contains('button', 'Add Education').click();
 
         cy.wait('@postEducationHistory')
@@ -200,10 +203,10 @@ describe('Profile edit flow', () => {
         cy.get('input[name="degree"]').clear().type(newDegree);
         cy.get('input[name="field_of_study"]').clear().type(newFieldOfStudy);
         cy.get('input[name="start_date"]').click();
-        cy.get('.grid > :nth-child(9)').click();
+        cy.get('.grid > :nth-child(25)').click();
         cy.get('input[type="checkbox"]').click();
         cy.get('input[name="end_date"]').click();
-        cy.get('.grid > :nth-child(13)').click();
+        cy.get('.grid > :nth-child(27)').click({ force: true });
         cy.contains('button', 'Edit Education').click();
 
         cy.wait('@putEducationHistory')
