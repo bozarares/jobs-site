@@ -2,6 +2,9 @@
 import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
 import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
 import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
+import { useModalStore } from '@/Stores/modalStore';
+
+const modalStore = useModalStore();
 const props = defineProps({
     edit: {
         type: Boolean,
@@ -10,10 +13,6 @@ const props = defineProps({
     user: {
         type: Object,
         required: true,
-    },
-    openModal: {
-        type: Function,
-        default: () => {},
     },
 });
 </script>
@@ -24,7 +23,7 @@ const props = defineProps({
         @click="
             () => {
                 if (edit) {
-                    openModal('socials');
+                    modalStore.openModal('userSocials');
                 }
             }
         "

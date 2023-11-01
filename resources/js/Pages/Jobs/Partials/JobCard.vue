@@ -1,13 +1,10 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
 import { Button } from '@/Components/UI';
-import {
-    EyeIcon,
-    HeartIcon,
-    MapPinIcon,
-    ShareIcon,
-} from '@heroicons/vue/24/outline';
+import { useModalStore } from '@/Stores/modalStore';
 import { Link } from '@inertiajs/vue3';
+
+const modalStore = useModalStore();
 
 const props = defineProps({
     job: {
@@ -25,10 +22,6 @@ const props = defineProps({
     edit: {
         type: Boolean,
         default: false,
-    },
-    openModal: {
-        type: Function,
-        default: () => {},
     },
 });
 
@@ -94,7 +87,7 @@ console.log(props.job);
                 <Button
                     @click="
                         () => {
-                            openModal('apply');
+                            modalStore.openModal('jobApply');
                         }
                     "
                     class="w-full"

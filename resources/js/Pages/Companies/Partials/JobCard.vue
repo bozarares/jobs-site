@@ -4,6 +4,7 @@ import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
 import { Button } from '@/Components/UI';
 import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
+
 const props = defineProps({
     job: { type: Object, default: () => {} },
 });

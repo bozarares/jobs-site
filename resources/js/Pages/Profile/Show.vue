@@ -1,11 +1,13 @@
 <script setup>
 import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
-import ModalWrapper from './Partials/ModalWrapper.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
 import { Button, Timeline } from '@/Components/UI';
 import { ref, watch } from 'vue';
 import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
+import { useModalStore } from '@/Stores/modalStore';
+
+const modalStore = useModalStore();
 const props = defineProps({
     user: {
         type: Object,
@@ -13,11 +15,6 @@ const props = defineProps({
     },
 });
 
-const modal = ref(null);
-
-const openModal = (modalName) => {
-    if (modal.value === null) modal.value = modalName;
-};
 const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
 
@@ -61,24 +58,8 @@ const edit = ref(false);
     >
         <!-- Left side -->
         <div class="flex w-full flex-col gap-4 md:w-auto">
-            <UserCard
-                :edit="edit"
-                :user="user"
-                :open-modal="
-                    (type) => {
-                        openModal(type);
-                    }
-                "
-            />
-            <SocialsCard
-                :edit="edit"
-                :user="user"
-                :open-modal="
-                    (type) => {
-                        openModal(type);
-                    }
-                "
-            />
+            <UserCard :edit="edit" :user="user" />
+            <SocialsCard :edit="edit" :user="user" />
             <SettingsCard
                 :toggle-edit="
                     (value) => {
@@ -97,7 +78,7 @@ const edit = ref(false);
                 @click="
                     () => {
                         if (edit) {
-                            openModal('description');
+                            modalStore.openModal('userDescription');
                         }
                     }
                 "
@@ -123,7 +104,7 @@ const edit = ref(false);
                 @click="
                     () => {
                         if (edit) {
-                            openModal('jobs');
+                            modalStore.openModal('userJobs');
                         }
                     }
                 "
@@ -148,7 +129,7 @@ const edit = ref(false);
                 @click="
                     () => {
                         if (edit) {
-                            openModal('education');
+                            modalStore.openModal('userEducation');
                         }
                     }
                 "
@@ -174,7 +155,7 @@ const edit = ref(false);
                 @click="
                     () => {
                         if (edit) {
-                            openModal('skills');
+                            modalStore.openModal('userSkills');
                         }
                     }
                 "
@@ -207,7 +188,7 @@ const edit = ref(false);
                 @click="
                     () => {
                         if (edit) {
-                            openModal('files');
+                            modalStore.openModal('userFiles');
                         }
                     }
                 "
@@ -267,12 +248,4 @@ const edit = ref(false);
             </div>
         </div>
     </div>
-    <ModalWrapper
-        :modal="modal"
-        :close-modal="
-            () => {
-                modal = null;
-            }
-        "
-    />
 </template>

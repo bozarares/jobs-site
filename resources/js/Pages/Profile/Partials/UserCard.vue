@@ -1,5 +1,8 @@
 <script setup>
 import { Avatar } from '@/Components/UI';
+import { useModalStore } from '@/Stores/modalStore';
+
+const modalStore = useModalStore();
 const props = defineProps({
     edit: {
         type: Boolean,
@@ -8,10 +11,6 @@ const props = defineProps({
     user: {
         type: Object,
         required: true,
-    },
-    openModal: {
-        type: Function,
-        default: () => {},
     },
 });
 </script>
@@ -22,7 +21,7 @@ const props = defineProps({
         @click="
             () => {
                 if (edit) {
-                    openModal('user');
+                    modalStore.openModal('userInfo');
                 }
             }
         "
@@ -37,8 +36,9 @@ const props = defineProps({
         >
             Click field to edit
         </h2>
-        <div class="relative flex flex-col items-center gap-2">
+        <div class="relative z-10 flex flex-col items-center gap-2">
             <Avatar
+                @click.stop.prevent="() => {}"
                 size="2xl"
                 class=""
                 :edit-mode="edit"
@@ -46,7 +46,7 @@ const props = defineProps({
                 :edit-click="
                     () => {
                         if (edit) {
-                            openModal('avatar');
+                            modalStore.openModal('userAvatar');
                         }
                     }
                 "

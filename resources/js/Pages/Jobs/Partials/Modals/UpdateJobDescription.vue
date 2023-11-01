@@ -1,10 +1,16 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
-import { onBeforeMount, onMounted, ref, watch } from 'vue';
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
+import { onMounted, ref, watch, onBeforeMount } from 'vue';
+import { router, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import toolbarOptions from '@/quillToolBarConfig';
+import pkg from 'lodash';
+const { debounce } = pkg;
+import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import toolbarOptions from '@/quillToolBarConfig';
+import { markRaw } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -12,20 +18,22 @@ const props = defineProps({
 const quillRef = ref(null);
 
 const page = usePage();
-const user = page.props.auth.user;
+const job = page.props.job;
 
-const form = useForm({
-    description: user.description,
-});
+const description = ref(job.description);
 
 const submit = () => {
     const htmlContent = quillRef.value.getHTML();
-    form.description = htmlContent;
-    form.post(route('profile.update.description'), {
-        onFinish: () => {
+    description.value = htmlContent;
+    axios
+        .patch(route('job.update.description', { job: job.slug }), {
+            description: description.value,
+        })
+        .then((response) => {
+            console.log(response);
+            router.reload({ preserveState: true, only: ['job'] });
             props.closeModal();
-        },
-    });
+        });
 };
 
 const isClient = ref(false);
@@ -39,7 +47,7 @@ watch(
     () => quillRef.value,
     () => {
         if (quillRef.value) {
-            quillRef.value.setHTML(user.description);
+            quillRef.value.setHTML(description.value);
         }
     },
 );
@@ -47,7 +55,7 @@ watch(
 onMounted(async () => {
     if (isClient.value) {
         const { QuillEditor: QuillImport } = await import('@vueup/vue-quill');
-        QuillEditor.value = QuillImport;
+        QuillEditor.value = markRaw(QuillImport);
     }
 });
 </script>
@@ -81,5 +89,3 @@ onMounted(async () => {
         >
     </div>
 </template>
-
-<style></style>

@@ -2,7 +2,6 @@
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import { onMounted, onBeforeMount, ref, reactive, markRaw } from 'vue';
 import { Button, Checkbox, Input, Radio } from '@/Components/UI';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import toolbarOptions from '@/quillToolBarConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import axios from 'axios';

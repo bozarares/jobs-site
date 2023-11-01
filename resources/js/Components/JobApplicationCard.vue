@@ -28,6 +28,10 @@ const formattedApplicationDate = computed(() => {
 const experiences = computed(() => {
     return job.value.levels.join(', ');
 });
+
+const isClosed = computed(() => {
+    return props.application.status === 'closed';
+});
 </script>
 
 <template>
@@ -88,6 +92,14 @@ const experiences = computed(() => {
                 <span class="font-bold uppercase">Salary</span>
                 {{ job.salary ? `$${job.salary}` : 'Confidential' }}
             </div>
+        </div>
+        <div
+            v-if="isClosed"
+            class="absolute bottom-0 left-0 flex min-h-[10em] w-full translate-y-[10em] cursor-default items-center justify-center rounded-b-md border-t-2 bg-white px-6 transition-transform duration-300 group-hover:translate-y-0"
+        >
+            <Button :options="{ shape: 'pill', color: 'green' }" class="w-full"
+                >Message</Button
+            >
         </div>
     </component>
 </template>

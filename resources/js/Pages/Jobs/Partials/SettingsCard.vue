@@ -1,13 +1,12 @@
 <script setup>
 import { Button } from '@/Components/UI';
+import { useModalStore } from '@/Stores/modalStore';
 import { ref } from 'vue';
+
+const modalStore = useModalStore();
 
 const props = defineProps({
     toggleEdit: {
-        type: Function,
-        default: () => {},
-    },
-    openModal: {
         type: Function,
         default: () => {},
     },
@@ -35,7 +34,7 @@ const edit = ref(false);
                 >{{ edit ? 'Stop edit' : 'Edit' }} Profile</Button
             >
             <Button
-                @click="props.openModal('delete')"
+                @click="modalStore.openModal('jobDelete')"
                 class="w-full"
                 :options="{ shape: 'pill', color: 'red' }"
                 >Delete</Button

@@ -1,6 +1,7 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
 import { Button } from '@/Components/UI';
+import { useModalStore } from '@/Stores/modalStore';
 import {
     EyeIcon,
     HeartIcon,
@@ -8,6 +9,8 @@ import {
     ShareIcon,
 } from '@heroicons/vue/24/outline';
 import { Link } from '@inertiajs/vue3';
+
+const modalStore = useModalStore();
 
 const props = defineProps({
     company: {
@@ -21,10 +24,6 @@ const props = defineProps({
     edit: {
         type: Boolean,
         default: false,
-    },
-    openModal: {
-        type: Function,
-        default: () => {},
     },
     viewButton: {
         type: Boolean,
@@ -46,7 +45,7 @@ const props = defineProps({
                 @click="
                     () => {
                         if (edit) {
-                            openModal('logo');
+                            modalStore.openModal('companyLogo');
                         }
                     }
                 "

@@ -10,6 +10,7 @@ use App\Models\JobType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Mews\Purifier\Facades\Purifier;
 
 class JobController extends Controller
 {
@@ -20,7 +21,7 @@ class JobController extends Controller
         if ($user) {
             $already_applied = $user->alreadyApplied($job);
         }
-        if ($job->company->owner === $user->id) {
+        if ($user && $job->company->owner === $user->id) {
             $job->load(['applications']);
         }
         return Inertia::render('Jobs/Show', [
@@ -61,6 +62,18 @@ class JobController extends Controller
             ['success' => true, 'message' => 'File deleted successfully'],
             200
         );
+    }
+
+    public function updateDescription(Request $request, Job $job)
+    {
+        $request_validated = $request->validate([
+            'description' => 'nullable|string|max:2048',
+        ]);
+        $request_validated['description'] = Purifier::clean(
+            $request_validated['description']
+        );
+        $job->description = $request_validated['description'];
+        $job->save();
     }
 
     public function delete(Request $request, Job $job)

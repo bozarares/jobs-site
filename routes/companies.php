@@ -40,6 +40,10 @@ Route::post('/job/{job}/update/skills', [
     SkillController::class,
     'editJobSkills',
 ])->name('job.update.skills');
+Route::patch('/job/{job}/update/description', [
+    JobController::class,
+    'updateDescription',
+])->name('job.update.description');
 Route::post('/job/{job}/apply', [ApplicationController::class, 'apply'])->name(
     'job.apply'
 );

@@ -2,25 +2,24 @@
 import { usePage } from '@inertiajs/vue3';
 import JobCard from './Partials/JobCard.vue';
 import { ref } from 'vue';
-import ModalWrapper from './Partials/ModalWrapper.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
+import { useModalStore } from '@/Stores/modalStore';
+
+const modalStore = useModalStore();
 
 const props = defineProps({
     applied: {
         type: Boolean,
         default: false,
     },
+    job: {
+        type: Object,
+        default: () => {},
+    },
 });
 
 const page = usePage();
-const job = page.props.job;
 const edit = ref(false);
-
-const modal = ref(null);
-
-const openModal = (modalName) => {
-    if (modal.value === null) modal.value = modalName;
-};
 </script>
 
 <template>
@@ -28,22 +27,8 @@ const openModal = (modalName) => {
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
         <div class="flex w-full flex-col gap-4 md:w-auto">
-            <JobCard
-                :alreadyApplied="props.applied"
-                :job="job"
-                :edit="edit"
-                :open-modal="
-                    (modal) => {
-                        openModal(modal);
-                    }
-                "
-            />
+            <JobCard :alreadyApplied="props.applied" :job="job" :edit="edit" />
             <SettingsCard
-                :open-modal="
-                    (modal) => {
-                        openModal(modal);
-                    }
-                "
                 :toggle-edit="
                     (value) => {
                         edit = value;
@@ -63,7 +48,7 @@ const openModal = (modalName) => {
                 @click="
                     () => {
                         if (edit) {
-                            openModal('description');
+                            modalStore.openModal('jobDescription');
                         }
                     }
                 "
@@ -88,7 +73,7 @@ const openModal = (modalName) => {
                 @click="
                     () => {
                         if (edit) {
-                            openModal('skills');
+                            modalStore.openModal('jobSkills');
                         }
                     }
                 "
@@ -114,12 +99,4 @@ const openModal = (modalName) => {
             </div>
         </div>
     </div>
-    <ModalWrapper
-        :modal="modal"
-        :close-modal="
-            () => {
-                modal = null;
-            }
-        "
-    />
 </template>

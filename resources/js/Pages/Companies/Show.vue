@@ -3,11 +3,11 @@ import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
 import { ref, onMounted, onBeforeMount } from 'vue';
 import OwnerCard from './Partials/OwnerCard.vue';
-import ModalWrapper from './Partials/ModalWrapper.vue';
 import JobCard from './Partials/JobCard.vue';
 import { markRaw } from 'vue';
-import { computed } from 'vue';
+import { useModalStore } from '@/Stores/modalStore';
 
+const modalStore = useModalStore();
 const isClient = ref(false);
 const GoogleMap = ref(null);
 const Marker = ref(null);
@@ -40,11 +40,6 @@ const props = defineProps({
 });
 
 const edit = ref(false);
-const modal = ref(null);
-
-const openModal = (modalName) => {
-    if (modal.value === null) modal.value = modalName;
-};
 
 const mapStyles = ref([
     {
@@ -250,26 +245,13 @@ onMounted(() => {
     >
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex w-full flex-col gap-4 md:w-auto">
-            <CompanyCard
-                :edit="isOwner && edit"
-                :company="company"
-                :open-modal="
-                    (type) => {
-                        openModal(type);
-                    }
-                "
-            />
+            <CompanyCard :edit="isOwner && edit" :company="company" />
             <OwnerCard
                 v-if="isOwner"
                 :applications="company.application_number"
                 :toggle-edit="
                     (value) => {
                         edit = value;
-                    }
-                "
-                :open-modal="
-                    (type) => {
-                        openModal(type);
                     }
                 "
             />
@@ -288,7 +270,7 @@ onMounted(() => {
                 @click="
                     () => {
                         if (edit) {
-                            openModal('description');
+                            modalStore.openModal('companyDescription');
                         }
                     }
                 "
@@ -318,7 +300,7 @@ onMounted(() => {
                 @click="
                     () => {
                         if (edit) {
-                            openModal('contact');
+                            modalStore.openModal('companyContact');
                         }
                     }
                 "
@@ -393,12 +375,4 @@ onMounted(() => {
             </div>
         </div>
     </div>
-    <ModalWrapper
-        :modal="modal"
-        :close-modal="
-            () => {
-                modal = null;
-            }
-        "
-    />
 </template>

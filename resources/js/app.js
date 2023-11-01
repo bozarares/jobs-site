@@ -8,6 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 
 import DefaultLayout from '@/Layouts/DefaultLayout/DefaultLayout.vue';
+import { createPinia } from 'pinia';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -24,6 +25,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(createPinia())
             .use(autoAnimatePlugin)
             .use(ZiggyVue, Ziggy)
             .mount(el);

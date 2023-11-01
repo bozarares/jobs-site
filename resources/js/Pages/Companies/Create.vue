@@ -1,6 +1,5 @@
 <script setup>
 import { Button, Input, SearchInput } from '@/Components/UI';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import filePondServer from '@/filePondConfig';

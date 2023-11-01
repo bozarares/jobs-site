@@ -1,7 +1,10 @@
 <script setup>
 import Button from '@/Components/UI/Button/Button.vue';
+import { useModalStore } from '@/Stores/modalStore';
 import { SparklesIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
+
+const modalStore = useModalStore();
 
 const props = defineProps({
     class: {
@@ -9,10 +12,6 @@ const props = defineProps({
         default: '',
     },
     toggleEdit: {
-        type: Function,
-        default: () => {},
-    },
-    openModal: {
         type: Function,
         default: () => {},
     },
@@ -63,7 +62,7 @@ const edit = ref(false);
                     shape: 'pill',
                     color: 'green',
                 }"
-                @click="openModal('add_job')"
+                @click="modalStore.openModal('companyCreateJob')"
                 >Create job</Button
             >
             <Button

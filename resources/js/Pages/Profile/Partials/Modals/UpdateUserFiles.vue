@@ -2,7 +2,7 @@
 import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, markRaw } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import filePondServer from '@/filePondConfig';
 import { Button, Input } from '@/Components/UI';
@@ -29,7 +29,9 @@ onMounted(async () => {
             'filepond-plugin-file-validate-type'
         );
 
-        FilePond.value = VueFilePond(FilePondPluginFileValidateType.default);
+        FilePond.value = markRaw(
+            VueFilePond(FilePondPluginFileValidateType.default),
+        );
     }
 });
 

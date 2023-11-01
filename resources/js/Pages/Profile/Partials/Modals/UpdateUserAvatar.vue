@@ -1,22 +1,23 @@
 <script setup>
+// TODO: Change form with axios
+// TODO: Change controller so it will send a response
+
 import { useForm, usePage } from '@inertiajs/vue3';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { markRaw, onMounted, ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
-import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-
-const props = defineProps({
-    closeModal: { type: Function, default: () => {} },
-});
+import { onBeforeUnmount } from 'vue';
+import { onBeforeMount } from 'vue';
 
 const isClient = ref(false);
-const FilePond = ref(null);
 
 onBeforeMount(() => {
     isClient.value = typeof window !== 'undefined';
 });
+
+let FilePond = ref(null);
 
 onMounted(async () => {
     if (isClient.value) {
@@ -25,18 +26,23 @@ onMounted(async () => {
             'filepond-plugin-file-validate-type'
         );
 
-        FilePond.value = VueFilePond(FilePondPluginFileValidateType.default);
+        FilePond.value = markRaw(
+            VueFilePond(FilePondPluginFileValidateType.default),
+        );
     }
+});
+
+const props = defineProps({
+    closeModal: { type: Function, default: () => {} },
 });
 
 const page = usePage();
 const csrfToken = page.props.csrf;
-const company = page.props.company;
 
 const filePondRef = ref(null);
 
 const form = useForm({
-    logo: null,
+    avatar: null,
     extension: null,
 });
 
@@ -48,7 +54,7 @@ const submit = () => {
         return;
     }
     submited.value = true;
-    form.patch(route('companies.update.logo', { company: company.slug }), {
+    form.post(route('profile.update.avatar'), {
         onError: () => {
             submited.value = false;
         },
@@ -64,7 +70,7 @@ const onProcessFile = (error, file) => {
         return;
     }
     uploaded.value = true;
-    form.logo = file.serverId;
+    form.avatar = file.serverId;
     form.extension = file.fileExtension;
 };
 
@@ -102,7 +108,9 @@ onBeforeUnmount(() => {
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Edit Logo</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                Edit Avatar
+            </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
                 @click="closeModal()"
@@ -114,10 +122,10 @@ onBeforeUnmount(() => {
                 v-if="isClient && FilePond"
                 id="avatar-upload"
                 @processfile="onProcessFile"
-                :server="filePondServer(csrfToken, form.logo, form.extension)"
+                :server="filePondServer(csrfToken, form.avatar, form.extension)"
                 ref="filePondRef"
                 class="w-full"
-                label-idle="Drop the logo here..."
+                label-idle="Drop the avatar here..."
                 accepted-file-types="image/jpeg, image/png"
             />
         </div>
