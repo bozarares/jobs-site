@@ -1,6 +1,6 @@
 <script setup>
 import { Button, Checkbox, Input } from '@/Components/UI';
-import { AtSymbolIcon, KeyIcon, UserIcon } from '@heroicons/vue/24/outline';
+import { AtSymbolIcon, KeyIcon } from '@heroicons/vue/24/outline';
 import { useForm } from '@inertiajs/vue3';
 
 const form = useForm({

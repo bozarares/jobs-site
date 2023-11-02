@@ -5,8 +5,6 @@
 import { onMounted, ref, watch, onBeforeMount } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
-import pkg from 'lodash';
-const { debounce } = pkg;
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import toolbarOptions from '@/quillToolBarConfig';

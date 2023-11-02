@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Job;
-use App\Models\JobExperience;
 use App\Models\JobLevel;
 use App\Models\JobType;
 use Illuminate\Http\Request;

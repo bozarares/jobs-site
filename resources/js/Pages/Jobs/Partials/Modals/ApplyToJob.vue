@@ -2,14 +2,11 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { Button, Input, Switch } from '@/Components/UI';
-import pkg from 'lodash';
-const { debounce } = pkg;
+import { Button, Switch } from '@/Components/UI';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { watch } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },

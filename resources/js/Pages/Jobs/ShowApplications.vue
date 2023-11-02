@@ -2,10 +2,8 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { Avatar, Button, Input, Switch, Timeline } from '@/Components/UI';
-import pkg from 'lodash';
-const { debounce } = pkg;
-import axios from 'axios';
+import { Button, Timeline } from '@/Components/UI';
+
 import {
     ArrowDownTrayIcon,
     ChevronLeftIcon,
@@ -14,15 +12,10 @@ import {
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import { onBeforeUnmount } from 'vue';
-import { reactive } from 'vue';
+import { ref, watch, computed, reactive } from 'vue';
 
-import { computed } from 'vue';
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
-import { watch } from 'vue';
-import { onBeforeMount } from 'vue';
+
 import UserApplicationCard from './Partials/UserApplicationCard.vue';
 import EmployerPanelCard from './Partials/EmployerPanelCard.vue';
 

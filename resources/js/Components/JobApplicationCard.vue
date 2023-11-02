@@ -1,9 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import RatingStars from './RatingStars.vue';
-import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
 import Button from './UI/Button/Button.vue';
-import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
