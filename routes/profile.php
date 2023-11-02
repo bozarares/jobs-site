@@ -1,115 +1,72 @@
 <?php
-
 use App\Http\Controllers\Profile\EducationHistoryController;
 use App\Http\Controllers\Profile\JobHistoryController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\SkillController;
 use App\Http\Controllers\Profile\UserFilesController;
+use Illuminate\Support\Facades\Route;
 
-// Profile routes
-
-Route::middleware('auth')
-    ->name('profile.')
-    ->group(function () {
-        Route::get('/profile', [ProfileController::class, 'show'])->name(
-            'show'
-        );
-        Route::patch('/profile', [ProfileController::class, 'update'])->name(
-            'update'
-        );
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
-            'destroy'
-        );
-    });
-
-// Avatar, user, socials, and description routes
-Route::middleware('auth')
-    ->name('profile.update.')
-    ->prefix('profile/update')
-    ->group(function () {
-        Route::post('/avatar', [
-            ProfileController::class,
-            'updateAvatar',
-        ])->name('avatar');
-        Route::post('/user', [ProfileController::class, 'updateUser'])->name(
-            'user'
-        );
-        Route::post('/socials', [
-            ProfileController::class,
-            'updateSocials',
-        ])->name('socials');
-        Route::post('/description', [
-            ProfileController::class,
-            'updateDescription',
-        ])->name('description');
-    });
-
-// Job history routes
-Route::middleware('auth')
-    ->name('profile.update.')
-    ->prefix('profile/update')
-    ->group(function () {
-        Route::post('/jobHistory', [
-            JobHistoryController::class,
-            'addJobHistory',
-        ])->name('jobHistory');
-        Route::put('/jobHistory', [
-            JobHistoryController::class,
-            'editJobHistory',
-        ])->name('jobHistory');
-        Route::delete('/jobHistory', [
-            JobHistoryController::class,
-            'deleteJobHistory',
-        ])->name('jobHistory');
-    });
-
-// Education history routes
-Route::middleware('auth')
-    ->name('profile.update.')
-    ->prefix('profile/update')
-    ->group(function () {
-        Route::post('/educationHistory', [
-            EducationHistoryController::class,
-            'addeducationHistory',
-        ])->name('educationHistory');
-        Route::put('/educationHistory', [
-            EducationHistoryController::class,
-            'editeducationHistory',
-        ])->name('educationHistory');
-        Route::delete('/educationHistory', [
-            EducationHistoryController::class,
-            'deleteeducationHistory',
-        ])->name('educationHistory');
-    });
-
-// Skills routes
+// All profile-related routes are protected with 'auth' middleware
 Route::middleware('auth')->group(function () {
-    Route::post('/profile/update/skills', [
-        SkillController::class,
-        'editUserSkills',
-    ])->name('profile.update.skills');
-    Route::post('/get/skills', [SkillController::class, 'search'])->name(
-        'get.skills'
-    );
-});
+    // Basic profile actions
+    Route::controller(ProfileController::class)
+        ->prefix('profile')
+        ->name('profile.')
+        ->group(function () {
+            Route::get('/', 'show')->name('show');
+            Route::patch('/', 'update')->name('update');
+            Route::delete('/', 'destroy')->name('destroy');
+            Route::get('/applications', 'applications')->name('applications');
+        });
 
-// User files routes
-Route::middleware('auth')
-    ->name('profile.update.')
-    ->prefix('profile/update')
-    ->group(function () {
-        Route::post('/files', [UserFilesController::class, 'addFile'])->name(
-            'files'
-        );
-        Route::delete('/files', [
-            UserFilesController::class,
-            'deleteFile',
-        ])->name('files');
-    });
+    // Update profile details
+    Route::controller(ProfileController::class)
+        ->prefix('profile/update')
+        ->name('profile.update.')
+        ->group(function () {
+            Route::post('/avatar', 'updateAvatar')->name('avatar');
+            Route::post('/user', 'updateUser')->name('user');
+            Route::post('/socials', 'updateSocials')->name('socials');
+            Route::post('/description', 'updateDescription')->name(
+                'description'
+            );
+        });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/applications', [
-        ProfileController::class,
-        'applications',
-    ])->name('profile.applications');
+    // Job history management
+    Route::controller(JobHistoryController::class)
+        ->prefix('profile/update/jobHistory')
+        ->name('profile.update.jobHistory.')
+        ->group(function () {
+            Route::post('/', 'addJobHistory')->name('add');
+            Route::put('/', 'editJobHistory')->name('edit');
+            Route::delete('/', 'deleteJobHistory')->name('delete');
+        });
+
+    // Education history management
+    Route::controller(EducationHistoryController::class)
+        ->prefix('profile/update/educationHistory')
+        ->name('profile.update.educationHistory.')
+        ->group(function () {
+            Route::post('/', 'addEducationHistory')->name('add');
+            Route::put('/', 'editEducationHistory')->name('edit');
+            Route::delete('/', 'deleteEducationHistory')->name('delete');
+        });
+
+    // Skill management
+    Route::controller(SkillController::class)
+        ->prefix('profile/update')
+        ->name('profile.update.')
+        ->group(function () {
+            Route::post('/skills', 'editUserSkills')->name('skills');
+            Route::post('/get/skills', 'search')->name('get.skills');
+        });
+
+    // File management
+    Route::controller(UserFilesController::class)
+        ->prefix('profile/update/files')
+        ->name('profile.update.files.')
+        ->group(function () {
+            Route::post('/', 'addFile')->name('add');
+            Route::delete('/', 'deleteFile')->name('delete');
+        });
 });
