@@ -78,6 +78,9 @@ class JobController extends Controller
     public function delete(Request $request, Job $job)
     {
         $job->delete();
-        return redirect()->route('welcome');
+        return response()->json(
+            ['success' => true, 'message' => 'Job deleted successfully'],
+            200
+        );
     }
 }

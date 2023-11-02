@@ -93,10 +93,14 @@ const componentMap = {
         import('@/Pages/Jobs/Partials/Modals/UpdateJobDescription.vue'),
     ),
     jobApplications: defineAsyncComponent(() =>
-        import('@/Pages/Jobs/Partials/Modals/ShowApplications.vue'),
+        import(
+            '@/Pages/Applications/Partials/Modals/ShowApplicationsModal.vue'
+        ),
     ),
     applicationMessage: defineAsyncComponent(() =>
-        import('@/Pages/Jobs/Partials/Modals/ShowApplicationMessage.vue'),
+        import(
+            '@/Pages/Applications/Partials/Modals/ShowApplicationMessage.vue'
+        ),
     ),
 };
 

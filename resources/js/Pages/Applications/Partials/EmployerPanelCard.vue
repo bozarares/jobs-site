@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const applications = ref([]);
-const job = ref(props.application ? props.application.job : null); // Initialize the job ref
+const job = ref(props.application ? props.application.job : null);
 const scrollContainer = ref(null);
 const isLoaded = ref(false);
 const currentPage = ref(1);
@@ -20,7 +20,6 @@ const isCardVisible = ref(false);
 const applicationStatus = ref('open');
 const message = ref('');
 
-// Helper method to reset application loading
 const resetApplicationLoading = () => {
     isLoaded.value = false;
     applications.value = [];

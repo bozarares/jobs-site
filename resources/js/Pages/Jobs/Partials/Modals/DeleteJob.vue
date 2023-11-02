@@ -13,15 +13,20 @@ const props = defineProps({
 });
 
 const page = usePage();
-const user = page.props.auth.user;
+const job = page.props.job;
+const company = page.props.job.company;
 
 const error = ref('');
 const submit = () => {
     axios
-        .delete(route('job.delete', { job: page.props.job.slug }))
+        .delete(route('job.delete', { job: job.slug }))
         .then((response) => {
             if (response.status === 200) {
-                router.reload({ preserveState: true });
+                router.visit(
+                    route('companies.show', {
+                        company: company.slug,
+                    }),
+                );
                 props.closeModal();
             }
         })

@@ -117,7 +117,7 @@ class ApplicationController extends Controller
             ->where('id', '>', $application->id)
             ->min('id');
 
-        return Inertia::render('Jobs/ShowApplications', [
+        return Inertia::render('Application/Show', [
             'application' => $application,
             'previous' => $previousId,
             'next' => $nextId,
