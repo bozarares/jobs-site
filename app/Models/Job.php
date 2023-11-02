@@ -104,4 +104,12 @@ class Job extends Model
     {
         return $this->hasMany(Application::class);
     }
+
+    public function getApplicationCountAttribute()
+    {
+        return $this->applications()
+            ->where('status', 'open')
+            ->orWhere('status', 'accepted')
+            ->count();
+    }
 }

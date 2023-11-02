@@ -22,7 +22,7 @@ class JobController extends Controller
             $already_applied = $user->alreadyApplied($job);
         }
         if ($user && $job->company->owner === $user->id) {
-            $job->load(['applications']);
+            $job->append(['application_count']);
         }
         return Inertia::render('Jobs/Show', [
             'job' => $job->load(['company']),

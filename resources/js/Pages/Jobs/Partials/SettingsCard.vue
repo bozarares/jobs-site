@@ -10,6 +10,10 @@ const props = defineProps({
         type: Function,
         default: () => {},
     },
+    job: {
+        type: Object,
+        required: true,
+    },
 });
 
 const edit = ref(false);
@@ -21,6 +25,20 @@ const edit = ref(false);
     >
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">Settings</h2>
+            <h2 class="text-sm font-bold text-black/70">
+                Applicants:
+                {{
+                    job.application_count === 0 ? 'none' : job.application_count
+                }}
+            </h2>
+            <Button
+                v-if="job.application_count > 0"
+                @click="modalStore.openModal('jobApplications')"
+                class="w-full"
+                :options="{ shape: 'pill', color: 'green' }"
+            >
+                View Applicants
+            </Button>
             <Button
                 id="edit-profile-button"
                 class="w-full"
@@ -31,7 +49,7 @@ const edit = ref(false);
                     }
                 "
                 :options="{ shape: 'pill', color: 'green' }"
-                >{{ edit ? 'Stop edit' : 'Edit' }} Profile</Button
+                >{{ edit ? 'Stop edit' : 'Edit' }} Job</Button
             >
             <Button
                 @click="modalStore.openModal('jobDelete')"

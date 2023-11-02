@@ -1,55 +1,38 @@
 <script setup>
-import { ref } from 'vue';
-import { onBeforeMount } from 'vue';
+import { ref, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
-import { watchEffect } from 'vue';
-import { defineAsyncComponent } from 'vue';
+import { watch } from 'vue';
 
 const modalStore = useModalStore();
 
 const isClient = ref(false);
-onBeforeMount(() => {
+
+onMounted(() => {
     isClient.value = typeof window !== 'undefined';
+
+    onUnmounted(() => {
+        toggleScroll(true);
+    });
 });
 
-function disableScroll() {
-    if (isClient.value) {
-        document.body.addEventListener('mousewheel', preventScroll, {
-            passive: false,
-        });
-        document.body.addEventListener('touchmove', preventScroll, {
-            passive: false,
-        });
-    }
-}
-function enableScroll() {
-    if (isClient.value) {
-        document.body.removeEventListener('mousewheel', preventScroll, {
-            passive: false,
-        });
-        document.body.removeEventListener('touchmove', preventScroll, {
-            passive: false,
-        });
-    }
-}
+watch(
+    () => modalStore.modal,
+    (newValue, oldValue) => {
+        toggleScroll(!newValue);
+    },
+);
 
-function preventScroll(e) {
-    e.preventDefault();
-}
-
-watchEffect(() => {
-    if (isClient.value) {
-        if (modalStore.modal) {
-            disableScroll();
-            document.body.style.inlineSize = '100%';
-            document.body.style.overflowY = 'scroll';
-        } else {
-            enableScroll();
-            document.body.style.inlineSize = 'auto';
-            document.body.style.overflowY = 'auto';
-        }
+function toggleScroll(enable) {
+    if (enable) {
+        // Re-enable scrolling
+        document.body.style.overflow = 'auto';
+        document.body.style.height = 'auto';
+    } else {
+        // Disable scrolling
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
     }
-});
+}
 
 const componentMap = {
     // Profile Modals
@@ -109,6 +92,12 @@ const componentMap = {
     jobDescription: defineAsyncComponent(() =>
         import('@/Pages/Jobs/Partials/Modals/UpdateJobDescription.vue'),
     ),
+    jobApplications: defineAsyncComponent(() =>
+        import('@/Pages/Jobs/Partials/Modals/ShowApplications.vue'),
+    ),
+    applicationMessage: defineAsyncComponent(() =>
+        import('@/Pages/Jobs/Partials/Modals/ShowApplicationMessage.vue'),
+    ),
 };
 
 const enterActiveClass = 'transition-all duration-150 ease-out';
@@ -139,6 +128,11 @@ const leaveToClass = 'opacity-0';
                     class="absolute inset-0 bg-black opacity-20"
                 ></div>
                 <component
+                    v-bind="
+                        modalStore.modal === 'applicationMessage'
+                            ? { args: modalStore.args }
+                            : {}
+                    "
                     :is="componentMap[modalStore.modal]"
                     :close-modal="
                         () => {

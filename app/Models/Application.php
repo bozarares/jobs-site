@@ -15,10 +15,13 @@ class Application extends Model
         parent::boot();
 
         static::updated(function ($application) {
-            Log::info('Application updated');
             if ($application->isDirty('status')) {
-                Log::info('Application status changed');
-                $application->files()->detach();
+                if ($application->status === 'hired') {
+                    $application->files()->detach();
+                }
+                if ($application->status === 'closed') {
+                    $application->files()->detach();
+                }
             }
         });
     }

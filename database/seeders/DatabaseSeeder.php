@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Company::factory()->create([
             'name' => 'Test Company',
         ]);
+
+        \App\Models\User::factory(50)->create();
+
         \App\Models\JobLevel::factory()->create([
             'level' => 'Internship',
         ]);
@@ -42,5 +45,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\JobType::factory()->create([
             'type' => 'On-Site',
         ]);
+
+        \App\Models\Job::factory(3)->create();
+        // \App\Models\Application::factory(100)->create();
     }
 }

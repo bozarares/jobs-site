@@ -29,6 +29,7 @@ const edit = ref(false);
         <div class="flex w-full flex-col gap-4 md:w-auto">
             <JobCard :alreadyApplied="props.applied" :job="job" :edit="edit" />
             <SettingsCard
+                :job="job"
                 :toggle-edit="
                     (value) => {
                         edit = value;

@@ -7,8 +7,11 @@ import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MessageIcon from './UI/Icons/MessageIcon.vue';
 dayjs.extend(relativeTime);
+import { useModalStore } from '@/Stores/modalStore';
 
+const modalStore = useModalStore();
 const featured = ref(false);
 const props = defineProps({
     application: {
@@ -101,5 +104,19 @@ const isClosed = computed(() => {
                 >Message</Button
             >
         </div>
+        <MessageIcon
+            v-if="props.application.message"
+            class="absolute right-0 top-0 m-2 h-8 w-8 fill-green-600"
+            @click.stop.prevent="
+                () => {
+                    modalStore.openModal(
+                        'applicationMessage',
+                        (args = {
+                            message: application.message,
+                        }),
+                    );
+                }
+            "
+        />
     </component>
 </template>

@@ -36,6 +36,23 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::post('/job/{job}/application', [
+    ApplicationController::class,
+    'get',
+])->name('job.get.application');
+Route::patch('/job/{job}/application/{application}', [
+    ApplicationController::class,
+    'setStatus',
+])->name('application.set.status');
+Route::post('/job/{job}/application/load', [
+    ApplicationController::class,
+    'load',
+])->name('job.load.application');
+
+Route::get('/jobs/{job}/application/{application}', [
+    ApplicationController::class,
+    'show',
+])->name('job.show.application');
 Route::post('/job/{job}/update/skills', [
     SkillController::class,
     'editJobSkills',
