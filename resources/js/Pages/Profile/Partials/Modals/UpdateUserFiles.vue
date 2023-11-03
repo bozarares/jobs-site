@@ -59,7 +59,7 @@ const addFile = () => {
         return;
     }
     axios
-        .post(route('profile.update.files'), {
+        .post(route('profile.update.files.add'), {
             name: fileName.value,
             extension: fileExtension.value,
             servername: fileServername.value,
@@ -81,7 +81,7 @@ const addFile = () => {
 
 const removeFile = (fileId) => {
     axios
-        .delete(route('profile.update.files'), {
+        .delete(route('profile.update.files.delete'), {
             data: {
                 id: fileId,
             },
@@ -107,7 +107,6 @@ const onProcessFile = (error, file) => {
         console.log(error);
         return;
     }
-    console.log(file);
     fileName.value = sanitizeFilename(file.filenameWithoutExtension);
     fileExtension.value = file.fileExtension;
     fileServername.value = file.serverId;
@@ -116,7 +115,6 @@ const onProcessFile = (error, file) => {
 const onProcessFileProgress = (file, progress) => {
     if (progress === 1) {
         uploaded.value = true;
-        console.log('onProcessFileProgress uploaded', uploaded.value);
     }
 };
 

@@ -28,7 +28,6 @@ const submit = () => {
             description: description.value,
         })
         .then((response) => {
-            console.log(response);
             router.reload({ preserveState: true, only: ['job'] });
             props.closeModal();
         });

@@ -58,8 +58,10 @@ Route::middleware('auth')->group(function () {
         ->name('profile.update.')
         ->group(function () {
             Route::post('/skills', 'editUserSkills')->name('skills');
-            Route::post('/get/skills', 'search')->name('get.skills');
         });
+    Route::post('/get/skills', [SkillController::class, 'search'])->name(
+        'get.skills'
+    );
 
     // File management
     Route::controller(UserFilesController::class)

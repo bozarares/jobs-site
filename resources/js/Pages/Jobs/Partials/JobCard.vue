@@ -24,8 +24,6 @@ const props = defineProps({
         default: false,
     },
 });
-
-console.log(props.job);
 </script>
 <template>
     <div

@@ -40,7 +40,7 @@ const resetForm = () => {
 };
 
 const submitAdd = () => {
-    form.post(route('profile.update.jobHistory'), {
+    form.post(route('profile.update.jobHistory.add'), {
         onSuccess: (response) => {
             jobHistory.value = page.props.user.job_history;
             resetForm();
@@ -50,7 +50,7 @@ const submitAdd = () => {
 };
 
 const submitEdit = () => {
-    form.put(route('profile.update.jobHistory'), {
+    form.put(route('profile.update.jobHistory.edit'), {
         onSuccess: (response) => {
             jobHistory.value = page.props.user.job_history;
             editMode.value = false;
@@ -61,7 +61,7 @@ const submitEdit = () => {
 };
 
 const submitDelete = () => {
-    form.delete(route('profile.update.jobHistory'), {
+    form.delete(route('profile.update.jobHistory.delete'), {
         onSuccess: (response) => {
             jobHistory.value = page.props.user.job_history;
             editMode.value = false;

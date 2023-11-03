@@ -42,7 +42,7 @@ const resetForm = () => {
 };
 
 const submitAdd = () => {
-    form.post(route('profile.update.educationHistory'), {
+    form.post(route('profile.update.educationHistory.add'), {
         onSuccess: (response) => {
             educationHistory.value = page.props.user.education_history;
             resetForm();
@@ -52,7 +52,7 @@ const submitAdd = () => {
 };
 
 const submitEdit = () => {
-    form.put(route('profile.update.educationHistory'), {
+    form.put(route('profile.update.educationHistory.edit'), {
         onSuccess: (response) => {
             educationHistory.value = page.props.user.education_history;
             resetForm();
@@ -62,7 +62,7 @@ const submitEdit = () => {
 };
 
 const submitDelete = () => {
-    form.delete(route('profile.update.educationHistory'), {
+    form.delete(route('profile.update.educationHistory.delete'), {
         onSuccess: (response) => {
             educationHistory.value = page.props.user.education_history;
             resetForm();

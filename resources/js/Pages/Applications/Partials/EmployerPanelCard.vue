@@ -42,7 +42,6 @@ const loadApplications = async (page = 1) => {
         applications.value.push(...response.data.applications);
         isLoaded.value = true;
     } catch (error) {
-        console.log(isLoaded.value);
         console.error('There was an error fetching the applications:', error);
     }
 };
