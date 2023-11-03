@@ -22,6 +22,7 @@ return new class extends Migration {
                 ->cascadeOnDelete();
             $table->string('status')->default('open');
             $table->text('message')->nullable();
+            $table->dateTime('seen_at')->nullable();
             $table->timestamps();
         });
     }

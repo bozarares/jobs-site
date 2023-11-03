@@ -25,8 +25,8 @@ class Application extends Model
         });
     }
 
-    protected $fillable = ['status', 'message', 'job_id', 'user_id'];
-    protected $casts = ['status' => 'string'];
+    protected $fillable = ['status', 'message', 'job_id', 'user_id', 'seen_at'];
+    protected $casts = ['status' => 'string', 'seen_at' => 'datetime'];
     protected $with = ['user', 'job', 'files'];
 
     public function user()

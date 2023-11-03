@@ -8,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import MessageIcon from './UI/Icons/MessageIcon.vue';
 dayjs.extend(relativeTime);
 import { useModalStore } from '@/Stores/modalStore';
+import { EyeIcon } from '@heroicons/vue/24/outline';
 
 const modalStore = useModalStore();
 const featured = ref(false);
@@ -23,6 +24,11 @@ const job = ref(props.application.job);
 const formattedApplicationDate = computed(() => {
     return props.application.created_at
         ? dayjs(props.application.created_at).format('D MMM. YYYY')
+        : false;
+});
+const formattedSeenDate = computed(() => {
+    return props.application.seen_at
+        ? dayjs(props.application.seen_at).format('D MMM. YYYY')
         : false;
 });
 
@@ -75,11 +81,19 @@ const isClosed = computed(() => {
                 {{ job.title }}
             </h2>
             <h3>{{ experiences }}</h3>
-            <div v-if="formattedApplicationDate" class="mt-4 text-sm">
-                Applied - {{ formattedApplicationDate }}
-            </div>
-            <div v-if="application.status" class="mt-2 text-sm">
-                Status - {{ application.status }}
+            <div class="mt-6 flex flex-col items-center gap-1">
+                <div v-if="formattedApplicationDate" class="text-sm">
+                    Applied - {{ formattedApplicationDate }}
+                </div>
+                <div
+                    v-if="formattedSeenDate"
+                    class="flex items-center gap-1 text-sm text-blue-500"
+                >
+                    <EyeIcon class="w-4" /> Seen - {{ formattedSeenDate }}
+                </div>
+                <div v-if="application.status" class="text-sm">
+                    Status - {{ application.status }}
+                </div>
             </div>
         </div>
 
@@ -94,14 +108,14 @@ const isClosed = computed(() => {
                 {{ job.salary ? `$${job.salary}` : 'Confidential' }}
             </div>
         </div>
-        <div
+        <!-- <div
             v-if="isClosed"
             class="absolute bottom-0 left-0 flex min-h-[10em] w-full translate-y-[10em] cursor-default items-center justify-center rounded-b-md border-t-2 bg-white px-6 transition-transform duration-300 group-hover:translate-y-0"
         >
             <Button :options="{ shape: 'pill', color: 'green' }" class="w-full"
                 >Message</Button
             >
-        </div>
+        </div> -->
         <MessageIcon
             v-if="props.application.message"
             class="absolute right-0 top-0 m-2 h-8 w-8 fill-green-600"

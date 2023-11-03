@@ -1,7 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import RatingStars from './RatingStars.vue';
-import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
+import {
+    EyeIcon,
+    HandThumbDownIcon,
+    HandThumbUpIcon,
+} from '@heroicons/vue/24/outline';
 import Button from './UI/Button/Button.vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
@@ -19,6 +23,12 @@ const props = defineProps({
 const formattedApplicationDate = computed(() => {
     return props.job.application_date
         ? dayjs(props.job.application_date).format('D MMM. YYYY')
+        : false;
+});
+
+const formattedSeenDate = computed(() => {
+    return props.job.seen_at
+        ? dayjs(props.seen_at).format('D MMM. YYYY')
         : false;
 });
 
@@ -62,8 +72,19 @@ const experiences = computed(() => {
                 {{ job.title }}
             </h2>
             <h3>{{ experiences }}</h3>
-            <div v-if="formattedApplicationDate" class="mt-10 text-sm">
-                Applied - {{ formattedApplicationDate }}
+            <div class="mt-6 flex flex-col items-center gap-1">
+                <div v-if="formattedApplicationDate" class="text-sm">
+                    Applied - {{ formattedApplicationDate }}
+                </div>
+                <div
+                    v-if="formattedSeenDate"
+                    class="flex items-center gap-1 text-sm text-blue-500"
+                >
+                    <EyeIcon class="w-4" /> Seen - {{ formattedSeenDate }}
+                </div>
+                <div v-if="job.status" class="text-sm">
+                    Status - {{ job.status }}
+                </div>
             </div>
         </div>
 

@@ -47,6 +47,7 @@ class ApplicationController extends Controller
         );
     }
 
+    // TODO - Add status (accepted) to the query
     public function get(Request $request, Job $job)
     {
         $request_validated = $request->validate([
@@ -79,6 +80,12 @@ class ApplicationController extends Controller
             );
         }
 
+        /** @var \App\Models\Application $currentApplication */
+        if ($currentApplication->seen_at === null) {
+            $currentApplication->seen_at = now();
+            $currentApplication->save();
+        }
+
         $previousId = $job
             ->applications()
             ->where('status', 'open')
@@ -99,6 +106,7 @@ class ApplicationController extends Controller
         ]);
     }
 
+    // TODO - Add status (accepted) to the query
     public function show(Request $request, Job $job, Application $application)
     {
         if ($application->job_id !== $job->id) {
@@ -117,7 +125,12 @@ class ApplicationController extends Controller
             ->where('id', '>', $application->id)
             ->min('id');
 
-        return Inertia::render('Application/Show', [
+        if ($application->seen_at === null) {
+            $application->seen_at = now();
+            $application->save();
+        }
+
+        return Inertia::render('Applications/Show', [
             'application' => $application,
             'previous' => $previousId,
             'next' => $nextId,

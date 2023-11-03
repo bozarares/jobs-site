@@ -29,6 +29,18 @@ class WelcomeController extends Controller
                         ->where('user_id', $user->id)
                         ->limit(1),
                 ])
+                ->addSelect([
+                    'seen_at' => Application::select('seen_at')
+                        ->whereColumn('job_id', 'jobs.id')
+                        ->where('user_id', $user->id)
+                        ->limit(1),
+                ])
+                ->addSelect([
+                    'status' => Application::select('status')
+                        ->whereColumn('job_id', 'jobs.id')
+                        ->where('user_id', $user->id)
+                        ->limit(1),
+                ])
 
                 ->latest()
                 ->limit(5)
