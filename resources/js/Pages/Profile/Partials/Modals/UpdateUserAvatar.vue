@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                Edit Avatar
+                {{ $t('modals.edit_avatar') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
                 :server="filePondServer(csrfToken, form.avatar, form.extension)"
                 ref="filePondRef"
                 class="w-full"
-                label-idle="Drop the avatar here..."
+                :label-idle="$t('labels.avatar_drop')"
                 accepted-file-types="image/jpeg, image/png"
             />
         </div>
@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Save</Button
+            >{{ $t('buttons.save') }}</Button
         >
     </div>
 </template>

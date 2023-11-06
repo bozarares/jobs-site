@@ -117,14 +117,17 @@ watch(applicationStatus, () => {
                 isCardVisible = !isCardVisible;
             }
         "
-        class="fixed bottom-0 z-[100] flex w-full flex-col items-center justify-center bg-white py-2 md:hidden"
+        class="fixed bottom-0 flex w-full flex-col items-center justify-center bg-white py-2 md:hidden"
     >
         <ChevronRightIcon v-if="isCardVisible" class="w-6" />
         <ChevronLeftIcon v-if="!isCardVisible" class="w-6" />
-        <div>{{ isCardVisible ? 'Hide' : 'Show' }} Employer Options</div>
+        <div>
+            {{ isCardVisible ? 'Hide' : 'Show' }}
+            {{ $t('modals.employer_options') }}
+        </div>
     </div>
     <div
-        class="container absolute z-[100] m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out md:relative md:z-50 md:block md:max-w-sm"
+        class="container absolute m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out md:relative md:block md:max-w-sm"
         :class="{
             'translate-x-[150%] md:translate-x-0': !isCardVisible,
             'translate-x-0': isCardVisible,
@@ -132,7 +135,7 @@ watch(applicationStatus, () => {
     >
         <div class="h-full">
             <h2 class="px-4 text-lg font-bold uppercase text-black/60">
-                Employer Options
+                {{ $t('modals.employer_options') }}
             </h2>
             <div class="flex justify-around border-t-[1px]">
                 <div
@@ -147,7 +150,7 @@ watch(applicationStatus, () => {
                         }
                     "
                 >
-                    Open
+                    {{ $t('buttons.open') }}
                 </div>
                 <div
                     @click="
@@ -162,7 +165,7 @@ watch(applicationStatus, () => {
                             applicationStatus === 'accepted',
                     }"
                 >
-                    Accepted
+                    {{ $t('buttons.accepted') }}
                 </div>
             </div>
             <div
@@ -202,7 +205,11 @@ watch(applicationStatus, () => {
                 v-if="applicationStatus === 'open'"
                 class="flex h-[10em] flex-col items-center justify-center gap-4"
             >
-                <Input class="px-2" label="Message" v-model="message" />
+                <Input
+                    class="px-2"
+                    :label="$t('labels.message')"
+                    v-model="message"
+                />
                 <div class="flex items-center justify-center gap-1">
                     <Button
                         @click="
@@ -212,7 +219,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-r-none"
                         :options="{ color: 'green', shape: 'pill' }"
-                        >Accept</Button
+                        >{{ $t('buttons.accept') }}</Button
                     >
                     <Button
                         @click="
@@ -222,7 +229,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-l-none"
                         :options="{ color: 'red', shape: 'pill' }"
-                        >Decline</Button
+                        >{{ $t('buttons.decline') }}</Button
                     >
                 </div>
             </div>
@@ -240,7 +247,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-r-none"
                         :options="{ color: 'green', shape: 'pill' }"
-                        >Hire</Button
+                        >{{ $t('buttons.hired') }}</Button
                     >
                     <Button
                         @click="
@@ -250,7 +257,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-l-none"
                         :options="{ color: 'red', shape: 'pill' }"
-                        >Decline</Button
+                        >{{ $t('buttons.decline') }}</Button
                     >
                 </div>
             </div>

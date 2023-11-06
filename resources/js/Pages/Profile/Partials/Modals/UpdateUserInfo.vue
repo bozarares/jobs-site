@@ -44,7 +44,7 @@ const submit = () => {
             <Input
                 v-model="form.name"
                 :error="form.errors.name"
-                label="Name"
+                :label="$t('labels.name')"
                 type="text"
                 name="name"
                 :options="{ leftIcon: UserIcon, size: 'small' }"

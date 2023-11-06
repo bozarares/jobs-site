@@ -1,4 +1,5 @@
 <script setup>
+// TODO - Add a box for Company Create same as CompanyCard
 import { Button } from '@/Components/UI';
 import { Link } from '@inertiajs/vue3';
 import CompanyCard from './Partials/CompanyCard.vue';
@@ -13,7 +14,7 @@ const props = defineProps({
 <template>
     <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
         <h1 class="text-center text-2xl font-semibold text-gray-800">
-            Businesses Center
+            {{ $t('labels.business_center') }}
         </h1>
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <div class="flex gap-2">

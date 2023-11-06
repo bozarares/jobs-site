@@ -34,20 +34,20 @@ const submit = () => {
         class="container flex max-w-md flex-col gap-4 px-4 py-2"
     >
         <h2 class="w-full text-2xl font-bold text-gray-700">
-            Why create an account?
+            {{ $t('generic.why_create_account') }}
             <ul class="list-inside list-disc text-sm">
-                <li>You can save jobs</li>
-                <li>You can apply to jobs</li>
-                <li>You will be in touch with the employer</li>
+                <li>{{ $t('generic.save_jobs') }}</li>
+                <li>{{ $t('generic.apply_jobs') }}</li>
+                <li>{{ $t('generic.save_time') }}</li>
             </ul>
         </h2>
         <h2 class="w-full text-2xl font-bold text-gray-700">
-            I want an account
+            {{ $t('generic.want_account') }}
         </h2>
         <Input
             v-model="form.name"
             :error="form.errors.name"
-            label="Name"
+            :label="$t('labels.name')"
             type="text"
             name="name"
             :options="{ leftIcon: UserIcon }"
@@ -55,7 +55,7 @@ const submit = () => {
         <Input
             v-model="form.email"
             :error="form.errors.email"
-            label="Email"
+            :label="$t('labels.email')"
             type="text"
             name="email"
             :options="{ leftIcon: AtSymbolIcon }"
@@ -63,7 +63,7 @@ const submit = () => {
         <Input
             v-model="form.password"
             :error="form.errors.password"
-            label="Password"
+            :label="$t('labels.password')"
             type="password"
             name="password"
             :options="{ leftIcon: KeyIcon }"
@@ -71,16 +71,16 @@ const submit = () => {
         <Input
             v-model="form.password_confirmation"
             :error="form.errors.password_confirmation"
-            label="Password Confirmation"
+            :label="$t('labels.confirm_password')"
             type="password"
             name="password_confirmation"
             :options="{ leftIcon: KeyIcon }"
         />
         <Checkbox
             v-model="agreement"
-            label="I agree with terms and conditions"
+            :label="$t('labels.terms_and_conditions')"
             color="gray"
         />
-        <Button :disabled="!agreement">Register</Button>
+        <Button :disabled="!agreement">{{ $t('labels.register') }}</Button>
     </form>
 </template>

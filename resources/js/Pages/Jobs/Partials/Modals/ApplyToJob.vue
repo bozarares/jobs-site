@@ -45,7 +45,9 @@ const submit = () => {
         class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Apply</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('modals.apply_to_job') }}
+            </h2>
             <div>
                 <XMarkIcon
                     class="h-6 cursor-pointer text-black/60"
@@ -57,23 +59,30 @@ const submit = () => {
         <div class="flex flex-col gap-2 overflow-auto">
             <div class="flex flex-col">
                 <h2 class="font-bold">
-                    Profile completion:
-                    {{ completion }}%
+                    {{ $t('profile.completion') }}: {{ completion }}%
                 </h2>
                 <ul
                     class="list-inside list-disc text-sm text-red-500"
                     v-if="completion != 100"
                 >
-                    <li v-if="user.description === ''">No description</li>
-                    <li v-if="user.avatar === null">No Avatar</li>
+                    <li v-if="user.description === ''">
+                        {{ $t('generic.no_description_added') }}
+                    </li>
+                    <li v-if="user.avatar === null">
+                        {{ $t('generic.no_avatar_added') }}
+                    </li>
                     <li v-if="user.job_history.length === 0">
-                        No Job History added
+                        {{ $t('generic.no_job_history_added') }}
                     </li>
                     <li v-if="user.education_history.length === 0">
-                        No Edication History added
+                        {{ $t('generic.no_education_history_added') }}
                     </li>
-                    <li v-if="user.skills.length === 0">No Skills added</li>
-                    <li v-if="user.files.length === 0">No Files added</li>
+                    <li v-if="user.skills.length === 0">
+                        {{ $t('generic.no_skills_added') }}
+                    </li>
+                    <li v-if="user.files.length === 0">
+                        {{ $t('generic.no_files_added') }}
+                    </li>
                     <li
                         v-if="
                             !user.social_github ||
@@ -81,18 +90,19 @@ const submit = () => {
                             !user.social_facebook
                         "
                     >
-                        No Socials added
+                        {{ $t('generic.no_social_links_added') }}
                     </li>
                 </ul>
                 <div v-if="completion != 100">
                     <h2>
-                        Note: Completing your profile will increase your chances
-                        of getting hired
+                        {{ $t('generic.uncompleted_profile') }}
                     </h2>
                 </div>
             </div>
             <div class="mt-8 flex flex-col">
-                <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>
+                <h2 class="text-lg font-bold uppercase text-black/60">
+                    {{ $t('fields.files') }}
+                </h2>
                 <div
                     class="mt-2 flex w-full justify-between border-b border-black/10 pb-5 first:mt-4 last:border-b-0 last:pb-0"
                     v-for="file in user.files"
@@ -110,8 +120,7 @@ const submit = () => {
                 </div>
             </div>
             <h2 class="mt-4 text-justify font-bold">
-                Note: Files will be available only for the company you are
-                applying to, for the duration of the application process
+                {{ $t('generic.apply_message') }}
             </h2>
         </div>
         <h2 v-if="error" class="text-center text-sm font-bold text-red-500">

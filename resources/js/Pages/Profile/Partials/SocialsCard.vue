@@ -34,13 +34,15 @@ const props = defineProps({
     >
         <h2
             v-if="edit"
-            class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+            class="absolute right-0 top-0 pr-2 text-xs font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
         >
-            Click field to edit
+            {{ $t('generic.click_field') }}
         </h2>
 
         <div class="relative flex flex-col items-center gap-2">
-            <h2 class="text-lg font-bold uppercase text-black/60">Socials</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('fields.social_links') }}
+            </h2>
             <h2 class="text-center font-bold text-black/60">
                 {{ user.email }}
             </h2>

@@ -49,6 +49,7 @@
         "tinymce": "^6.7.1",
         "vite-plugin-mkcert": "^1.16.0",
         "vue-filepond": "^7.0.4",
+        "vue-i18n": "^9.6.5",
         "vue3-google-map": "^0.18.0"
     }
 }

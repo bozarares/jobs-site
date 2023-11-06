@@ -143,7 +143,7 @@ const endDateComputed = computed({
                     "
                     class="text-sm"
                     :options="{ color: 'blue', shape: 'pill' }"
-                    >Edit</Button
+                    >{{ $t('buttons.edit') }}</Button
                 >
                 <Button
                     @click="
@@ -154,12 +154,12 @@ const endDateComputed = computed({
                     "
                     class="text-sm"
                     :options="{ color: 'red', shape: 'pill' }"
-                    >Delete</Button
+                    >{{ $t('buttons.delete') }}</Button
                 >
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
-            You don't have a job history
+            {{ $t('fallbacks.no_job_history') }}
         </div>
     </div>
     <div
@@ -167,7 +167,7 @@ const endDateComputed = computed({
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                Edit Job History
+                {{ $t('modals.edit_job_history') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -180,7 +180,7 @@ const endDateComputed = computed({
                 <Input
                     v-model="form.company"
                     :error="form.errors.company"
-                    label="Company"
+                    :label="$t('labels.company')"
                     type="text"
                     name="company"
                     :options="{ leftIcon: PhoneIcon, size: 'small' }"
@@ -188,7 +188,7 @@ const endDateComputed = computed({
                 <Input
                     v-model="form.title"
                     :error="form.errors.title"
-                    label="Title"
+                    :label="$t('labels.title')"
                     type="text"
                     name="title"
                     :options="{ leftIcon: UserIcon, size: 'small' }"
@@ -197,7 +197,7 @@ const endDateComputed = computed({
             <Input
                 v-model="form.description"
                 :error="form.errors.description"
-                label="Description"
+                :label="$t('labels.description')"
                 type="text"
                 name="description"
                 :options="{ leftIcon: UserIcon, size: 'small' }"
@@ -205,7 +205,7 @@ const endDateComputed = computed({
             <DateTime
                 v-model="startDateComputed"
                 class=""
-                label="Start Date"
+                :label="$t('labels.start_date')"
                 name="start_date"
                 :dateOptions="{
                     minDate: new Date(1900, 0, 0),
@@ -218,7 +218,7 @@ const endDateComputed = computed({
                     v-model="endDateComputed"
                     :disabled="toDate"
                     class=""
-                    label="End Date"
+                    :label="$t('labels.end_date')"
                     name="end_date"
                     :dateOptions="{
                         minDate: new Date(1900, 0, 0),
@@ -226,7 +226,7 @@ const endDateComputed = computed({
                     }"
                     :options="{ leftIcon: CalendarDaysIcon }"
                 />
-                <Checkbox v-model="toDate" label="To date" />
+                <Checkbox v-model="toDate" :label="$t('labels.to_date')" />
             </div>
         </div>
         <div v-if="!editMode" class="flex w-full items-center">
@@ -238,7 +238,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'green', shape: 'pill' }"
-                >Add Job</Button
+                >{{ $t('buttons.add') }}</Button
             >
         </div>
         <div v-else class="flex w-full items-center gap-4">
@@ -256,7 +256,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'red', shape: 'pill' }"
-                >Cancel</Button
+                >{{ $t('buttons.cancel') }}</Button
             >
             <Button
                 @click="
@@ -266,7 +266,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'green', shape: 'pill' }"
-                >Edit Job</Button
+                >{{ $t('buttons.edit') }}</Button
             >
         </div>
     </div>

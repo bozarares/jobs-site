@@ -6,11 +6,12 @@ import {
     DropdownLabel,
     DropdownMenu,
     DropdownSeparator,
+    LanguageSelector,
 } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 
 import { Link, usePage } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import {
@@ -19,11 +20,11 @@ import {
     Cog8ToothIcon,
     UserIcon,
 } from '@heroicons/vue/24/outline';
-import { computed } from 'vue';
-import { onMounted } from 'vue';
-import { inject } from 'vue';
-import { onBeforeMount } from 'vue';
+import { useLocaleStore } from '@/Stores/localeStore';
 
+const localeStore = useLocaleStore();
+
+const language = ref(localeStore.locale);
 const page = usePage();
 const isOwner = computed(() => {
     if (page.props.auth.user) {
@@ -31,22 +32,26 @@ const isOwner = computed(() => {
     }
     return false;
 });
-// If you want to use watch
+
+watch(
+    () => language.value,
+    (newValue) => {
+        localeStore.setLocale(newValue);
+    },
+);
+
 watch(
     () => page.props.auth.user,
     (newValue, oldValue) => {
-        // Dacă un utilizator nou este autentificat și vechiul utilizator nu a fost autentificat
         if (newValue && !oldValue) {
             broadcastListen(newValue.id);
             console.log('Listening to user ' + newValue.id);
-        }
-        // Dacă nu există niciun utilizator autentificat și anterior a fost un utilizator autentificat
-        else if (!newValue && oldValue) {
+        } else if (!newValue && oldValue) {
             broadcastDisconnect();
             console.log('Disconnecting from user ' + oldValue.id);
         }
     },
-    { deep: true }, // Pentru a urmări schimbările adânci în proprietatea user
+    { deep: true },
 );
 </script>
 
@@ -69,17 +74,31 @@ watch(
                     :href="route('companies.index')"
                     v-if="isOwner"
                     :options="{ shape: 'pill', color: 'green' }"
-                    >Businesses</Button
+                    >{{ $t('buttons.businesses') }}</Button
                 >
-                <Link v-else :href="route('companies.create')" class="text-sm"
-                    >Try recruiting</Link
+                <Link
+                    v-else
+                    :href="route('companies.create')"
+                    class="text-sm"
+                    >{{ $t('buttons.try_recruting') }}</Link
                 >
                 <DropdownMenu align="right" class="mt-6 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <BellIcon class="h-6 w-6" />
                     </template>
-                    <DropdownHeader>Notification Centre</DropdownHeader>
+                    <DropdownHeader>{{
+                        $t('labels.notifications')
+                    }}</DropdownHeader>
                 </DropdownMenu>
+                <LanguageSelector
+                    v-model="language"
+                    :languages="[
+                        { locale: 'en_US', emoji: '🇺🇸', name: 'English' },
+                        { locale: 'ro_RO', emoji: '🇷🇴', name: 'Română' },
+                        { locale: 'ja_JP', emoji: '🇯🇵', name: '日本語' },
+                        // { locale: 'fr', emoji: '🇫🇷', name: 'Francais' },
+                    ]"
+                />
                 <DropdownMenu align="right" class="mt-4 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <Avatar
@@ -145,16 +164,16 @@ watch(
                                 :href="route('profile.show')"
                                 class="text-sm font-bold"
                                 :leftIcon="UserIcon"
-                                >Profile</DropdownItem
+                                >{{ $t('labels.profile') }}</DropdownItem
                             >
                             <DropdownSeparator />
-                            <DropdownLabel align="left"
-                                >User controlls</DropdownLabel
-                            >
+                            <DropdownLabel align="left">{{
+                                $t('labels.user_controlls')
+                            }}</DropdownLabel>
                             <DropdownItem
                                 class="text-sm font-bold"
                                 :leftIcon="Cog8ToothIcon"
-                                >Settings</DropdownItem
+                                >{{ $t('labels.settings') }}</DropdownItem
                             >
                             <DropdownItem
                                 :is="Link"
@@ -162,7 +181,7 @@ watch(
                                 method="POST"
                                 class="text-sm font-bold"
                                 :leftIcon="ArrowRightOnRectangleIcon"
-                                >Logout</DropdownItem
+                                >{{ $t('labels.logout') }}</DropdownItem
                             >
                         </div>
                     </div>

@@ -57,11 +57,15 @@ function handleTouchEnd(event) {
             class="flex flex-row flex-wrap items-center justify-center gap-2 py-2 md:flex-col md:items-start md:justify-between"
         >
             <div class="flex items-center gap-2 text-sm">
-                <span class="font-bold uppercase">Location </span>
+                <span class="font-bold uppercase"
+                    >{{ $t('labels.location') }}
+                </span>
                 {{ job.location }} ({{ job.type }})
             </div>
             <div class="flex items-center gap-2 text-sm">
-                <span class="font-bold uppercase">Salary</span>
+                <span class="font-bold uppercase">{{
+                    $t('labels.salary')
+                }}</span>
                 {{ salary }}
             </div>
         </div>

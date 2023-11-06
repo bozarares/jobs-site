@@ -59,7 +59,7 @@ const submit = () => {
             <div class="flex w-full flex-col items-center gap-8 px-8">
                 <Input
                     v-model="form.name"
-                    label="Name"
+                    :label="$t('labels.name')"
                     type="text"
                     name="name"
                     :error="form.errors.name"
@@ -67,7 +67,7 @@ const submit = () => {
                 ></Input>
                 <Input
                     v-model="form.email"
-                    label="Email"
+                    :label="$t('labels.email')"
                     type="email"
                     name="email"
                     :error="form.errors.email"
@@ -78,7 +78,7 @@ const submit = () => {
                 ></Input>
                 <Input
                     v-model="form.password"
-                    label="Password"
+                    :label="$t('labels.password')"
                     type="password"
                     name="password"
                     :error="form.errors.password"

@@ -9,6 +9,7 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 
 import DefaultLayout from '@/Layouts/DefaultLayout/DefaultLayout.vue';
 import { createPinia } from 'pinia';
+import { i18n } from './Languages/i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -23,12 +24,17 @@ createInertiaApp({
         return page;
     },
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(createPinia())
-            .use(autoAnimatePlugin)
-            .use(ZiggyVue, Ziggy)
-            .mount(el);
+        const app = createApp({ render: () => h(App, props) });
+        app.use(plugin);
+        app.use(createPinia());
+        app.use(autoAnimatePlugin);
+        app.use(ZiggyVue, Ziggy);
+
+        app.use(i18n);
+
+        app.mount(el);
+
+        return app;
     },
     progress: {
         color: '#4B5563',

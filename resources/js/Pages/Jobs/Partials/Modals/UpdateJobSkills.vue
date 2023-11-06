@@ -94,7 +94,7 @@ onMounted(() => {
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
-            You don't have selected skills
+            {{ $t('fallbacks.no_skills') }}
         </div>
     </div>
     <div
@@ -102,7 +102,7 @@ onMounted(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                Edit Job Skills
+                {{ $t('modals.edit_required_skills') }}
             </h2>
             <div>
                 <XMarkIcon
@@ -113,7 +113,11 @@ onMounted(() => {
         </div>
 
         <div class="flex gap-2 overflow-auto">
-            <Input label="Skills" v-model="inputTextValue" name="add_skill" />
+            <Input
+                :label="$tc('labels.skill', 1)"
+                v-model="inputTextValue"
+                name="add_skill"
+            />
             <Button
                 @click="
                     () => {
@@ -121,7 +125,7 @@ onMounted(() => {
                         inputTextValue = '';
                     }
                 "
-                >Add</Button
+                >{{ $t('buttons.add') }}</Button
             >
         </div>
         <div class="flex flex-wrap gap-2">
@@ -158,7 +162,7 @@ onMounted(() => {
             "
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Save</Button
+            >{{ $t('buttons.save') }}</Button
         >
     </div>
 </template>

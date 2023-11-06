@@ -127,7 +127,7 @@ onMounted(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                Edit Contact
+                {{ $t('modals.edit_contact') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -139,20 +139,20 @@ onMounted(() => {
             <Input
                 name="Phone number"
                 v-model="form.phone_number"
-                label="Contact phone number"
+                :label="$t('labels.contact_phone_number')"
                 :error="form.errors.phone_number"
                 :options="{ leftIcon: PhoneIcon }"
             />
             <Input
                 name="Contact email"
                 v-model="form.email"
-                label="Contact email"
+                :label="$t('labels.contact_email')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />
             <SearchInput
                 v-model="selectedCountry"
-                label="Country"
+                :label="$t('labels.country')"
                 type="text"
                 name="Company country"
                 :options="{
@@ -176,7 +176,7 @@ onMounted(() => {
             <SearchInput
                 v-model="selectedState"
                 :disabled="!states.length"
-                label="County/State"
+                :label="$t('labels.county')"
                 type="text"
                 name="Company state"
                 :options="{
@@ -200,7 +200,7 @@ onMounted(() => {
             <SearchInput
                 v-model="selectedTown"
                 :disabled="!towns.length"
-                label="Town"
+                :label="$t('labels.town')"
                 type="text"
                 name="Company town"
                 :options="{
@@ -226,7 +226,7 @@ onMounted(() => {
                 :disabled="!addressValid"
                 :options="{ leftIcon: MapPinIcon }"
                 v-model="form.address"
-                label="Address"
+                :label="$t('labels.address')"
                 :error="form.errors.address"
             />
         </div>
@@ -234,7 +234,7 @@ onMounted(() => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Save</Button
+            >{{ $t('buttons.save') }}</Button
         >
     </div>
 </template>

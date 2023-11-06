@@ -32,9 +32,9 @@ const props = defineProps({
     >
         <h2
             v-if="edit"
-            class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+            class="absolute right-0 top-0 pr-2 text-xs font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
         >
-            Click field to edit
+            {{ $t('generic.click_field') }}
         </h2>
         <div class="relative z-10 flex flex-col items-center gap-2">
             <Avatar

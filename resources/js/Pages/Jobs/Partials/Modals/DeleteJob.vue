@@ -43,7 +43,9 @@ const submit = () => {
         class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Delete</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('modals.delete_job') }}
+            </h2>
             <div>
                 <XMarkIcon
                     class="h-6 cursor-pointer text-black/60"
@@ -54,8 +56,7 @@ const submit = () => {
 
         <div class="flex flex-col gap-2 overflow-auto">
             <h2 class="text-center font-bold text-red-500">
-                Deleting will close all applications and remove access to the
-                files
+                {{ $t('generic.delete_job_message') }}
             </h2>
         </div>
         <div class="flex w-full items-center justify-center gap-4">
@@ -67,7 +68,7 @@ const submit = () => {
                 "
                 class=""
                 :options="{ color: 'red', shape: 'pill' }"
-                >Delete</Button
+                >{{ $t('buttons.delete') }}</Button
             >
             <Button
                 @click="
@@ -77,7 +78,7 @@ const submit = () => {
                 "
                 class=""
                 :options="{ color: 'gray', shape: 'pill' }"
-                >Cancel</Button
+                >{{ $t('buttons.cancel') }}</Button
             >
         </div>
     </div>

@@ -3,14 +3,11 @@ import { Button, Timeline } from '@/Components/UI';
 
 import axios from 'axios';
 import {
-    ArrowDownTrayIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    EyeIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
 
-import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 import UserApplicationCard from '../UserApplicationCard.vue';
 import EmployerPanelCard from '../EmployerPanelCard.vue';
 
@@ -145,7 +142,7 @@ onBeforeUnmount(() => {
         >
             <div class="flex items-center justify-between px-4 md:px-8">
                 <h2 class="text-lg font-bold uppercase text-black/60">
-                    Application
+                    {{ $t('modals.view_application') }}
                 </h2>
                 <div class="flex gap-2">
                     <div class="flex gap-4">
@@ -190,7 +187,9 @@ onBeforeUnmount(() => {
                 class="flex w-full flex-col gap-4 overflow-auto p-4 py-4 md:p-8"
             >
                 <UserApplicationCard :user="user" />
-                <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>
+                <h2 class="text-lg font-bold uppercase text-black/60">
+                    {{ $t('fields.files') }}
+                </h2>
                 <div
                     class="group/file relative flex justify-center gap-2 px-2 py-2"
                     v-for="file in application.current.files"
@@ -204,7 +203,7 @@ onBeforeUnmount(() => {
                 </div>
                 <div>
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        Description
+                        {{ $t('fields.description') }}
                     </h2>
                     <div
                         class="ql-editor prose"
@@ -213,19 +212,19 @@ onBeforeUnmount(() => {
                 </div>
                 <div class="pr-8">
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        Job history
+                        {{ $t('fields.job_history') }}
                     </h2>
                     <Timeline :items="jobHistoryTimeline" />
                 </div>
                 <div class="pr-8">
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        Education history
+                        {{ $t('fields.education_history') }}
                     </h2>
                     <Timeline :items="educationHistoryTimeline" />
                 </div>
                 <div>
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        Skills
+                        {{ $t('fields.skills') }}
                     </h2>
                     <div class="flex flex-wrap gap-2">
                         <div

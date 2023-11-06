@@ -38,7 +38,7 @@ const submit = () => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                Edit Socials
+                {{ $t('modals.edit_social_links') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -50,7 +50,7 @@ const submit = () => {
             <Input
                 v-model="form.phone_number"
                 :error="form.errors.phone_number"
-                label="Phone number"
+                :label="$t('labels.phone_number')"
                 type="text"
                 name="phone_number"
                 :options="{ leftIcon: PhoneIcon, size: 'small' }"
@@ -93,7 +93,7 @@ const submit = () => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Save</Button
+            >{{ $t('buttons.save') }}</Button
         >
     </div>
 </template>

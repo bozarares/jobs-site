@@ -244,15 +244,17 @@ const revertFiles = () => {
     <div
         class="container mt-24 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
     >
-        <h2 class="text-2xl font-bold">Thank you for trusting us!</h2>
+        <h2 class="text-2xl font-bold">
+            {{ $t('generic.company_create_thanks') }}
+        </h2>
         <h3 class="mb-4 text-lg font-semibold text-gray-700">
-            Before recruiting you need to add your company
+            {{ $t('generic.company_create_before') }}
         </h3>
         <div class="flex w-full max-w-lg flex-col items-center gap-4">
             <Input
                 name="Company name"
                 v-model="form.name"
-                label="Company name"
+                :label="$t('labels.company_name')"
                 :error="form.errors.name"
                 :options="{ leftIcon: BuildingOfficeIcon }"
             />
@@ -260,27 +262,27 @@ const revertFiles = () => {
             <Input
                 name="Company code"
                 v-model="form.code"
-                label="Unique registration code"
+                :label="$t('labels.unique_registration_code')"
                 :error="form.errors.code"
                 :options="{ leftIcon: RectangleStackIcon }"
             />
             <Input
                 name="Phone number"
                 v-model="form.phone_number"
-                label="Contact phone number"
+                :label="$t('labels.contact_phone_number')"
                 :error="form.errors.phone_number"
                 :options="{ leftIcon: PhoneIcon }"
             />
             <Input
                 name="Contact email"
                 v-model="form.email"
-                label="Contact email"
+                :label="$t('labels.contact_email')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />
             <SearchInput
                 v-model="selectedCountry"
-                label="Country"
+                :label="$t('labels.country')"
                 type="text"
                 name="Company country"
                 :options="{
@@ -307,7 +309,7 @@ const revertFiles = () => {
             <SearchInput
                 v-model="selectedState"
                 :disabled="states.length === 0"
-                label="County/State"
+                :label="$t('labels.county')"
                 type="text"
                 name="Company state"
                 :options="{
@@ -334,7 +336,7 @@ const revertFiles = () => {
             <SearchInput
                 v-model="selectedTown"
                 :disabled="towns.length === 0"
-                label="Town"
+                :label="$t('labels.town')"
                 type="text"
                 name="Company town"
                 :options="{
@@ -362,7 +364,7 @@ const revertFiles = () => {
                 "
                 :options="{ leftIcon: MapPinIcon }"
                 v-model="form.address"
-                label="Address"
+                :label="$t('labels.address')"
                 :error="form.errors.address"
             />
             <FilePond
@@ -374,7 +376,7 @@ const revertFiles = () => {
                 "
                 ref="filePondRef"
                 class="w-full"
-                label-idle="Drop the company logo here..."
+                :label-idle="$t('labels.logo_drop')"
                 accepted-file-types="image/jpeg, image/png"
             />
             <p
@@ -383,7 +385,9 @@ const revertFiles = () => {
             >
                 {{ form.errors.logo }}
             </p>
-            <p class="text-center text-lg">Add a description to your company</p>
+            <p class="text-center text-lg">
+                {{ $t('labels.add_description') }}
+            </p>
             <div>
                 <QuillEditor
                     v-if="isClient && QuillEditor"
@@ -408,7 +412,7 @@ const revertFiles = () => {
                     "
                     class="mt-4 w-24"
                     :options="{ color: 'green' }"
-                    >Create</Button
+                    >{{ $t('buttons.create') }}</Button
                 >
             </div>
         </div>

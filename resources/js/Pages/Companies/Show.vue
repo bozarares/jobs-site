@@ -264,7 +264,7 @@ onMounted(() => {
         >
             <!-- Description -->
             <ContentCard
-                title="Description"
+                :title="$t('fields.description')"
                 :edit="edit"
                 id-edit="company-description-edit"
                 modal="companyDescription"
@@ -273,7 +273,7 @@ onMounted(() => {
             </ContentCard>
 
             <!-- Jobs -->
-            <ContentCard title="Jobs">
+            <ContentCard :title="$t('fields.jobs')">
                 <p class="text-sm font-bold" v-if="company.jobs.length === 0">
                     There are no jobs available at the moment
                 </p>
@@ -282,7 +282,7 @@ onMounted(() => {
 
             <!-- Contact -->
             <ContentCard
-                title="Contact"
+                :title="$t('fields.contact')"
                 :edit="edit"
                 id-edit="company-contact-edit"
                 modal="companyContact"

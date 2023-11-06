@@ -40,11 +40,11 @@ const submit = () => {
         @submit.prevent="submit"
         class="flex w-full flex-col gap-4 p-4"
     >
-        <DropdownHeader>Login</DropdownHeader>
+        <DropdownHeader>{{ $t('labels.login') }}</DropdownHeader>
         <Input
             v-model="form.email"
             :error="form.errors.email"
-            label="Email"
+            :label="$t('labels.email')"
             type="email"
             name="email"
             :options="{ leftIcon: UserIcon, size: 'small' }"
@@ -52,7 +52,7 @@ const submit = () => {
         <Input
             v-model="form.password"
             :error="form.errors.password"
-            label="Password"
+            :label="$t('labels.password')"
             type="password"
             name="password"
             :options="{
@@ -65,20 +65,24 @@ const submit = () => {
                 },
             }"
         />
-        <Checkbox label="Remember me" color="gray" v-model="form.remember" />
-        <Button type="submit">Login</Button>
+        <Checkbox
+            :label="$t('labels.remember_me')"
+            color="gray"
+            v-model="form.remember"
+        />
+        <Button type="submit">{{ $t('labels.login') }}</Button>
         <div class="flex flex-col items-center gap-1 text-sm">
             <Link
                 @click.prevent="triggerClose()"
                 href="/"
                 class="text-blue-600 hover:text-blue-800"
-                >Forgot your password?</Link
+                >{{ $t('labels.forgot_password') }}</Link
             >
             <Link
                 @click.prevent="triggerClose()"
                 :href="route('connect')"
                 class="text-blue-600 hover:text-blue-800"
-                >I want an account!</Link
+                >{{ $t('labels.want_account') }}</Link
             >
         </div>
     </form>

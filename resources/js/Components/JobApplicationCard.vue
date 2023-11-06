@@ -83,16 +83,22 @@ const isClosed = computed(() => {
             <h3>{{ experiences }}</h3>
             <div class="mt-6 flex flex-col items-center gap-1">
                 <div v-if="formattedApplicationDate" class="text-sm">
-                    Applied - {{ formattedApplicationDate }}
+                    {{ $t('labels.applied') }} - {{ formattedApplicationDate }}
                 </div>
                 <div
                     v-if="formattedSeenDate"
                     class="flex items-center gap-1 text-sm text-blue-500"
                 >
-                    <EyeIcon class="w-4" /> Seen - {{ formattedSeenDate }}
+                    <EyeIcon class="w-4" /> {{ $t('labels.seen') }} -
+                    {{ formattedSeenDate }}
                 </div>
                 <div v-if="application.status" class="text-sm">
-                    Status - {{ application.status }}
+                    {{ $t('labels.status') }} -
+                    {{
+                        $t('labels.application_status', {
+                            status: application.status,
+                        })
+                    }}
                 </div>
             </div>
         </div>
@@ -100,11 +106,15 @@ const isClosed = computed(() => {
         <!-- Location and Salary -->
         <div class="mt-4 flex items-center justify-between">
             <div class="flex flex-col items-center justify-center text-sm">
-                <span class="text-center font-bold uppercase">Location </span>
+                <span class="text-center font-bold uppercase"
+                    >{{ $t('labels.location') }}
+                </span>
                 {{ job.location }}
             </div>
             <div class="flex flex-col items-center text-sm">
-                <span class="font-bold uppercase">Salary</span>
+                <span class="font-bold uppercase">{{
+                    $t('labels.salary')
+                }}</span>
                 {{ job.salary ? `$${job.salary}` : 'Confidential' }}
             </div>
         </div>

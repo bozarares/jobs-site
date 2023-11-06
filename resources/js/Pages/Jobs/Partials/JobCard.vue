@@ -66,15 +66,25 @@ const props = defineProps({
             <RatingStars :rating.number="3.5"></RatingStars>
             <div class="flex flex-col items-center gap-2">
                 <div class="flex items-center gap-2 text-sm">
-                    <span class="font-bold uppercase">Salary</span>
-                    {{ job.salary ? `$${job.salary}` : 'Confidential' }}
+                    <span class="font-bold uppercase">{{
+                        $t('labels.salary')
+                    }}</span>
+                    {{
+                        job.salary
+                            ? `$${job.salary}`
+                            : $t('labels.confidential')
+                    }}
                 </div>
                 <div class="flex items-center gap-2 text-sm">
-                    <span class="font-bold uppercase">Town</span>
+                    <span class="font-bold uppercase">{{
+                        $t('labels.town')
+                    }}</span>
                     {{ job.location }}
                 </div>
                 <div class="flex items-center gap-2 text-sm">
-                    <span class="font-bold uppercase">Type</span>
+                    <span class="font-bold uppercase">{{
+                        $t('labels.type')
+                    }}</span>
                     {{ job.type }}
                 </div>
             </div>
@@ -94,7 +104,7 @@ const props = defineProps({
                         color: 'green',
                         // leftIcon: ShareIcon,
                     }"
-                    >Apply</Button
+                    >{{ $t('buttons.apply') }}</Button
                 >
             </div>
         </div>

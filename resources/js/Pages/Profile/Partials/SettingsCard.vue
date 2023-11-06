@@ -22,13 +22,24 @@ const edit = ref(false);
         class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <div class="relative flex flex-col items-center gap-2">
-            <h2 class="text-lg font-bold uppercase text-black/60">Settings</h2>
-            <h2>
-                Profile Completion:
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('fields.settings') }}
+            </h2>
+            <h2
+                :class="{
+                    'bg-red-500': user.profileCompletion < 50,
+                    'bg-yellow-500':
+                        user.profileCompletion >= 50 &&
+                        user.profileCompletion < 75,
+                    'bg-green-500': user.profileCompletion >= 75,
+                }"
+                class="rounded px-2 py-0.5 font-extrabold text-white"
+            >
+                {{ $t('labels.profile') }}:
                 <span>{{ Math.round(user.profileCompletion) }}%</span>
             </h2>
             <div class="flex items-center gap-2">
-                <h2>Edit Profile</h2>
+                <h2>{{ $t('profile.edit') }}</h2>
                 <Switch
                     :on-change="
                         (value) => {

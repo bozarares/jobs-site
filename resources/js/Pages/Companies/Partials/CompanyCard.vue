@@ -68,9 +68,9 @@ const props = defineProps({
             />
             <h2
                 v-if="edit"
-                class="pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                class="pr-2 text-sm font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
             >
-                Click logo to edit
+                {{ $t('generic.click_logo') }}
             </h2>
             <!-- Job Title -->
             <h2 class="mb-2 text-center text-lg font-bold uppercase">
@@ -101,7 +101,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: ShareIcon,
                     }"
-                    >Share</Button
+                    >{{ $t('buttons.share') }}</Button
                 >
                 <Button
                     :id="`company-view-${company.name}`"
@@ -115,7 +115,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: EyeIcon,
                     }"
-                    >View</Button
+                    >{{ $t('buttons.view') }}</Button
                 >
                 <Button
                     class="w-full"
@@ -124,7 +124,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: HeartIcon,
                     }"
-                    >Follow</Button
+                    >{{ $t('buttons.follow') }}</Button
                 >
             </div>
         </div>

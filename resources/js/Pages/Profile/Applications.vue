@@ -22,11 +22,15 @@ const filteredApplication = computed(() => {
     <div
         class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-gray-800"
     >
-        <Link :href="route('profile.applications')">My applications</Link>
-        <Link :href="route('profile.applications')">Likes</Link>
+        <Link :href="route('profile.applications')">{{
+            $t('labels.my_applications')
+        }}</Link>
+        <Link>{{ $t('labels.likes') }}</Link>
     </div>
     <div class="flex w-full items-center justify-center gap-2 bg-gray-50 p-6">
-        <h1 class="text-lg font-bold text-black/70">Show closed jobs</h1>
+        <h1 class="text-lg font-bold text-black/70">
+            {{ $t('generic.show_closed_jobs') }}
+        </h1>
         <Switch
             :on-change="
                 (value) => {

@@ -55,10 +55,12 @@ onMounted(async () => {
 <template>
     <div
         id="company-description-edit-modal"
-        class="container relative mx-auto flex max-h-[50em] max-w-2xl flex-col gap-8 overflow-scroll rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[50em] max-w-2xl flex-col gap-8 rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Add Job</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('modals.create_job') }}
+            </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
                 @click="closeModal()"
@@ -69,7 +71,7 @@ onMounted(async () => {
         </div>
         <div class="flex flex-wrap justify-center gap-12 md:flex-row">
             <div class="flex flex-col items-start">
-                <h2 class="w-full text-center">Job Type</h2>
+                <h2 class="w-full text-center">{{ $t('labels.job_type') }}</h2>
                 <Radio
                     label="Remote"
                     name="type"
@@ -90,7 +92,9 @@ onMounted(async () => {
                 />
             </div>
             <div class="flex flex-col items-start">
-                <h2 class="w-full text-center">Experience Level</h2>
+                <h2 class="w-full text-center">
+                    {{ $t('labels.experience_level') }}
+                </h2>
                 <Checkbox
                     label="Internship"
                     name="experience"
@@ -119,11 +123,11 @@ onMounted(async () => {
             <div class="flex w-full flex-col items-start gap-4 sm:w-auto">
                 <Input
                     :disabled="salary_confidential"
-                    label="Salary"
+                    :label="$t('labels.salary')"
                     v-model.number="job.salary"
                 />
                 <Checkbox
-                    label="Confidential"
+                    :label="$t('labels.confidential')"
                     name="type"
                     v-model="salary_confidential"
                     @change="
@@ -134,7 +138,7 @@ onMounted(async () => {
                         }
                     "
                 />
-                <Input label="Town" v-model="job.location" />
+                <Input :label="$t('labels.town')" v-model="job.location" />
             </div>
         </div>
         <div class="flex h-auto min-h-[15em] flex-col overflow-hidden pb-20">
@@ -150,7 +154,7 @@ onMounted(async () => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Save</Button
+            >{{ $t('buttons.save') }}</Button
         >
     </div>
 </template>
