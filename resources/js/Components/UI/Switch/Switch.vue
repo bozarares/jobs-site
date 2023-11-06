@@ -19,7 +19,7 @@ const toggle = () => {
 };
 </script>
 <template>
-    <div @click="toggle" class="relative">
+    <div @click="toggle" class="relative cursor-pointer">
         <div
             :class="[
                 isOn ? 'bg-green-400' : 'bg-gray-400',

@@ -1,4 +1,5 @@
 <script setup>
+import { Switch } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 import { useModalStore } from '@/Stores/modalStore';
 import { SparklesIcon } from '@heroicons/vue/24/outline';
@@ -33,6 +34,17 @@ const edit = ref(false);
             Owner Panel
         </h2>
         <div class="mt-3 flex w-[10em] flex-col items-center gap-3 md:w-full">
+            <div class="flex items-center gap-2">
+                <h2>Edit Company</h2>
+                <Switch
+                    :on-change="
+                        (value) => {
+                            edit = value;
+                            toggleEdit(edit);
+                        }
+                    "
+                />
+            </div>
             <Button
                 class="w-full"
                 :options="{
@@ -42,20 +54,7 @@ const edit = ref(false);
                 }"
                 >Feature</Button
             >
-            <Button
-                id="edit-company-button"
-                @click="
-                    () => {
-                        edit = !edit;
-                        toggleEdit(edit);
-                    }
-                "
-                class="w-full"
-                :options="{
-                    shape: 'pill',
-                }"
-                >Edit Company</Button
-            >
+
             <Button
                 class="w-full"
                 :options="{

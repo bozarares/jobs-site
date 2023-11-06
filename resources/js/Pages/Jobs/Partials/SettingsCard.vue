@@ -1,5 +1,5 @@
 <script setup>
-import { Button } from '@/Components/UI';
+import { Button, Switch } from '@/Components/UI';
 import { useModalStore } from '@/Stores/modalStore';
 import { ref } from 'vue';
 
@@ -39,18 +39,17 @@ const edit = ref(false);
             >
                 View Applicants
             </Button>
-            <Button
-                id="edit-profile-button"
-                class="w-full"
-                @click="
-                    () => {
-                        edit = !edit;
-                        toggleEdit(edit);
-                    }
-                "
-                :options="{ shape: 'pill', color: 'green' }"
-                >{{ edit ? 'Stop edit' : 'Edit' }} Job</Button
-            >
+            <div class="flex items-center gap-2">
+                <h2>Edit Job</h2>
+                <Switch
+                    :on-change="
+                        (value) => {
+                            edit = value;
+                            toggleEdit(edit);
+                        }
+                    "
+                />
+            </div>
             <Button
                 @click="modalStore.openModal('jobDelete')"
                 class="w-full"

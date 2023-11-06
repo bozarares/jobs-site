@@ -21,7 +21,7 @@ const salary = computed(() => {
 let touchStartX = 0;
 let touchEndX = 0;
 
-const revealButtons = ref(false); // Ref pentru a controla vizibilitatea butoanelor
+const revealButtons = ref(false);
 
 function handleTouchStart(event) {
     touchStartX = event.touches[0].clientX;
@@ -30,10 +30,10 @@ function handleTouchStart(event) {
 function handleTouchEnd(event) {
     touchEndX = event.changedTouches[0].clientX;
     if (touchStartX > touchEndX + 100) {
-        revealButtons.value = true; // Afișează butoanele dacă este o tragere spre stânga
+        revealButtons.value = true;
     }
     if (touchStartX < touchEndX + 100) {
-        revealButtons.value = false; // Afișează butoanele dacă este o tragere spre stânga
+        revealButtons.value = false;
     }
 }
 </script>
@@ -42,7 +42,7 @@ function handleTouchEnd(event) {
     <div
         @touchstart="handleTouchStart"
         @touchend="handleTouchEnd"
-        class="group container prose relative flex flex-col items-center justify-between rounded-sm px-4 outline outline-gray-200 md:flex-row"
+        class="group/jobs container prose relative flex flex-col items-center justify-between rounded-sm px-4 outline outline-gray-200 md:flex-row"
     >
         <div class="flex flex-col md:items-start">
             <div class="text-center text-xl font-bold md:text-start">
@@ -66,7 +66,7 @@ function handleTouchEnd(event) {
             </div>
         </div>
         <div
-            class="absolute left-0 hidden h-full w-full items-center justify-center gap-4 opacity-0 backdrop-blur-[2.5px] transition-all duration-200 ease-in-out md:flex md:group-hover:opacity-100"
+            class="absolute left-0 hidden h-full w-full items-center justify-center gap-4 opacity-0 backdrop-blur-[2.5px] transition-all duration-200 ease-in-out md:flex md:group-hover/jobs:opacity-100"
         >
             <div class="flex gap-1">
                 <Button

@@ -57,14 +57,16 @@ Route::middleware('auth')->group(function () {
     // Job management routes
     // TODO - add 'can.edit.job' middleware
     Route::controller(JobController::class)->group(function () {
-        Route::post('/job/{job}/update/skills', 'editJobSkills')->name(
-            'job.update.skills'
-        );
         Route::patch(
             '/job/{job}/update/description',
             'updateDescription'
         )->name('job.update.description');
         Route::delete('/job/{job}', 'delete')->name('job.delete');
+    });
+    Route::controller(SkillController::class)->group(function () {
+        Route::post('/job/{job}/update/skills', 'editJobSkills')->name(
+            'job.update.skills'
+        );
     });
 
     // Application submission route

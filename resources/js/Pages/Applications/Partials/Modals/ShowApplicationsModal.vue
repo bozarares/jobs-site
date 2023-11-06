@@ -24,6 +24,7 @@ import {
     watch,
     onBeforeMount,
 } from 'vue';
+import FileAction from '@/Components/FileAction.vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -195,36 +196,11 @@ onBeforeUnmount(() => {
                     v-for="file in application.current.files"
                     :key="file.id"
                 >
-                    <PDFIcon v-if="file.extension === 'pdf'" class="h-6" />{{
-                        file.name
-                    }}
-                    <div
-                        class="absolute inset-0 left-0 hidden h-full w-full items-center justify-center gap-4 opacity-0 backdrop-blur-[1px] transition-all duration-200 ease-in-out md:flex md:group-hover/file:opacity-100"
-                    >
-                        <Button
-                            as="a"
-                            is="a"
-                            target="_blank"
-                            :href="route('users.files.show', file.servername)"
-                            :options="{
-                                leftIcon: EyeIcon,
-                                color: 'green',
-                                shape: 'pill',
-                            }"
-                        />
-                        <Button
-                            as="a"
-                            is="a"
-                            target="_blank"
-                            :href="
-                                route('users.files.download', file.servername)
-                            "
-                            :options="{
-                                leftIcon: ArrowDownTrayIcon,
-                                shape: 'pill',
-                            }"
-                        />
-                    </div>
+                    <FileAction
+                        :file="file"
+                        show-route="users.files.show"
+                        download-route="users.files.download"
+                    />
                 </div>
                 <div>
                     <h2 class="text-lg font-bold uppercase text-black/60">

@@ -6,6 +6,8 @@ import { Button, Timeline } from '@/Components/UI';
 import { ref, watch } from 'vue';
 import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import { useModalStore } from '@/Stores/modalStore';
+import ContentCard from '@/Components/ContentCard.vue';
+import FileAction from '@/Components/FileAction.vue';
 
 const modalStore = useModalStore();
 const props = defineProps({
@@ -61,6 +63,7 @@ const edit = ref(false);
             <UserCard :edit="edit" :user="user" />
             <SocialsCard :edit="edit" :user="user" />
             <SettingsCard
+                :user="props.user"
                 :toggle-edit="
                     (value) => {
                         edit = value;
@@ -73,106 +76,43 @@ const edit = ref(false);
         <div
             class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
-            <div
-                :id="edit ? 'profile-description-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('userDescription');
-                        }
-                    }
-                "
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
-                :class="{
-                    'cursor-pointer': edit,
-                }"
+            <!-- Description -->
+            <ContentCard
+                title="Description"
+                :edit="edit"
+                id-edit="profile-description-edit"
+                modal="userDescription"
             >
-                <h2
-                    v-if="edit"
-                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Description
-                </h2>
                 <div class="ql-editor prose" v-html="user.description" />
-            </div>
-            <div
-                :id="edit ? 'profile-jobs-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('userJobs');
-                        }
-                    }
-                "
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
-            >
-                <h2
-                    v-if="edit"
-                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Job history
-                </h2>
-                <Timeline :items="jobHistoryTimeline" />
-            </div>
-            <div
-                :id="edit ? 'profile-education-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('userEducation');
-                        }
-                    }
-                "
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
-            >
-                <h2
-                    v-if="edit"
-                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
+            </ContentCard>
 
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Education
-                </h2>
-                <Timeline :items="educationHistoryTimeline" />
-            </div>
-            <div
-                :id="edit ? 'profile-skills-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('userSkills');
-                        }
-                    }
-                "
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+            <!-- Job History -->
+            <ContentCard
+                title="Job History"
+                :edit="edit"
+                id-edit="profile-jobs-edit"
+                modal="userJobs"
             >
-                <h2
-                    v-if="edit"
-                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Skills
-                </h2>
+                <Timeline :items="jobHistoryTimeline" />
+            </ContentCard>
+
+            <!-- Education History -->
+            <ContentCard
+                title="Education History"
+                :edit="edit"
+                id-edit="profile-education-edit"
+                modal="userEducation"
+            >
+                <Timeline :items="educationHistoryTimeline" />
+            </ContentCard>
+
+            <!-- Skills -->
+            <ContentCard
+                title="Skills"
+                :edit="edit"
+                id-edit="profile-skills-edit"
+                modal="userSkills"
+            >
                 <div class="flex flex-wrap gap-2">
                     <div
                         v-for="skill in user.skills"
@@ -182,70 +122,25 @@ const edit = ref(false);
                         {{ skill.name }}
                     </div>
                 </div>
-            </div>
-            <div
-                :id="edit ? 'profile-files-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('userFiles');
-                        }
-                    }
-                "
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+            </ContentCard>
+
+            <!-- Files -->
+            <ContentCard
+                title="Files"
+                :edit="edit"
+                id-edit="profile-files-edit"
+                modal="userFiles"
             >
-                <h2
-                    v-if="edit"
-                    class="absolute bottom-0 right-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-
-                <h2 class="text-lg font-bold uppercase text-black/60">Files</h2>
-                <div class="flex flex-wrap items-center gap-4">
-                    <div
-                        v-for="file in user.files"
-                        :key="file.id"
-                        class="flex items-center gap-4 rounded border px-4 py-2 text-black"
-                    >
-                        {{ file.name }}
-                        <div class="flex items-center gap-1">
-                            <Button
-                                as="a"
-                                is="a"
-                                target="_blank"
-                                :href="
-                                    route('users.files.show', file.servername)
-                                "
-                                :options="{
-                                    leftIcon: EyeIcon,
-                                    color: 'green',
-                                    shape: 'pill',
-                                }"
-                            />
-                            <Button
-                                as="a"
-                                is="a"
-                                target="_blank"
-                                :href="
-                                    route(
-                                        'users.files.download',
-                                        file.servername,
-                                    )
-                                "
-                                :options="{
-                                    leftIcon: ArrowDownTrayIcon,
-
-                                    shape: 'pill',
-                                }"
-                            />
-                        </div>
+                <div class="flex flex-col gap-4">
+                    <div v-for="file in user.files" :key="file.id">
+                        <FileAction
+                            :file="file"
+                            show-route="users.files.show"
+                            download-route="users.files.download"
+                        />
                     </div>
                 </div>
-            </div>
+            </ContentCard>
         </div>
     </div>
 </template>

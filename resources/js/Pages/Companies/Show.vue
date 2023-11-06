@@ -6,6 +6,7 @@ import OwnerCard from './Partials/OwnerCard.vue';
 import JobCard from './Partials/JobCard.vue';
 import { markRaw } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
+import ContentCard from '@/Components/ContentCard.vue';
 
 const modalStore = useModalStore();
 const isClient = ref(false);
@@ -261,63 +262,31 @@ onMounted(() => {
         <div
             class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
         >
-            <div
-                :id="edit ? 'company-description-edit' : ''"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('companyDescription');
-                        }
-                    }
-                "
+            <!-- Description -->
+            <ContentCard
+                title="Description"
+                :edit="edit"
+                id-edit="company-description-edit"
+                modal="companyDescription"
             >
-                <h2
-                    v-if="edit"
-                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Description
-                </h2>
-                <div class="ql-editor prose" v-html="company.description"></div>
-            </div>
-            <div
-                class="container flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
-            >
-                <h2 class="text-lg font-bold uppercase text-black/60">Jobs</h2>
-                <p class="text-sm font-bold">
+                <div class="ql-editor prose" v-html="company.description" />
+            </ContentCard>
+
+            <!-- Jobs -->
+            <ContentCard title="Jobs">
+                <p class="text-sm font-bold" v-if="company.jobs.length === 0">
                     There are no jobs available at the moment
                 </p>
                 <JobCard v-for="job in company.jobs" :key="job.id" :job="job" />
-            </div>
-            <div
-                :id="edit ? 'company-contact-edit' : ''"
-                @click="
-                    () => {
-                        if (edit) {
-                            modalStore.openModal('companyContact');
-                        }
-                    }
-                "
-                :class="{
-                    'cursor-pointer': edit,
-                }"
-                class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 shadow-md"
+            </ContentCard>
+
+            <!-- Contact -->
+            <ContentCard
+                title="Contact"
+                :edit="edit"
+                id-edit="company-contact-edit"
+                modal="companyContact"
             >
-                <h2
-                    v-if="edit"
-                    class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
-                >
-                    Click field to edit
-                </h2>
-                <h2 class="text-lg font-bold uppercase text-black/60">
-                    Contact
-                </h2>
                 <div class="flex flex-col items-start gap-2">
                     <div class="flex flex-col gap-2">
                         <h2
@@ -372,7 +341,7 @@ onMounted(() => {
                         />
                     </GoogleMap>
                 </div>
-            </div>
+            </ContentCard>
         </div>
     </div>
 </template>
