@@ -1,4 +1,4 @@
-export const ro_RO = {
+export const ro = {
     common: {
         edit: 'Editează',
         delete: 'Șterge',

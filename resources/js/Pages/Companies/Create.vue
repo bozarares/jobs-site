@@ -262,7 +262,7 @@ const revertFiles = () => {
             <Input
                 name="Company code"
                 v-model="form.code"
-                :label="$t('labels.companyDetails.code')"
+                :label="$t('labels.companyDetails.registrationCode')"
                 :error="form.errors.code"
                 :options="{ leftIcon: RectangleStackIcon }"
             />
@@ -276,7 +276,7 @@ const revertFiles = () => {
             <Input
                 name="Contact email"
                 v-model="form.email"
-                :label="$t('labels.email.contact')"
+                :label="$t('labels.email.self.contact')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />

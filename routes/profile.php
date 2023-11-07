@@ -71,4 +71,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/', 'addFile')->name('add');
             Route::delete('/', 'deleteFile')->name('delete');
         });
+
+    Route::post('/language', [
+        ProfileController::class,
+        'changeLanguage',
+    ])->name('language');
 });

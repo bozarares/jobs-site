@@ -23,9 +23,9 @@ import {
 } from '@heroicons/vue/24/outline';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid';
-import USAFlag from '@/Components/UI/Icons/Flags/USAFlag.vue';
-import RomaniaFlag from '@/Components/UI/Icons/Flags/RomaniaFlag.vue';
-import JapanFlag from '@/Components/UI/Icons/Flags/JapanFlag.vue';
+import { languages } from '@/Languages/languages';
+import axios from 'axios';
+import { onMounted } from 'vue';
 
 const localeStore = useLocaleStore();
 
@@ -38,10 +38,40 @@ const isOwner = computed(() => {
     return false;
 });
 
+function getCookie(cname) {
+    let name = cname + '=';
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return '';
+}
+
 watch(
     () => language.value,
     (newValue) => {
         localeStore.setLocale(newValue);
+
+        if (page.props.auth.user) {
+            page.props.auth.user.locale = newValue;
+            axios.post(route('language'), { language: newValue });
+        } else {
+            if (
+                typeof getCookie('user_locale') === 'undefined' ||
+                getCookie('user_locale') !== newValue
+            ) {
+                document.cookie = `user_locale=${newValue};path=/;max-age=${
+                    60 * 24 * 30 * 24 * 60 * 60
+                }`;
+            }
+        }
     },
 );
 
@@ -49,6 +79,8 @@ watch(
     () => page.props.auth.user,
     (newValue, oldValue) => {
         if (newValue && !oldValue) {
+            const userLocale = newValue.locale || 'en';
+            localeStore.setLocale(userLocale);
             broadcastListen(newValue.id);
             console.log('Listening to user ' + newValue.id);
         } else if (!newValue && oldValue) {
@@ -58,6 +90,21 @@ watch(
     },
     { deep: true },
 );
+
+onMounted(() => {
+    const cookieValue = getCookie('user_locale');
+    if (cookieValue) {
+        localeStore.setLocale(cookieValue);
+        language.value = cookieValue;
+    } else {
+        localeStore.setLocale('en');
+        language.value = 'en';
+    }
+
+    if (page.props.auth.user === null) {
+        broadcastDisconnect();
+    }
+});
 </script>
 
 <template>
@@ -105,24 +152,7 @@ watch(
 
                     <LanguageSelector
                         v-model="language"
-                        :languages="[
-                            {
-                                locale: 'en_US',
-                                flag: USAFlag,
-                                name: 'English',
-                            },
-                            {
-                                locale: 'ro_RO',
-                                flag: RomaniaFlag,
-                                name: 'Română',
-                            },
-                            {
-                                locale: 'ja_JP',
-                                flag: JapanFlag,
-                                name: '日本語',
-                            },
-                            // { locale: 'fr', emoji: '🇫🇷', name: 'Francais' },
-                        ]"
+                        :languages="languages"
                     />
                     <div class="my-5 flex items-center justify-center gap-2">
                         <MoonIcon

@@ -5,7 +5,7 @@ import { defineStore } from 'pinia';
 
 export const useLocaleStore = defineStore('locale', {
     state: () => ({
-        locale: 'en_US',
+        locale: 'en',
     }),
     actions: {
         async setLocale(newLocale) {

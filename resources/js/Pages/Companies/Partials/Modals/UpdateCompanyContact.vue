@@ -146,7 +146,7 @@ onMounted(() => {
             <Input
                 name="Contact email"
                 v-model="form.email"
-                :label="$t('labels.email.contact')"
+                :label="$t('labels.email.self.contact')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />

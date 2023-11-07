@@ -2,14 +2,12 @@
 import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
-import { Button, Timeline } from '@/Components/UI';
+import { Timeline } from '@/Components/UI';
 import { ref, watch } from 'vue';
-import { ArrowDownTrayIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import { useModalStore } from '@/Stores/modalStore';
 import ContentCard from '@/Components/ContentCard.vue';
 import FileAction from '@/Components/FileAction.vue';
 
-const modalStore = useModalStore();
 const props = defineProps({
     user: {
         type: Object,
@@ -19,10 +17,11 @@ const props = defineProps({
 
 const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
+const language = ref('en');
 
 watch(
     () => props.user.job_history,
-    (newValue, oldValue) => {
+    (newValue) => {
         jobHistoryTimeline.value = newValue.map((item) => {
             return {
                 start: new Date(item.start_date),
@@ -37,7 +36,7 @@ watch(
 );
 watch(
     () => props.user.education_history,
-    (newValue, oldValue) => {
+    (newValue) => {
         educationHistoryTimeline.value = newValue.map((item) => {
             return {
                 start: new Date(item.start_date),
@@ -60,7 +59,15 @@ const edit = ref(false);
     >
         <!-- Left side -->
         <div class="flex w-full flex-col gap-4 md:w-auto">
-            <UserCard :edit="edit" :user="user" />
+            <UserCard
+                :edit="edit"
+                :user="user"
+                :on-language-change="
+                    (newLangauage) => {
+                        language = newLangauage;
+                    }
+                "
+            />
             <SocialsCard :edit="edit" :user="user" />
             <SettingsCard
                 :user="props.user"

@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,6 +34,18 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $locale = $request->user()->locale ?? 'en';
+        Cookie::queue(
+            Cookie::make(
+                'user_locale',
+                $locale,
+                60 * 24 * 30,
+                '/',
+                null,
+                false,
+                false
+            )
+        );
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

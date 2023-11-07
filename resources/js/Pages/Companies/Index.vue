@@ -3,6 +3,7 @@
 import { Button } from '@/Components/UI';
 import { Link } from '@inertiajs/vue3';
 import CompanyCard from './Partials/CompanyCard.vue';
+import AddCompany from './Partials/AddCompany.vue';
 
 const props = defineProps({
     companies: {
@@ -16,17 +17,6 @@ const props = defineProps({
         <h1 class="text-center text-2xl font-semibold text-gray-800">
             {{ $t('labels.business.center') }}
         </h1>
-        <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
-            <div class="flex gap-2">
-                <Button
-                    as="a"
-                    :is="Link"
-                    :href="route('companies.create')"
-                    :options="{ shape: 'pill' }"
-                    >Create a new business</Button
-                >
-            </div>
-        </div>
     </div>
     <div
         class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
@@ -38,5 +28,6 @@ const props = defineProps({
             :key="company.id"
             :company="company"
         />
+        <AddCompany />
     </div>
 </template>

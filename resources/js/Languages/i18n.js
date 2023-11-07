@@ -1,14 +1,14 @@
 import { createI18n } from 'vue-i18n';
 import axios from 'axios';
-import { en_US } from './en_US';
+import { en } from './en';
 
 const i18n = createI18n({
-    locale: 'en_US', // setează localizarea implicită
-    fallbackLocale: 'en_US', // setează localizarea de rezervă
-    messages: { en_US }, // inițial, obiectul de mesaje va fi gol
+    locale: 'en', // setează localizarea implicită
+    fallbackLocale: 'en', // setează localizarea de rezervă
+    messages: { en }, // inițial, obiectul de mesaje va fi gol
 });
 
-const loadedLanguages = ['en_US']; // limba noastră implicită care este preîncărcată
+const loadedLanguages = ['en']; // limba noastră implicită care este preîncărcată
 
 function setI18nLanguage(lang) {
     i18n.global.locale = lang; // Vite folosește Composition API, deci 'locale' este un ref

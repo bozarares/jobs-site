@@ -18,9 +18,10 @@ return new class extends Migration {
 
             $table->string('phone_number')->nullable();
             $table->string('tag')->nullable();
-            $table->text('description')->nullable();
             $table->string('avatar')->nullable();
             $table->string('avatar_extension')->nullable();
+
+            $table->string('locale', 2)->default('en');
 
             $table->string('social_linkedin')->nullable();
             $table->string('social_github')->nullable();

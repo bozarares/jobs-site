@@ -5,17 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EducationHistory extends Model
+class UserDescription extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'institution',
-        'degree',
-        'field_of_study',
-        'start_date',
-        'end_date',
-        'locale',
-    ];
+
+    protected $fillable = ['description', 'locale'];
 
     public function user()
     {

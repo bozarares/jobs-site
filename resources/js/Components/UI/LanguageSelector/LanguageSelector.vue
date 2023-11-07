@@ -1,17 +1,26 @@
 <script setup>
-import { onUnmounted, ref } from 'vue';
+import { onUnmounted, ref, markRaw } from 'vue';
 import { useFloating } from '@floating-ui/vue';
+import { shallowRef } from 'vue';
 
 const props = defineProps({
     name: String,
     disabled: Boolean,
-    languages: Array, // Array of language objects
-    modelValue: String, // The selected language locale
+    languages: Array,
+    modelValue: String,
+    showName: {
+        type: Boolean,
+        default: true,
+    },
+    class: {
+        type: String,
+        default: '',
+    },
 });
 
 const emits = defineEmits(['update:modelValue']);
 
-const selectedLanguage = ref(
+const selectedLanguage = shallowRef(
     props.languages.find((lang) => lang.locale === props.modelValue),
 );
 const isSelectVisible = ref(false);
@@ -55,14 +64,17 @@ onUnmounted(() => {
 <template>
     <div
         ref="containerElementRef"
-        class="relative flex w-full items-center justify-center"
+        class="flex w-full items-center justify-center"
+        :class="props.class"
     >
         <div
             class="flex cursor-pointer select-none items-center gap-2"
             @click="toggleSelectVisibility"
         >
             <component :is="selectedLanguage?.flag" class="mr-2 h-6 w-6" />
-            {{ selectedLanguage?.name || 'Select Language' }}
+            <div v-if="props.showName">
+                {{ selectedLanguage?.name || 'Select Language' }}
+            </div>
         </div>
 
         <div

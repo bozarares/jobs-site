@@ -44,7 +44,7 @@ const submit = () => {
         <Input
             v-model="form.email"
             :error="form.errors.email"
-            :label="$t('labels.email')"
+            :label="$t('labels.email.self')"
             type="email"
             name="email"
             :options="{ leftIcon: UserIcon, size: 'small' }"

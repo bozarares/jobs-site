@@ -12,13 +12,19 @@ return new class extends Migration {
     {
         Schema::create('job_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table
+                ->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->string('company');
             $table->string('title');
             $table->string('description')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->string('locale', 2)->index();
             $table->timestamps();
+
+            $table->unique(['user_id', 'locale']);
         });
     }
 

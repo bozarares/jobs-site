@@ -67,7 +67,7 @@ const submit = () => {
                 ></Input>
                 <Input
                     v-model="form.email"
-                    :label="$t('labels.email')"
+                    :label="$t('labels.email.self')"
                     type="email"
                     name="email"
                     :error="form.errors.email"

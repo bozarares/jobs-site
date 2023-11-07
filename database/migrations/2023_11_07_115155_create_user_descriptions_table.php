@@ -10,17 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('education_histories', function (Blueprint $table) {
+        Schema::create('user_descriptions', function (Blueprint $table) {
             $table->id();
             $table
                 ->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->string('institution');
-            $table->string('degree');
-            $table->string('field_of_study');
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->text('description');
             $table->string('locale', 2)->index();
             $table->timestamps();
 
@@ -33,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('education_histories');
+        Schema::dropIfExists('user_descriptions');
     }
 };

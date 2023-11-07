@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -42,6 +43,27 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Applications', [
             'applications' => $applications,
         ]);
+    }
+
+    public function changeLanguage(Request $request)
+    {
+        $request->validate([
+            'language' => ['required', 'string', 'in:en,ro,ja'],
+        ]);
+        $user = Auth::user();
+        $user->locale = $request->language;
+        Cookie::queue(
+            Cookie::make(
+                'user_locale',
+                $request->language,
+                60 * 24 * 30,
+                '/',
+                null,
+                false,
+                false
+            )
+        );
+        $user->save();
     }
     public function show(): Response
     {

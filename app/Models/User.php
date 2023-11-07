@@ -40,7 +40,6 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'tag',
-        'description',
         'avatar',
         'avatar_extension',
         'social_linkedin',
@@ -65,7 +64,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['jobHistory', 'educationHistory', 'skills', 'files'];
+    protected $with = ['skills', 'files'];
 
     protected $appends = ['profileCompletion'];
 
@@ -87,6 +86,27 @@ class User extends Authenticatable
     public function educationHistory()
     {
         return $this->hasMany(EducationHistory::class);
+    }
+
+    public function userDescription()
+    {
+        return $this->hasMany(UserDescription::class);
+    }
+
+    public function getLocalizedDataAttribute($lang)
+    {
+        return [
+            'language' => $lang,
+            'jobHistory' => $this->jobHistory()
+                ->where('locale', $lang)
+                ->get(),
+            'educationHistory' => $this->educationHistory()
+                ->where('locale', $lang)
+                ->get(),
+            'userDescription' => $this->userDescription()
+                ->where('locale', $lang)
+                ->first(),
+        ];
     }
 
     public function skills()
