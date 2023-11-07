@@ -245,16 +245,16 @@ const revertFiles = () => {
         class="container mt-24 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
     >
         <h2 class="text-2xl font-bold">
-            {{ $t('generic.company_create_thanks') }}
+            {{ $t('messages.thanks') }}
         </h2>
         <h3 class="mb-4 text-lg font-semibold text-gray-700">
-            {{ $t('generic.company_create_before') }}
+            {{ $t('messages.companyCreate') }}
         </h3>
         <div class="flex w-full max-w-lg flex-col items-center gap-4">
             <Input
                 name="Company name"
                 v-model="form.name"
-                :label="$t('labels.company_name')"
+                :label="$t('labels.companyDetails.name')"
                 :error="form.errors.name"
                 :options="{ leftIcon: BuildingOfficeIcon }"
             />
@@ -262,27 +262,27 @@ const revertFiles = () => {
             <Input
                 name="Company code"
                 v-model="form.code"
-                :label="$t('labels.unique_registration_code')"
+                :label="$t('labels.companyDetails.code')"
                 :error="form.errors.code"
                 :options="{ leftIcon: RectangleStackIcon }"
             />
             <Input
                 name="Phone number"
                 v-model="form.phone_number"
-                :label="$t('labels.contact_phone_number')"
+                :label="$t('labels.phone.contact')"
                 :error="form.errors.phone_number"
                 :options="{ leftIcon: PhoneIcon }"
             />
             <Input
                 name="Contact email"
                 v-model="form.email"
-                :label="$t('labels.contact_email')"
+                :label="$t('labels.email.contact')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />
             <SearchInput
                 v-model="selectedCountry"
-                :label="$t('labels.country')"
+                :label="$t('labels.country.self')"
                 type="text"
                 name="Company country"
                 :options="{
@@ -309,7 +309,7 @@ const revertFiles = () => {
             <SearchInput
                 v-model="selectedState"
                 :disabled="states.length === 0"
-                :label="$t('labels.county')"
+                :label="$t('labels.country.county')"
                 type="text"
                 name="Company state"
                 :options="{
@@ -336,7 +336,7 @@ const revertFiles = () => {
             <SearchInput
                 v-model="selectedTown"
                 :disabled="towns.length === 0"
-                :label="$t('labels.town')"
+                :label="$t('labels.country.town')"
                 type="text"
                 name="Company town"
                 :options="{
@@ -376,7 +376,7 @@ const revertFiles = () => {
                 "
                 ref="filePondRef"
                 class="w-full"
-                :label-idle="$t('labels.logo_drop')"
+                :label-idle="$t('labels.logo.drop')"
                 accepted-file-types="image/jpeg, image/png"
             />
             <p
@@ -386,7 +386,7 @@ const revertFiles = () => {
                 {{ form.errors.logo }}
             </p>
             <p class="text-center text-lg">
-                {{ $t('labels.add_description') }}
+                {{ $t('labels.companyDetails.description') }}
             </p>
             <div>
                 <QuillEditor
@@ -412,7 +412,7 @@ const revertFiles = () => {
                     "
                     class="mt-4 w-24"
                     :options="{ color: 'green' }"
-                    >{{ $t('buttons.create') }}</Button
+                    >{{ $t('common.create') }}</Button
                 >
             </div>
         </div>

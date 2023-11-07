@@ -77,7 +77,7 @@ const props = defineProps({
                 </div>
                 <div class="flex items-center gap-2 text-sm">
                     <span class="font-bold uppercase">{{
-                        $t('labels.town')
+                        $t('labels.country.town')
                     }}</span>
                     {{ job.location }}
                 </div>
@@ -104,7 +104,7 @@ const props = defineProps({
                         color: 'green',
                         // leftIcon: ShareIcon,
                     }"
-                    >{{ $t('buttons.apply') }}</Button
+                    >{{ $t('common.apply') }}</Button
                 >
             </div>
         </div>

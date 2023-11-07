@@ -21,7 +21,9 @@ const page = usePage();
         class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Message</h2>
+            <h2 class="text-lg font-bold uppercase text-black/60">
+                {{ $t('common.message') }}
+            </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
                 @click="closeModal()"

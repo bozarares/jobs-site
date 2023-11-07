@@ -94,7 +94,7 @@ onMounted(() => {
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
-            {{ $t('fallbacks.no_skills') }}
+            {{ $t('fallbacks.skills') }}
         </div>
     </div>
     <div
@@ -102,7 +102,7 @@ onMounted(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_required_skills') }}
+                {{ $t('labels.skills.editRequired') }}
             </h2>
             <div>
                 <XMarkIcon
@@ -114,7 +114,7 @@ onMounted(() => {
 
         <div class="flex gap-2 overflow-auto">
             <Input
-                :label="$tc('labels.skill', 1)"
+                :label="$tc('labels.skills.self', 1)"
                 v-model="inputTextValue"
                 name="add_skill"
             />
@@ -125,7 +125,7 @@ onMounted(() => {
                         inputTextValue = '';
                     }
                 "
-                >{{ $t('buttons.add') }}</Button
+                >{{ $t('common.add') }}</Button
             >
         </div>
         <div class="flex flex-wrap gap-2">
@@ -162,7 +162,7 @@ onMounted(() => {
             "
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >{{ $t('buttons.save') }}</Button
+            >{{ $t('common.save') }}</Button
         >
     </div>
 </template>

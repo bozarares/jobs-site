@@ -168,7 +168,7 @@ onBeforeUnmount(() => {
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
-            {{ $t('fallbacks.no_files') }}
+            {{ $t('fallbacks.files') }}
         </div>
     </div>
     <div
@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_files') }}
+                {{ $t('labels.files.edit') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
         <div class="flex flex-col gap-4 overflow-auto">
             <Input
                 v-model="fileName"
-                :label="$t('labels.file_name')"
+                :label="$t('labels.files.name')"
                 name="file_name"
             />
             <FilePond
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
                 "
                 ref="filePondRef"
                 class="w-full"
-                :label-idle="$t('labels.file_drop')"
+                :label-idle="$t('labels.files.drop')"
                 accepted-file-types="application/pdf"
             />
         </div>
@@ -212,7 +212,7 @@ onBeforeUnmount(() => {
                 @click="addFile"
                 class=""
                 :options="{ color: 'green', shape: 'pill' }"
-                >{{ $t('buttons.add') }}</Button
+                >{{ $t('common.add') }}</Button
             >
         </div>
     </div>

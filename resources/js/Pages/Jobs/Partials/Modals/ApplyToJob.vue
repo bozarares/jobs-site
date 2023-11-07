@@ -59,29 +59,29 @@ const submit = () => {
         <div class="flex flex-col gap-2 overflow-auto">
             <div class="flex flex-col">
                 <h2 class="font-bold">
-                    {{ $t('profile.completion') }}: {{ completion }}%
+                    {{ $t('sections.profile') }}: {{ completion }}%
                 </h2>
                 <ul
                     class="list-inside list-disc text-sm text-red-500"
                     v-if="completion != 100"
                 >
                     <li v-if="user.description === ''">
-                        {{ $t('generic.no_description_added') }}
+                        {{ $t('messages.missingFields.description') }}
                     </li>
                     <li v-if="user.avatar === null">
-                        {{ $t('generic.no_avatar_added') }}
+                        {{ $t('messages.missingFields.avatar') }}
                     </li>
                     <li v-if="user.job_history.length === 0">
-                        {{ $t('generic.no_job_history_added') }}
+                        {{ $t('messages.missingFields.jobHistory') }}
                     </li>
                     <li v-if="user.education_history.length === 0">
-                        {{ $t('generic.no_education_history_added') }}
+                        {{ $t('messages.missingFields.educationHistory') }}
                     </li>
                     <li v-if="user.skills.length === 0">
-                        {{ $t('generic.no_skills_added') }}
+                        {{ $t('messages.missingFields.skills') }}
                     </li>
                     <li v-if="user.files.length === 0">
-                        {{ $t('generic.no_files_added') }}
+                        {{ $t('messages.missingFields.files') }}
                     </li>
                     <li
                         v-if="
@@ -90,18 +90,18 @@ const submit = () => {
                             !user.social_facebook
                         "
                     >
-                        {{ $t('generic.no_social_links_added') }}
+                        {{ $t('messages.missingFields.social') }}
                     </li>
                 </ul>
                 <div v-if="completion != 100">
                     <h2>
-                        {{ $t('generic.uncompleted_profile') }}
+                        {{ $t('messages.incompleteProfile') }}
                     </h2>
                 </div>
             </div>
             <div class="mt-8 flex flex-col">
                 <h2 class="text-lg font-bold uppercase text-black/60">
-                    {{ $t('fields.files') }}
+                    {{ $t('labels.files.self') }}
                 </h2>
                 <div
                     class="mt-2 flex w-full justify-between border-b border-black/10 pb-5 first:mt-4 last:border-b-0 last:pb-0"
@@ -120,7 +120,7 @@ const submit = () => {
                 </div>
             </div>
             <h2 class="mt-4 text-justify font-bold">
-                {{ $t('generic.apply_message') }}
+                {{ $t('messages.applyNote') }}
             </h2>
         </div>
         <h2 v-if="error" class="text-center text-sm font-bold text-red-500">

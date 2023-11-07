@@ -23,7 +23,7 @@ const edit = ref(false);
     >
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('fields.settings') }}
+                {{ $t('sections.settings') }}
             </h2>
             <h2
                 :class="{
@@ -35,11 +35,11 @@ const edit = ref(false);
                 }"
                 class="rounded px-2 py-0.5 font-extrabold text-white"
             >
-                {{ $t('labels.profile') }}:
+                {{ $t('sections.profile') }}:
                 <span>{{ Math.round(user.profileCompletion) }}%</span>
             </h2>
             <div class="flex items-center gap-2">
-                <h2>{{ $t('profile.edit') }}</h2>
+                <h2>{{ $t('actions.editProfile') }}</h2>
                 <Switch
                     :on-change="
                         (value) => {

@@ -70,7 +70,7 @@ const props = defineProps({
                 v-if="edit"
                 class="pr-2 text-sm font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
             >
-                {{ $t('generic.click_logo') }}
+                {{ $t('labels.clickToEdit.logo') }}
             </h2>
             <!-- Job Title -->
             <h2 class="mb-2 text-center text-lg font-bold uppercase">
@@ -101,7 +101,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: ShareIcon,
                     }"
-                    >{{ $t('buttons.share') }}</Button
+                    >{{ $t('common.share') }}</Button
                 >
                 <Button
                     :id="`company-view-${company.name}`"
@@ -115,7 +115,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: EyeIcon,
                     }"
-                    >{{ $t('buttons.view') }}</Button
+                    >{{ $t('common.view') }}</Button
                 >
                 <Button
                     class="w-full"
@@ -124,7 +124,7 @@ const props = defineProps({
                         color: 'green',
                         leftIcon: HeartIcon,
                     }"
-                    >{{ $t('buttons.follow') }}</Button
+                    >{{ $t('common.follow') }}</Button
                 >
             </div>
         </div>

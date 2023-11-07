@@ -74,20 +74,19 @@ const experiences = computed(() => {
             <h3>{{ experiences }}</h3>
             <div class="mt-6 flex flex-col items-center gap-1">
                 <div v-if="formattedApplicationDate" class="text-sm">
-                    {{ $t('labels.applied') }} - {{ formattedApplicationDate }}
+                    {{ $t('jobDates.applied') }} -
+                    {{ formattedApplicationDate }}
                 </div>
                 <div
                     v-if="formattedSeenDate"
                     class="flex items-center gap-1 text-sm text-blue-500"
                 >
-                    <EyeIcon class="w-4" /> {{ $t('labels.seen') }} -
+                    <EyeIcon class="w-4" /> {{ $t('jobDates.seen') }} -
                     {{ formattedSeenDate }}
                 </div>
                 <div v-if="job.status" class="text-sm">
                     {{ $t('labels.status') }} -
-                    {{
-                        $t('labels.application_status', { status: job.status })
-                    }}
+                    {{ $t(`statuses.${job.status}`) }}
                 </div>
             </div>
         </div>

@@ -63,7 +63,7 @@ onMounted(async () => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_description') }}
+                {{ $t('labels.description.edit') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -83,7 +83,7 @@ onMounted(async () => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >{{ $t('buttons.save') }}</Button
+            >{{ $t('common.save') }}</Button
         >
     </div>
 </template>

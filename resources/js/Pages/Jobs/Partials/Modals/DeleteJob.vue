@@ -44,7 +44,7 @@ const submit = () => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.delete_job') }}
+                {{ $t('actions.deleteJob') }}
             </h2>
             <div>
                 <XMarkIcon
@@ -56,7 +56,7 @@ const submit = () => {
 
         <div class="flex flex-col gap-2 overflow-auto">
             <h2 class="text-center font-bold text-red-500">
-                {{ $t('generic.delete_job_message') }}
+                {{ $t('messages.deleteJobConfirmation') }}
             </h2>
         </div>
         <div class="flex w-full items-center justify-center gap-4">
@@ -68,7 +68,7 @@ const submit = () => {
                 "
                 class=""
                 :options="{ color: 'red', shape: 'pill' }"
-                >{{ $t('buttons.delete') }}</Button
+                >{{ $t('common.delete') }}</Button
             >
             <Button
                 @click="
@@ -78,7 +78,7 @@ const submit = () => {
                 "
                 class=""
                 :options="{ color: 'gray', shape: 'pill' }"
-                >{{ $t('buttons.cancel') }}</Button
+                >{{ $t('common.cancel') }}</Button
             >
         </div>
     </div>

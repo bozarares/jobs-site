@@ -74,20 +74,20 @@ watch(
                     :href="route('companies.index')"
                     v-if="isOwner"
                     :options="{ shape: 'pill', color: 'green' }"
-                    >{{ $t('buttons.businesses') }}</Button
+                    >{{ $tc('labels.business.self', 2) }}</Button
                 >
                 <Link
                     v-else
                     :href="route('companies.create')"
                     class="text-sm"
-                    >{{ $t('buttons.try_recruting') }}</Link
+                    >{{ $t('sections.recruit') }}</Link
                 >
                 <DropdownMenu align="right" class="mt-6 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <BellIcon class="h-6 w-6" />
                     </template>
                     <DropdownHeader>{{
-                        $t('labels.notifications')
+                        $t('sections.notifications')
                     }}</DropdownHeader>
                 </DropdownMenu>
                 <LanguageSelector
@@ -164,16 +164,16 @@ watch(
                                 :href="route('profile.show')"
                                 class="text-sm font-bold"
                                 :leftIcon="UserIcon"
-                                >{{ $t('labels.profile') }}</DropdownItem
+                                >{{ $t('sections.profile') }}</DropdownItem
                             >
                             <DropdownSeparator />
                             <DropdownLabel align="left">{{
-                                $t('labels.user_controlls')
+                                $t('labels.userControlls')
                             }}</DropdownLabel>
                             <DropdownItem
                                 class="text-sm font-bold"
                                 :leftIcon="Cog8ToothIcon"
-                                >{{ $t('labels.settings') }}</DropdownItem
+                                >{{ $t('sections.settings') }}</DropdownItem
                             >
                             <DropdownItem
                                 :is="Link"
@@ -181,7 +181,7 @@ watch(
                                 method="POST"
                                 class="text-sm font-bold"
                                 :leftIcon="ArrowRightOnRectangleIcon"
-                                >{{ $t('labels.logout') }}</DropdownItem
+                                >{{ $t('common.logout') }}</DropdownItem
                             >
                         </div>
                     </div>

@@ -43,7 +43,7 @@ const edit = ref(false);
         >
             <!-- Description -->
             <ContentCard
-                :title="$t('fields.description')"
+                :title="$t('labels.description.self')"
                 :edit="edit"
                 id-edit="job-description-edit"
                 modal="jobDescription"
@@ -53,7 +53,7 @@ const edit = ref(false);
 
             <!-- Requirements -->
             <ContentCard
-                :title="$t('fields.required_skills')"
+                :title="$t('labels.skills.required')"
                 :edit="edit"
                 id-edit="job-skills-edit"
                 modal="jobSkills"

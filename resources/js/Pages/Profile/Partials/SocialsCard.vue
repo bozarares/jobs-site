@@ -36,12 +36,12 @@ const props = defineProps({
             v-if="edit"
             class="absolute right-0 top-0 pr-2 text-xs font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
         >
-            {{ $t('generic.click_field') }}
+            {{ $t('labels.clickToEdit.field') }}
         </h2>
 
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('fields.social_links') }}
+                {{ $t('labels.social.links') }}
             </h2>
             <h2 class="text-center font-bold text-black/60">
                 {{ user.email }}

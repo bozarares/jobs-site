@@ -143,7 +143,7 @@ const endDateComputed = computed({
                     "
                     class="text-sm"
                     :options="{ color: 'blue', shape: 'pill' }"
-                    >{{ $t('buttons.edit') }}</Button
+                    >{{ $t('common.edit') }}</Button
                 >
                 <Button
                     @click="
@@ -154,12 +154,12 @@ const endDateComputed = computed({
                     "
                     class="text-sm"
                     :options="{ color: 'red', shape: 'pill' }"
-                    >{{ $t('buttons.delete') }}</Button
+                    >{{ $t('common.delete') }}</Button
                 >
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
-            {{ $t('fallbacks.no_job_history') }}
+            {{ $t('fallbacks.jobHistory') }}
         </div>
     </div>
     <div
@@ -167,7 +167,7 @@ const endDateComputed = computed({
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_job_history') }}
+                {{ $t('labels.jobHistory.edit') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -188,7 +188,7 @@ const endDateComputed = computed({
                 <Input
                     v-model="form.title"
                     :error="form.errors.title"
-                    :label="$t('labels.title')"
+                    :label="$t('labels.jobHistory.title')"
                     type="text"
                     name="title"
                     :options="{ leftIcon: UserIcon, size: 'small' }"
@@ -197,7 +197,7 @@ const endDateComputed = computed({
             <Input
                 v-model="form.description"
                 :error="form.errors.description"
-                :label="$t('labels.description')"
+                :label="$t('labels.description.self')"
                 type="text"
                 name="description"
                 :options="{ leftIcon: UserIcon, size: 'small' }"
@@ -205,7 +205,7 @@ const endDateComputed = computed({
             <DateTime
                 v-model="startDateComputed"
                 class=""
-                :label="$t('labels.start_date')"
+                :label="$t('labels.startDate')"
                 name="start_date"
                 :dateOptions="{
                     minDate: new Date(1900, 0, 0),
@@ -218,7 +218,7 @@ const endDateComputed = computed({
                     v-model="endDateComputed"
                     :disabled="toDate"
                     class=""
-                    :label="$t('labels.end_date')"
+                    :label="$t('labels.endDate')"
                     name="end_date"
                     :dateOptions="{
                         minDate: new Date(1900, 0, 0),
@@ -226,7 +226,7 @@ const endDateComputed = computed({
                     }"
                     :options="{ leftIcon: CalendarDaysIcon }"
                 />
-                <Checkbox v-model="toDate" :label="$t('labels.to_date')" />
+                <Checkbox v-model="toDate" :label="$t('labels.toDate')" />
             </div>
         </div>
         <div v-if="!editMode" class="flex w-full items-center">
@@ -238,7 +238,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'green', shape: 'pill' }"
-                >{{ $t('buttons.add') }}</Button
+                >{{ $t('common.add') }}</Button
             >
         </div>
         <div v-else class="flex w-full items-center gap-4">
@@ -256,7 +256,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'red', shape: 'pill' }"
-                >{{ $t('buttons.cancel') }}</Button
+                >{{ $t('common.cancel') }}</Button
             >
             <Button
                 @click="
@@ -266,7 +266,7 @@ const endDateComputed = computed({
                 "
                 class="w-full"
                 :options="{ color: 'green', shape: 'pill' }"
-                >{{ $t('buttons.edit') }}</Button
+                >{{ $t('common.edit') }}</Button
             >
         </div>
     </div>

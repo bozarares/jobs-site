@@ -123,7 +123,7 @@ watch(applicationStatus, () => {
         <ChevronLeftIcon v-if="!isCardVisible" class="w-6" />
         <div>
             {{ isCardVisible ? 'Hide' : 'Show' }}
-            {{ $t('modals.employer_options') }}
+            {{ $t('labels.owner.employer') }}
         </div>
     </div>
     <div
@@ -135,7 +135,7 @@ watch(applicationStatus, () => {
     >
         <div class="h-full">
             <h2 class="px-4 text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.employer_options') }}
+                {{ $t('labels.owner.employer') }}
             </h2>
             <div class="flex justify-around border-t-[1px]">
                 <div
@@ -150,7 +150,7 @@ watch(applicationStatus, () => {
                         }
                     "
                 >
-                    {{ $t('buttons.open') }}
+                    {{ $t('common.open') }}
                 </div>
                 <div
                     @click="
@@ -165,7 +165,7 @@ watch(applicationStatus, () => {
                             applicationStatus === 'accepted',
                     }"
                 >
-                    {{ $t('buttons.accepted') }}
+                    {{ $t('common.accepted') }}
                 </div>
             </div>
             <div
@@ -207,7 +207,7 @@ watch(applicationStatus, () => {
             >
                 <Input
                     class="px-2"
-                    :label="$t('labels.message')"
+                    :label="$t('common.message')"
                     v-model="message"
                 />
                 <div class="flex items-center justify-center gap-1">
@@ -219,7 +219,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-r-none"
                         :options="{ color: 'green', shape: 'pill' }"
-                        >{{ $t('buttons.accept') }}</Button
+                        >{{ $t('common.accept') }}</Button
                     >
                     <Button
                         @click="
@@ -229,7 +229,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-l-none"
                         :options="{ color: 'red', shape: 'pill' }"
-                        >{{ $t('buttons.decline') }}</Button
+                        >{{ $t('common.decline') }}</Button
                     >
                 </div>
             </div>
@@ -247,7 +247,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-r-none"
                         :options="{ color: 'green', shape: 'pill' }"
-                        >{{ $t('buttons.hired') }}</Button
+                        >{{ $t('common.hired') }}</Button
                     >
                     <Button
                         @click="
@@ -257,7 +257,7 @@ watch(applicationStatus, () => {
                         "
                         class="rounded-l-none"
                         :options="{ color: 'red', shape: 'pill' }"
-                        >{{ $t('buttons.decline') }}</Button
+                        >{{ $t('common.decline') }}</Button
                     >
                 </div>
             </div>

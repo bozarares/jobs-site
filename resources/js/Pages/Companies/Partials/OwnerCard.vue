@@ -31,11 +31,11 @@ const edit = ref(false);
         class="group container relative flex w-full flex-col items-center justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
     >
         <h2 class="mb-2 text-center text-lg font-bold uppercase">
-            {{ $t('fields.owner_panel') }}
+            {{ $t('labels.owner.self') }}
         </h2>
         <div class="mt-3 flex w-[10em] flex-col items-center gap-3 md:w-full">
             <div class="flex items-center gap-2">
-                <h2 class="text-sm">{{ $t('generic.edit_company') }}</h2>
+                <h2 class="text-sm">{{ $t('actions.editCompany') }}</h2>
                 <Switch
                     :on-change="
                         (value) => {
@@ -52,7 +52,7 @@ const edit = ref(false);
                     color: 'gold',
                     leftIcon: SparklesIcon,
                 }"
-                >{{ $t('buttons.feature') }}</Button
+                >{{ $t('common.feature') }}</Button
             >
 
             <Button
@@ -62,7 +62,7 @@ const edit = ref(false);
                     color: 'green',
                 }"
                 @click="modalStore.openModal('companyCreateJob')"
-                >{{ $t('buttons.create_job') }}</Button
+                >{{ $t('actions.createJob') }}</Button
             >
             <Button
                 class="w-full"
@@ -70,7 +70,7 @@ const edit = ref(false);
                     shape: 'pill',
                     color: 'green',
                 }"
-                >{{ $tc('buttons.applications', props.applications) }}</Button
+                >{{ $tc('labels.applications', props.applications) }}</Button
             >
         </div>
     </div>

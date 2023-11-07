@@ -127,7 +127,7 @@ onMounted(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_contact') }}
+                {{ $t('labels.contact.edit') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -139,20 +139,20 @@ onMounted(() => {
             <Input
                 name="Phone number"
                 v-model="form.phone_number"
-                :label="$t('labels.contact_phone_number')"
+                :label="$t('labels.phone.contact')"
                 :error="form.errors.phone_number"
                 :options="{ leftIcon: PhoneIcon }"
             />
             <Input
                 name="Contact email"
                 v-model="form.email"
-                :label="$t('labels.contact_email')"
+                :label="$t('labels.email.contact')"
                 :error="form.errors.email"
                 :options="{ leftIcon: AtSymbolIcon }"
             />
             <SearchInput
                 v-model="selectedCountry"
-                :label="$t('labels.country')"
+                :label="$t('labels.country.self')"
                 type="text"
                 name="Company country"
                 :options="{
@@ -176,7 +176,7 @@ onMounted(() => {
             <SearchInput
                 v-model="selectedState"
                 :disabled="!states.length"
-                :label="$t('labels.county')"
+                :label="$t('labels.country.county')"
                 type="text"
                 name="Company state"
                 :options="{
@@ -200,7 +200,7 @@ onMounted(() => {
             <SearchInput
                 v-model="selectedTown"
                 :disabled="!towns.length"
-                :label="$t('labels.town')"
+                :label="$t('labels.country.town')"
                 type="text"
                 name="Company town"
                 :options="{
@@ -234,7 +234,7 @@ onMounted(() => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >{{ $t('buttons.save') }}</Button
+            >{{ $t('common.save') }}</Button
         >
     </div>
 </template>

@@ -59,7 +59,7 @@ onMounted(async () => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.create_job') }}
+                {{ $t('labels.job.create') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -71,7 +71,7 @@ onMounted(async () => {
         </div>
         <div class="flex flex-wrap justify-center gap-12 md:flex-row">
             <div class="flex flex-col items-start">
-                <h2 class="w-full text-center">{{ $t('labels.job_type') }}</h2>
+                <h2 class="w-full text-center">{{ $t('labels.job.type') }}</h2>
                 <Radio
                     label="Remote"
                     name="type"
@@ -93,7 +93,7 @@ onMounted(async () => {
             </div>
             <div class="flex flex-col items-start">
                 <h2 class="w-full text-center">
-                    {{ $t('labels.experience_level') }}
+                    {{ $t('labels.job.experienceLevel') }}
                 </h2>
                 <Checkbox
                     label="Internship"
@@ -138,7 +138,10 @@ onMounted(async () => {
                         }
                     "
                 />
-                <Input :label="$t('labels.town')" v-model="job.location" />
+                <Input
+                    :label="$t('labels.country.town')"
+                    v-model="job.location"
+                />
             </div>
         </div>
         <div class="flex h-auto min-h-[15em] flex-col overflow-hidden pb-20">
@@ -154,7 +157,7 @@ onMounted(async () => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >{{ $t('buttons.save') }}</Button
+            >{{ $t('common.save') }}</Button
         >
     </div>
 </template>

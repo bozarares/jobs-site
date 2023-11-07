@@ -25,21 +25,21 @@ const edit = ref(false);
     >
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('fields.settings') }}
+                {{ $t('sections.settings') }}
             </h2>
-            <h2 class="text-sm font-bold text-black/70">
+            <!-- <h2 class="text-sm font-bold text-black/70">
                 {{ $tc('labels.applicants', job.application_count) }}
-            </h2>
+            </h2> -->
             <Button
                 v-if="job.application_count > 0"
                 @click="modalStore.openModal('jobApplications')"
                 class="w-full"
                 :options="{ shape: 'pill', color: 'green' }"
             >
-                {{ $tc('buttons.view_applicants', job.application_count) }}
+                {{ $tc('labels.applications', job.application_count) }}
             </Button>
             <div class="flex items-center gap-2">
-                <h2>{{ $t('generic.edit_job') }}</h2>
+                <h2>{{ $t('actions.editJob') }}</h2>
                 <Switch
                     :on-change="
                         (value) => {
@@ -53,7 +53,7 @@ const edit = ref(false);
                 @click="modalStore.openModal('jobDelete')"
                 class="w-full"
                 :options="{ shape: 'pill', color: 'red' }"
-                >{{ $t('buttons.delete') }}</Button
+                >{{ $t('common.delete') }}</Button
             >
         </div>
     </div>

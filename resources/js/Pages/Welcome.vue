@@ -21,17 +21,17 @@ const props = defineProps({
         class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-gray-800"
     >
         <Link :href="route('profile.applications')">{{
-            $t('labels.my_applications')
+            $t('sections.applications')
         }}</Link>
-        <Link>{{ $t('labels.likes') }}</Link>
+        <Link>{{ $t('sections.likes') }}</Link>
     </div>
     <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
         <h1 class="text-center text-2xl font-semibold text-gray-800">
-            {{ $t('generic.welcome_message') }}
+            {{ $t('messages.welcome') }}
         </h1>
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Input
-                :label="$t('labels.search_for_a_job')"
+                :label="$t('labels.searchForAJob')"
                 :options="{ size: 'small', leftIcon: MagnifyingGlassIcon }"
             />
             <Input
@@ -39,9 +39,9 @@ const props = defineProps({
                 :options="{ size: 'small', leftIcon: GlobeEuropeAfricaIcon }"
             />
             <div class="flex w-full gap-2">
-                <Button>{{ $t('buttons.search') }}</Button>
+                <Button>{{ $t('common.search') }}</Button>
                 <Button :options="{ leftIcon: FunnelIcon }">{{
-                    $t('buttons.filter')
+                    $t('labels.filter')
                 }}</Button>
             </div>
         </div>

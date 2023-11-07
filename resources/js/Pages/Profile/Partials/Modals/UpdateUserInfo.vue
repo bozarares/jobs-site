@@ -52,7 +52,7 @@ const submit = () => {
             <Input
                 v-model="form.tag"
                 :error="form.errors.tag"
-                label="Tag"
+                :label="$t('labels.tag')"
                 type="text"
                 name="tag"
                 :options="{ leftIcon: UserIcon, size: 'small' }"

@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.edit_logo') }}
+                {{ $t('labels.logo.edit') }}
             </h2>
             <XMarkIcon
                 class="h-6 cursor-pointer text-black/60"
@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
                 :server="filePondServer(csrfToken, form.logo, form.extension)"
                 ref="filePondRef"
                 class="w-full"
-                :label-idle="$t('labels.logo_drop')"
+                :label-idle="$t('labels.logo.drop')"
                 accepted-file-types="image/jpeg, image/png"
             />
         </div>
@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
             @click="submit"
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >{{ $t('buttons.save') }}</Button
+            >{{ $t('common.save') }}</Button
         >
     </div>
 </template>

@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
         >
             <div class="flex items-center justify-between px-4 md:px-8">
                 <h2 class="text-lg font-bold uppercase text-black/60">
-                    {{ $t('modals.view_application') }}
+                    {{ $t('labels.application') }}
                 </h2>
                 <div class="flex gap-2">
                     <div class="flex gap-4">
@@ -188,7 +188,7 @@ onBeforeUnmount(() => {
             >
                 <UserApplicationCard :user="user" />
                 <h2 class="text-lg font-bold uppercase text-black/60">
-                    {{ $t('fields.files') }}
+                    {{ $t('labels.files.self') }}
                 </h2>
                 <div
                     class="group/file relative flex justify-center gap-2 px-2 py-2"
@@ -203,7 +203,7 @@ onBeforeUnmount(() => {
                 </div>
                 <div>
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        {{ $t('fields.description') }}
+                        {{ $t('labels.description.self') }}
                     </h2>
                     <div
                         class="ql-editor prose"
@@ -212,19 +212,19 @@ onBeforeUnmount(() => {
                 </div>
                 <div class="pr-8">
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        {{ $t('fields.job_history') }}
+                        {{ $t('labels.jobHistory.self') }}
                     </h2>
                     <Timeline :items="jobHistoryTimeline" />
                 </div>
                 <div class="pr-8">
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        {{ $t('fields.education_history') }}
+                        {{ $t('labels.educationHistory.self') }}
                     </h2>
                     <Timeline :items="educationHistoryTimeline" />
                 </div>
                 <div>
                     <h2 class="text-lg font-bold uppercase text-black/60">
-                        {{ $t('fields.skills') }}
+                        {{ $t('labels.skills.self') }}
                     </h2>
                     <div class="flex flex-wrap gap-2">
                         <div

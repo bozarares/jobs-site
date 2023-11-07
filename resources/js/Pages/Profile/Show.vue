@@ -78,7 +78,7 @@ const edit = ref(false);
         >
             <!-- Description -->
             <ContentCard
-                :title="$t('fields.description')"
+                :title="$t('labels.description.self')"
                 :edit="edit"
                 id-edit="profile-description-edit"
                 modal="userDescription"
@@ -88,7 +88,7 @@ const edit = ref(false);
 
             <!-- Job History -->
             <ContentCard
-                :title="$t('fields.job_history')"
+                :title="$t('labels.jobHistory.self')"
                 :edit="edit"
                 id-edit="profile-jobs-edit"
                 modal="userJobs"
@@ -98,7 +98,7 @@ const edit = ref(false);
 
             <!-- Education History -->
             <ContentCard
-                :title="$t('fields.education_history')"
+                :title="$t('labels.educationHistory.self')"
                 :edit="edit"
                 id-edit="profile-education-edit"
                 modal="userEducation"
@@ -108,7 +108,7 @@ const edit = ref(false);
 
             <!-- Skills -->
             <ContentCard
-                :title="$tc('fields.skills', 2)"
+                :title="$tc('labels.skills.self', 2)"
                 :edit="edit"
                 id-edit="profile-skills-edit"
                 modal="userSkills"
@@ -126,7 +126,7 @@ const edit = ref(false);
 
             <!-- Files -->
             <ContentCard
-                :title="$t('fields.files')"
+                :title="$t('labels.files.self')"
                 :edit="edit"
                 id-edit="profile-files-edit"
                 modal="userFiles"
