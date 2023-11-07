@@ -7,6 +7,7 @@ import {
     DropdownMenu,
     DropdownSeparator,
     LanguageSelector,
+    Switch,
 } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 
@@ -21,6 +22,10 @@ import {
     UserIcon,
 } from '@heroicons/vue/24/outline';
 import { useLocaleStore } from '@/Stores/localeStore';
+import { Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid';
+import USAFlag from '@/Components/UI/Icons/Flags/USAFlag.vue';
+import RomaniaFlag from '@/Components/UI/Icons/Flags/RomaniaFlag.vue';
+import JapanFlag from '@/Components/UI/Icons/Flags/JapanFlag.vue';
 
 const localeStore = useLocaleStore();
 
@@ -90,15 +95,41 @@ watch(
                         $t('sections.notifications')
                     }}</DropdownHeader>
                 </DropdownMenu>
-                <LanguageSelector
-                    v-model="language"
-                    :languages="[
-                        { locale: 'en_US', emoji: '🇺🇸', name: 'English' },
-                        { locale: 'ro_RO', emoji: '🇷🇴', name: 'Română' },
-                        { locale: 'ja_JP', emoji: '🇯🇵', name: '日本語' },
-                        // { locale: 'fr', emoji: '🇫🇷', name: 'Francais' },
-                    ]"
-                />
+                <DropdownMenu align="right" class="mt-6 w-[10em]">
+                    <template v-slot:dropdownMenuButton>
+                        <Cog6ToothIcon class="h-6 w-6" />
+                    </template>
+                    <DropdownHeader>{{
+                        $t('sections.settings')
+                    }}</DropdownHeader>
+
+                    <LanguageSelector
+                        v-model="language"
+                        :languages="[
+                            {
+                                locale: 'en_US',
+                                flag: USAFlag,
+                                name: 'English',
+                            },
+                            {
+                                locale: 'ro_RO',
+                                flag: RomaniaFlag,
+                                name: 'Română',
+                            },
+                            {
+                                locale: 'ja_JP',
+                                flag: JapanFlag,
+                                name: '日本語',
+                            },
+                            // { locale: 'fr', emoji: '🇫🇷', name: 'Francais' },
+                        ]"
+                    />
+                    <div class="my-5 flex items-center justify-center gap-2">
+                        <MoonIcon
+                            class="w-5 text-indigo-900"
+                        /><Switch /><SunIcon class="w-6 text-yellow-500" />
+                    </div>
+                </DropdownMenu>
                 <DropdownMenu align="right" class="mt-4 w-[20em]">
                     <template v-slot:dropdownMenuButton>
                         <Avatar

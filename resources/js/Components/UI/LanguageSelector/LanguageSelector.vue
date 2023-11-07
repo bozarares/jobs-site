@@ -22,7 +22,7 @@ const selectElementRef = ref(null);
 const { floatingStyles: selectFloatingStyles } = useFloating(
     containerElementRef,
     selectElementRef,
-    { placement: 'bottom' },
+    { placement: 'right' },
 );
 
 const handleLanguageSelect = (language) => {
@@ -53,12 +53,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div ref="containerElementRef" class="relative">
+    <div
+        ref="containerElementRef"
+        class="relative flex w-full items-center justify-center"
+    >
         <div
-            class="cursor-pointer select-none text-2xl"
+            class="flex cursor-pointer select-none items-center gap-2"
             @click="toggleSelectVisibility"
         >
-            {{ selectedLanguage?.emoji || 'Select Language' }}
+            <component :is="selectedLanguage?.flag" class="mr-2 h-6 w-6" />
+            {{ selectedLanguage?.name || 'Select Language' }}
         </div>
 
         <div
@@ -74,7 +78,7 @@ onUnmounted(() => {
                     class="flex cursor-pointer items-center justify-center gap-2 p-2 hover:bg-gray-100"
                     @click="handleLanguageSelect(language)"
                 >
-                    <div>{{ language.emoji }}</div>
+                    <component :is="language.flag" class="h-6 w-6" />
                     <div>{{ language.name }}</div>
                 </li>
             </ul>
