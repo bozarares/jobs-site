@@ -27,7 +27,7 @@ const edit = ref(false);
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
-        <div class="flex w-full flex-col gap-4 md:w-auto">
+        <div class="flex w-full flex-col items-center gap-4 md:w-auto">
             <JobCard :alreadyApplied="props.applied" :job="job" :edit="edit" />
             <SettingsCard
                 :job="job"
@@ -39,7 +39,7 @@ const edit = ref(false);
             />
         </div>
         <div
-            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
+            class="flex w-full flex-grow flex-col items-center justify-start gap-4 md:w-3/4"
         >
             <!-- Description -->
             <ContentCard

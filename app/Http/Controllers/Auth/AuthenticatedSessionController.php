@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $locale = $request->user()->locale ?? 'en';
+        $theme = $request->user()->theme ?? 'light';
         Cookie::queue(
             Cookie::make(
                 'user_locale',
@@ -45,6 +46,9 @@ class AuthenticatedSessionController extends Controller
                 false,
                 false
             )
+        );
+        Cookie::queue(
+            Cookie::make('theme', $theme, 60 * 24 * 30, '/', null, false, false)
         );
 
         return redirect()->intended(RouteServiceProvider::HOME);

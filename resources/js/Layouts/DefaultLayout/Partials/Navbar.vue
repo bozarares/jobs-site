@@ -22,13 +22,14 @@ import {
     UserIcon,
 } from '@heroicons/vue/24/outline';
 import { useLocaleStore } from '@/Stores/localeStore';
+import { useCookieStore } from '@/Stores/cookieStore';
 import { Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid';
 import { languages } from '@/Languages/languages';
 import axios from 'axios';
 import { onMounted } from 'vue';
 
 const localeStore = useLocaleStore();
-
+const cookieStore = useCookieStore();
 const language = ref(localeStore.locale);
 const page = usePage();
 const isOwner = computed(() => {
@@ -109,14 +110,20 @@ onMounted(() => {
 </script>
 
 <template>
-    <header class="sticky z-50 items-center bg-white py-2 shadow">
+    <header
+        class="sticky z-50 items-center bg-white py-2 shadow dark:bg-zinc-800"
+    >
         <div
             class="container mx-auto flex max-w-screen-lg justify-between px-4"
         >
             <Link href="/">
                 <img
                     class="h-8 fill-current object-contain text-gray-500"
-                    src="/images/logo/logo-black.png"
+                    :src="
+                        cookieStore.theme === 'dark'
+                            ? '/images/logo/logo-white.png'
+                            : '/images/logo/logo-black.png'
+                    "
                     alt="Logo"
                 />
             </Link>
@@ -132,36 +139,59 @@ onMounted(() => {
                 <Link
                     v-else
                     :href="route('companies.create')"
-                    class="text-sm"
+                    class="text-sm dark:text-white"
                     >{{ $t('sections.recruit') }}</Link
                 >
+
+                <!-- Notification Panel -->
                 <DropdownMenu align="right" class="mt-6 w-[20em]">
                     <template v-slot:dropdownMenuButton>
-                        <BellIcon class="h-6 w-6" />
+                        <BellIcon class="h-6 w-6 dark:text-white" />
                     </template>
                     <DropdownHeader>{{
                         $t('sections.notifications')
                     }}</DropdownHeader>
                 </DropdownMenu>
-                <DropdownMenu align="right" class="mt-6 w-[10em]">
+
+                <!-- Settings Panel -->
+                <DropdownMenu
+                    align="right"
+                    class="mt-6 w-[10em] dark:bg-zinc-800"
+                >
                     <template v-slot:dropdownMenuButton>
-                        <Cog6ToothIcon class="h-6 w-6" />
+                        <Cog6ToothIcon class="h-6 w-6 dark:text-white" />
                     </template>
-                    <DropdownHeader>{{
+                    <DropdownHeader class="dark:text-gray-100">{{
                         $t('sections.settings')
                     }}</DropdownHeader>
 
                     <LanguageSelector
+                        class="dark:text-gray-100"
                         v-model="language"
                         :languages="languages"
                     />
                     <div class="my-5 flex items-center justify-center gap-2">
-                        <MoonIcon
-                            class="w-5 text-indigo-900"
-                        /><Switch /><SunIcon class="w-6 text-yellow-500" />
+                        <SunIcon class="w-6 text-yellow-500" />
+                        <Switch
+                            :value="cookieStore.theme === 'dark'"
+                            :on-change="
+                                (value) => {
+                                    cookieStore.setDarkMode(
+                                        value ? 'dark' : 'light',
+                                    );
+                                }
+                            "
+                        /><MoonIcon
+                            class="w-5 text-indigo-900 dark:text-indigo-500"
+                        />
                     </div>
                 </DropdownMenu>
-                <DropdownMenu align="right" class="mt-4 w-[20em]">
+
+                <!-- User Panel -->
+                <DropdownMenu
+                    align="right"
+                    class="mt-4 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-100"
+                >
                     <template v-slot:dropdownMenuButton>
                         <Avatar
                             :src="
@@ -210,30 +240,36 @@ onMounted(() => {
                                     "
                                 />
                                 <div class="flex flex-col items-center">
-                                    <p class="text-xl font-bold text-black">
+                                    <p
+                                        class="text-xl font-bold text-black dark:text-gray-200"
+                                    >
                                         {{ $page.props.auth.user.name }}
                                     </p>
-                                    <p class="text-sm font-bold text-black/50">
+                                    <p
+                                        class="text-sm font-bold text-black/50 dark:text-gray-200"
+                                    >
                                         {{ $page.props.auth.user.email }}
                                     </p>
                                 </div>
                             </div>
                         </DropdownHeader>
                         <div class="flex flex-col">
-                            <DropdownSeparator />
+                            <DropdownSeparator class="dark:bg-zinc-700" />
                             <DropdownItem
                                 :is="Link"
                                 :href="route('profile.show')"
-                                class="text-sm font-bold"
+                                class="text-sm font-bold dark:hover:bg-zinc-700"
                                 :leftIcon="UserIcon"
                                 >{{ $t('sections.profile') }}</DropdownItem
                             >
-                            <DropdownSeparator />
-                            <DropdownLabel align="left">{{
-                                $t('labels.userControlls')
-                            }}</DropdownLabel>
+                            <DropdownSeparator class="dark:bg-zinc-700" />
+                            <DropdownLabel
+                                align="left"
+                                class="dark:text-zinc-700"
+                                >{{ $t('labels.userControlls') }}</DropdownLabel
+                            >
                             <DropdownItem
-                                class="text-sm font-bold"
+                                class="text-sm font-bold dark:hover:bg-zinc-700"
                                 :leftIcon="Cog8ToothIcon"
                                 >{{ $t('sections.settings') }}</DropdownItem
                             >
@@ -241,7 +277,7 @@ onMounted(() => {
                                 :is="Link"
                                 :href="route('logout')"
                                 method="POST"
-                                class="text-sm font-bold"
+                                class="text-sm font-bold dark:hover:bg-zinc-700"
                                 :leftIcon="ArrowRightOnRectangleIcon"
                                 >{{ $t('common.logout') }}</DropdownItem
                             >

@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-gray-800"
+        class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-zinc-800 dark:bg-zinc-800/95 dark:text-zinc-100"
     >
         <Link :href="route('profile.applications')">{{
             $t('sections.applications')
@@ -27,8 +27,12 @@ const props = defineProps({
             $t('sections.likes')
         }}</Link>
     </div>
-    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
-        <h1 class="text-center text-2xl font-semibold text-gray-800">
+    <div
+        class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"
+    >
+        <h1
+            class="text-center text-2xl font-semibold text-zinc-800 dark:text-zinc-100"
+        >
             {{ $t('messages.welcome') }}
         </h1>
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
@@ -49,7 +53,7 @@ const props = defineProps({
         </div>
     </div>
     <div
-        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
+        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 pt-6"
     >
         <JobCard v-for="job in jobs" :key="job.slug" :job="job" />
     </div>

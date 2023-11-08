@@ -40,11 +40,11 @@ const experiences = computed(() => {
 <template>
     <Link
         :href="route('jobs.show', { job: props.job.slug })"
-        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md sm:w-[15em] md:mx-0 md:min-h-[25em]"
+        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-gray-100 sm:w-[15em] md:mx-0 md:min-h-[25em]"
         :class="
             featured
                 ? 'outline outline-2 outline-yellow-500'
-                : 'outline outline-gray-200'
+                : 'outline outline-gray-200 dark:outline-zinc-700'
         "
     >
         <!-- Logo and Company Name -->
@@ -108,7 +108,7 @@ const experiences = computed(() => {
         </div>
         <div
             @click.stop.prevent="() => {}"
-            class="h-18 absolute bottom-0 left-0 flex w-full translate-y-24 cursor-default items-center justify-center rounded-b-md border-t-2 bg-white transition-transform duration-300 group-hover:translate-y-0"
+            class="h-18 absolute bottom-0 left-0 flex w-full translate-y-24 cursor-default items-center justify-center rounded-b-md border-t-2 bg-inherit transition-transform duration-300 group-hover:translate-y-0 dark:border-zinc-600"
         >
             <div class="flex items-center justify-center gap-4">
                 <Button
@@ -121,14 +121,14 @@ const experiences = computed(() => {
                         class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-gray-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500/50"
                     >
                         <HandThumbDownIcon
-                            class="fill-white transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                            class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                     <div
                         class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-gray-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500/50"
                     >
                         <HandThumbUpIcon
-                            class="fill-white transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                            class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                 </div>

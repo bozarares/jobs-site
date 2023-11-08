@@ -76,6 +76,11 @@ Route::middleware('auth')->group(function () {
         ProfileController::class,
         'changeLanguage',
     ])->name('language');
+
+    Route::post('/theme', [ProfileController::class, 'changeTheme'])->name(
+        'changeTheme'
+    );
+
     Route::post('/profile/getLocalizedData', [
         ProfileController::class,
         'getLocalizedData',

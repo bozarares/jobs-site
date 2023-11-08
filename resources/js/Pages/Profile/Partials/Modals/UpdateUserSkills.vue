@@ -72,7 +72,7 @@ onMounted(() => {
 <template>
     <div
         id="skills-modal"
-        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 text-zinc-500 shadow dark:bg-zinc-800 dark:text-zinc-300"
     >
         <div
             v-if="skills.length !== 0"
@@ -90,7 +90,7 @@ onMounted(() => {
                     }
                 "
             >
-                <XMarkIcon class="h-5 text-black/60" />
+                <XMarkIcon class="h-5" />
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
@@ -98,17 +98,14 @@ onMounted(() => {
         </div>
     </div>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 text-zinc-500 shadow dark:bg-zinc-800 dark:text-zinc-300"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.skills.edit') }}
             </h2>
             <div>
-                <XMarkIcon
-                    class="h-6 cursor-pointer text-black/60"
-                    @click="closeModal()"
-                />
+                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
             </div>
         </div>
 
@@ -132,7 +129,7 @@ onMounted(() => {
             <div
                 v-for="skill in filteredSkills"
                 :key="skill.id"
-                class="cursor-pointer rounded bg-gray-800 px-2 py-1 text-white hover:bg-gray-700"
+                class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
             >
                 <div
                     @click="

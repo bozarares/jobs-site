@@ -34,14 +34,16 @@ const submit = () => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2
+                class="text-lg font-bold uppercase text-zinc-500 dark:text-zinc-300"
+            >
                 {{ $t('labels.social.edit') }}
             </h2>
             <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
+                class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
         </div>
@@ -56,7 +58,9 @@ const submit = () => {
                 :options="{ leftIcon: PhoneIcon, size: 'small' }"
             />
             <div class="flex items-center gap-1">
-                <p class="text-xl font-bold text-black/60">linkedin.com/in/</p>
+                <p class="text-xl font-bold text-zinc-800 dark:text-zinc-100">
+                    linkedin.com/in/
+                </p>
                 <Input
                     v-model="form.social_linkedin"
                     :error="form.errors.social_linkedin"
@@ -67,7 +71,9 @@ const submit = () => {
                 />
             </div>
             <div class="flex items-center gap-1">
-                <p class="text-xl font-bold text-black/60">github.com/</p>
+                <p class="text-xl font-bold text-zinc-800 dark:text-zinc-100">
+                    github.com/
+                </p>
                 <Input
                     v-model="form.social_github"
                     :error="form.errors.social_github"
@@ -78,7 +84,9 @@ const submit = () => {
                 />
             </div>
             <div class="flex items-center gap-1">
-                <p class="text-xl font-bold text-black/60">facebook.com/</p>
+                <p class="text-xl font-bold text-zinc-800 dark:text-zinc-100">
+                    facebook.com/
+                </p>
                 <Input
                     v-model="form.social_facebook"
                     :error="form.errors.social_facebook"

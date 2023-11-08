@@ -213,16 +213,17 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 // Compute classes for the input based on the borderStyle and disabled props.
 const inputClass = computed(() =>
     cva(
-        'w-full py-3 text-md pl-12 tracking-wider caret-gray-700 outline-none flex-shrink-0',
+        'text-md w-full flex-shrink-0 py-3 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-gray-100 dark:caret-zinc-100',
         {
             variants: {
                 borderStyle: {
-                    bordered: 'rounded-md border-2 border-black/20 shadow',
+                    bordered:
+                        'rounded-md border-2 border-zinc-200 shadow dark:border-zinc-500',
                     'border-bottom': 'border-b-2',
                     'no-border': '',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
+                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 dark:!bg-zinc-700 dark:!text-zinc-100 ',
                 },
             },
         },
@@ -269,7 +270,7 @@ const resetInputOnEscape = () => {
             aria-hidden="true"
         >
             <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900"
+                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900 dark:text-gray-400"
                 :is="options.leftIcon"
             />
         </div>
@@ -295,7 +296,7 @@ const resetInputOnEscape = () => {
             class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
         >
             <span
-                class="text-md pointer-events-none absolute left-12 select-none text-gray-700/80 transition-all duration-300"
+                class="text-md pointer-events-none absolute left-12 select-none text-gray-700/80 transition-all duration-300 dark:text-gray-100"
                 :class="[
                     isLabelFloating
                         ? '-translate-y-4 transform text-xs'
@@ -328,19 +329,19 @@ const resetInputOnEscape = () => {
                         inputTextValue.length !== 0
                     "
                     @mousedown.prevent
-                    class="absolute left-0 top-0 z-10 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400"
+                    class="scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 absolute left-0 top-0 z-10 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white dark:border-zinc-500 dark:bg-zinc-800 dark:text-zinc-100"
                     :style="floatingStyles"
                 >
                     <component
                         v-if="searchResults.length === 0"
                         is="p"
-                        class="w-full border-b-2 py-2 text-center"
+                        class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
                     >
                         {{ options.noResultMessage }}
                     </component>
                     <component
                         is="button"
-                        class="w-full border-b-2 py-2 text-center"
+                        class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
                         v-else
                         v-for="searchItem in searchResults"
                         :key="searchItem.item.refIndex"

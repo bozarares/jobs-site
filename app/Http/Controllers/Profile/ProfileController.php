@@ -67,6 +67,27 @@ class ProfileController extends Controller
         $user->save();
     }
 
+    public function changeTheme(Request $request)
+    {
+        $request->validate([
+            'theme' => ['required', 'in:light,dark'],
+        ]);
+        $user = Auth::user();
+        $user->theme = $request->theme;
+        Cookie::queue(
+            Cookie::make(
+                'theme',
+                $request->theme,
+                60 * 24 * 30,
+                '/',
+                null,
+                false,
+                false
+            )
+        );
+        $user->save();
+    }
+
     public function getLocalizedData(Request $request)
     {
         $request->validate([

@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('avatar_extension')->nullable();
 
             $table->string('locale', 2)->default('en');
+            $table->string('theme')->default('light');
 
             $table->string('social_linkedin')->nullable();
             $table->string('social_github')->nullable();

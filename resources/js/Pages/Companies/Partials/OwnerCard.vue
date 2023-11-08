@@ -54,8 +54,7 @@ const edit = ref(false);
                 }"
                 >{{ $t('common.feature') }}</Button
             >
-
-            <Button
+            <!-- <Button
                 class="w-full"
                 :options="{
                     shape: 'pill',
@@ -63,15 +62,15 @@ const edit = ref(false);
                 }"
                 @click="modalStore.openModal('companyCreateJob')"
                 >{{ $t('actions.createJob') }}</Button
-            >
-            <Button
+            > -->
+            <!-- <Button
                 class="w-full"
                 :options="{
                     shape: 'pill',
                     color: 'green',
                 }"
                 >{{ $tc('labels.applications', props.applications) }}</Button
-            >
+            > -->
         </div>
     </div>
 </template>

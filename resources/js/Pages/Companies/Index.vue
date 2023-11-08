@@ -13,13 +13,17 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
-        <h1 class="text-center text-2xl font-semibold text-gray-800">
+    <div
+        class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/95"
+    >
+        <h1
+            class="text-center text-2xl font-semibold text-zinc-800 dark:text-zinc-100"
+        >
             {{ $t('labels.business.center') }}
         </h1>
     </div>
     <div
-        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
+        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 pt-6"
     >
         <CompanyCard
             :viewButton="true"

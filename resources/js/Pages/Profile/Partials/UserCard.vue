@@ -44,7 +44,7 @@ watch(
                 }
             }
         "
-        class="group container relative flex w-full flex-col justify-between rounded bg-white p-6 shadow-md md:w-[15em]"
+        class="group container relative flex w-full flex-col justify-between rounded bg-white p-6 text-gray-600 shadow-md dark:bg-zinc-800 dark:text-gray-100 md:w-[15em]"
         :class="{
             'cursor-pointer': edit,
         }"
@@ -58,7 +58,7 @@ watch(
         />
         <h2
             v-if="edit"
-            class="absolute right-0 top-0 pr-2 text-xs font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+            class="absolute right-0 top-0 pr-2 text-xs font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-zinc-600"
         >
             {{ $t('labels.clickToEdit.field') }}
         </h2>
@@ -89,7 +89,7 @@ watch(
                 <h2 class="text-center text-lg font-bold uppercase">
                     {{ user.name }}
                 </h2>
-                <h2 class="text-center font-bold text-black/60">
+                <h2 class="text-center font-bold">
                     {{ user.tag }}
                 </h2>
             </div>

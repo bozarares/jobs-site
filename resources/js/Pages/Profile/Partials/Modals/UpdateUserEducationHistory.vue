@@ -115,7 +115,7 @@ const endDateComputed = computed({
 <template>
     <div
         id="education-history-modal"
-        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 text-zinc-800 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div
             v-if="educationHistory.length !== 0"
@@ -126,12 +126,14 @@ const endDateComputed = computed({
             <div>
                 <div class="text-lg font-bold">
                     {{ education.institution }}
-                    <span class="text-base text-gray-600">{{
+                    <span class="text-base text-zinc-600 dark:text-zinc-200">{{
                         education.degree
                     }}</span>
                 </div>
-                <div>{{ education.field_of_study }}</div>
-                <div class="text-sm text-gray-600">
+                <div class="text-zinc-600 dark:text-zinc-200">
+                    {{ education.field_of_study }}
+                </div>
+                <div class="text-sm text-zinc-600 dark:text-zinc-200">
                     {{ education.start_date }} -
                     {{ education.end_date ? education.end_date : 'To date' }}
                 </div>
@@ -169,21 +171,18 @@ const endDateComputed = computed({
                 >
             </div>
         </div>
-        <div v-else class="font-bold text-gray-600">
+        <div v-else class="font-bold text-zinc-500 dark:text-zinc-300">
             {{ $t('fallbacks.educationHistory') }}
         </div>
     </div>
     <div
-        class="container relative flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-visible rounded bg-white p-8 text-zinc-500 shadow dark:bg-zinc-800 dark:text-zinc-300"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.educationHistory.edit') }}
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-visible">

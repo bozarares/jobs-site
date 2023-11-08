@@ -60,7 +60,7 @@ const getAcronym = computed(() => {
 });
 const avatarClass = computed(() => {
     return cva(
-        'flex cursor-default items-center justify-center overflow-hidden border-2 border-gray-500 bg-gradient-to-br from-gray-300 to-gray-200 font-bold tracking-normal text-gray-700 shadow-sm duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition',
+        'flex cursor-default items-center justify-center overflow-hidden border-2 border-zinc-500 bg-gradient-to-br from-white to-zinc-300 font-bold tracking-normal text-zinc-700 shadow-sm duration-150 ease-in-out hover:transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:transition dark:border-zinc-100 dark:from-zinc-700 dark:to-zinc-800 dark:text-zinc-100',
         {
             variants: {
                 size: {
@@ -105,7 +105,7 @@ const avatarClass = computed(() => {
                 v-if="editMode"
                 :id="props.editButtonId"
                 @click="editClick"
-                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-gray-900 p-2 text-white"
+                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-gray-900 p-2 text-white dark:border-zinc-800 dark:bg-zinc-200 dark:text-zinc-800"
             >
                 <component :is="PencilSquareIcon"></component>
             </div>

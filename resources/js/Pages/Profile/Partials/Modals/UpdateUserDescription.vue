@@ -54,14 +54,16 @@ onMounted(async () => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-2xl flex-col gap-8 rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2
+                class="text-lg font-bold uppercase text-zinc-500 dark:text-zinc-300"
+            >
                 {{ $t('labels.description.edit') }}
             </h2>
             <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
+                class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
         </div>
@@ -84,4 +86,44 @@ onMounted(async () => {
     </div>
 </template>
 
-<style></style>
+<style>
+.ql-toolbar .ql-stroke {
+    @apply dark:fill-none dark:stroke-zinc-100;
+}
+
+.ql-picker-options {
+    @apply dark:!bg-zinc-800 dark:text-zinc-100 dark:selection:bg-black dark:hover:bg-zinc-600;
+}
+
+.ql-picker-item .ql-selected {
+    @apply dark:bg-zinc-600;
+}
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    @apply dark:bg-zinc-600;
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover {
+    @apply dark:bg-zinc-600;
+}
+
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    @apply dark:text-zinc-100;
+}
+</style>

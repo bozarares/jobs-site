@@ -105,14 +105,16 @@ onBeforeUnmount(() => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2
+                class="text-lg font-bold uppercase text-zinc-500 dark:text-zinc-300"
+            >
                 {{ $t('labels.avatar.edit') }}
             </h2>
             <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
+                class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
         </div>
@@ -124,7 +126,7 @@ onBeforeUnmount(() => {
                 @processfile="onProcessFile"
                 :server="filePondServer(csrfToken, form.avatar, form.extension)"
                 ref="filePondRef"
-                class="w-full"
+                class="w-full bg-black"
                 :label-idle="$t('labels.avatar.drop')"
                 accepted-file-types="image/jpeg, image/png"
             />
@@ -137,3 +139,19 @@ onBeforeUnmount(() => {
         >
     </div>
 </template>
+
+<style>
+.filepond--credits {
+    color: white !important;
+}
+.filepond--drop-label {
+    @apply !text-zinc-300;
+}
+.filepond--panel,
+.filepond--panel-root {
+    @apply !bg-zinc-700;
+}
+.filepond--wrapper {
+    @apply !bg-zinc-700/0;
+}
+</style>

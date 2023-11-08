@@ -7,6 +7,7 @@ import JobCard from './Partials/JobCard.vue';
 import { markRaw } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
 import ContentCard from '@/Components/ContentCard.vue';
+import AddJob from './Partials/AddJob.vue';
 
 const modalStore = useModalStore();
 const isClient = ref(false);
@@ -245,7 +246,7 @@ onMounted(() => {
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
         <!-- Div-ul cu detaliile companiei -->
-        <div class="flex w-full flex-col gap-4 md:w-auto">
+        <div class="flex w-full flex-col items-center gap-4 md:w-auto">
             <CompanyCard :edit="isOwner && edit" :company="company" />
             <OwnerCard
                 v-if="isOwner"
@@ -258,9 +259,8 @@ onMounted(() => {
             />
         </div>
 
-        <!-- Div-ul cu descrierea companiei -->
         <div
-            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
+            class="flex w-full flex-grow flex-col items-center justify-start gap-4 md:w-3/4"
         >
             <!-- Description -->
             <ContentCard
@@ -277,7 +277,17 @@ onMounted(() => {
                 <p class="text-sm font-bold" v-if="company.jobs.length === 0">
                     There are no jobs available at the moment
                 </p>
-                <JobCard v-for="job in company.jobs" :key="job.id" :job="job" />
+                <div class="flex flex-wrap items-center justify-center gap-2">
+                    <JobCard
+                        v-for="job in company.jobs"
+                        :key="job.slug"
+                        :job="job"
+                    />
+                    <AddJob
+                        v-if="isOwner && edit"
+                        @click="modalStore.openModal('companyCreateJob')"
+                    />
+                </div>
             </ContentCard>
 
             <!-- Contact -->

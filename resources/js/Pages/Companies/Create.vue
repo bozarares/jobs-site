@@ -242,12 +242,14 @@ const revertFiles = () => {
 
 <template>
     <div
-        class="container mt-12 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
+        class="container mt-12 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md dark:bg-zinc-800 dark:text-zinc-100"
     >
         <h2 class="text-center text-2xl font-bold">
             {{ $t('messages.thanks') }}
         </h2>
-        <h3 class="mb-4 text-center text-lg font-semibold text-gray-700">
+        <h3
+            class="mb-4 text-center text-lg font-semibold text-zinc-700 dark:text-zinc-200"
+        >
             {{ $t('messages.companyCreate') }}
         </h3>
         <div class="flex w-full max-w-lg flex-col items-center gap-4">
@@ -425,3 +427,59 @@ const revertFiles = () => {
         </div>
     </div>
 </template>
+
+<style>
+.filepond--credits {
+    color: white !important;
+}
+.filepond--drop-label {
+    @apply !text-zinc-300;
+}
+.filepond--panel,
+.filepond--panel-root {
+    @apply !bg-zinc-700;
+}
+.filepond--wrapper {
+    @apply !bg-zinc-700/0;
+}
+
+.ql-toolbar .ql-stroke {
+    @apply dark:fill-none dark:stroke-zinc-100;
+}
+
+.ql-picker-options {
+    @apply dark:!bg-zinc-800 dark:text-zinc-100 dark:selection:bg-black dark:hover:bg-zinc-600;
+}
+
+.ql-picker-item .ql-selected {
+    @apply dark:bg-zinc-600;
+}
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    @apply dark:bg-zinc-600;
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover {
+    @apply dark:bg-zinc-600;
+}
+
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+    @apply dark:text-zinc-100;
+}
+</style>

@@ -104,7 +104,7 @@ const edit = ref(false);
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >
         <!-- Left side -->
-        <div class="flex w-full flex-col gap-4 md:w-auto">
+        <div class="flex w-full flex-col items-center gap-4 md:w-auto">
             <UserCard
                 :edit="edit"
                 :user="user"
@@ -128,7 +128,7 @@ const edit = ref(false);
 
         <!-- Right side -->
         <div
-            class="flex w-full flex-grow flex-col justify-start gap-4 md:w-3/4"
+            class="flex w-full flex-grow flex-col items-center justify-start gap-4 md:w-3/4"
         >
             <!-- Description -->
             <ContentCard
@@ -137,7 +137,10 @@ const edit = ref(false);
                 id-edit="profile-description-edit"
                 modal="userDescription"
             >
-                <div class="ql-editor prose" v-html="description" />
+                <div
+                    class="ql-editor prose dark:!text-gray-100"
+                    v-html="description"
+                />
             </ContentCard>
 
             <!-- Job History -->

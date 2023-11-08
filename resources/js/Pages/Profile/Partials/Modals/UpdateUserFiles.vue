@@ -150,7 +150,7 @@ onBeforeUnmount(() => {
 <template>
     <div
         id="files-modal"
-        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 text-zinc-500 shadow dark:bg-zinc-800 dark:text-zinc-300"
     >
         <div
             v-if="files.length !== 0"
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
                 aria-label="Delete button"
                 @click="removeFile(file.id)"
             >
-                <XMarkIcon class="h-5 text-black/60" />
+                <XMarkIcon class="h-5" />
             </div>
         </div>
         <div v-else class="font-bold text-gray-600">
@@ -172,16 +172,13 @@ onBeforeUnmount(() => {
         </div>
     </div>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 text-zinc-500 shadow dark:bg-zinc-800 dark:text-zinc-300"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.files.edit') }}
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-auto">
@@ -217,3 +214,19 @@ onBeforeUnmount(() => {
         </div>
     </div>
 </template>
+
+<style>
+.filepond--credits {
+    color: white !important;
+}
+.filepond--drop-label {
+    @apply !text-zinc-300;
+}
+.filepond--panel,
+.filepond--panel-root {
+    @apply !bg-zinc-700;
+}
+.filepond--wrapper {
+    @apply !bg-zinc-700/0;
+}
+</style>

@@ -8,14 +8,14 @@
         :class="dropdownItemClass"
     >
         <component
-            class="absolute left-0 mr-2 h-6 pl-3 text-gray-700/60"
+            class="absolute left-0 mr-2 h-6 pl-3 text-gray-700/60 dark:text-inherit"
             :is="leftIcon"
         />
         <div class="inline-block w-full text-center">
             <slot />
         </div>
         <component
-            class="absolute right-0 ml-2 h-6 pr-3 text-gray-700/60"
+            class="absolute right-0 ml-2 h-6 pr-3 text-gray-700/60 dark:text-inherit"
             :is="rightIcon"
         />
     </component>

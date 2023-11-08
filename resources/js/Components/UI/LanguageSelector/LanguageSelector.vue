@@ -31,7 +31,7 @@ const selectElementRef = ref(null);
 const { floatingStyles: selectFloatingStyles } = useFloating(
     containerElementRef,
     selectElementRef,
-    { placement: 'right' },
+    { placement: 'bottom' },
 );
 
 const handleLanguageSelect = (language) => {
@@ -83,11 +83,13 @@ onUnmounted(() => {
             class="absolute z-10 w-auto"
             :style="selectFloatingStyles"
         >
-            <ul class="rounded border bg-white shadow">
+            <ul
+                class="rounded border bg-white shadow dark:border-zinc-700 dark:bg-zinc-800"
+            >
                 <li
                     v-for="language in languages"
                     :key="language.locale"
-                    class="flex cursor-pointer items-center justify-center gap-2 p-2 hover:bg-gray-100"
+                    class="flex cursor-pointer items-center justify-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-zinc-700"
                     @click="handleLanguageSelect(language)"
                 >
                     <component :is="language.flag" class="h-6 w-6" />

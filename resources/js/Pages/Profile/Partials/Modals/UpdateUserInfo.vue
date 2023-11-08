@@ -30,12 +30,16 @@ const submit = () => {
 <template>
     <div
         id="user-modal"
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">Edit User</h2>
+            <h2
+                class="text-lg font-bold uppercase text-zinc-500 dark:text-zinc-300"
+            >
+                Edit User
+            </h2>
             <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
+                class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
         </div>

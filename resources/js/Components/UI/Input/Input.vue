@@ -95,16 +95,17 @@ const inputId = computed(() => props.name + '-' + crypto.randomUUID());
 // A CVA instance for borderStyle variants
 const inputClass = computed(() =>
     cva(
-        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-gray-100 dark:caret-zinc-200',
         {
             variants: {
                 borderStyle: {
-                    bordered: 'rounded-md border-2 border-black/20 shadow',
+                    bordered:
+                        'rounded-md border-2 border-zinc-200 shadow dark:border-zinc-500',
                     'border-bottom': 'border-b-2',
                     'no-border': '',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
+                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 dark:!bg-zinc-700 dark:!text-zinc-100 ',
                 },
                 password: {
                     true: 'pr-12',
@@ -168,7 +169,7 @@ const togglePasswordVisibility = () => {
                 aria-hidden="true"
             >
                 <component
-                    class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900"
+                    class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900 dark:text-gray-400"
                     :is="options.leftIcon"
                 />
             </div>
@@ -192,7 +193,7 @@ const togglePasswordVisibility = () => {
                 class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
             >
                 <span
-                    class="text-md pointer-events-none absolute left-12 select-none text-gray-700/80 transition-all duration-300"
+                    class="text-md pointer-events-none absolute left-12 select-none text-gray-600 transition-all duration-300 dark:text-gray-100"
                     :class="labelClasses"
                     :id="`${inputId}-label`"
                     >{{ props.label }}</span
@@ -209,7 +210,7 @@ const togglePasswordVisibility = () => {
                 "
             >
                 <component
-                    class="absolute right-0 flex h-8 w-full cursor-pointer select-none items-center justify-center p-1 text-gray-900 transition-all duration-300"
+                    class="absolute right-0 flex h-8 w-full cursor-pointer select-none items-center justify-center p-1 text-gray-900 transition-all duration-300 dark:text-gray-400"
                     :is="
                         inputType === 'password'
                             ? options.passwordIcon.show

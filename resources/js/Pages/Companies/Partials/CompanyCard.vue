@@ -35,7 +35,7 @@ const props = defineProps({
     <div
         :id="`company-card-${company.name}`"
         :class="class"
-        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
+        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-zinc-100 md:w-[15em]"
     >
         <!-- Logo and Company Name -->
 
