@@ -19,9 +19,13 @@ const props = defineProps({
         type: Function,
         default: () => {},
     },
+    language: {
+        type: String,
+        default: 'en',
+    },
 });
 
-const language = ref('en');
+const language = ref(props.language);
 watch(
     () => language.value,
     (newValue) => {
@@ -46,7 +50,8 @@ watch(
         }"
     >
         <LanguageSelector
-            class="absolute right-0 top-0 !justify-end"
+            class="absolute left-0 top-0 z-20 !justify-start pl-1"
+            @click.prevent.stop=""
             :show-name="false"
             :languages="languages"
             v-model="language"

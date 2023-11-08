@@ -58,6 +58,7 @@ watch(
     () => language.value,
     (newValue) => {
         localeStore.setLocale(newValue);
+        localeStore.setProfileLocale(newValue);
 
         if (page.props.auth.user) {
             page.props.auth.user.locale = newValue;

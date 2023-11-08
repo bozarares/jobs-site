@@ -15,6 +15,7 @@ class EducationHistoryController extends Controller
             'field_of_study' => ['nullable', 'string', 'max:2048'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $user->educationHistory()->create($request->all());
@@ -29,6 +30,7 @@ class EducationHistoryController extends Controller
             'field_of_study' => ['nullable', 'string', 'max:2048'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $educationHistory = $user->educationHistory()->find($request->id);
@@ -39,6 +41,7 @@ class EducationHistoryController extends Controller
     {
         $request->validate([
             'id' => ['required', 'integer'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $educationHistory = $user->educationHistory()->find($request->id);

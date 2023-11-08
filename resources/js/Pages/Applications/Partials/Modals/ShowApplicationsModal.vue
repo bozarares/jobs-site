@@ -1,5 +1,6 @@
 <script setup>
-import { Button, Timeline } from '@/Components/UI';
+import { LanguageSelector, Timeline } from '@/Components/UI';
+import { languages } from '@/Languages/languages';
 
 import axios from 'axios';
 import {
@@ -22,10 +23,13 @@ import {
     onBeforeMount,
 } from 'vue';
 import FileAction from '@/Components/FileAction.vue';
+import { useLocaleStore } from '@/Stores/localeStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
+const localeStore = useLocaleStore();
+const locale = ref(localeStore.locale);
 
 const page = usePage();
 const job = page.props.job;
@@ -40,40 +44,53 @@ const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
 
 watch(
-    () => user.value.job_history,
+    () => locale.value,
     (newValue) => {
-        if (!newValue) {
+        fetchLocalizedData(application.current.id, newValue);
+    },
+);
+
+watch(
+    () => user.value,
+    (newValue) => {
+        if (!newValue.localizedData && !newValue.localizedData?.jobHistory) {
             return;
         }
-        jobHistoryTimeline.value = newValue.map((item) => {
-            return {
-                start: new Date(item.start_date),
-                end: item.end_date ? new Date(item.end_date) : undefined,
-                title: item.company,
-                subtitle: item.title,
-                description: item.description,
-            };
-        });
+        jobHistoryTimeline.value = newValue.localizedData.jobHistory.map(
+            (item) => {
+                return {
+                    start: new Date(item.start_date),
+                    end: item.end_date ? new Date(item.end_date) : undefined,
+                    title: item.company,
+                    subtitle: item.title,
+                    description: item.description,
+                };
+            },
+        );
     },
-    { immediate: true },
+    { immediate: true, deep: true },
 );
 watch(
-    () => user.value.education_history,
+    () => user.value,
     (newValue) => {
-        if (!newValue) {
+        if (
+            !newValue.localizedData &&
+            !newValue.localizedData?.educationHistory
+        ) {
             return;
         }
-        educationHistoryTimeline.value = newValue.map((item) => {
-            return {
-                start: new Date(item.start_date),
-                end: item.end_date ? new Date(item.end_date) : undefined,
-                title: item.institution,
-                subtitle: item.degree,
-                description: item.field_of_study,
-            };
-        });
+        educationHistoryTimeline.value =
+            newValue.localizedData.educationHistory.map((item) => {
+                return {
+                    start: new Date(item.start_date),
+                    end: item.end_date ? new Date(item.end_date) : undefined,
+                    title: item.institution,
+                    subtitle: item.degree,
+                    description: item.field_of_study,
+                };
+            });
     },
-    { immediate: true },
+    { immediate: true, deep: true },
 );
 
 const updateUrl = (applicationId) => {
@@ -83,6 +100,17 @@ const updateUrl = (applicationId) => {
     }
     const newUrl = `/jobs/${job.slug}/application/${applicationId}`;
     window.history.pushState({ applicationId }, '', newUrl);
+};
+
+const fetchLocalizedData = async (application_id, locale) => {
+    const response = await axios.post(
+        route('application.get.localized.data', { job: job.slug }),
+        {
+            application_id,
+            locale,
+        },
+    );
+    user.value.localizedData = response.data.localizedData;
 };
 
 const fetchApplication = async (applicationId = null) => {
@@ -96,7 +124,7 @@ const fetchApplication = async (applicationId = null) => {
     try {
         const response = await axios.post(
             route('job.get.application', { job: job.slug }),
-            { application_id: applicationId },
+            { application_id: applicationId, locale: locale.value },
         );
         application.current = response.data.application;
         application.next = response.data.next;
@@ -127,7 +155,7 @@ onBeforeUnmount(() => {
 
 <template>
     <div
-        class="flex h-full w-full flex-col-reverse items-center justify-center overflow-auto md:flex-row-reverse md:gap-4"
+        class="flex h-full w-full flex-col-reverse items-center justify-center md:flex-row-reverse md:gap-4"
     >
         <EmployerPanelCard
             :application="application.current"
@@ -138,7 +166,7 @@ onBeforeUnmount(() => {
             "
         />
         <div
-            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col overflow-auto rounded bg-white py-8 shadow"
+            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-8 shadow"
         >
             <div class="flex items-center justify-between px-4 md:px-8">
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -146,6 +174,12 @@ onBeforeUnmount(() => {
                 </h2>
                 <div class="flex gap-2">
                     <div class="flex gap-4">
+                        <LanguageSelector
+                            @click.prevent.stop=""
+                            :show-name="false"
+                            :languages="languages"
+                            v-model="locale"
+                        />
                         <ChevronLeftIcon
                             class="h-6"
                             :class="{
@@ -206,8 +240,10 @@ onBeforeUnmount(() => {
                         {{ $t('labels.description.self') }}
                     </h2>
                     <div
+                        v-if="user && user.localizedData"
                         class="ql-editor prose"
-                        v-html="user.description"
+                        :class="{ 'ql-editor': user.localizedData.description }"
+                        v-html="user.localizedData.description"
                     ></div>
                 </div>
                 <div class="pr-8">

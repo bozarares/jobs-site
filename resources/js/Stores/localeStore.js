@@ -6,11 +6,15 @@ import { defineStore } from 'pinia';
 export const useLocaleStore = defineStore('locale', {
     state: () => ({
         locale: 'en',
+        profileLocale: 'en',
     }),
     actions: {
         async setLocale(newLocale) {
             await loadLanguageAsync(newLocale);
             this.locale = newLocale;
+        },
+        setProfileLocale(newLocale) {
+            this.profileLocale = newLocale;
         },
     },
 });

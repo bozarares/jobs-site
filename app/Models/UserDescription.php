@@ -9,7 +9,7 @@ class UserDescription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['description', 'locale'];
+    protected $fillable = ['user_id', 'description', 'locale'];
 
     public function user()
     {

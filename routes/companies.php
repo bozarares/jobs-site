@@ -49,6 +49,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/job/{job}/application/load', 'load')->name(
             'job.load.application'
         );
+        Route::post(
+            '/job/{job}/application/getLocalizedData',
+            'getLocalizedData'
+        )->name('application.get.localized.data');
         Route::get('/jobs/{job}/application/{application}', 'show')->name(
             'job.show.application'
         );

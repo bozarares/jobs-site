@@ -23,8 +23,6 @@ return new class extends Migration {
             $table->date('end_date')->nullable();
             $table->string('locale', 2)->index();
             $table->timestamps();
-
-            $table->unique(['user_id', 'locale']);
         });
     }
 

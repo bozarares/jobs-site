@@ -103,9 +103,9 @@ class User extends Authenticatable
             'educationHistory' => $this->educationHistory()
                 ->where('locale', $lang)
                 ->get(),
-            'userDescription' => $this->userDescription()
+            'description' => $this->userDescription()
                 ->where('locale', $lang)
-                ->first(),
+                ->value('description'),
         ];
     }
 

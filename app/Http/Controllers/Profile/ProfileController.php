@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\UserDescription;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,11 +66,27 @@ class ProfileController extends Controller
         );
         $user->save();
     }
+
+    public function getLocalizedData(Request $request)
+    {
+        $request->validate([
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
+        ]);
+
+        $user = Auth::user();
+        $localizedData = $user->getLocalizedDataAttribute($request->locale);
+        return response()->json([
+            'localizedData' => $localizedData,
+        ]);
+    }
     public function show(): Response
     {
         $user = Auth::user();
+        $locale = $user->locale;
+        $localizedData = $user->getLocalizedDataAttribute($locale);
         return Inertia::render('Profile/Show', [
-            'user' => $user, //! We can use $user->only
+            'user' => $user,
+            'localizedData' => $localizedData,
         ]);
     }
 
@@ -152,19 +169,23 @@ class ProfileController extends Controller
         return Redirect::route('profile.show');
     }
 
-    public function updateDescription(Request $request): RedirectResponse
+    public function updateDescription(Request $request)
     {
         $request_validated = $request->validate([
             'description' => ['nullable', 'string', 'max:2048'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $request_validated['description'] = Purifier::clean(
             $request_validated['description']
         );
-        $user->description = $request_validated['description'];
-
-        $user->save();
-        return Redirect::route('profile.show');
+        UserDescription::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'locale' => $request_validated['locale'],
+            ],
+            ['description' => $request_validated['description']]
+        );
     }
 
     public function edit(Request $request): Response

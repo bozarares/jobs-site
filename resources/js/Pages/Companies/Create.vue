@@ -242,131 +242,138 @@ const revertFiles = () => {
 
 <template>
     <div
-        class="container mt-24 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
+        class="container mt-12 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md"
     >
-        <h2 class="text-2xl font-bold">
+        <h2 class="text-center text-2xl font-bold">
             {{ $t('messages.thanks') }}
         </h2>
-        <h3 class="mb-4 text-lg font-semibold text-gray-700">
+        <h3 class="mb-4 text-center text-lg font-semibold text-gray-700">
             {{ $t('messages.companyCreate') }}
         </h3>
         <div class="flex w-full max-w-lg flex-col items-center gap-4">
-            <Input
-                name="Company name"
-                v-model="form.name"
-                :label="$t('labels.companyDetails.name')"
-                :error="form.errors.name"
-                :options="{ leftIcon: BuildingOfficeIcon }"
-            />
-
-            <Input
-                name="Company code"
-                v-model="form.code"
-                :label="$t('labels.companyDetails.registrationCode')"
-                :error="form.errors.code"
-                :options="{ leftIcon: RectangleStackIcon }"
-            />
-            <Input
-                name="Phone number"
-                v-model="form.phone_number"
-                :label="$t('labels.phone.contact')"
-                :error="form.errors.phone_number"
-                :options="{ leftIcon: PhoneIcon }"
-            />
-            <Input
-                name="Contact email"
-                v-model="form.email"
-                :label="$t('labels.email.self.contact')"
-                :error="form.errors.email"
-                :options="{ leftIcon: AtSymbolIcon }"
-            />
-            <SearchInput
-                v-model="selectedCountry"
-                :label="$t('labels.country.self')"
-                type="text"
-                name="Company country"
-                :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
-                    noResultMessage: 'No results found! 😢',
-                }"
-                :search="{
-                    items: countries,
-                    searchField: 'name',
-                    keys: ['name', 'iso2', 'iso3'],
-                    maxResults: 20,
-                    hotReload: true,
-                }"
-                :validity-check="true"
-                :on-validity-change="
-                    (newValue) => {
-                        if (newValue) getStates();
-                        selectedCountryValid = newValue;
-                    }
-                "
-            />
-            <SearchInput
-                v-model="selectedState"
-                :disabled="states.length === 0"
-                :label="$t('labels.country.county')"
-                type="text"
-                name="Company state"
-                :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
-                    noResultMessage: 'No results found! 😢',
-                }"
-                :search="{
-                    items: states,
-                    searchField: 'name',
-                    keys: ['name'],
-                    maxResults: 20,
-                    hotReload: true,
-                }"
-                :validity-check="true"
-                :on-validity-change="
-                    (newValue) => {
-                        if (newValue) getTowns();
-                        selectedStateValid = newValue;
-                    }
-                "
-            />
-            <SearchInput
-                v-model="selectedTown"
-                :disabled="towns.length === 0"
-                :label="$t('labels.country.town')"
-                type="text"
-                name="Company town"
-                :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
-                    noResultMessage: 'No results found! 😢',
-                }"
-                :search="{
-                    items: towns,
-                    searchField: 'name',
-                    keys: ['name'],
-                    maxResults: 20,
-                    hotReload: true,
-                }"
-                :validity-check="true"
-                :on-validity-change="
-                    (newValue) => (selectedTownValid = newValue)
-                "
-            />
-            <Input
-                name="Company address"
-                :disabled="
-                    selectedTown.length === 0 || selectedTownValid === false
-                "
-                :options="{ leftIcon: MapPinIcon }"
-                v-model="form.address"
-                :label="$t('labels.address')"
-                :error="form.errors.address"
-            />
+            <div class="flex w-full flex-col gap-4 md:flex-row">
+                <Input
+                    name="Company name"
+                    v-model="form.name"
+                    :label="$t('labels.companyDetails.name')"
+                    :error="form.errors.name"
+                    :options="{ leftIcon: BuildingOfficeIcon }"
+                />
+                <Input
+                    name="Company code"
+                    v-model="form.code"
+                    :label="$t('labels.companyDetails.registrationCode')"
+                    :error="form.errors.code"
+                    :options="{ leftIcon: RectangleStackIcon }"
+                />
+            </div>
+            <div class="flex w-full flex-col gap-4 md:flex-row">
+                <Input
+                    name="Phone number"
+                    v-model="form.phone_number"
+                    :label="$t('labels.phone.contact')"
+                    :error="form.errors.phone_number"
+                    :options="{ leftIcon: PhoneIcon }"
+                />
+                <Input
+                    name="Contact email"
+                    v-model="form.email"
+                    :label="$t('labels.email.contact')"
+                    :error="form.errors.email"
+                    :options="{ leftIcon: AtSymbolIcon }"
+                />
+            </div>
+            <div class="flex w-full flex-col gap-4 md:flex-row">
+                <SearchInput
+                    v-model="selectedCountry"
+                    :label="$t('labels.country.self')"
+                    type="text"
+                    name="Company country"
+                    :options="{
+                        leftIcon: GlobeEuropeAfricaIcon,
+                        borderStyle: 'bordered',
+                        xMarkIcon: XMarkIcon,
+                        noResultMessage: 'No results found! 😢',
+                    }"
+                    :search="{
+                        items: countries,
+                        searchField: 'name',
+                        keys: ['name', 'iso2', 'iso3'],
+                        maxResults: 20,
+                        hotReload: true,
+                    }"
+                    :validity-check="true"
+                    :on-validity-change="
+                        (newValue) => {
+                            if (newValue) getStates();
+                            selectedCountryValid = newValue;
+                        }
+                    "
+                />
+                <SearchInput
+                    v-model="selectedState"
+                    :disabled="states.length === 0"
+                    :label="$t('labels.country.county')"
+                    type="text"
+                    name="Company state"
+                    :options="{
+                        leftIcon: GlobeEuropeAfricaIcon,
+                        borderStyle: 'bordered',
+                        xMarkIcon: XMarkIcon,
+                        noResultMessage: 'No results found! 😢',
+                    }"
+                    :search="{
+                        items: states,
+                        searchField: 'name',
+                        keys: ['name'],
+                        maxResults: 20,
+                        hotReload: true,
+                    }"
+                    :validity-check="true"
+                    :on-validity-change="
+                        (newValue) => {
+                            if (newValue) getTowns();
+                            selectedStateValid = newValue;
+                        }
+                    "
+                />
+            </div>
+            <div class="flex w-full flex-col gap-4 md:flex-row">
+                <SearchInput
+                    v-model="selectedTown"
+                    :disabled="towns.length === 0"
+                    :label="$t('labels.country.town')"
+                    type="text"
+                    name="Company town"
+                    :options="{
+                        leftIcon: GlobeEuropeAfricaIcon,
+                        borderStyle: 'bordered',
+                        xMarkIcon: XMarkIcon,
+                        noResultMessage: 'No results found! 😢',
+                    }"
+                    :search="{
+                        items: towns,
+                        searchField: 'name',
+                        keys: ['name'],
+                        maxResults: 20,
+                        hotReload: true,
+                    }"
+                    :validity-check="true"
+                    :on-validity-change="
+                        (newValue) => (selectedTownValid = newValue)
+                    "
+                />
+                <Input
+                    name="Company address"
+                    :disabled="
+                        selectedTown.length === 0 || selectedTownValid === false
+                    "
+                    :options="{ leftIcon: MapPinIcon }"
+                    v-model="form.address"
+                    :label="$t('labels.address')"
+                    :error="form.errors.address"
+                />
+            </div>
             <FilePond
                 v-if="isClient && FilePond"
                 id="logo-upload"

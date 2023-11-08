@@ -15,6 +15,7 @@ class JobHistoryController extends Controller
             'description' => ['nullable', 'string', 'max:2048'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $user->jobHistory()->create($request->all());
@@ -29,6 +30,7 @@ class JobHistoryController extends Controller
             'description' => ['nullable', 'string', 'max:2048'],
             'start_date' => ['required', 'date'],
             'end_date' => ['nullable', 'date'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $jobHistory = $user->jobHistory()->find($request->id);
@@ -39,6 +41,7 @@ class JobHistoryController extends Controller
     {
         $request->validate([
             'id' => ['required', 'integer'],
+            'locale' => ['required', 'string', 'in:en,ro,ja'],
         ]);
         $user = $request->user();
         $jobHistory = $user->jobHistory()->find($request->id);

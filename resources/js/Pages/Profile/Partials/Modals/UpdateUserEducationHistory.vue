@@ -14,13 +14,16 @@ import {
 } from '@heroicons/vue/24/outline';
 import { computed } from 'vue';
 import dayjs from 'dayjs';
+import { useProfileStore } from '@/Stores/profileStore';
+import { watch } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
+const profileStore = useProfileStore();
 const page = usePage();
-const educationHistory = ref(page.props.user.education_history);
+const educationHistory = ref(profileStore.educationHistory);
 
 const toDate = ref(false);
 const form = useForm({
@@ -30,6 +33,7 @@ const form = useForm({
     field_of_study: '',
     start_date: null,
     end_date: null,
+    locale: profileStore.profileLanguage,
 });
 
 const editMode = ref(false);
@@ -41,30 +45,35 @@ const resetForm = () => {
     toDate.value = false;
 };
 
+watch(
+    () => profileStore.educationHistory,
+    (newValue) => {
+        educationHistory.value = newValue;
+    },
+);
+
 const submitAdd = () => {
     form.post(route('profile.update.educationHistory.add'), {
-        onSuccess: (response) => {
-            educationHistory.value = page.props.user.education_history;
+        onSuccess: () => {
+            profileStore.setProfileWatcher(true);
             resetForm();
         },
-        onFinish: () => {},
     });
 };
 
 const submitEdit = () => {
     form.put(route('profile.update.educationHistory.edit'), {
-        onSuccess: (response) => {
-            educationHistory.value = page.props.user.education_history;
+        onSuccess: () => {
+            profileStore.setProfileWatcher(true);
             resetForm();
         },
-        onFinish: () => {},
     });
 };
 
 const submitDelete = () => {
     form.delete(route('profile.update.educationHistory.delete'), {
-        onSuccess: (response) => {
-            educationHistory.value = page.props.user.education_history;
+        onSuccess: () => {
+            profileStore.setProfileWatcher(true);
             resetForm();
         },
     });

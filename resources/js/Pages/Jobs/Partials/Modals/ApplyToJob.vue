@@ -7,11 +7,14 @@ import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { onMounted } from 'vue';
+import { useLocaleStore } from '@/Stores/localeStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
+const localeStore = useLocaleStore();
 const page = usePage();
 const user = page.props.auth.user;
 const completion = Math.round(user.profileCompletion);
@@ -38,6 +41,15 @@ const submit = () => {
                 : 'An error occurred';
         });
 };
+
+onMounted(async () => {
+    const response = await axios.post(route('get.localized.data'), {
+        locale: localeStore.locale,
+    });
+    user.job_history = response.data.localizedData.jobHistory;
+    user.education_history = response.data.localizedData.educationHistory;
+    user.description = response.data.localizedData.description;
+});
 </script>
 
 <template>
@@ -65,16 +77,23 @@ const submit = () => {
                     class="list-inside list-disc text-sm text-red-500"
                     v-if="completion != 100"
                 >
-                    <li v-if="user.description === ''">
+                    <li v-if="user.description && user.description === ''">
                         {{ $t('messages.missingFields.description') }}
                     </li>
                     <li v-if="user.avatar === null">
                         {{ $t('messages.missingFields.avatar') }}
                     </li>
-                    <li v-if="user.job_history.length === 0">
+                    <li
+                        v-if="user.job_history && user.job_history.length === 0"
+                    >
                         {{ $t('messages.missingFields.jobHistory') }}
                     </li>
-                    <li v-if="user.education_history.length === 0">
+                    <li
+                        v-if="
+                            user.education_history &&
+                            user.education_history.length === 0
+                        "
+                    >
                         {{ $t('messages.missingFields.educationHistory') }}
                     </li>
                     <li v-if="user.skills.length === 0">

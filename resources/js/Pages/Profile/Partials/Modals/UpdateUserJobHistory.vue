@@ -12,13 +12,16 @@ import {
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
+import { useProfileStore } from '@/Stores/profileStore';
+import { watch } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
+const profileStore = useProfileStore();
 const page = usePage();
-const jobHistory = ref(page.props.user.job_history);
+const jobHistory = ref(profileStore.jobHistory);
 
 const toDate = ref(false);
 const form = useForm({
@@ -28,6 +31,7 @@ const form = useForm({
     description: '',
     start_date: null,
     end_date: null,
+    locale: profileStore.profileLanguage,
 });
 
 const editMode = ref(false);
@@ -39,31 +43,36 @@ const resetForm = () => {
     toDate.value = false;
 };
 
+watch(
+    () => profileStore.jobHistory,
+    (newValue) => {
+        jobHistory.value = newValue;
+    },
+);
+
 const submitAdd = () => {
     form.post(route('profile.update.jobHistory.add'), {
-        onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
+        onSuccess: () => {
+            profileStore.setProfileWatcher(true);
             resetForm();
         },
-        onFinish: () => {},
     });
 };
 
 const submitEdit = () => {
     form.put(route('profile.update.jobHistory.edit'), {
-        onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
+        onSuccess: () => {
+            profileStore.setProfileWatcher(true);
             editMode.value = false;
             resetForm();
         },
-        onFinish: () => {},
     });
 };
 
 const submitDelete = () => {
     form.delete(route('profile.update.jobHistory.delete'), {
         onSuccess: (response) => {
-            jobHistory.value = page.props.user.job_history;
+            profileStore.setProfileWatcher(true);
             editMode.value = false;
             resetForm();
         },

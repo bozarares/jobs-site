@@ -1,8 +1,6 @@
 <script setup>
-// TODO: Change form with axios
-// TODO: Change controller so it will send a response
-
-import { Button, Timeline } from '@/Components/UI';
+import { Button, LanguageSelector, Timeline } from '@/Components/UI';
+import { languages } from '@/Languages/languages';
 
 import {
     ArrowDownTrayIcon,
@@ -18,6 +16,8 @@ import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
 import UserApplicationCard from './Partials/UserApplicationCard.vue';
 import EmployerPanelCard from './Partials/EmployerPanelCard.vue';
+import { useLocaleStore } from '@/Stores/localeStore';
+import axios from 'axios';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -26,8 +26,18 @@ const props = defineProps({
     next: { type: Number, default: null },
 });
 
+const localeStore = useLocaleStore();
+const locale = ref(localeStore.locale);
+
+watch(
+    () => locale.value,
+    (newValue) => {
+        fetchLocalizedData(application.current.id, newValue);
+    },
+);
+
 const page = usePage();
-const job = page.props.job;
+const job = page.props.application.job;
 const application = reactive({
     current: props.application,
     previous: props.previous,
@@ -39,46 +49,63 @@ const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
 
 watch(
-    () => user.value.job_history,
+    () => user.value,
     (newValue, oldValue) => {
-        if (!newValue) {
+        if (!newValue.localizedData && !newValue.localizedData?.jobHistory) {
             return;
         }
-        jobHistoryTimeline.value = newValue.map((item) => {
-            return {
-                start: new Date(item.start_date),
-                end: item.end_date ? new Date(item.end_date) : undefined,
-                title: item.company,
-                subtitle: item.title,
-                description: item.description,
-            };
-        });
+        jobHistoryTimeline.value = newValue.localizedData.jobHistory.map(
+            (item) => {
+                return {
+                    start: new Date(item.start_date),
+                    end: item.end_date ? new Date(item.end_date) : undefined,
+                    title: item.company,
+                    subtitle: item.title,
+                    description: item.description,
+                };
+            },
+        );
     },
-    { immediate: true },
+    { immediate: true, deep: true },
 );
 watch(
-    () => user.value.education_history,
+    () => user.value,
     (newValue, oldValue) => {
-        if (!newValue) {
+        if (
+            !newValue.localizedData &&
+            !newValue.localizedData?.educationHistory
+        ) {
             return;
         }
-        educationHistoryTimeline.value = newValue.map((item) => {
-            return {
-                start: new Date(item.start_date),
-                end: item.end_date ? new Date(item.end_date) : undefined,
-                title: item.institution,
-                subtitle: item.degree,
-                description: item.field_of_study,
-            };
-        });
+        educationHistoryTimeline.value =
+            newValue.localizedData.educationHistory.map((item) => {
+                return {
+                    start: new Date(item.start_date),
+                    end: item.end_date ? new Date(item.end_date) : undefined,
+                    title: item.institution,
+                    subtitle: item.degree,
+                    description: item.field_of_study,
+                };
+            });
     },
-    { immediate: true },
+    { immediate: true, deep: true },
 );
+
+const fetchLocalizedData = async (application_id, locale) => {
+    const response = await axios.post(
+        route('application.get.localized.data', { job: job.slug }),
+        {
+            application_id,
+            locale,
+        },
+    );
+    user.value.localizedData = response.data.localizedData;
+};
 </script>
 
 <template>
     <div
-        class="flex h-full w-full flex-col-reverse items-center justify-center overflow-auto overflow-x-hidden md:flex-row-reverse md:gap-4"
+        class="mt-8 flex h-full w-full flex-col-reverse items-center justify-center overflow-x-hidden md:flex-row-reverse md:gap-4"
     >
         <EmployerPanelCard
             :application="application.current"
@@ -94,7 +121,7 @@ watch(
             "
         />
         <div
-            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col overflow-auto rounded bg-white py-8 shadow"
+            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-8 shadow"
         >
             <div class="flex items-center justify-between px-4 md:px-8">
                 <h2 class="text-lg font-bold uppercase text-black/60">
@@ -102,6 +129,13 @@ watch(
                 </h2>
                 <div class="flex gap-2">
                     <div class="flex gap-4">
+                        <LanguageSelector
+                            class=""
+                            @click.prevent.stop=""
+                            :show-name="false"
+                            :languages="languages"
+                            v-model="locale"
+                        />
                         <ChevronLeftIcon
                             class="h-6"
                             :class="{
@@ -200,8 +234,12 @@ watch(
                             {{ $t('labels.description.self') }}
                         </h2>
                         <div
+                            v-if="user && user.localizedData"
                             class="ql-editor prose"
-                            v-html="user.description"
+                            :class="{
+                                'ql-editor': user.localizedData.description,
+                            }"
+                            v-html="user.localizedData.description"
                         ></div>
                     </div>
                     <div class="pr-8">

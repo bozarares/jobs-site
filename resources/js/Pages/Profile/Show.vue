@@ -4,23 +4,65 @@ import SocialsCard from './Partials/SocialsCard.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
 import { Timeline } from '@/Components/UI';
 import { ref, watch } from 'vue';
-import { useModalStore } from '@/Stores/modalStore';
 import ContentCard from '@/Components/ContentCard.vue';
 import FileAction from '@/Components/FileAction.vue';
+import { useLocaleStore } from '@/Stores/localeStore';
+import { useProfileStore } from '@/Stores/profileStore';
+import { onMounted } from 'vue';
 
 const props = defineProps({
     user: {
         type: Object,
         required: true,
     },
+    localizedData: {
+        type: Object,
+        required: true,
+    },
 });
+
+const localeStore = useLocaleStore();
+const profileStore = useProfileStore();
+
+const jobHistory = ref(props.localizedData.jobHistory);
+const educationHistory = ref(props.localizedData.educationHistory);
+const description = ref(props.localizedData.description);
+const language = ref(props.localizedData.language);
 
 const jobHistoryTimeline = ref([]);
 const educationHistoryTimeline = ref([]);
-const language = ref('en');
 
 watch(
-    () => props.user.job_history,
+    () => profileStore.profileWatcherLocale,
+    async (newValue) => {
+        if (newValue) {
+            profileStore.resetProfileWatcher();
+            const response = await axios.post(route('get.localized.data'), {
+                locale: localeStore.profileLocale,
+            });
+            jobHistory.value = response.data.localizedData.jobHistory;
+            educationHistory.value =
+                response.data.localizedData.educationHistory;
+            description.value = response.data.localizedData.description;
+            profileStore.setData(response.data.localizedData);
+        }
+    },
+);
+
+const getLocalizedData = async (newLangauage) => {
+    const response = await axios.post(route('get.localized.data'), {
+        locale: newLangauage,
+    });
+    jobHistory.value = response.data.localizedData.jobHistory;
+    educationHistory.value = response.data.localizedData.educationHistory;
+    description.value = response.data.localizedData.description;
+    language.value = response.data.localizedData.language;
+    localeStore.setProfileLocale(newLangauage);
+    profileStore.setData(response.data.localizedData);
+};
+
+watch(
+    () => jobHistory.value,
     (newValue) => {
         jobHistoryTimeline.value = newValue.map((item) => {
             return {
@@ -35,7 +77,7 @@ watch(
     { immediate: true },
 );
 watch(
-    () => props.user.education_history,
+    () => educationHistory.value,
     (newValue) => {
         educationHistoryTimeline.value = newValue.map((item) => {
             return {
@@ -49,6 +91,10 @@ watch(
     },
     { immediate: true },
 );
+
+onMounted(() => {
+    profileStore.setData(props.localizedData);
+});
 
 const edit = ref(false);
 </script>
@@ -64,9 +110,10 @@ const edit = ref(false);
                 :user="user"
                 :on-language-change="
                     (newLangauage) => {
-                        language = newLangauage;
+                        getLocalizedData(newLangauage);
                     }
                 "
+                :language="language"
             />
             <SocialsCard :edit="edit" :user="user" />
             <SettingsCard
@@ -90,7 +137,7 @@ const edit = ref(false);
                 id-edit="profile-description-edit"
                 modal="userDescription"
             >
-                <div class="ql-editor prose" v-html="user.description" />
+                <div class="ql-editor prose" v-html="description" />
             </ContentCard>
 
             <!-- Job History -->

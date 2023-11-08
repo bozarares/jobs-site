@@ -1,30 +1,31 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import { markRaw, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { useLocaleStore } from '@/Stores/localeStore';
+import { useProfileStore } from '@/Stores/profileStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 const quillRef = ref(null);
 
+const profileStore = useProfileStore();
+const localeStore = useLocaleStore();
 const page = usePage();
-const user = page.props.auth.user;
+const localizedData = page.props.localizedData;
 
-const form = useForm({
-    description: user.description,
-});
-
-const submit = () => {
+const submit = async () => {
     const htmlContent = quillRef.value.getHTML();
-    form.description = htmlContent;
-    form.post(route('profile.update.description'), {
-        onFinish: () => {
-            props.closeModal();
-        },
+    const locale = localeStore.profileLocale;
+    const response = await axios.post(route('profile.update.description'), {
+        description: htmlContent,
+        locale,
     });
+    profileStore.setProfileWatcher(locale);
+    props.closeModal();
 };
 
 const isClient = ref(false);
@@ -38,7 +39,7 @@ watch(
     () => quillRef.value,
     () => {
         if (quillRef.value) {
-            quillRef.value.setHTML(user.description);
+            quillRef.value.setHTML(profileStore.description);
         }
     },
 );

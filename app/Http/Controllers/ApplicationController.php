@@ -47,11 +47,25 @@ class ApplicationController extends Controller
         );
     }
 
-    // TODO - Add status (accepted) to the query
+    public function getLocalizedData(Request $request)
+    {
+        $request->validate([
+            'application_id' => 'required|exists:applications,id',
+            'locale' => 'required|string|in:en,ro,ja',
+        ]);
+        $application = Application::findOrFail(
+            $request->input('application_id')
+        );
+        $localizedData = $application->user->getLocalizedDataAttribute(
+            $request->input('locale')
+        );
+        return response()->json(['localizedData' => $localizedData]);
+    }
     public function get(Request $request, Job $job)
     {
         $request_validated = $request->validate([
             'application_id' => 'nullable|exists:applications,id',
+            'locale' => 'required|string|in:en,ro,ja',
         ]);
 
         $applicationId = $request_validated['application_id'] ?? null;
@@ -86,15 +100,20 @@ class ApplicationController extends Controller
             $currentApplication->save();
         }
 
+        $localizedData = $currentApplication->user->getLocalizedDataAttribute(
+            $request->locale
+        );
+        $currentApplication->user->localizedData = $localizedData;
+
         $previousId = $job
             ->applications()
-            ->where('status', 'open')
+            ->where('status', $currentApplication->status)
             ->where('id', '<', $currentApplication->id)
             ->max('id');
 
         $nextId = $job
             ->applications()
-            ->where('status', 'open')
+            ->where('status', $currentApplication->status)
             ->where('id', '>', $currentApplication->id)
             ->min('id');
 
@@ -106,22 +125,23 @@ class ApplicationController extends Controller
         ]);
     }
 
-    // TODO - Add status (accepted) to the query
     public function show(Request $request, Job $job, Application $application)
     {
         if ($application->job_id !== $job->id) {
             abort(404);
         }
 
+        $locale = $request->user->locale ?? 'en';
+
         $previousId = $job
             ->applications()
-            ->where('status', 'open')
+            ->where('status', $application->status)
             ->where('id', '<', $application->id)
             ->max('id');
 
         $nextId = $job
             ->applications()
-            ->where('status', 'open')
+            ->where('status', $application->status)
             ->where('id', '>', $application->id)
             ->min('id');
 
@@ -129,6 +149,9 @@ class ApplicationController extends Controller
             $application->seen_at = now();
             $application->save();
         }
+
+        $localizedData = $application->user->getLocalizedDataAttribute($locale);
+        $application->user->localizedData = $localizedData;
 
         return Inertia::render('Applications/Show', [
             'application' => $application,

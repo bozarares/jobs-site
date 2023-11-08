@@ -23,7 +23,9 @@ const props = defineProps({
         <Link :href="route('profile.applications')">{{
             $t('sections.applications')
         }}</Link>
-        <Link>{{ $t('sections.likes') }}</Link>
+        <Link :href="route('profile.applications')">{{
+            $t('sections.likes')
+        }}</Link>
     </div>
     <div class="flex w-full flex-col items-center space-y-4 bg-gray-50 p-6">
         <h1 class="text-center text-2xl font-semibold text-gray-800">
