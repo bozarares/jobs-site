@@ -117,7 +117,7 @@ watch(applicationStatus, () => {
                 isCardVisible = !isCardVisible;
             }
         "
-        class="fixed bottom-0 flex w-full flex-col items-center justify-center bg-white py-2 md:hidden"
+        class="fixed bottom-0 flex w-full flex-col items-center justify-center bg-white py-2 dark:bg-zinc-800 dark:text-zinc-100 md:hidden"
     >
         <ChevronRightIcon v-if="isCardVisible" class="w-6" />
         <ChevronLeftIcon v-if="!isCardVisible" class="w-6" />
@@ -127,21 +127,24 @@ watch(applicationStatus, () => {
         </div>
     </div>
     <div
-        class="container absolute m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out md:relative md:block md:max-w-sm"
+        class="container absolute m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 md:relative md:block md:max-w-sm"
         :class="{
             'translate-x-[150%] md:translate-x-0': !isCardVisible,
             'translate-x-0': isCardVisible,
         }"
     >
         <div class="h-full">
-            <h2 class="px-4 text-lg font-bold uppercase text-black/60">
+            <h2 class="px-4 text-lg font-bold uppercase">
                 {{ $t('labels.owner.employer') }}
             </h2>
-            <div class="flex justify-around border-t-[1px]">
+            <div
+                class="flex justify-around border-y-[1px] dark:border-zinc-500"
+            >
                 <div
-                    class="h-full w-full border-r-[1px] py-3 text-center"
+                    class="h-full w-full border-x-[1px] py-3 text-center dark:border-zinc-500"
                     :class="{
-                        'bg-gray-700 text-white': applicationStatus === 'open',
+                        'bg-zinc-700 text-white dark:bg-zinc-100 dark:text-zinc-800':
+                            applicationStatus === 'open',
                     }"
                     @click="
                         () => {
@@ -159,9 +162,9 @@ watch(applicationStatus, () => {
                                 applicationStatus = 'accepted';
                         }
                     "
-                    class="h-full w-full border-r-[1px] py-3 text-center"
+                    class="h-full w-full border-r-[1px] py-3 text-center dark:border-zinc-500"
                     :class="{
-                        'bg-gray-700 text-white':
+                        'bg-zinc-700 text-white dark:bg-zinc-100 dark:text-zinc-800':
                             applicationStatus === 'accepted',
                     }"
                 >
@@ -169,12 +172,12 @@ watch(applicationStatus, () => {
                 </div>
             </div>
             <div
-                class="flex h-[18em] flex-col overflow-scroll"
+                class="flex h-[18em] flex-col overflow-auto"
                 ref="scrollContainer"
                 @scroll="handleScroll"
             >
                 <div
-                    class="relative flex cursor-pointer items-center justify-center border-b-[1px] border-gray-200 py-4 first:border-t-[1px]"
+                    class="relative flex cursor-pointer items-center justify-center border-b-[1px] border-zinc-200 py-4 dark:border-zinc-500"
                     v-for="application in applications"
                     @click="
                         () => {
@@ -237,7 +240,11 @@ watch(applicationStatus, () => {
                 v-else
                 class="flex h-[10em] flex-col items-center justify-center gap-4"
             >
-                <Input class="px-2" label="Message" v-model="message" />
+                <Input
+                    class="px-2"
+                    :label="$t('common.message')"
+                    v-model="message"
+                />
                 <div class="flex items-center justify-center gap-1">
                     <Button
                         @click="

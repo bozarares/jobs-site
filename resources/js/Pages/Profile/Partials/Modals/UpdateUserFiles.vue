@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
                 <XMarkIcon class="h-5" />
             </div>
         </div>
-        <div v-else class="font-bold text-gray-600">
+        <div v-else class="font-bold text-zinc-600">
             {{ $t('fallbacks.files') }}
         </div>
     </div>
@@ -217,16 +217,16 @@ onBeforeUnmount(() => {
 
 <style>
 .filepond--credits {
-    color: white !important;
+    @apply dark:text-zinc-100;
 }
 .filepond--drop-label {
-    @apply !text-zinc-300;
+    @apply dark:text-zinc-300;
 }
 .filepond--panel,
 .filepond--panel-root {
-    @apply !bg-zinc-700;
+    @apply dark:bg-zinc-700;
 }
 .filepond--wrapper {
-    @apply !bg-zinc-700/0;
+    @apply bg-zinc-700/0;
 }
 </style>

@@ -123,16 +123,13 @@ onMounted(() => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.contact.edit') }}
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-auto">

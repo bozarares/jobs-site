@@ -24,7 +24,7 @@ const submit = () => {
         @submit.prevent="submit"
         class="container flex max-w-md flex-col gap-4 px-4 py-2"
     >
-        <h2 class="w-full text-2xl font-bold text-gray-700">
+        <h2 class="w-full text-2xl font-bold">
             {{ $t('labels.account.have') }}
         </h2>
         <Input

@@ -181,7 +181,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 // CVA instance for input style
 const inputClass = computed(() =>
     cva(
-        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-gray-100 dark:caret-zinc-200',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
         {
             variants: {
                 borderStyle: {
@@ -191,7 +191,7 @@ const inputClass = computed(() =>
                     'no-border': 'py-3',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 dark:!bg-zinc-700 dark:!text-zinc-400',
+                    true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 dark:!bg-zinc-700 dark:!text-zinc-400',
                 },
             },
         },
@@ -235,7 +235,7 @@ const dayClass = (day) => {
             tempDate.isBefore(dayjs(endDate.value)) &&
             tempDate.isAfter(dayjs(startDate.value))
         )
-            return 'bg-blue-300 rounded-none text-gray-100';
+            return 'bg-blue-300 rounded-none text-zinc-100';
     }
     return '';
 };
@@ -384,7 +384,7 @@ const days = dayjs().localeData().weekdaysShort();
 </script>
 <template>
     <div
-        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-gray-700"
+        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
         ref="containerElementRef"
     >
         <!-- Left Icon -->
@@ -394,7 +394,7 @@ const days = dayjs().localeData().weekdaysShort();
             aria-hidden="true"
         >
             <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900 dark:text-gray-400"
+                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
                 :is="options.leftIcon"
             />
         </div>
@@ -418,7 +418,7 @@ const days = dayjs().localeData().weekdaysShort();
             class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
         >
             <span
-                class="text-md pointer-events-none absolute left-12 select-none text-gray-600 transition-all duration-300 dark:text-gray-100"
+                class="text-md pointer-events-none absolute left-12 select-none text-zinc-600 transition-all duration-300 dark:text-zinc-100"
                 :class="[
                     isLabelFloating
                         ? '-translate-y-4 transform text-xs'
@@ -433,7 +433,7 @@ const days = dayjs().localeData().weekdaysShort();
         <!-- Date Picker -->
         <div
             v-if="isDatePickerVisible && isDateMode"
-            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-gray-500/20 bg-white p-2 text-zinc-100 shadow-sm dark:bg-zinc-800"
+            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 text-zinc-100 shadow-sm dark:bg-zinc-800"
             :style="dateFloatingStyles"
             ref="dateElementRef"
         >
@@ -452,7 +452,7 @@ const days = dayjs().localeData().weekdaysShort();
                         dayjs(
                             `${selectedYear}-${selectedMonth + 1}-01`,
                         ).isBefore(dateOptions.minDate)
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                     ]"
                     @click.prevent="selectedMonth--"
@@ -489,7 +489,7 @@ const days = dayjs().localeData().weekdaysShort();
                         dayjs(
                             `${selectedYear}-${selectedMonth + 1}-01`,
                         ).isAfter(dateOptions.maxDate)
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                     ]"
                     @click.prevent="selectedMonth++"
@@ -540,7 +540,7 @@ const days = dayjs().localeData().weekdaysShort();
                 <div
                     v-for="(day, index) in days"
                     :key="index"
-                    class="flex h-8 w-8 items-center justify-center text-sm text-gray-500"
+                    class="flex h-8 w-8 items-center justify-center text-sm text-zinc-500"
                 >
                     {{ day }}
                 </div>
@@ -558,11 +558,11 @@ const days = dayjs().localeData().weekdaysShort();
                         new Date(selectedYear, selectedMonth, day) >=
                         dateOptions.minDate.setHours(0, 0, 0, 0)
                             ? ''
-                            : 'pointer-events-none bg-gray-100',
+                            : 'pointer-events-none bg-zinc-100',
                         new Date(selectedYear, selectedMonth, day) <=
                         dateOptions.maxDate.setHours(23, 59, 59, 999)
                             ? ''
-                            : 'pointer-events-none bg-gray-100',
+                            : 'pointer-events-none bg-zinc-100',
                     ]"
                     class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md hover:bg-blue-500 hover:text-white"
                     @click.prevent="selectDay(day)"
@@ -582,11 +582,11 @@ const days = dayjs().localeData().weekdaysShort();
                     :class="[
                         new Date(selectedYear, index + 1, 1) <=
                         dateOptions.minDate.setHours(0, 0, 0, 0)
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                         new Date(selectedYear, index - 1, 1) >=
                         dateOptions.maxDate.setHours(0, 0, 0, 0)
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                     ]"
                     class="flex h-8 w-full cursor-pointer items-center justify-center rounded-md text-sm hover:bg-blue-500 hover:text-white"
@@ -621,10 +621,10 @@ const days = dayjs().localeData().weekdaysShort();
                     :key="year"
                     :class="[
                         new Date(year + 1) <= dateOptions.minDate.getFullYear()
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                         new Date(year - 1) >= dateOptions.maxDate.getFullYear()
-                            ? 'pointer-events-none bg-gray-100 dark:bg-zinc-600'
+                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
                             : '',
                     ]"
                     class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
@@ -646,7 +646,7 @@ const days = dayjs().localeData().weekdaysShort();
         </div>
         <div
             v-if="isDatePickerVisible && !isDateMode && dateOptions.time"
-            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-gray-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
+            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
             :style="dateFloatingStyles"
             ref="dateElementRef"
         >

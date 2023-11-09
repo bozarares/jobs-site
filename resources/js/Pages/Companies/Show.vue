@@ -269,7 +269,10 @@ onMounted(() => {
                 id-edit="company-description-edit"
                 modal="companyDescription"
             >
-                <div class="ql-editor prose" v-html="company.description" />
+                <div
+                    class="ql-editor prose dark:!text-zinc-100"
+                    v-html="company.description"
+                />
             </ContentCard>
 
             <!-- Jobs -->

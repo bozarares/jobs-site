@@ -28,10 +28,10 @@ const props = defineProps({
                 :name="user?.name || ''"
             />
             <div class="flex flex-col items-center">
-                <div class="text-center text-2xl font-bold text-black/80">
+                <div class="text-center text-2xl font-bold">
                     {{ user?.name }}
                 </div>
-                <div class="text-center font-bold text-black/80">
+                <div class="text-center font-bold">
                     {{ user?.tag }}
                 </div>
             </div>
@@ -45,7 +45,7 @@ const props = defineProps({
                 <a
                     :href="`https://linkedin.com/in/${user?.social_linkedin}`"
                     v-if="user?.social_linkedin"
-                    class="flex items-center gap-2 text-center font-bold text-black/60"
+                    class="flex items-center gap-2 text-center font-bold"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -55,17 +55,17 @@ const props = defineProps({
                 <a
                     :href="`https://github.com/${user?.social_github}`"
                     v-if="user?.social_github"
-                    class="flex items-center gap-2 text-center font-bold text-black/60"
+                    class="flex items-center gap-2 text-center font-bold"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span><GithubIcon /></span>
+                    <span><GithubIcon class="dark:fill-zinc-100" /></span>
                     Github
                 </a>
                 <a
                     :href="`https://facebook.com/${user?.social_facebook}`"
                     v-if="user?.social_facebook"
-                    class="flex items-center gap-2 text-center font-bold text-black/60"
+                    class="flex items-center gap-2 text-center font-bold"
                     target="_blank"
                     rel="noopener noreferrer"
                 >

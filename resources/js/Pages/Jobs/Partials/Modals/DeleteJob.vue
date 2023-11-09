@@ -40,17 +40,14 @@ const submit = () => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('actions.deleteJob') }}
             </h2>
             <div>
-                <XMarkIcon
-                    class="h-6 cursor-pointer text-black/60"
-                    @click="closeModal()"
-                />
+                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
             </div>
         </div>
 

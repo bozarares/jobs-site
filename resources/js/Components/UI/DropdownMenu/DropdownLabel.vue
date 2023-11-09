@@ -2,7 +2,7 @@
     <div :class="dropdownLabelClass">
         <div
             :class="
-                'w-full py-0.5 text-sm font-semibold text-gray-700/50' +
+                'w-full py-0.5 text-sm font-semibold text-zinc-700/50' +
                 props.class
             "
         >

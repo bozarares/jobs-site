@@ -29,7 +29,7 @@ const props = defineProps({
     <div
         :id="`job-card-${job.title}`"
         :class="class"
-        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
+        class="group container relative flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-zinc-100 md:w-[15em]"
     >
         <!-- Logo and Company Name -->
 
@@ -46,7 +46,7 @@ const props = defineProps({
                             e.target.src = '/images/logo/broken-image.png';
                         }
                     "
-                    class="h-12 fill-current object-contain text-gray-500"
+                    class="h-12 fill-current object-contain text-zinc-500"
                     :src="
                         '/logos/companies/' +
                         job.company.logo +

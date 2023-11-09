@@ -89,7 +89,7 @@ onUnmounted(() => {
                 <li
                     v-for="language in languages"
                     :key="language.locale"
-                    class="flex cursor-pointer items-center justify-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-zinc-700"
+                    class="flex cursor-pointer items-center justify-center gap-2 p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700"
                     @click="handleLanguageSelect(language)"
                 >
                     <component :is="language.flag" class="h-6 w-6" />

@@ -93,7 +93,7 @@ onMounted(() => {
                 <XMarkIcon class="h-5" />
             </div>
         </div>
-        <div v-else class="font-bold text-gray-600">
+        <div v-else class="font-bold text-zinc-600">
             {{ $t('fallbacks.skills') }}
         </div>
     </div>
@@ -129,7 +129,7 @@ onMounted(() => {
             <div
                 v-for="skill in filteredSkills"
                 :key="skill.id"
-                class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
+                class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
             >
                 <div
                     @click="

@@ -33,7 +33,7 @@ const submit = () => {
         @submit.prevent="submit"
         class="container flex max-w-md flex-col gap-4 px-4 py-2"
     >
-        <h2 class="w-full text-2xl font-bold text-gray-700">
+        <h2 class="w-full text-2xl font-bold">
             {{ $t('messages.whyCreateAccount.self') }}
             <ul class="list-inside list-disc text-sm">
                 <li>{{ $t('messages.whyCreateAccount.messageOne') }}</li>
@@ -41,7 +41,7 @@ const submit = () => {
                 <li>{{ $t('messages.whyCreateAccount.messageThree') }}</li>
             </ul>
         </h2>
-        <h2 class="w-full text-2xl font-bold text-gray-700">
+        <h2 class="w-full text-2xl font-bold">
             {{ $t('labels.account.want') }}
         </h2>
         <Input

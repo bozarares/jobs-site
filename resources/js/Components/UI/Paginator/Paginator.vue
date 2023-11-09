@@ -6,14 +6,14 @@
             class="cursor-pointer text-blue-500"
             >First</span
         >
-        <span v-else class="text-gray-500">First</span>
+        <span v-else class="text-zinc-500">First</span>
         <span
             v-if="props.links.current !== 1"
             @click="navigate(props.links.first)"
             class="cursor-pointer text-blue-500"
             >Previous</span
         >
-        <span v-else class="text-gray-500">Previous</span>
+        <span v-else class="text-zinc-500">Previous</span>
 
         <span>
             Page {{ props.links.current }} of
@@ -26,19 +26,19 @@
             class="cursor-pointer text-blue-500"
             >Next</span
         >
-        <span v-else class="text-gray-500">Next</span>
+        <span v-else class="text-zinc-500">Next</span>
         <span
             v-if="props.links.current !== props.links.total"
             @click="navigate(props.links.last)"
             class="cursor-pointer text-blue-500"
             >Last</span
         >
-        <span v-else class="text-gray-500">Last</span>
+        <span v-else class="text-zinc-500">Last</span>
     </nav>
 </template>
 
 <script setup>
-import { router } from "@inertiajs/vue3";
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
     links: Object,

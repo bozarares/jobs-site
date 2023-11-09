@@ -118,7 +118,7 @@ onMounted(() => {
         >
             <Link href="/">
                 <img
-                    class="h-8 fill-current object-contain text-gray-500"
+                    class="h-8 fill-current object-contain text-zinc-500"
                     :src="
                         cookieStore.theme === 'dark'
                             ? '/images/logo/logo-white.png'
@@ -161,12 +161,12 @@ onMounted(() => {
                     <template v-slot:dropdownMenuButton>
                         <Cog6ToothIcon class="h-6 w-6 dark:text-white" />
                     </template>
-                    <DropdownHeader class="dark:text-gray-100">{{
+                    <DropdownHeader class="dark:text-zinc-100">{{
                         $t('sections.settings')
                     }}</DropdownHeader>
 
                     <LanguageSelector
-                        class="dark:text-gray-100"
+                        class="dark:text-zinc-100"
                         v-model="language"
                         :languages="languages"
                     />
@@ -190,7 +190,7 @@ onMounted(() => {
                 <!-- User Panel -->
                 <DropdownMenu
                     align="right"
-                    class="mt-4 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-100"
+                    class="mt-4 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
                 >
                     <template v-slot:dropdownMenuButton>
                         <Avatar
@@ -241,12 +241,12 @@ onMounted(() => {
                                 />
                                 <div class="flex flex-col items-center">
                                     <p
-                                        class="text-xl font-bold text-black dark:text-gray-200"
+                                        class="text-xl font-bold text-black dark:text-zinc-200"
                                     >
                                         {{ $page.props.auth.user.name }}
                                     </p>
                                     <p
-                                        class="text-sm font-bold text-black/50 dark:text-gray-200"
+                                        class="text-sm font-bold text-black/50 dark:text-zinc-200"
                                     >
                                         {{ $page.props.auth.user.email }}
                                     </p>

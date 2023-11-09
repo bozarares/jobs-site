@@ -138,7 +138,7 @@ const edit = ref(false);
                 modal="userDescription"
             >
                 <div
-                    class="ql-editor prose dark:!text-gray-100"
+                    class="ql-editor prose dark:!text-zinc-100"
                     v-html="description"
                 />
             </ContentCard>
@@ -174,7 +174,7 @@ const edit = ref(false);
                     <div
                         v-for="skill in user.skills"
                         :key="skill.id"
-                        class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
+                        class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
                     >
                         {{ skill.name }}
                     </div>

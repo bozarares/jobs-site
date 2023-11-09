@@ -35,3 +35,25 @@ watch(
     <Footer></Footer>
     <ModalWrapper />
 </template>
+
+<style>
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-zinc-600 shadow dark:bg-zinc-200;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-700 dark:bg-zinc-300;
+}
+</style>

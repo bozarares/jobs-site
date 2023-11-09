@@ -48,7 +48,10 @@ const edit = ref(false);
                 id-edit="job-description-edit"
                 modal="jobDescription"
             >
-                <div class="ql-editor prose" v-html="job.description" />
+                <div
+                    class="ql-editor prose dark:!text-zinc-100"
+                    v-html="job.description"
+                />
             </ContentCard>
 
             <!-- Requirements -->
@@ -62,7 +65,7 @@ const edit = ref(false);
                     <div
                         v-for="skill in job.skills"
                         :key="skill.id"
-                        class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
+                        class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
                     >
                         {{ skill.name }}
                     </div>

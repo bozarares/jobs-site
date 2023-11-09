@@ -49,11 +49,11 @@ const isClosed = computed(() => {
                 ? null
                 : route('jobs.show', { job: props.application.job.slug })
         "
-        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md sm:w-[15em] md:mx-0 md:min-h-[25em]"
+        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-zinc-100 sm:w-[15em] md:mx-0 md:min-h-[25em]"
         :class="
             featured
                 ? 'outline outline-2 outline-yellow-500'
-                : 'outline outline-gray-200'
+                : 'outline outline-zinc-200 dark:outline-zinc-700'
         "
     >
         <!-- Logo and Company Name -->
@@ -70,11 +70,13 @@ const isClosed = computed(() => {
                     '.' +
                     job.company.logo_extension
                 "
-                class="h-8 fill-current object-contain text-gray-500"
+                class="h-8 fill-current object-contain text-zinc-500 dark:text-zinc-300"
                 src="/images/logo/logo-black.png"
                 alt="Logo"
             />
-            <div class="text-sm text-gray-500">{{ job.company.name }}</div>
+            <div class="text-sm text-zinc-500 dark:text-zinc-300">
+                {{ job.company.name }}
+            </div>
             <RatingStars :rating.number="3.5"></RatingStars>
             <!-- Job Title -->
             <h2 class="mt-2 text-center text-xl font-bold">

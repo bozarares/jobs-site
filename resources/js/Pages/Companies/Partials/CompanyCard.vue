@@ -57,7 +57,7 @@ const props = defineProps({
                 :class="{
                     'cursor-pointer': edit,
                 }"
-                class="h-12 fill-current object-contain text-gray-500"
+                class="h-12 fill-current object-contain text-zinc-500"
                 :src="
                     '/logos/companies/' +
                     company.logo +
@@ -68,7 +68,7 @@ const props = defineProps({
             />
             <h2
                 v-if="edit"
-                class="pr-2 text-sm font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-black"
+                class="pr-2 text-sm font-extrabold text-zinc-500 transition-all duration-150 ease-in-out group-hover:text-black"
             >
                 {{ $t('labels.clickToEdit.logo') }}
             </h2>

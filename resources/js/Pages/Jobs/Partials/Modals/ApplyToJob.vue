@@ -54,17 +54,14 @@ onMounted(async () => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[40em] max-w-2xl flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
-                {{ $t('modals.apply_to_job') }}
+            <h2 class="text-lg font-bold uppercase">
+                {{ $t('common.apply') }}
             </h2>
             <div>
-                <XMarkIcon
-                    class="h-6 cursor-pointer text-black/60"
-                    @click="closeModal()"
-                />
+                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
             </div>
         </div>
 
@@ -119,7 +116,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="mt-8 flex flex-col">
-                <h2 class="text-lg font-bold uppercase text-black/60">
+                <h2 class="text-lg font-bold uppercase">
                     {{ $t('labels.files.self') }}
                 </h2>
                 <div
@@ -153,7 +150,7 @@ onMounted(async () => {
             "
             class=""
             :options="{ color: 'green', shape: 'pill' }"
-            >Apply</Button
+            >{{ $t('common.apply') }}</Button
         >
     </div>
 </template>

@@ -8,14 +8,14 @@
         :class="dropdownItemClass"
     >
         <component
-            class="absolute left-0 mr-2 h-6 pl-3 text-gray-700/60 dark:text-inherit"
+            class="absolute left-0 mr-2 h-6 pl-3 text-zinc-700/60 dark:text-inherit"
             :is="leftIcon"
         />
         <div class="inline-block w-full text-center">
             <slot />
         </div>
         <component
-            class="absolute right-0 ml-2 h-6 pr-3 text-gray-700/60 dark:text-inherit"
+            class="absolute right-0 ml-2 h-6 pr-3 text-zinc-700/60 dark:text-inherit"
             :is="rightIcon"
         />
     </component>
@@ -66,7 +66,7 @@ onMounted(() => {
 
 const dropdownItemClass = computed(() => {
     return cva(
-        'relative flex w-full cursor-pointer select-none items-center tracking-wider transition-colors hover:bg-gray-200' +
+        'relative flex w-full cursor-pointer select-none items-center tracking-wider transition-colors hover:bg-zinc-200' +
             ' ' +
             props.class,
         {

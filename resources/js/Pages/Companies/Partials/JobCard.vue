@@ -41,7 +41,7 @@ function handleTouchEnd(event) {
 <template>
     <Link
         :href="route('jobs.show', { job: job.slug })"
-        class="container prose relative flex min-h-[5em] w-full flex-col items-center justify-between rounded-sm px-4 py-2 outline outline-gray-200 transition-all duration-150 ease-in-out hover:scale-[101%] lg:min-h-[15em] lg:max-w-[13em]"
+        class="container prose relative flex min-h-[5em] w-full flex-col items-center justify-between rounded-sm px-4 py-2 outline outline-zinc-200 transition-all duration-150 ease-in-out hover:scale-[101%] dark:bg-zinc-800 dark:text-zinc-100 dark:outline-zinc-700 lg:min-h-[15em] lg:max-w-[13em]"
     >
         <div class="flex flex-col lg:items-start">
             <div class="text-center text-xl font-bold">

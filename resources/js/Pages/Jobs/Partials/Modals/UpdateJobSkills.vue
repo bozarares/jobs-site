@@ -72,13 +72,13 @@ onMounted(() => {
 <template>
     <div
         id="skills-modal"
-        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow"
+        class="container relative flex max-h-[25em] max-w-lg flex-col overflow-y-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div
             v-if="skills.length !== 0"
             v-for="skill in skills"
             :key="skill.id"
-            class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0"
+            class="flex items-center justify-between border-b-2 pb-4 pt-4 first:pt-0 last:border-b-0 last:pb-0 dark:border-b-zinc-500"
         >
             <div>{{ skill }}</div>
             <div
@@ -90,25 +90,22 @@ onMounted(() => {
                     }
                 "
             >
-                <XMarkIcon class="h-5 text-black/60" />
+                <XMarkIcon class="h-5" />
             </div>
         </div>
-        <div v-else class="font-bold text-gray-600">
+        <div v-else class="font-bold">
             {{ $t('fallbacks.skills') }}
         </div>
     </div>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.skills.editRequired') }}
             </h2>
             <div>
-                <XMarkIcon
-                    class="h-6 cursor-pointer text-black/60"
-                    @click="closeModal()"
-                />
+                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
             </div>
         </div>
 
@@ -132,7 +129,7 @@ onMounted(() => {
             <div
                 v-for="skill in filteredSkills"
                 :key="skill.id"
-                class="cursor-pointer rounded bg-gray-800 px-2 py-1 text-white hover:bg-gray-700"
+                class="cursor-pointer select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
             >
                 <div
                     @click="

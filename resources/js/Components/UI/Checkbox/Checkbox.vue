@@ -1,7 +1,7 @@
 <script setup>
-import { CheckIcon } from "@heroicons/vue/24/outline";
-import { cva } from "class-variance-authority";
-import { computed } from "vue";
+import { CheckIcon } from '@heroicons/vue/24/outline';
+import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 const props = defineProps({
     label: String,
@@ -10,13 +10,13 @@ const props = defineProps({
     description: String,
     color: {
         type: String,
-        validator: (val) => ["green", "blue", "red", "gray"].includes(val),
-        default: "gray",
+        validator: (val) => ['green', 'blue', 'red', 'gray'].includes(val),
+        default: 'gray',
     },
     border: {
         type: String,
-        validator: (val) => ["square", "rounded", "circle"].includes(val),
-        default: "rounded",
+        validator: (val) => ['square', 'rounded', 'circle'].includes(val),
+        default: 'rounded',
     },
     checked: Boolean,
     disabled: Boolean,
@@ -25,29 +25,29 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(['update:modelValue']);
 
 const checkboxClass = computed(() => {
     return cva(
-        "mr-2 flex h-6 w-6 items-center justify-center border-2 bg-white duration-150 ease-in-out hover:cursor-pointer hover:transition peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500 peer-focus-visible:ring-offset-2 peer-focus-visible:transition",
+        'mr-2 flex h-6 w-6 items-center justify-center border-2 bg-white duration-150 ease-in-out hover:cursor-pointer hover:transition peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-500 peer-focus-visible:ring-offset-2 peer-focus-visible:transition',
         {
             variants: {
                 color: {
-                    green: "border-green-700 peer-checked:bg-green-500",
-                    blue: "border-blue-700 peer-checked:bg-blue-500",
-                    red: "border-red-700 peer-checked:bg-red-500",
-                    gray: "border-black peer-checked:bg-gray-700",
+                    green: 'border-green-700 peer-checked:bg-green-500',
+                    blue: 'border-blue-700 peer-checked:bg-blue-500',
+                    red: 'border-red-700 peer-checked:bg-red-500',
+                    gray: 'border-black peer-checked:bg-zinc-700',
                 },
                 border: {
-                    square: "rounded-none",
-                    rounded: "rounded-md",
-                    circle: "rounded-full",
+                    square: 'rounded-none',
+                    rounded: 'rounded-md',
+                    circle: 'rounded-full',
                 },
                 disabled: {
-                    true: "!hover:ring-0 !cursor-not-allowed !border-gray-300 !bg-gray-100 !text-gray-400 hover:ring-gray-700/0 hover:ring-offset-0 focus:ring-black focus:ring-offset-0",
+                    true: '!hover:ring-0 !cursor-not-allowed !border-zinc-300 !bg-zinc-100 !text-zinc-400 hover:ring-gray-700/0 hover:ring-offset-0 focus:ring-black focus:ring-offset-0',
                 },
             },
-        }
+        },
     )({ color: props.color, border: props.border, disabled: props.disabled });
 });
 const uniqueInputId = computed(() => crypto.randomUUID());
@@ -55,14 +55,14 @@ const uniqueInputId = computed(() => crypto.randomUUID());
 // Emit the update event according to the type of modelValue
 const handleCheck = (event) => {
     if (!Array.isArray(props.modelValue))
-        return emits("update:modelValue", event.target.checked);
+        return emits('update:modelValue', event.target.checked);
     let newModelValue = [...props.modelValue];
     if (event.target.checked) {
         newModelValue.push(props.value);
     } else {
         newModelValue = newModelValue.filter((val) => val !== props.value);
     }
-    emits("update:modelValue", newModelValue);
+    emits('update:modelValue', newModelValue);
 };
 </script>
 
@@ -87,14 +87,14 @@ const handleCheck = (event) => {
             />
             <div :class="checkboxClass">
                 <component
-                    :class="[props.disabled ? 'text-gray-300' : '']"
+                    :class="[props.disabled ? 'text-zinc-300' : '']"
                     :is="CheckIcon"
-                    class="pointer-events-none hidden h-3/4 w-3/4 stroke-[4] font-bold text-gray-100"
+                    class="pointer-events-none hidden h-3/4 w-3/4 stroke-[4] font-bold text-zinc-100"
                 />
             </div>
             <div
                 class="flex flex-col"
-                :class="[props.disabled ? 'text-gray-500' : '']"
+                :class="[props.disabled ? 'text-zinc-500' : '']"
             >
                 <label
                     :for="uniqueInputId"

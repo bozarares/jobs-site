@@ -40,11 +40,11 @@ const experiences = computed(() => {
 <template>
     <Link
         :href="route('jobs.show', { job: props.job.slug })"
-        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-gray-100 sm:w-[15em] md:mx-0 md:min-h-[25em]"
+        class="group container relative mx-5 flex w-full flex-col justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-zinc-100 sm:w-[15em] md:mx-0 md:min-h-[25em]"
         :class="
             featured
                 ? 'outline outline-2 outline-yellow-500'
-                : 'outline outline-gray-200 dark:outline-zinc-700'
+                : 'outline outline-zinc-200 dark:outline-zinc-700'
         "
     >
         <!-- Logo and Company Name -->
@@ -61,11 +61,13 @@ const experiences = computed(() => {
                     '.' +
                     job.company.logo_extension
                 "
-                class="h-8 fill-current object-contain text-gray-500"
+                class="h-8 fill-current object-contain text-zinc-500 dark:text-zinc-300"
                 src="/images/logo/logo-black.png"
                 alt="Logo"
             />
-            <div class="text-sm text-gray-500">{{ job.company.name }}</div>
+            <div class="text-sm text-zinc-500 dark:text-zinc-300">
+                {{ job.company.name }}
+            </div>
             <RatingStars :rating.number="3.5"></RatingStars>
             <!-- Job Title -->
             <h2 class="mb-2 mt-8 text-center text-xl font-bold">
@@ -118,14 +120,14 @@ const experiences = computed(() => {
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-gray-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500/50"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500/50"
                     >
                         <HandThumbDownIcon
                             class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-gray-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500/50"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500/50"
                     >
                         <HandThumbUpIcon
                             class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"

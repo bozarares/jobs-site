@@ -19,7 +19,7 @@ const edit = ref(false);
 
 <template>
     <div
-        class="group container relative flex w-full flex-col justify-between rounded bg-white p-6 text-gray-600 shadow-md dark:bg-zinc-800 dark:text-gray-100 md:w-[15em]"
+        class="group container relative flex w-full flex-col justify-between rounded bg-white p-6 text-zinc-600 shadow-md dark:bg-zinc-800 dark:text-zinc-100 md:w-[15em]"
     >
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase">

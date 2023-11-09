@@ -33,7 +33,7 @@ const submit = () => {
 <template>
     <Head title="Register" />
     <div
-        class="flex min-h-screen flex-col items-center bg-gray-100 pt-2 sm:pt-8"
+        class="flex min-h-screen flex-col items-center bg-zinc-100 pt-2 sm:pt-8"
     >
         <form
             @submit.prevent="submit"

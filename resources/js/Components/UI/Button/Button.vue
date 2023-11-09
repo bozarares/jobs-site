@@ -48,16 +48,16 @@ const buttonClass = computed(() => {
         {
             variants: {
                 color: {
-                    gray: 'bg-gray-700 text-white hover:bg-gray-600 focus:ring-gray-700',
+                    gray: 'bg-zinc-700 text-white hover:bg-zinc-600 focus:ring-gray-700',
                     red: 'bg-red-500 text-white hover:bg-red-400 focus:ring-red-500',
                     blue: 'bg-blue-500 text-white hover:bg-blue-400 focus:ring-blue-500',
                     green: 'bg-green-500 text-white hover:bg-green-400 focus:ring-green-500',
                     amber: 'bg-amber-500 text-white hover:bg-amber-400 focus:ring-amber-500',
                     gold: 'bg-yellow-500 text-white hover:bg-yellow-400 focus:ring-yellow-500',
-                    text: 'bg-transparent text-gray-700 hover:bg-gray-200 hover:text-gray-900 focus:ring-gray-300',
+                    text: 'bg-transparent text-zinc-700 hover:bg-zinc-200 hover:text-zinc-900 focus:ring-gray-300',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed bg-gray-300 text-gray-500 hover:bg-gray-300 focus:ring-gray-200',
+                    true: '!cursor-not-allowed bg-zinc-300 text-zinc-500 hover:bg-zinc-300 focus:ring-gray-200',
                 },
                 shape: {
                     pill: 'rounded-full',

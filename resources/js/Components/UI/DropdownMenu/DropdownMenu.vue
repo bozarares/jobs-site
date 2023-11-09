@@ -40,7 +40,7 @@ onBeforeUnmount(() => {
 
 const menuClass = computed(() => {
     return cva(
-        'absolute z-10 mt-2 flex flex-col items-center rounded border-[1px] border-gray-700/20 bg-white shadow',
+        'absolute z-10 mt-2 flex flex-col items-center rounded border-[1px] border-zinc-700/20 bg-white shadow',
         {
             variants: {
                 align: {

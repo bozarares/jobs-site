@@ -95,16 +95,16 @@ const toggleIsSelectVisible = () => {
 // CVA instance for design options
 const inputClass = computed(() => {
     return cva(
-        'text-md bg-white h-12 w-full pl-12 pr-6 tracking-wider caret-gray-700 outline-none',
+        'text-md h-12 w-full bg-white pl-12 pr-6 tracking-wider caret-gray-700 outline-none',
         {
             variants: {
                 borderStyle: {
-                    bordered: 'rounded-sm border-2 border-gray-500 py-3',
+                    bordered: 'rounded-sm border-2 border-zinc-500 py-3',
                     'border-bottom': 'border-b-2 py-3',
                     'no-border': 'py-3',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
+                    true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 ',
                 },
             },
         },
@@ -117,7 +117,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
     <div
         ref="containerElementRef"
         :class="props.disabled ? 'pointer-events-none' : ''"
-        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-gray-700"
+        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
     >
         <!-- Left Icon -->
         <div
@@ -125,7 +125,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
             aria-hidden="true"
         >
             <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900"
+                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900"
                 :is="options.leftIcon"
             />
         </div>
@@ -136,7 +136,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
             @click="toggleIsSelectVisible"
         >
             <component
-                class="absolute left-0 cursor-pointer select-none text-gray-900"
+                class="absolute left-0 cursor-pointer select-none text-zinc-900"
                 :is="options.rightIcon"
             />
         </div>
@@ -145,7 +145,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
             class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
         >
             <span
-                class="text-md pointer-events-none absolute left-12 select-none text-gray-700/80 transition-all duration-100"
+                class="text-md pointer-events-none absolute left-12 select-none text-zinc-700/80 transition-all duration-100"
                 :class="[
                     isLabelFloating
                         ? '-translate-y-4 transform text-xs'
@@ -204,7 +204,7 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
                 ref="selectElementRef"
                 v-if="props.select && isSelectVisible"
                 @mousedown.prevent
-                class="absolute left-0 top-0 z-20 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400"
+                class="scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 absolute left-0 top-0 z-20 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white"
                 :style="selectFloatingStyles"
             >
                 <component

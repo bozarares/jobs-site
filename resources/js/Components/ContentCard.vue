@@ -40,7 +40,7 @@ const props = defineProps({
                 }
             }
         "
-        class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 text-gray-700 shadow-md dark:bg-zinc-800 dark:text-gray-100"
+        class="group container relative flex w-full flex-col gap-4 rounded bg-white p-6 text-zinc-700 shadow-md dark:bg-zinc-800 dark:text-zinc-100"
         :class="{
             'cursor-pointer': props.edit,
             [props.class]: props.class,
@@ -48,13 +48,13 @@ const props = defineProps({
     >
         <h2
             v-if="edit"
-            class="absolute right-0 top-0 pr-2 font-extrabold text-gray-500 transition-all duration-150 ease-in-out group-hover:text-zinc-600"
+            class="absolute right-0 top-0 pr-2 font-extrabold text-zinc-500 transition-all duration-150 ease-in-out group-hover:text-zinc-600"
         >
             {{ $t('labels.clickToEdit.field') }}
         </h2>
 
         <h2
-            class="text-lg font-bold uppercase text-gray-500 dark:text-gray-300"
+            class="text-lg font-bold uppercase text-zinc-500 dark:text-zinc-300"
         >
             {{ props.title }}
         </h2>

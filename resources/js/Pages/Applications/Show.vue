@@ -9,7 +9,7 @@ import {
     EyeIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
-import { router, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref, watch, computed, reactive } from 'vue';
 
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
@@ -121,10 +121,10 @@ const fetchLocalizedData = async (application_id, locale) => {
             "
         />
         <div
-            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-8 shadow"
+            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
         >
             <div class="flex items-center justify-between px-4 md:px-8">
-                <h2 class="text-lg font-bold uppercase text-black/60">
+                <h2 class="text-lg font-bold uppercase">
                     {{ $t('labels.application') }}
                 </h2>
                 <div class="flex gap-2">
@@ -139,9 +139,9 @@ const fetchLocalizedData = async (application_id, locale) => {
                         <ChevronLeftIcon
                             class="h-6"
                             :class="{
-                                'cursor-not-allowed text-black/20':
+                                'cursor-not-allowed text-zinc-600':
                                     !application.previous,
-                                'cursor-pointer text-black/60':
+                                'cursor-pointer text-zinc-800 dark:text-zinc-100':
                                     application.previous,
                             }"
                             @click="
@@ -160,9 +160,9 @@ const fetchLocalizedData = async (application_id, locale) => {
                         <ChevronRightIcon
                             class="h-6"
                             :class="{
-                                'cursor-not-allowed text-black/20':
+                                'cursor-not-allowed text-zinc-600':
                                     !application.next,
-                                'cursor-pointer text-black/60':
+                                'cursor-pointer text-zinc-800 dark:text-zinc-100':
                                     application.next,
                             }"
                             @click="
@@ -179,17 +179,22 @@ const fetchLocalizedData = async (application_id, locale) => {
                             "
                         />
                     </div>
-                    <XMarkIcon
-                        class="h-6 cursor-pointer text-black/60"
-                        @click="closeModal()"
-                    />
+                    <Link
+                        :href="
+                            route('jobs.show', {
+                                job: application.current.job.slug,
+                            })
+                        "
+                    >
+                        <XMarkIcon class="h-6 cursor-pointer" />
+                    </Link>
                 </div>
             </div>
             <div
                 class="flex w-full flex-col gap-4 overflow-auto p-4 py-4 md:p-8"
             >
                 <UserApplicationCard :user="user" />
-                <h2 class="text-lg font-bold uppercase text-black/60">
+                <h2 class="text-lg font-bold uppercase">
                     {{ $t('labels.files.self') }}
                 </h2>
                 <div
@@ -230,12 +235,12 @@ const fetchLocalizedData = async (application_id, locale) => {
                 </div>
                 <div class="flex w-full flex-col gap-4">
                     <div>
-                        <h2 class="text-lg font-bold uppercase text-black/60">
+                        <h2 class="text-lg font-bold uppercase">
                             {{ $t('labels.description.self') }}
                         </h2>
                         <div
                             v-if="user && user.localizedData"
-                            class="ql-editor prose"
+                            class="prose dark:text-zinc-100"
                             :class="{
                                 'ql-editor': user.localizedData.description,
                             }"
@@ -243,26 +248,26 @@ const fetchLocalizedData = async (application_id, locale) => {
                         ></div>
                     </div>
                     <div class="pr-8">
-                        <h2 class="text-lg font-bold uppercase text-black/60">
+                        <h2 class="text-lg font-bold uppercase">
                             {{ $t('labels.jobHistory.self') }}
                         </h2>
                         <Timeline :items="jobHistoryTimeline" />
                     </div>
                     <div class="pr-8">
-                        <h2 class="text-lg font-bold uppercase text-black/60">
+                        <h2 class="text-lg font-bold uppercase">
                             {{ $t('labels.educationHistory.self') }}
                         </h2>
                         <Timeline :items="educationHistoryTimeline" />
                     </div>
                     <div>
-                        <h2 class="text-lg font-bold uppercase text-black/60">
+                        <h2 class="text-lg font-bold uppercase">
                             {{ $t('labels.skills.self') }}
                         </h2>
                         <div class="flex flex-wrap gap-2">
                             <div
                                 v-for="skill in user.skills"
                                 :key="skill.id"
-                                class="select-none rounded-full px-3 py-1 outline outline-gray-400 transition-all duration-150 ease-in-out hover:scale-105"
+                                class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
                             >
                                 {{ skill.name }}
                             </div>

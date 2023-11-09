@@ -25,7 +25,7 @@ const toastClass = (status) => {
                 success: 'bg-green-500 text-black',
                 warning: 'bg-amber-500 text-black',
                 danger: 'bg-red-500 text-black',
-                alert: 'bg-gray-500 text-black',
+                alert: 'bg-zinc-500 text-black',
             },
         },
     })({ status });
@@ -37,7 +37,7 @@ const iconClass = (status) => {
                 success: 'text-green-500',
                 warning: 'text-amber-500',
                 danger: 'text-red-500',
-                alert: 'text-gray-500',
+                alert: 'text-zinc-500',
             },
         },
     })({ status });
@@ -59,7 +59,7 @@ const toastIcon = (status) => {
 
 <template>
     <Teleport to="body">
-        <div class="fixed right-0 bottom-0 m-2">
+        <div class="fixed bottom-0 right-0 m-2">
             <transition-group
                 name="slide"
                 tag="div"
@@ -84,7 +84,7 @@ const toastIcon = (status) => {
                         <div v-if="item.title" class="text-md font-bold">
                             {{ item.title }}
                         </div>
-                        <div class="text-sm font-medium text-gray-400">
+                        <div class="text-sm font-medium text-zinc-400">
                             {{ item.message }}
                         </div>
                     </div>

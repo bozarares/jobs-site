@@ -18,20 +18,17 @@ const page = usePage();
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('common.message') }}
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="overflow-auto">
-            <div class="prose">{{ args.message }}</div>
+            <div class="prose dark:text-zinc-100">{{ args.message }}</div>
         </div>
     </div>
 </template>

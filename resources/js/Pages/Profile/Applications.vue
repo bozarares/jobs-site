@@ -20,15 +20,17 @@ const filteredApplication = computed(() => {
 
 <template>
     <div
-        class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-gray-800"
+        class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-zinc-800 dark:bg-zinc-800/95 dark:text-zinc-100"
     >
         <Link :href="route('profile.applications')">{{
             $t('sections.applications')
         }}</Link>
         <Link>{{ $t('sections.likes') }}</Link>
     </div>
-    <div class="flex w-full items-center justify-center gap-2 bg-gray-50 p-6">
-        <h1 class="text-lg font-bold text-black/70">
+    <div
+        class="flex w-full items-center justify-center gap-2 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"
+    >
+        <h1 class="text-lg font-bold">
             {{ $t('actions.showClosedJobs') }}
         </h1>
         <Switch
@@ -40,7 +42,7 @@ const filteredApplication = computed(() => {
         />
     </div>
     <div
-        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 bg-gray-100 pt-6"
+        class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 pt-6"
     >
         <JobApplicationCard
             v-for="application in filteredApplication"

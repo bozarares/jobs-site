@@ -105,7 +105,7 @@ const avatarClass = computed(() => {
                 v-if="editMode"
                 :id="props.editButtonId"
                 @click="editClick"
-                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-gray-900 p-2 text-white dark:border-zinc-800 dark:bg-zinc-200 dark:text-zinc-800"
+                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-zinc-900 p-2 text-white dark:border-zinc-800 dark:bg-zinc-200 dark:text-zinc-800"
             >
                 <component :is="PencilSquareIcon"></component>
             </div>

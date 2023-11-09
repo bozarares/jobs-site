@@ -22,7 +22,7 @@ const toggle = () => {
     <div @click="toggle" class="relative cursor-pointer">
         <div
             :class="[
-                isOn ? 'bg-green-400' : 'bg-gray-400',
+                isOn ? 'bg-green-400' : 'bg-zinc-400',
                 'h-6 w-12 rounded-full transition-all duration-300 ease-in-out',
             ]"
         ></div>

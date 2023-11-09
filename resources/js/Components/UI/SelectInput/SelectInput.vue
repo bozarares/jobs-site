@@ -221,7 +221,7 @@ const inputClass = computed(() =>
                 'no-border': 'py-3',
             },
             disabled: {
-                true: '!cursor-not-allowed !bg-gray-100 !text-gray-400 ',
+                true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 ',
             },
         },
     })({ borderStyle: options.value.borderStyle, disabled: props.disabled }),
@@ -258,7 +258,7 @@ const resetInputOnEscape = () => {
 <template>
     <div
         ref="containerElementRef"
-        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-gray-700"
+        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
     >
         <!-- Left Icon -->
         <div
@@ -267,7 +267,7 @@ const resetInputOnEscape = () => {
             aria-hidden="true"
         >
             <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-gray-900"
+                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900"
                 :is="options.leftIcon"
             />
         </div>
@@ -295,7 +295,7 @@ const resetInputOnEscape = () => {
             class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
         >
             <span
-                class="text-md pointer-events-none absolute left-12 select-none text-gray-700/80 transition-all duration-300"
+                class="text-md pointer-events-none absolute left-12 select-none text-zinc-700/80 transition-all duration-300"
                 :class="[
                     isLabelFloating
                         ? '-translate-y-4 transform text-xs'
@@ -375,7 +375,7 @@ const resetInputOnEscape = () => {
                 aria-label="Clear input"
             >
                 <component
-                    class="absolute right-0 h-8 w-8 cursor-pointer select-none p-1 text-gray-900"
+                    class="absolute right-0 h-8 w-8 cursor-pointer select-none p-1 text-zinc-900"
                     :is="options.xMarkIcon"
                 />
             </button>
@@ -393,7 +393,7 @@ const resetInputOnEscape = () => {
                 class="relative flex h-6 w-full cursor-pointer items-center justify-center border-b-2"
                 @click="isSelectVisible = true"
             >
-                <div class="absolute left-0 px-1 text-sm text-gray-500">
+                <div class="absolute left-0 px-1 text-sm text-zinc-500">
                     {{ selectArray.length }} items selected
                 </div>
                 <component
@@ -403,7 +403,7 @@ const resetInputOnEscape = () => {
             </div>
             <div
                 v-if="isSelectVisible"
-                class="m-0.5 flex h-7 grow-0 basis-6 items-center justify-center gap-0.5 rounded-sm bg-gray-700 px-1 text-sm text-white"
+                class="m-0.5 flex h-7 grow-0 basis-6 items-center justify-center gap-0.5 rounded-sm bg-zinc-700 px-1 text-sm text-white"
                 v-for="(item, index) in selectArray"
                 :key="item"
             >

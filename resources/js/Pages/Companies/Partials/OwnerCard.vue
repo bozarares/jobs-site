@@ -28,7 +28,7 @@ const edit = ref(false);
 <template>
     <div
         :class="class"
-        class="group container relative flex w-full flex-col items-center justify-between overflow-hidden rounded bg-white p-6 shadow-md md:w-[15em]"
+        class="group container relative flex w-full flex-col items-center justify-between overflow-hidden rounded bg-white p-6 shadow-md dark:bg-zinc-800 dark:text-zinc-100 md:w-[15em]"
     >
         <h2 class="mb-2 text-center text-lg font-bold uppercase">
             {{ $t('labels.owner.self') }}

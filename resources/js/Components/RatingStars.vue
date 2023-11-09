@@ -20,10 +20,10 @@ const props = defineProps({ rating: Number });
             <StarIcon
                 :key="'empty-' + n"
                 v-else
-                class="h-4 w-4 text-gray-300"
+                class="h-4 w-4 text-zinc-300"
             />
         </div>
-        <p class="ml-1 text-sm font-bold text-gray-500">{{ props.rating }}/5</p>
+        <p class="ml-1 text-sm font-bold text-zinc-500">{{ props.rating }}/5</p>
     </div>
 </template>
 

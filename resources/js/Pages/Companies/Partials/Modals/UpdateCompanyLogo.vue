@@ -101,16 +101,13 @@ onBeforeUnmount(() => {
 
 <template>
     <div
-        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow"
+        class="container relative mx-auto flex max-h-[35em] max-w-lg flex-col gap-8 overflow-auto rounded bg-white p-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
     >
         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold uppercase text-black/60">
+            <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.logo.edit') }}
             </h2>
-            <XMarkIcon
-                class="h-6 cursor-pointer text-black/60"
-                @click="closeModal()"
-            />
+            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="overflow-auto">
@@ -133,3 +130,19 @@ onBeforeUnmount(() => {
         >
     </div>
 </template>
+
+<style>
+.filepond--credits {
+    @apply dark:text-zinc-100;
+}
+.filepond--drop-label {
+    @apply dark:text-zinc-300;
+}
+.filepond--panel,
+.filepond--panel-root {
+    @apply dark:bg-zinc-700;
+}
+.filepond--wrapper {
+    @apply bg-zinc-700/0;
+}
+</style>
