@@ -29,6 +29,10 @@ export const en = {
         email: {
             self: 'Email',
             contact: 'Contact Email',
+            new: 'New Email',
+            change: 'Change Email',
+            verified: 'Verified',
+            verify: 'Verify Email',
         },
         phone: {
             self: 'Phone Number',
@@ -65,12 +69,17 @@ export const en = {
             self: 'Password',
             confirm: 'Confirm Password',
             forgot: 'Forgot your Password?',
+            current: 'Current Password',
+            new: 'New Password',
+            confirmNew: 'Confirm New Password',
+            change: 'Change Password',
         },
         account: {
             remember: 'Remember me',
             want: 'I want an account',
             have: 'I have an account',
             terms: 'I agree with the terms and conditions',
+            delete: 'Delete Account',
         },
         social: {
             links: 'Social Links',
@@ -140,7 +149,11 @@ export const en = {
         profile: 'Profile',
         jobs: 'Jobs',
         applications: 'My Applications',
-        settings: 'Settings',
+        settings: {
+            self: 'Settings',
+            account: 'Account Settings',
+            privacy: 'Privacy & Security',
+        },
         notifications: 'Notifications',
         company: 'Company',
         contact: 'Contact',

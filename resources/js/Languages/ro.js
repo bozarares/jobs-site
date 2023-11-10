@@ -29,6 +29,10 @@ export const ro = {
         email: {
             self: 'Email',
             contact: 'Email de Contact',
+            new: 'Email Nou',
+            change: 'Schimbă Email',
+            verified: 'Verificat',
+            verify: 'Verifică Email',
         },
         phone: {
             self: 'Număr de Telefon',
@@ -64,12 +68,17 @@ export const ro = {
             self: 'Parolă',
             confirm: 'Confirmă Parola',
             forgot: 'Ți-ai uitat Parola?',
+            current: 'Parola Curentă',
+            new: 'Parolă Nouă',
+            confirmNew: 'Confirmă Parola Nouă',
+            change: 'Schimbă Parola',
         },
         account: {
             remember: 'Ține-mă minte',
             want: 'Vreau un cont',
             have: 'Am deja un cont',
             terms: 'Sunt de acord cu termenii și condițiile',
+            delete: 'Șterge Contul',
         },
         social: {
             links: 'Linkuri Sociale',
@@ -139,7 +148,11 @@ export const ro = {
         profile: 'Profil',
         jobs: 'Locuri de Muncă',
         applications: 'Aplicațiile Mele',
-        settings: 'Setări',
+        settings: {
+            self: 'Setări',
+            account: 'Setări Cont',
+            privacy: 'Confidențialitate și Securitate',
+        },
         notifications: 'Notificări',
         company: 'Companie',
         contact: 'Contact',

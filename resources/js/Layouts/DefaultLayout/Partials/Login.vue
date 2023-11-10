@@ -74,7 +74,7 @@ const submit = () => {
         <div class="flex flex-col items-center gap-1 text-sm">
             <Link
                 @click.prevent="triggerClose()"
-                href="/"
+                :href="route('password.request')"
                 class="text-blue-600 hover:text-blue-800"
                 >{{ $t('labels.password.forgot') }}</Link
             >

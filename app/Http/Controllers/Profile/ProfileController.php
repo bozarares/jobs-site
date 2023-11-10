@@ -209,6 +209,24 @@ class ProfileController extends Controller
         );
     }
 
+    public function editEmail(Request $request)
+    {
+        $request->validate([
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+        ]);
+
+        $user = $request->user();
+        $user->email = $request->email;
+        $user->email_verified_at = null;
+        $user->save();
+    }
+
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Edit', [

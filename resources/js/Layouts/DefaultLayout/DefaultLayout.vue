@@ -29,7 +29,7 @@ watch(
 
 <template>
     <Navbar></Navbar>
-    <main class="flex min-h-screen flex-grow flex-col items-center">
+    <main class="flex min-h-screen flex-grow flex-col items-center pt-[56px]">
         <slot />
     </main>
     <Footer></Footer>

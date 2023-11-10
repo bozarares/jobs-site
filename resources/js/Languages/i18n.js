@@ -30,8 +30,8 @@ async function loadLanguageAsync(lang) {
 
     // Dacă limba nu a fost încărcată încă
     const messages = await import(
-        /* viteIgnore: true */
-        `./${lang}.js` // Presupunem că fișierele de localizare sunt în format JSON
+        /* @vite-ignore */
+        `./${lang}.js`
     );
     i18n.global.setLocaleMessage(lang, messages[lang]);
     loadedLanguages.push(lang);

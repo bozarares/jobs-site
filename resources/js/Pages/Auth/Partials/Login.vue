@@ -3,6 +3,13 @@ import { Button, Checkbox, Input } from '@/Components/UI';
 import { AtSymbolIcon, KeyIcon } from '@heroicons/vue/24/outline';
 import { Link, useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    status: {
+        type: String,
+        default: '',
+    },
+});
+
 const form = useForm({
     email: '',
     password: '',
@@ -46,9 +53,12 @@ const submit = () => {
         <Checkbox :label="$t('labels.account.remember')" />
         <Button type="submit">{{ $t('common.login') }}</Button>
         <div class="flex flex-col items-center gap-1 text-sm">
-            <Link href="/" class="text-blue-600 hover:text-blue-800">{{
-                $t('labels.password.forgot')
-            }}</Link>
+            <Link
+                :href="route('password.request')"
+                class="text-blue-600 hover:text-blue-800"
+                >{{ $t('labels.password.forgot') }}</Link
+            >
         </div>
+        <h3 class="text-center text-sm text-zinc-100">{{ status }}</h3>
     </form>
 </template>

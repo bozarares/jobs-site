@@ -9,7 +9,6 @@ import {
     LanguageSelector,
     Switch,
 } from '@/Components/UI';
-import Button from '@/Components/UI/Button/Button.vue';
 
 import { Link, usePage } from '@inertiajs/vue3';
 import { ref, watch, computed } from 'vue';
@@ -17,13 +16,18 @@ import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import {
     ArrowRightOnRectangleIcon,
-    BellIcon,
     Cog8ToothIcon,
     UserIcon,
+    BuildingOffice2Icon,
 } from '@heroicons/vue/24/outline';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useCookieStore } from '@/Stores/cookieStore';
-import { Cog6ToothIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/solid';
+import {
+    Cog6ToothIcon,
+    MoonIcon,
+    SunIcon,
+    BellIcon,
+} from '@heroicons/vue/24/solid';
 import { languages } from '@/Languages/languages';
 import axios from 'axios';
 import { onMounted } from 'vue';
@@ -32,6 +36,7 @@ const localeStore = useLocaleStore();
 const cookieStore = useCookieStore();
 const language = ref(localeStore.locale);
 const page = usePage();
+
 const isOwner = computed(() => {
     if (page.props.auth.user) {
         return page.props.auth.user.isOwner;
@@ -111,10 +116,10 @@ onMounted(() => {
 
 <template>
     <header
-        class="sticky z-50 items-center bg-white py-2 shadow dark:bg-zinc-800"
+        class="fixed z-50 w-full items-center bg-white py-2 shadow dark:bg-zinc-800"
     >
         <div
-            class="container mx-auto flex max-w-screen-lg justify-between px-4"
+            class="container mx-auto flex max-w-screen-lg items-center justify-between px-4"
         >
             <Link href="/">
                 <img
@@ -128,7 +133,7 @@ onMounted(() => {
                 />
             </Link>
             <div class="flex items-center gap-6">
-                <Button
+                <!-- <Button
                     as="a"
                     :is="Link"
                     :href="route('companies.index')"
@@ -141,10 +146,13 @@ onMounted(() => {
                     :href="route('companies.create')"
                     class="text-sm dark:text-white"
                     >{{ $t('sections.recruit') }}</Link
-                >
+                > -->
 
                 <!-- Notification Panel -->
-                <DropdownMenu align="right" class="mt-6 w-[20em]">
+                <DropdownMenu
+                    align="right"
+                    class="mt-6 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
+                >
                     <template v-slot:dropdownMenuButton>
                         <BellIcon class="h-6 w-6 dark:text-white" />
                     </template>
@@ -156,13 +164,13 @@ onMounted(() => {
                 <!-- Settings Panel -->
                 <DropdownMenu
                     align="right"
-                    class="mt-6 w-[10em] dark:bg-zinc-800"
+                    class="mt-6 w-[10em] dark:border-zinc-600 dark:bg-zinc-800"
                 >
                     <template v-slot:dropdownMenuButton>
                         <Cog6ToothIcon class="h-6 w-6 dark:text-white" />
                     </template>
                     <DropdownHeader class="dark:text-zinc-100">{{
-                        $t('sections.settings')
+                        $t('sections.settings.self')
                     }}</DropdownHeader>
 
                     <LanguageSelector
@@ -262,6 +270,24 @@ onMounted(() => {
                                 :leftIcon="UserIcon"
                                 >{{ $t('sections.profile') }}</DropdownItem
                             >
+                            <DropdownItem
+                                v-if="isOwner"
+                                :is="Link"
+                                :href="route('companies.index')"
+                                class="text-sm font-bold dark:hover:bg-zinc-700"
+                                :leftIcon="BuildingOffice2Icon"
+                                >{{
+                                    $tc('labels.business.self', 2)
+                                }}</DropdownItem
+                            >
+                            <DropdownItem
+                                v-else
+                                :is="Link"
+                                :href="route('companies.create')"
+                                class="text-sm font-bold dark:hover:bg-zinc-700"
+                                :leftIcon="BuildingOffice2Icon"
+                                >{{ $t('sections.recruit') }}</DropdownItem
+                            >
                             <DropdownSeparator class="dark:bg-zinc-700" />
                             <DropdownLabel
                                 align="left"
@@ -269,9 +295,13 @@ onMounted(() => {
                                 >{{ $t('labels.userControlls') }}</DropdownLabel
                             >
                             <DropdownItem
+                                :is="Link"
+                                :href="route('settings.show')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
                                 :leftIcon="Cog8ToothIcon"
-                                >{{ $t('sections.settings') }}</DropdownItem
+                                >{{
+                                    $t('sections.settings.self')
+                                }}</DropdownItem
                             >
                             <DropdownItem
                                 :is="Link"

@@ -23,7 +23,7 @@ const edit = ref(false);
     >
         <div class="relative flex flex-col items-center gap-2">
             <h2 class="text-lg font-bold uppercase">
-                {{ $t('sections.settings') }}
+                {{ $t('sections.settings.self') }}
             </h2>
             <h2
                 :class="{

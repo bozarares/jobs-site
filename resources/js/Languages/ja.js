@@ -29,6 +29,10 @@ export const ja = {
         email: {
             self: 'メールアドレス',
             contact: '連絡先メールアドレス',
+            new: '新しいメールアドレス',
+            change: 'メールアドレスを変更',
+            verified: '確認済み',
+            verify: 'メールアドレスを確認',
         },
         phone: {
             self: '電話番号',
@@ -64,12 +68,17 @@ export const ja = {
             self: 'パスワード',
             confirm: 'パスワードの確認',
             forgot: 'パスワードをお忘れですか？',
+            current: '現在のパスワード',
+            new: '新しいパスワード',
+            confirmNew: '新しいパスワードの確認',
+            change: 'パスワードを変更',
         },
         account: {
             remember: 'ログイン状態を保持する',
             want: 'アカウントを作成する',
             have: 'すでにアカウントをお持ちの場合',
             terms: '利用規約に同意する',
+            delete: 'アカウントを削除',
         },
         social: {
             links: 'ソーシャルリンク',
@@ -139,7 +148,11 @@ export const ja = {
         profile: 'プロフィール',
         jobs: '求人情報',
         applications: '応募情報',
-        settings: '設定',
+        settings: {
+            self: '設定',
+            account: 'アカウント設定',
+            privacy: 'プライバシーとセキュリティ',
+        },
         notifications: '通知',
         company: '会社',
         contact: '連絡先',
