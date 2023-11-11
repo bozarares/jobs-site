@@ -149,9 +149,7 @@ const endDateComputed = computed({
                             form.field_of_study = education.field_of_study;
                             startDateComputed = education.start_date;
                             endDateComputed = education.end_date;
-
-                            // startDateComputed = new Date(1998, 0, 1);
-                            // endDateComputed = new Date(1998, 0, 1);
+                            toDate = education.end_date === null ? true : false;
                         }
                     "
                     class="text-sm"

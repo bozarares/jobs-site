@@ -149,9 +149,7 @@ const endDateComputed = computed({
                             form.description = job.description;
                             startDateComputed = job.start_date;
                             endDateComputed = job.end_date;
-
-                            // startDateComputed = new Date(1998, 0, 1);
-                            // endDateComputed = new Date(1998, 0, 1);
+                            toDate = job.end_date === null ? true : false;
                         }
                     "
                     class="text-sm"

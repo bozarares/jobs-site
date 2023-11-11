@@ -11,7 +11,7 @@ import {
 } from '@/Components/UI';
 
 import { Link, usePage } from '@inertiajs/vue3';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import Login from './Login.vue';
 import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import {
@@ -30,7 +30,6 @@ import {
 } from '@heroicons/vue/24/solid';
 import { languages } from '@/Languages/languages';
 import axios from 'axios';
-import { onMounted } from 'vue';
 
 const localeStore = useLocaleStore();
 const cookieStore = useCookieStore();

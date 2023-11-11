@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useFloating } from '@floating-ui/vue';
+import { useFloating, autoPlacement, flip } from '@floating-ui/vue';
 import { cva } from 'class-variance-authority';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
@@ -171,7 +171,16 @@ const { floatingStyles: dateFloatingStyles } = useFloating(
     containerElementRef,
     dateElementRef,
     {
-        placement: 'bottom',
+        middleware: [
+            // autoPlacement({
+            //     crossAxis: true,
+            //     allowedPlacements: ['bottom-end', 'top-start'],
+            // }),
+            flip({
+                crossAxis: true,
+                allowedPlacements: ['bottom-end', 'top-start'],
+            }),
+        ],
     },
 );
 
@@ -433,7 +442,7 @@ const days = dayjs().localeData().weekdaysShort();
         <!-- Date Picker -->
         <div
             v-if="isDatePickerVisible && isDateMode"
-            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 text-zinc-100 shadow-sm dark:bg-zinc-800"
+            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
             :style="dateFloatingStyles"
             ref="dateElementRef"
         >
