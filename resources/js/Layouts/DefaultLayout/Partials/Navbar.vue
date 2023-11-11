@@ -116,7 +116,7 @@ onMounted(() => {
 
 <template>
     <header
-        class="fixed z-50 w-full items-center bg-white py-2 shadow dark:bg-zinc-800"
+        class="fixed z-50 w-full items-center bg-white py-2 shadow dark:bg-zinc-800 dark:shadow-zinc-700"
     >
         <div
             class="container mx-auto flex max-w-screen-lg items-center justify-between px-4"
@@ -138,7 +138,7 @@ onMounted(() => {
                     :is="Link"
                     :href="route('companies.index')"
                     v-if="isOwner"
-                    :options="{ shape: 'pill', color: 'green' }"
+                    :options="{ shape: 'pill', color: 'blue' }"
                     >{{ $tc('labels.business.self', 2) }}</Button
                 >
                 <Link

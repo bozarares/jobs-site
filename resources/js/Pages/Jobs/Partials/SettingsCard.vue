@@ -34,7 +34,7 @@ const edit = ref(false);
                 v-if="job.application_count > 0"
                 @click="modalStore.openModal('jobApplications')"
                 class="w-full"
-                :options="{ shape: 'pill', color: 'green' }"
+                :options="{ shape: 'pill', color: 'blue' }"
             >
                 {{ $tc('labels.applications', job.application_count) }}
             </Button>

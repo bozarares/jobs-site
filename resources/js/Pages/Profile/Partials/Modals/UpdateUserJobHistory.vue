@@ -247,7 +247,7 @@ const endDateComputed = computed({
                     }
                 "
                 class="w-full"
-                :options="{ color: 'green', shape: 'pill' }"
+                :options="{ color: 'blue', shape: 'pill' }"
                 >{{ $t('common.add') }}</Button
             >
         </div>
@@ -275,7 +275,7 @@ const endDateComputed = computed({
                     }
                 "
                 class="w-full"
-                :options="{ color: 'green', shape: 'pill' }"
+                :options="{ color: 'blue', shape: 'pill' }"
                 >{{ $t('common.edit') }}</Button
             >
         </div>

@@ -420,7 +420,7 @@ const revertFiles = () => {
                         }
                     "
                     class="mt-4 w-24"
-                    :options="{ color: 'green' }"
+                    :options="{ color: 'blue' }"
                     >{{ $t('common.create') }}</Button
                 >
             </div>

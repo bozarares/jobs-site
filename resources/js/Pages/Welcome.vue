@@ -31,7 +31,7 @@ const props = defineProps({
         class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"
     >
         <h1
-            class="text-center text-2xl font-semibold text-zinc-800 dark:text-zinc-100"
+            class="gradient bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text pb-2 text-4xl font-bold text-transparent"
         >
             {{ $t('messages.welcome') }}
         </h1>
@@ -45,7 +45,9 @@ const props = defineProps({
                 :options="{ size: 'small', leftIcon: GlobeEuropeAfricaIcon }"
             />
             <div class="flex w-full gap-2">
-                <Button>{{ $t('common.search') }}</Button>
+                <Button :options="{ color: 'blue' }">{{
+                    $t('common.search')
+                }}</Button>
                 <Button :options="{ leftIcon: FunnelIcon }">{{
                     $t('labels.filter')
                 }}</Button>

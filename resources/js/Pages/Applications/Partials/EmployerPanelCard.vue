@@ -221,7 +221,7 @@ watch(applicationStatus, () => {
                             }
                         "
                         class="rounded-r-none"
-                        :options="{ color: 'green', shape: 'pill' }"
+                        :options="{ color: 'blue', shape: 'pill' }"
                         >{{ $t('common.accept') }}</Button
                     >
                     <Button
@@ -253,7 +253,7 @@ watch(applicationStatus, () => {
                             }
                         "
                         class="rounded-r-none"
-                        :options="{ color: 'green', shape: 'pill' }"
+                        :options="{ color: 'blue', shape: 'pill' }"
                         >{{ $t('common.hired') }}</Button
                     >
                     <Button

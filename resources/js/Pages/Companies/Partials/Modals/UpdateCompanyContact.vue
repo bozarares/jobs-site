@@ -230,7 +230,7 @@ onMounted(() => {
         <Button
             @click="submit"
             class=""
-            :options="{ color: 'green', shape: 'pill' }"
+            :options="{ color: 'blue', shape: 'pill' }"
             >{{ $t('common.save') }}</Button
         >
     </div>

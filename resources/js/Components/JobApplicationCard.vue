@@ -121,7 +121,7 @@ const isClosed = computed(() => {
             v-if="isClosed"
             class="absolute bottom-0 left-0 flex min-h-[10em] w-full translate-y-[10em] cursor-default items-center justify-center rounded-b-md border-t-2 bg-white px-6 transition-transform duration-300 group-hover:translate-y-0"
         >
-            <Button :options="{ shape: 'pill', color: 'green' }" class="w-full"
+            <Button :options="{ shape: 'pill', color: 'blue' }" class="w-full"
                 >Message</Button
             >
         </div> -->

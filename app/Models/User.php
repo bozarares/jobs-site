@@ -149,7 +149,7 @@ class User extends Authenticatable
         ) {
             $completedFields++;
         }
-        if ($this->description) {
+        if ($this->userDescription()->exists()) {
             $completedFields++;
         }
         if ($this->jobHistory()->exists()) {

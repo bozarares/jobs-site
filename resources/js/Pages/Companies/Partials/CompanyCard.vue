@@ -98,7 +98,7 @@ const props = defineProps({
                     class="w-full"
                     :options="{
                         shape: 'pill',
-                        color: 'green',
+                        color: 'blue',
                         leftIcon: ShareIcon,
                     }"
                     >{{ $t('common.share') }}</Button
@@ -112,7 +112,7 @@ const props = defineProps({
                     :href="route('companies.show', company.slug)"
                     :options="{
                         shape: 'pill',
-                        color: 'green',
+                        color: 'blue',
                         leftIcon: EyeIcon,
                     }"
                     >{{ $t('common.view') }}</Button
@@ -121,7 +121,7 @@ const props = defineProps({
                     class="w-full"
                     :options="{
                         shape: 'pill',
-                        color: 'green',
+                        color: 'blue',
                         leftIcon: HeartIcon,
                     }"
                     >{{ $t('common.follow') }}</Button

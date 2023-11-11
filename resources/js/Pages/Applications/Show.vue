@@ -215,7 +215,7 @@ const fetchLocalizedData = async (application_id, locale) => {
                             :href="route('users.files.show', file.servername)"
                             :options="{
                                 leftIcon: EyeIcon,
-                                color: 'green',
+                                color: 'blue',
                                 shape: 'pill',
                             }"
                         />

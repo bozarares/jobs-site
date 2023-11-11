@@ -149,7 +149,7 @@ onMounted(async () => {
                 }
             "
             class=""
-            :options="{ color: 'green', shape: 'pill' }"
+            :options="{ color: 'blue', shape: 'pill' }"
             >{{ $t('common.apply') }}</Button
         >
     </div>

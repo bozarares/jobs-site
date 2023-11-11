@@ -208,7 +208,7 @@ onBeforeUnmount(() => {
             <Button
                 @click="addFile"
                 class=""
-                :options="{ color: 'green', shape: 'pill' }"
+                :options="{ color: 'blue', shape: 'pill' }"
                 >{{ $t('common.add') }}</Button
             >
         </div>

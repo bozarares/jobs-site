@@ -65,7 +65,7 @@ const submit = () => {
         <Button
             @click="submit"
             class=""
-            :options="{ color: 'green', shape: 'pill' }"
+            :options="{ color: 'blue', shape: 'pill' }"
             >Save</Button
         >
     </div>

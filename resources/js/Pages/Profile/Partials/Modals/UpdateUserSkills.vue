@@ -114,6 +114,17 @@ onMounted(() => {
                 :label="$tc('labels.skills.self', 1)"
                 v-model="inputTextValue"
                 name="add_skill"
+                :options="{ size: 'small' }"
+                @keydown.enter.prevent="
+                    () => {
+                        if (inputTextValue !== '') {
+                            skills.push(inputTextValue);
+                            inputTextValue = '';
+                        } else {
+                            submit();
+                        }
+                    }
+                "
             />
             <Button
                 @click="
@@ -122,6 +133,8 @@ onMounted(() => {
                         inputTextValue = '';
                     }
                 "
+                class="w-24"
+                :options="{ color: 'blue' }"
                 >{{ $t('common.add') }}</Button
             >
         </div>
@@ -158,7 +171,7 @@ onMounted(() => {
                 }
             "
             class=""
-            :options="{ color: 'green', shape: 'pill' }"
+            :options="{ color: 'blue', shape: 'pill' }"
             >{{ $t('common.save') }}</Button
         >
     </div>

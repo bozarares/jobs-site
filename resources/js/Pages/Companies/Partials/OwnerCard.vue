@@ -58,7 +58,7 @@ const edit = ref(false);
                 class="w-full"
                 :options="{
                     shape: 'pill',
-                    color: 'green',
+                    color: 'blue',
                 }"
                 @click="modalStore.openModal('companyCreateJob')"
                 >{{ $t('actions.createJob') }}</Button
@@ -67,7 +67,7 @@ const edit = ref(false);
                 class="w-full"
                 :options="{
                     shape: 'pill',
-                    color: 'green',
+                    color: 'blue',
                 }"
                 >{{ $tc('labels.applications', props.applications) }}</Button
             > -->

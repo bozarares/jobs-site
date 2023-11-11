@@ -101,7 +101,7 @@ const props = defineProps({
                     class="w-full"
                     :options="{
                         shape: 'pill',
-                        color: 'green',
+                        color: 'blue',
                         // leftIcon: ShareIcon,
                     }"
                     >{{ $t('common.apply') }}</Button

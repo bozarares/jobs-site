@@ -115,7 +115,7 @@ const experiences = computed(() => {
             <div class="flex items-center justify-center gap-4">
                 <Button
                     @click.stop.prevent="() => {}"
-                    :options="{ shape: 'pill', color: 'green' }"
+                    :options="{ shape: 'pill', color: 'blue' }"
                     >Fast Apply</Button
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
