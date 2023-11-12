@@ -51,7 +51,11 @@ const submit = () => {
                 :label="$t('labels.name')"
                 type="text"
                 name="name"
-                :options="{ leftIcon: UserIcon, size: 'small' }"
+                :options="{
+                    leftIcon: UserIcon,
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                }"
             />
             <Input
                 v-model="form.tag"
@@ -59,7 +63,11 @@ const submit = () => {
                 :label="$t('labels.tag')"
                 type="text"
                 name="tag"
-                :options="{ leftIcon: UserIcon, size: 'small' }"
+                :options="{
+                    leftIcon: UserIcon,
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                }"
             />
         </div>
         <Button

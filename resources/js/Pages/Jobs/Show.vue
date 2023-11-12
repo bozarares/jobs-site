@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import JobCard from './Partials/JobCard.vue';
 import { ref } from 'vue';
 import SettingsCard from './Partials/SettingsCard.vue';
@@ -24,6 +24,8 @@ const edit = ref(false);
 </script>
 
 <template>
+    <Head :title="job.title" />
+
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >

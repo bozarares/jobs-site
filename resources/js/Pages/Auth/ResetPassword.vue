@@ -1,7 +1,7 @@
 <script setup>
 import { Button } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 
 // Assuming the token is passed as a prop to this component
 const props = defineProps({
@@ -25,6 +25,8 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Reset password" />
+
     <div
         class="container mt-12 w-full max-w-screen-sm rounded bg-zinc-800 p-4 text-zinc-100 shadow"
     >

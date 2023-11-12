@@ -191,7 +191,11 @@ const endDateComputed = computed({
                     :label="$t('labels.company')"
                     type="text"
                     name="company"
-                    :options="{ leftIcon: PhoneIcon, size: 'small' }"
+                    :options="{
+                        leftIcon: PhoneIcon,
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                    }"
                 />
                 <Input
                     v-model="form.title"
@@ -199,7 +203,11 @@ const endDateComputed = computed({
                     :label="$t('labels.jobHistory.title')"
                     type="text"
                     name="title"
-                    :options="{ leftIcon: UserIcon, size: 'small' }"
+                    :options="{
+                        leftIcon: UserIcon,
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                    }"
                 />
             </div>
             <Input
@@ -208,10 +216,15 @@ const endDateComputed = computed({
                 :label="$t('labels.description.self')"
                 type="text"
                 name="description"
-                :options="{ leftIcon: UserIcon, size: 'small' }"
+                :options="{
+                    leftIcon: UserIcon,
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                }"
             />
             <DateTime
                 v-model="startDateComputed"
+                :error="form.errors.start_date"
                 class=""
                 :label="$t('labels.startDate')"
                 name="start_date"
@@ -219,7 +232,10 @@ const endDateComputed = computed({
                     minDate: new Date(1900, 0, 0),
                     maxDate: new Date(2025, 0, 0),
                 }"
-                :options="{ leftIcon: CalendarDaysIcon }"
+                :options="{
+                    leftIcon: CalendarDaysIcon,
+                    borderStyle: 'border-bottom',
+                }"
             ></DateTime>
             <div class="flex flex-col items-center justify-center">
                 <DateTime
@@ -232,7 +248,10 @@ const endDateComputed = computed({
                         minDate: new Date(1900, 0, 0),
                         maxDate: new Date(2025, 0, 0),
                     }"
-                    :options="{ leftIcon: CalendarDaysIcon }"
+                    :options="{
+                        leftIcon: CalendarDaysIcon,
+                        borderStyle: 'border-bottom',
+                    }"
                 />
                 <Checkbox v-model="toDate" :label="$t('labels.toDate')" />
             </div>

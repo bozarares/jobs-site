@@ -10,8 +10,10 @@ import Button from './UI/Button/Button.vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useModalStore } from '@/Stores/modalStore';
 dayjs.extend(relativeTime);
 
+const modalStore = useModalStore();
 const featured = ref(false);
 const props = defineProps({
     job: {
@@ -114,20 +116,32 @@ const experiences = computed(() => {
         >
             <div class="flex items-center justify-center gap-4">
                 <Button
-                    @click.stop.prevent="() => {}"
-                    :options="{ shape: 'pill', color: 'blue' }"
-                    >Fast Apply</Button
+                    :disabled="!!job.application_date"
+                    @click.stop.prevent="
+                        () => {
+                            modalStore.openModal('jobApply', {
+                                job: job,
+                            });
+                        }
+                    "
+                    :options="{
+                        shape: 'pill',
+                        color: job.application_date ? 'gray' : 'blue',
+                    }"
+                    >{{
+                        job.application_date ? 'Applied' : 'Fast Apply'
+                    }}</Button
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500/50"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500"
                     >
                         <HandThumbDownIcon
                             class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500/50"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500"
                     >
                         <HandThumbUpIcon
                             class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"

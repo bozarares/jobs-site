@@ -87,7 +87,7 @@ export const en = {
         },
         companyDetails: {
             name: 'Company Name',
-            registrationCode: 'Unique Registration Code',
+            registrationCode: 'Registration Code',
             description: 'Add a description to your company',
         },
         description: {

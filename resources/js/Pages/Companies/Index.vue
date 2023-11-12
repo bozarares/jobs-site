@@ -1,7 +1,7 @@
 <script setup>
 // TODO - Add a box for Company Create same as CompanyCard
 import { Button } from '@/Components/UI';
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import CompanyCard from './Partials/CompanyCard.vue';
 import AddCompany from './Partials/AddCompany.vue';
 
@@ -13,6 +13,8 @@ const props = defineProps({
 });
 </script>
 <template>
+    <Head title="Companies" />
+
     <div
         class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/95"
     >

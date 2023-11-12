@@ -31,6 +31,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    error: {
+        type: String,
+        default: null,
+    },
 });
 
 const options = computed(() => {
@@ -40,6 +44,7 @@ const options = computed(() => {
         checkIcon: CheckIcon,
         xMarkIcon: XMarkIcon,
         noResultMessage: 'No results found',
+        size: 'default',
     };
     return { ...defaultOptions, ...props.options };
 });
@@ -213,22 +218,50 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 // Compute classes for the input based on the borderStyle and disabled props.
 const inputClass = computed(() =>
     cva(
-        'text-md w-full flex-shrink-0 py-3 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-100',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
         {
             variants: {
                 borderStyle: {
                     bordered:
-                        'rounded-md border-2 border-zinc-200 shadow dark:border-zinc-500',
-                    'border-bottom': 'border-b-2',
+                        'rounded-md border-2 border-zinc-200 shadow focus:border-blue-500 focus:outline-none focus:ring-0 dark:border-zinc-500 focus:dark:border-blue-500',
+                    'border-bottom':
+                        'border-0 border-b-2 focus:border-blue-500 focus:outline-none focus:ring-0 ',
                     'no-border': '',
                 },
                 disabled: {
                     true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 dark:!bg-zinc-700 dark:!text-zinc-100 ',
                 },
+                size: {
+                    default: 'text-md py-3',
+                    small: 'py-2 text-sm',
+                },
+                error: {
+                    true: '!border-red-500 dark:!border-red-500',
+                },
             },
         },
-    )({ borderStyle: options.value.borderStyle, disabled: props.disabled }),
+    )({
+        borderStyle: options.value.borderStyle,
+        disabled: props.disabled,
+        size: options.value.size,
+        error: !!props.error,
+    }),
 );
+
+const labelClasses = computed(() => {
+    let baseClasses = '';
+    if (options.value.size === 'default') {
+        baseClasses += isLabelFloating.value
+            ? '-translate-y-4 transform text-xs'
+            : 'transform-none text-md';
+    }
+    if (options.value.size === 'small') {
+        baseClasses += isLabelFloating.value
+            ? '-translate-y-1/2 transform opacity-0 text-xs'
+            : 'transform-none text-sm';
+    }
+    return baseClasses;
+});
 
 // Compute the aria label for the input.
 const inputAriaLabel = computed(() => {
@@ -257,149 +290,151 @@ const resetInputOnEscape = () => {
 </script>
 
 <template>
-    <div
-        ref="containerElementRef"
-        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
-        :class="[!options.leftIcon && 'justify-between']"
-    >
-        <!-- Left Icon -->
-
+    <div class="flex w-full flex-col">
         <div
-            v-if="options.leftIcon"
-            class="absolute left-0 ml-2 flex h-full w-8 items-center justify-center"
-            aria-hidden="true"
+            ref="containerElementRef"
+            class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
+            :class="[!options.leftIcon && 'justify-between']"
         >
-            <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
-                :is="options.leftIcon"
-            />
-        </div>
-
-        <!-- Input -->
-        <input
-            ref="inputElementRef"
-            :class="[inputClass, !options.leftIcon && '!pr-0 pl-6']"
-            :type="inputFieldType"
-            :name="props.name"
-            :id="uniqueInputId"
-            v-model="inputTextValue"
-            :disabled="props.disabled"
-            @focus="handleInputFocus"
-            @blur="handleInputBlur"
-            @keydown.escape="resetInputOnEscape"
-            :aria-label="inputAriaLabel"
-            :aria-labelledby="`${uniqueInputId}-label`"
-        />
-
-        <!-- Floating Label -->
-        <div
-            class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
-        >
-            <span
-                class="text-md pointer-events-none absolute left-12 select-none text-zinc-700/80 transition-all duration-300 dark:text-zinc-100"
-                :class="[
-                    isLabelFloating
-                        ? '-translate-y-4 transform text-xs'
-                        : 'transform-none',
-                    !options.leftIcon && '!left-6',
-                ]"
-                :id="`${uniqueInputId}-label`"
-                >{{ props.label }}</span
-            >
-        </div>
-
-        <!-- Search Result -->
-        <div class="group">
-            <Transition
-                enter-from-class="scale-90 opacity-0"
-                enter-active-class="transition duration-200"
-                enter-to-class="scale-100 opacity-100"
-                leave-from-class="scale-100 opacity-100"
-                leave-active-class="transition duration-200"
-                leave-to-class="scale-90 opacity-0"
-                mode="out-in"
-            >
-                <div
-                    ref="searchElementRef"
-                    v-if="
-                        searchResults &&
-                        searchResults != [] &&
-                        !isExactMatchFound &&
-                        isSearchVisible &&
-                        inputTextValue.length !== 0
-                    "
-                    @mousedown.prevent
-                    class="scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 absolute left-0 top-0 z-10 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white dark:border-zinc-500 dark:bg-zinc-800 dark:text-zinc-100"
-                    :style="floatingStyles"
-                >
-                    <component
-                        v-if="searchResults.length === 0"
-                        is="p"
-                        class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
-                    >
-                        {{ options.noResultMessage }}
-                    </component>
-                    <component
-                        is="button"
-                        class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
-                        v-else
-                        v-for="searchItem in searchResults"
-                        :key="searchItem.item.refIndex"
-                        @mousedown.prevent
-                        @click="
-                            inputTextValue =
-                                typeof searchItem.item === 'object' &&
-                                props.search.searchField
-                                    ? searchItem.item[props.search.searchField]
-                                    : searchItem.item
-                        "
-                    >
-                        <template v-if="searchItem.splitResult.beforeMatch">
-                            {{ searchItem.splitResult.beforeMatch }}
-                        </template>
-                        <span class="text-blue-500">
-                            {{ searchItem.splitResult.match }}
-                        </span>
-                        <template v-if="searchItem.splitResult.afterMatch">
-                            {{ searchItem.splitResult.afterMatch }}
-                        </template>
-                    </component>
-                </div>
-            </Transition>
-        </div>
-
-        <!-- Clear icon -->
-        <TransitionGroup
-            enter-from-class="scale-90 opacity-0"
-            enter-active-class="transition-all duration-200"
-            enter-to-class="scale-100 opacity-100"
-            leave-from-class="scale-100 opacity-100"
-            leave-active-class="transition-all duration-200"
-            leave-to-class="scale-90 opacity-0"
-        >
-            <button
-                v-if="inputTextValue !== '' && !isInputValid"
-                class="absolute right-0 mr-2 flex h-full w-8 items-center justify-center"
-                @click="resetInputField"
-                aria-label="Clear input"
-            >
-                <component
-                    class="absolute right-0 h-8 cursor-pointer select-none p-1 text-zinc-900"
-                    :is="options.xMarkIcon"
-                />
-            </button>
-            <!-- Check icon -->
+            <!-- Left Icon -->
             <div
-                v-if="isInputValid && props.validityCheck === true"
-                class="pointer-events-none absolute right-0 mr-2 flex h-full w-8 items-center justify-center"
-                aria-label="The input is valid"
+                v-if="options.leftIcon"
+                class="absolute left-0 ml-2 flex h-full w-8 items-center justify-center"
+                aria-hidden="true"
             >
                 <component
-                    class="absolute right-0 flex h-8 cursor-pointer select-none items-center justify-center p-1 text-green-600 transition-all duration-300 hover:scale-110"
-                    :is="options.checkIcon"
+                    class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
+                    :is="options.leftIcon"
                 />
             </div>
-        </TransitionGroup>
+            <!-- Input -->
+            <input
+                ref="inputElementRef"
+                :class="[inputClass, !options.leftIcon && '!pr-0 pl-6']"
+                :type="inputFieldType"
+                :name="props.name"
+                :id="uniqueInputId"
+                v-model="inputTextValue"
+                :disabled="props.disabled"
+                @focus="handleInputFocus"
+                @blur="handleInputBlur"
+                @keydown.escape="resetInputOnEscape"
+                :aria-label="inputAriaLabel"
+                :aria-labelledby="`${uniqueInputId}-label`"
+            />
+            <!-- Floating Label -->
+            <div
+                class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
+            >
+                <span
+                    class="text-md pointer-events-none absolute left-12 select-none text-zinc-700/80 transition-all duration-300 dark:text-zinc-100"
+                    :class="labelClasses"
+                    :id="`${uniqueInputId}-label`"
+                    >{{ props.label }}</span
+                >
+            </div>
+            <!-- Search Result -->
+            <div class="group">
+                <Transition
+                    enter-from-class="scale-90 opacity-0"
+                    enter-active-class="transition duration-200"
+                    enter-to-class="scale-100 opacity-100"
+                    leave-from-class="scale-100 opacity-100"
+                    leave-active-class="transition duration-200"
+                    leave-to-class="scale-90 opacity-0"
+                    mode="out-in"
+                >
+                    <div
+                        ref="searchElementRef"
+                        v-if="
+                            searchResults &&
+                            searchResults != [] &&
+                            !isExactMatchFound &&
+                            isSearchVisible &&
+                            inputTextValue.length !== 0
+                        "
+                        @mousedown.prevent
+                        class="scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-400 absolute left-0 top-0 z-10 flex max-h-[25em] w-full origin-top flex-col items-center overflow-y-auto rounded-b-md border-2 bg-white dark:border-zinc-500 dark:bg-zinc-800 dark:text-zinc-100"
+                        :style="floatingStyles"
+                    >
+                        <component
+                            v-if="searchResults.length === 0"
+                            is="p"
+                            class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
+                        >
+                            {{ options.noResultMessage }}
+                        </component>
+                        <component
+                            is="button"
+                            class="w-full border-b-2 py-2 text-center dark:border-b-zinc-500"
+                            v-else
+                            v-for="searchItem in searchResults"
+                            :key="searchItem.item.refIndex"
+                            @mousedown.prevent
+                            @click="
+                                inputTextValue =
+                                    typeof searchItem.item === 'object' &&
+                                    props.search.searchField
+                                        ? searchItem.item[
+                                              props.search.searchField
+                                          ]
+                                        : searchItem.item
+                            "
+                        >
+                            <template v-if="searchItem.splitResult.beforeMatch">
+                                {{ searchItem.splitResult.beforeMatch }}
+                            </template>
+                            <span class="text-blue-500">
+                                {{ searchItem.splitResult.match }}
+                            </span>
+                            <template v-if="searchItem.splitResult.afterMatch">
+                                {{ searchItem.splitResult.afterMatch }}
+                            </template>
+                        </component>
+                    </div>
+                </Transition>
+            </div>
+            <!-- Clear icon -->
+            <TransitionGroup
+                enter-from-class="scale-90 opacity-0"
+                enter-active-class="transition-all duration-200"
+                enter-to-class="scale-100 opacity-100"
+                leave-from-class="scale-100 opacity-100"
+                leave-active-class="transition-all duration-200"
+                leave-to-class="scale-90 opacity-0"
+            >
+                <button
+                    v-if="inputTextValue !== '' && !isInputValid"
+                    class="absolute right-0 mr-2 flex h-full w-8 items-center justify-center"
+                    @click="resetInputField"
+                    aria-label="Clear input"
+                >
+                    <component
+                        class="absolute right-0 h-8 cursor-pointer select-none p-1 text-zinc-900"
+                        :is="options.xMarkIcon"
+                    />
+                </button>
+                <!-- Check icon -->
+                <div
+                    v-if="isInputValid && props.validityCheck === true"
+                    class="pointer-events-none absolute right-0 mr-2 flex h-full w-8 items-center justify-center"
+                    aria-label="The input is valid"
+                >
+                    <component
+                        class="absolute right-0 flex h-8 cursor-pointer select-none items-center justify-center p-1 text-green-600 transition-all duration-300 hover:scale-110"
+                        :is="options.checkIcon"
+                    />
+                </div>
+            </TransitionGroup>
+        </div>
+        <!-- Errors -->
+        <div
+            v-if="props.error"
+            class="w-full px-1 pt-1 text-sm font-medium text-red-500"
+            :class="[!props.error && 'invisible']"
+        >
+            {{ props.error }}
+        </div>
     </div>
 </template>
 

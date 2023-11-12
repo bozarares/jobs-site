@@ -9,13 +9,17 @@ import { router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useLocaleStore } from '@/Stores/localeStore';
+import { useModalStore } from '@/Stores/modalStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
+const modalStore = useModalStore();
 const localeStore = useLocaleStore();
 const page = usePage();
+
+const job = modalStore.args?.job ?? page.props.job;
 const user = page.props.auth.user;
 const completion = Math.round(user.profileCompletion);
 const files = ref([]);
@@ -26,7 +30,7 @@ const submit = () => {
         return;
     }
     axios
-        .post(route('job.apply', { job: page.props.job.slug }), {
+        .post(route('job.apply', { job: job.slug }), {
             files: files.value,
         })
         .then((response) => {

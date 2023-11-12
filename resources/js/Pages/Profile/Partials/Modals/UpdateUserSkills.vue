@@ -114,7 +114,7 @@ onMounted(() => {
                 :label="$tc('labels.skills.self', 1)"
                 v-model="inputTextValue"
                 name="add_skill"
-                :options="{ size: 'small' }"
+                :options="{ size: 'small', borderStyle: 'border-bottom' }"
                 @keydown.enter.prevent="
                     () => {
                         if (inputTextValue !== '') {

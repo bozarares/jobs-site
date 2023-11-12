@@ -4,7 +4,7 @@ import Footer from './Partials/Footer.vue';
 import ModalWrapper from '@/Components/ModalWrapper.vue';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { useCookieStore } from '@/Stores/cookieStore';
-import { watch } from 'vue';
+import { onMounted, watch } from 'vue';
 
 const props = defineProps({ auth: Object });
 const cookieStore = useCookieStore();
@@ -25,6 +25,26 @@ watch(
         if (newValue) cookieStore.theme = newValue.theme;
     },
 );
+
+onMounted(() => {
+    const setFavicon = (darkMode) => {
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = darkMode
+            ? '/favicon/favicon-white.png'
+            : '/favicon/favicon-black.png';
+        document.head.appendChild(link);
+    };
+
+    const darkModeMediaQuery = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+    );
+    setFavicon(darkModeMediaQuery.matches);
+
+    darkModeMediaQuery.addEventListener('change', (e) => {
+        setFavicon(e.matches);
+    });
+});
 </script>
 
 <template>

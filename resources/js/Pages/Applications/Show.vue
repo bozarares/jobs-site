@@ -9,7 +9,7 @@ import {
     EyeIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { ref, watch, computed, reactive } from 'vue';
 
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
@@ -104,6 +104,8 @@ const fetchLocalizedData = async (application_id, locale) => {
 </script>
 
 <template>
+    <Head title="Application" />
+
     <div
         class="mt-8 flex h-full w-full flex-col-reverse items-center justify-center overflow-x-hidden md:flex-row-reverse md:gap-4"
     >

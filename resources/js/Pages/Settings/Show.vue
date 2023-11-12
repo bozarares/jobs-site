@@ -4,6 +4,7 @@ import AccountSettings from './Partials/AccountSettings.vue';
 import { Button } from '@/Components/UI';
 import { shallowRef } from 'vue';
 import { markRaw } from 'vue';
+import { Head } from '@inertiajs/vue3';
 const props = defineProps({
     user: Object,
 });
@@ -11,6 +12,8 @@ const settings = shallowRef(AccountSettings);
 </script>
 
 <template>
+    <Head title="Settings" />
+
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-start gap-2"
     >

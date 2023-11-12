@@ -9,6 +9,7 @@ import FileAction from '@/Components/FileAction.vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
 import { onMounted } from 'vue';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
     user: {
@@ -100,6 +101,8 @@ const edit = ref(false);
 </script>
 
 <template>
+    <Head title="Profile" />
+
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >

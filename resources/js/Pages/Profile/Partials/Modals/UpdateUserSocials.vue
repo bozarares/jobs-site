@@ -55,7 +55,11 @@ const submit = () => {
                 :label="$t('labels.phone.self')"
                 type="text"
                 name="phone_number"
-                :options="{ leftIcon: PhoneIcon, size: 'small' }"
+                :options="{
+                    leftIcon: PhoneIcon,
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                }"
             />
             <div class="flex items-center gap-1">
                 <p class="text-xl font-bold text-zinc-800 dark:text-zinc-100">
@@ -64,10 +68,15 @@ const submit = () => {
                 <Input
                     v-model="form.social_linkedin"
                     :error="form.errors.social_linkedin"
+                    class="fill-white"
                     label="linkedin"
                     type="text"
                     name="linkedin"
-                    :options="{ size: 'small', leftIcon: LinkedinIcon }"
+                    :options="{
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                        leftIcon: LinkedinIcon,
+                    }"
                 />
             </div>
             <div class="flex items-center gap-1">
@@ -77,10 +86,15 @@ const submit = () => {
                 <Input
                     v-model="form.social_github"
                     :error="form.errors.social_github"
+                    class="fill-white"
                     label="github"
                     type="text"
                     name="github"
-                    :options="{ size: 'small', leftIcon: GithubIcon }"
+                    :options="{
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                        leftIcon: GithubIcon,
+                    }"
                 />
             </div>
             <div class="flex items-center gap-1">
@@ -90,10 +104,15 @@ const submit = () => {
                 <Input
                     v-model="form.social_facebook"
                     :error="form.errors.social_facebook"
+                    class="fill-white"
                     label="facebook"
                     type="text"
                     name="facebook"
-                    :options="{ size: 'small', leftIcon: FacebookIcon }"
+                    :options="{
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                        leftIcon: FacebookIcon,
+                    }"
                 />
             </div>
         </div>

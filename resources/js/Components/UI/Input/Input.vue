@@ -95,13 +95,14 @@ const inputId = computed(() => props.name + '-' + crypto.randomUUID());
 // A CVA instance for borderStyle variants
 const inputClass = computed(() =>
     cva(
-        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
         {
             variants: {
                 borderStyle: {
                     bordered:
-                        'rounded-md border-2 border-zinc-200 shadow dark:border-zinc-500',
-                    'border-bottom': 'border-b-2',
+                        'rounded-md border-2 border-zinc-200 shadow focus:border-blue-500 focus:outline-none focus:ring-0 dark:border-zinc-500 focus:dark:border-blue-500',
+                    'border-bottom':
+                        'border-0 border-b-2 focus:border-blue-500 focus:outline-none focus:ring-0 ',
                     'no-border': '',
                 },
                 disabled: {
@@ -114,6 +115,9 @@ const inputClass = computed(() =>
                     default: 'text-md py-3',
                     small: 'py-2 text-sm',
                 },
+                error: {
+                    true: '!border-red-500 dark:!border-red-500',
+                },
             },
         },
     )({
@@ -121,6 +125,7 @@ const inputClass = computed(() =>
         disabled: props.disabled,
         password: props.type === 'password',
         size: options.value.size,
+        error: !!props.error,
     }),
 );
 
@@ -175,7 +180,7 @@ const togglePasswordVisibility = () => {
             </div>
             <!-- Input -->
             <input
-                :class="inputClass"
+                :class="[inputClass, !options.leftIcon && '!pr-0 pl-6']"
                 :type="inputType"
                 :name="props.name"
                 :id="inputId"

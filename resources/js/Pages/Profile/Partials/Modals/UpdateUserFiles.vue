@@ -10,6 +10,7 @@ import { Button, Input } from '@/Components/UI';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { onBeforeMount } from 'vue';
+import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -186,6 +187,11 @@ onBeforeUnmount(() => {
                 v-model="fileName"
                 :label="$t('labels.files.name')"
                 name="file_name"
+                :options="{
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                    leftIcon: PDFIcon,
+                }"
             />
             <FilePond
                 v-if="isClient && FilePond"

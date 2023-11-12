@@ -7,7 +7,7 @@ const cookieStore = useCookieStore();
 
 <template>
     <header
-        class="z-50 w-full items-center bg-white py-2 shadow dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-zinc-700"
+        class="z-50 mt-12 w-full items-center bg-white py-2 shadow dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-zinc-700"
     >
         <div
             class="container mx-auto flex max-w-screen-lg items-center justify-between px-4 py-12"

@@ -1,7 +1,7 @@
 <script setup>
 import { Button, Input, SearchInput } from '@/Components/UI';
 import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import filePondServer from '@/filePondConfig';
 import axios from 'axios';
 
@@ -241,6 +241,8 @@ const revertFiles = () => {
 </script>
 
 <template>
+    <Head title="Create" />
+
     <div
         class="container mt-12 flex max-w-screen-md flex-col items-center rounded-md bg-white p-4 shadow-md dark:bg-zinc-800 dark:text-zinc-100"
     >
@@ -259,14 +261,22 @@ const revertFiles = () => {
                     v-model="form.name"
                     :label="$t('labels.companyDetails.name')"
                     :error="form.errors.name"
-                    :options="{ leftIcon: BuildingOfficeIcon }"
+                    :options="{
+                        leftIcon: BuildingOfficeIcon,
+
+                        borderStyle: 'border-bottom',
+                    }"
                 />
                 <Input
                     name="Company code"
                     v-model="form.code"
                     :label="$t('labels.companyDetails.registrationCode')"
                     :error="form.errors.code"
-                    :options="{ leftIcon: RectangleStackIcon }"
+                    :options="{
+                        leftIcon: RectangleStackIcon,
+
+                        borderStyle: 'border-bottom',
+                    }"
                 />
             </div>
             <div class="flex w-full flex-col gap-4 md:flex-row">
@@ -275,14 +285,22 @@ const revertFiles = () => {
                     v-model="form.phone_number"
                     :label="$t('labels.phone.contact')"
                     :error="form.errors.phone_number"
-                    :options="{ leftIcon: PhoneIcon }"
+                    :options="{
+                        leftIcon: PhoneIcon,
+
+                        borderStyle: 'border-bottom',
+                    }"
                 />
                 <Input
                     name="Contact email"
                     v-model="form.email"
                     :label="$t('labels.email.contact')"
                     :error="form.errors.email"
-                    :options="{ leftIcon: AtSymbolIcon }"
+                    :options="{
+                        leftIcon: AtSymbolIcon,
+
+                        borderStyle: 'border-bottom',
+                    }"
                 />
             </div>
             <div class="flex w-full flex-col gap-4 md:flex-row">
@@ -296,6 +314,8 @@ const revertFiles = () => {
                         borderStyle: 'bordered',
                         xMarkIcon: XMarkIcon,
                         noResultMessage: 'No results found! 😢',
+
+                        borderStyle: 'border-bottom',
                     }"
                     :search="{
                         items: countries,
@@ -323,6 +343,8 @@ const revertFiles = () => {
                         borderStyle: 'bordered',
                         xMarkIcon: XMarkIcon,
                         noResultMessage: 'No results found! 😢',
+
+                        borderStyle: 'border-bottom',
                     }"
                     :search="{
                         items: states,
@@ -352,6 +374,8 @@ const revertFiles = () => {
                         borderStyle: 'bordered',
                         xMarkIcon: XMarkIcon,
                         noResultMessage: 'No results found! 😢',
+
+                        borderStyle: 'border-bottom',
                     }"
                     :search="{
                         items: towns,
@@ -370,7 +394,11 @@ const revertFiles = () => {
                     :disabled="
                         selectedTown.length === 0 || selectedTownValid === false
                     "
-                    :options="{ leftIcon: MapPinIcon }"
+                    :options="{
+                        leftIcon: MapPinIcon,
+
+                        borderStyle: 'border-bottom',
+                    }"
                     v-model="form.address"
                     :label="$t('labels.address')"
                     :error="form.errors.address"

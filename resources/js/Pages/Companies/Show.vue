@@ -8,6 +8,7 @@ import { markRaw } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
 import ContentCard from '@/Components/ContentCard.vue';
 import AddJob from './Partials/AddJob.vue';
+import { Head } from '@inertiajs/vue3';
 
 const modalStore = useModalStore();
 const isClient = ref(false);
@@ -242,6 +243,8 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head :title="props.company.name" />
+
     <div
         class="mt-12 flex w-full max-w-screen-lg flex-wrap justify-center gap-8 p-6 md:flex-nowrap"
     >

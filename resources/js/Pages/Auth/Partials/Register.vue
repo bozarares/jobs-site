@@ -50,7 +50,10 @@ const submit = () => {
             :label="$t('labels.name')"
             type="text"
             name="name"
-            :options="{ leftIcon: UserIcon }"
+            :options="{
+                leftIcon: UserIcon,
+                borderStyle: 'border-bottom',
+            }"
         />
         <Input
             v-model="form.email"
@@ -58,7 +61,10 @@ const submit = () => {
             :label="$t('labels.email.self')"
             type="text"
             name="email"
-            :options="{ leftIcon: AtSymbolIcon }"
+            :options="{
+                leftIcon: AtSymbolIcon,
+                borderStyle: 'border-bottom',
+            }"
         />
         <Input
             v-model="form.password"
@@ -66,7 +72,7 @@ const submit = () => {
             :label="$t('labels.password.self')"
             type="password"
             name="password"
-            :options="{ leftIcon: KeyIcon }"
+            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
         />
         <Input
             v-model="form.password_confirmation"
@@ -74,7 +80,7 @@ const submit = () => {
             :label="$t('labels.password.confirm')"
             type="password"
             name="password_confirmation"
-            :options="{ leftIcon: KeyIcon }"
+            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
         />
         <Checkbox
             v-model="agreement"

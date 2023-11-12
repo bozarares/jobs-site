@@ -47,7 +47,11 @@ const submit = () => {
             :label="$t('labels.email.self')"
             type="email"
             name="email"
-            :options="{ leftIcon: UserIcon, size: 'small' }"
+            :options="{
+                leftIcon: UserIcon,
+                size: 'small',
+                borderStyle: 'border-bottom',
+            }"
         />
         <Input
             v-model="form.password"
@@ -57,7 +61,7 @@ const submit = () => {
             name="password"
             :options="{
                 size: 'small',
-                borderStyle: 'bordered',
+                borderStyle: 'border-bottom',
                 leftIcon: KeyIcon,
                 passwordIcon: {
                     show: EyeIcon,

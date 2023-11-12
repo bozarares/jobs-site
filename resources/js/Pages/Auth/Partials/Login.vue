@@ -40,7 +40,7 @@ const submit = () => {
             :label="$t('labels.email.self')"
             type="text"
             name="email"
-            :options="{ leftIcon: AtSymbolIcon }"
+            :options="{ leftIcon: AtSymbolIcon, borderStyle: 'border-bottom' }"
         />
         <Input
             v-model="form.password"
@@ -48,7 +48,7 @@ const submit = () => {
             :label="$t('labels.password.self')"
             type="password"
             name="password"
-            :options="{ leftIcon: KeyIcon }"
+            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
         />
         <Checkbox :label="$t('labels.account.remember')" />
         <Button type="submit">{{ $t('common.login') }}</Button>

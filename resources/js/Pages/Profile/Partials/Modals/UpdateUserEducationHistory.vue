@@ -194,6 +194,7 @@ const endDateComputed = computed({
                     :options="{
                         leftIcon: AcademicCapIcon,
                         size: 'small',
+                        borderStyle: 'border-bottom',
                     }"
                 />
                 <Input
@@ -202,7 +203,11 @@ const endDateComputed = computed({
                     :label="$t('labels.educationHistory.degree')"
                     type="text"
                     name="degree"
-                    :options="{ leftIcon: DocumentIcon, size: 'small' }"
+                    :options="{
+                        leftIcon: DocumentIcon,
+                        size: 'small',
+                        borderStyle: 'border-bottom',
+                    }"
                 />
             </div>
             <Input
@@ -211,7 +216,11 @@ const endDateComputed = computed({
                 :label="$t('labels.educationHistory.field')"
                 type="text"
                 name="field_of_study"
-                :options="{ leftIcon: AcademicCapIcon, size: 'small' }"
+                :options="{
+                    leftIcon: AcademicCapIcon,
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                }"
             />
             <DateTime
                 v-model="startDateComputed"
@@ -222,7 +231,10 @@ const endDateComputed = computed({
                     minDate: new Date(1900, 0, 0),
                     maxDate: new Date(2025, 0, 0),
                 }"
-                :options="{ leftIcon: CalendarDaysIcon }"
+                :options="{
+                    leftIcon: CalendarDaysIcon,
+                    borderStyle: 'border-bottom',
+                }"
             ></DateTime>
             <div class="flex flex-col items-center justify-center">
                 <DateTime
@@ -235,7 +247,10 @@ const endDateComputed = computed({
                         minDate: new Date(1900, 0, 0),
                         maxDate: new Date(2025, 0, 0),
                     }"
-                    :options="{ leftIcon: CalendarDaysIcon }"
+                    :options="{
+                        leftIcon: CalendarDaysIcon,
+                        borderStyle: 'border-bottom',
+                    }"
                 />
                 <Checkbox v-model="toDate" :label="$t('labels.toDate')" />
             </div>

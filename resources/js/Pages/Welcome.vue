@@ -7,7 +7,7 @@ import {
     GlobeEuropeAfricaIcon,
     MagnifyingGlassIcon,
 } from '@heroicons/vue/24/outline';
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 const props = defineProps({
     jobs: {
         type: Array,
@@ -17,6 +17,7 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head title="Home" />
     <div
         class="flex w-full justify-center gap-4 bg-white/75 py-1 text-sm font-bold text-zinc-800 dark:bg-zinc-800/95 dark:text-zinc-100"
     >
@@ -31,7 +32,7 @@ const props = defineProps({
         class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"
     >
         <h1
-            class="gradient bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text pb-2 text-4xl font-bold text-transparent"
+            class="gradient max-w-screen-lg bg-gradient-to-r from-blue-300 to-blue-500 bg-clip-text pb-2 text-center text-4xl font-bold text-transparent"
         >
             {{ $t('messages.welcome') }}
         </h1>

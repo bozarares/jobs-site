@@ -70,6 +70,7 @@ const options = computed(() => {
     const defaultOptions = {
         borderStyle: 'bordered',
         leftIcon: null,
+        size: 'default',
     };
     return { ...defaultOptions, ...props.options };
 });
@@ -190,21 +191,34 @@ const uniqueInputId = computed(() => props.name + '-' + crypto.randomUUID());
 // CVA instance for input style
 const inputClass = computed(() =>
     cva(
-        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
         {
             variants: {
                 borderStyle: {
                     bordered:
-                        'rounded-md border-2 border-zinc-200 shadow dark:border-zinc-500',
-                    'border-bottom': 'border-b-2 py-3',
-                    'no-border': 'py-3',
+                        'rounded-md border-2 border-zinc-200 shadow focus:border-blue-500 focus:outline-none focus:ring-0 dark:border-zinc-500 focus:dark:border-blue-500',
+                    'border-bottom':
+                        'border-0 border-b-2 focus:border-blue-500 focus:outline-none focus:ring-0 ',
+                    'no-border': '',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 dark:!bg-zinc-700 dark:!text-zinc-400',
+                    true: '!cursor-not-allowed !bg-zinc-100 !text-zinc-400 dark:!bg-zinc-700 dark:!text-zinc-100 ',
+                },
+                size: {
+                    default: 'text-md py-3',
+                    small: 'py-2 text-sm',
+                },
+                error: {
+                    true: '!border-red-500 dark:!border-red-500',
                 },
             },
         },
-    )({ borderStyle: options.value.borderStyle, disabled: props.disabled }),
+    )({
+        borderStyle: options.value.borderStyle,
+        disabled: props.disabled,
+        size: options.value.size,
+        error: !!props.error,
+    }),
 );
 
 const dayClass = (day) => {
@@ -390,389 +404,409 @@ var getMonth = function (idx) {
 };
 
 const days = dayjs().localeData().weekdaysShort();
+
+const labelClasses = computed(() => {
+    let baseClasses = '';
+    if (options.value.size === 'default') {
+        baseClasses += isLabelFloating.value
+            ? '-translate-y-4 transform text-xs'
+            : 'transform-none text-md';
+    }
+    if (options.value.size === 'small') {
+        baseClasses += isLabelFloating.value
+            ? '-translate-y-1/2 transform opacity-0 text-xs'
+            : 'transform-none text-sm';
+    }
+    return baseClasses;
+});
 </script>
 <template>
-    <div
-        class="relative flex min-h-[2em] w-full flex-col items-center tracking-wider text-zinc-700"
-        ref="containerElementRef"
-    >
-        <!-- Left Icon -->
+    <div class="flex w-full flex-col">
         <div
-            v-if="options.leftIcon"
-            class="absolute left-0 ml-2 flex h-full w-8 items-center justify-center"
-            aria-hidden="true"
+            class="flex-grow-1 relative flex w-full flex-col items-center tracking-wider text-zinc-700"
+            ref="containerElementRef"
         >
-            <component
-                class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
-                :is="options.leftIcon"
+            <!-- Left Icon -->
+            <div
+                class="absolute left-0 ml-2 flex h-full w-8 items-center justify-center"
+                aria-hidden="true"
+            >
+                <component
+                    class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
+                    :is="options.leftIcon"
+                />
+            </div>
+            <input
+                type="text"
+                :class="[inputClass, !options.leftIcon && '!pr-0 pl-6']"
+                :name="props.name"
+                readonly
+                v-model="formattedDate"
+                @click.prevent="
+                    () => {
+                        if (disabled === false)
+                            isDatePickerVisible = !isDatePickerVisible;
+                    }
+                "
             />
-        </div>
-
-        <input
-            type="text"
-            :class="[inputClass, !options.leftIcon && '!pr-0 pl-6']"
-            :name="props.name"
-            readonly
-            v-model="formattedDate"
-            @click.prevent="
-                () => {
-                    if (disabled === false)
-                        isDatePickerVisible = !isDatePickerVisible;
-                }
-            "
-        />
-
-        <!-- Floating Label -->
-        <div
-            class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
-        >
-            <span
-                class="text-md pointer-events-none absolute left-12 select-none text-zinc-600 transition-all duration-300 dark:text-zinc-100"
-                :class="[
-                    isLabelFloating
-                        ? '-translate-y-4 transform text-xs'
-                        : 'transform-none',
-                    !options.leftIcon && '!left-6',
-                ]"
-                :id="`${uniqueInputId}-label`"
-                >{{ props.label }}</span
+            <!-- Floating Label -->
+            <div
+                class="pointer-events-none absolute right-0 flex h-full w-full items-center justify-center"
             >
-        </div>
-
-        <!-- Date Picker -->
-        <div
-            v-if="isDatePickerVisible && isDateMode"
-            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
-            :style="dateFloatingStyles"
-            ref="dateElementRef"
-        >
-            <button
-                v-if="dateOptions.time"
-                class="my-1 w-full rounded-md border-2 py-1 text-center hover:bg-blue-500 hover:text-white"
-                @click.prevent="isDateMode = false"
-            >
-                Select time
-            </button>
-            <!-- Date controlls -->
-            <div class="flex justify-between px-2">
-                <button
-                    class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
-                    :class="[
-                        dayjs(
-                            `${selectedYear}-${selectedMonth + 1}-01`,
-                        ).isBefore(dateOptions.minDate)
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                    ]"
-                    @click.prevent="selectedMonth--"
+                <span
+                    class="text-md pointer-events-none absolute left-12 select-none text-zinc-600 transition-all duration-300 dark:text-zinc-100"
+                    :class="labelClasses"
+                    :id="`${uniqueInputId}-label`"
+                    >{{ props.label }}</span
                 >
-                    {{ '<' }}
+            </div>
+            <!-- Date Picker -->
+            <div
+                v-if="isDatePickerVisible && isDateMode"
+                class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
+                :style="dateFloatingStyles"
+                ref="dateElementRef"
+            >
+                <button
+                    v-if="dateOptions.time"
+                    class="my-1 w-full rounded-md border-2 py-1 text-center hover:bg-blue-500 hover:text-white"
+                    @click.prevent="isDateMode = false"
+                >
+                    Select time
                 </button>
-                <div>
+                <!-- Date controlls -->
+                <div class="flex justify-between px-2">
                     <button
-                        class="rounded-md px-2 hover:bg-blue-500 hover:text-white"
+                        class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
+                        :class="[
+                            dayjs(
+                                `${selectedYear}-${selectedMonth + 1}-01`,
+                            ).isBefore(dateOptions.minDate)
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                        ]"
+                        @click.prevent="selectedMonth--"
+                    >
+                        {{ '<' }}
+                    </button>
+                    <div>
+                        <button
+                            class="rounded-md px-2 hover:bg-blue-500 hover:text-white"
+                            @click.prevent="
+                                () => {
+                                    showSelectMonth = true;
+                                    showSelectYear = false;
+                                }
+                            "
+                        >
+                            {{ getMonth(selectedMonth) }}
+                        </button>
+                        <button
+                            class="rounded-md px-2 hover:bg-blue-500 hover:text-white"
+                            @click.prevent="
+                                () => {
+                                    showSelectYear = true;
+                                    showSelectMonth = false;
+                                }
+                            "
+                        >
+                            {{ selectedYear }}
+                        </button>
+                    </div>
+                    <button
+                        class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
+                        :class="[
+                            dayjs(
+                                `${selectedYear}-${selectedMonth + 1}-01`,
+                            ).isAfter(dateOptions.maxDate)
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                        ]"
+                        @click.prevent="selectedMonth++"
+                    >
+                        {{ '>' }}
+                    </button>
+                </div>
+                <!-- Day picker -->
+                <div
+                    class="flex h-64 flex-col items-center justify-center gap-2"
+                    v-if="
+                        dateOptions.type === 'range' &&
+                        showRangeSelectionDialog !== false
+                    "
+                >
+                    <p class="pb-6 text-lg">The selected date is:</p>
+                    <button
+                        class="w-40 rounded-md border-2 px-4 py-2 hover:bg-blue-500 hover:text-white"
                         @click.prevent="
                             () => {
-                                showSelectMonth = true;
-                                showSelectYear = false;
+                                startDate = showRangeSelectionDialog;
+                                selectedDate = [startDate, endDate];
+                                showRangeSelectionDialog = false;
                             }
                         "
                     >
-                        {{ getMonth(selectedMonth) }}
+                        Start date
                     </button>
                     <button
-                        class="rounded-md px-2 hover:bg-blue-500 hover:text-white"
+                        class="w-40 rounded-md border-2 px-4 py-2 hover:bg-blue-500 hover:text-white"
                         @click.prevent="
                             () => {
-                                showSelectYear = true;
+                                endDate = showRangeSelectionDialog;
+                                selectedDate = [startDate, endDate];
+                                showRangeSelectionDialog = false;
+                            }
+                        "
+                    >
+                        End date
+                    </button>
+                </div>
+                <div
+                    v-auto-animate="{ duration: 100, easing: 'ease-in-out' }"
+                    v-else-if="!showSelectMonth && !showSelectYear"
+                    class="grid h-64 grid-cols-7 gap-1 text-center"
+                >
+                    <div
+                        v-for="(day, index) in days"
+                        :key="index"
+                        class="flex h-8 w-8 items-center justify-center text-sm text-zinc-500"
+                    >
+                        {{ day }}
+                    </div>
+                    <div
+                        v-for="n in firstDayOfMonth"
+                        :key="'empty' + n"
+                        class="h-8 w-8"
+                    ></div>
+                    <button
+                        v-for="day in daysOfMonth"
+                        :key="day"
+                        :class="[
+                            dayClass(day),
+                            new Date(selectedYear, selectedMonth, day) >=
+                            dateOptions.minDate.setHours(0, 0, 0, 0)
+                                ? ''
+                                : 'pointer-events-none bg-zinc-100',
+                            new Date(selectedYear, selectedMonth, day) <=
+                            dateOptions.maxDate.setHours(23, 59, 59, 999)
+                                ? ''
+                                : 'pointer-events-none bg-zinc-100',
+                        ]"
+                        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md hover:bg-blue-500 hover:text-white"
+                        @click.prevent="selectDay(day)"
+                    >
+                        {{ day }}
+                    </button>
+                </div>
+                <!-- Month picker -->
+                <div
+                    v-else-if="showSelectMonth"
+                    class="grid h-64 grid-cols-3 pt-8 text-center"
+                >
+                    <div
+                        v-for="(_1, index) in 12"
+                        :key="index"
+                        :class="[
+                            new Date(selectedYear, index + 1, 1) <=
+                            dateOptions.minDate.setHours(0, 0, 0, 0)
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                            new Date(selectedYear, index - 1, 1) >=
+                            dateOptions.maxDate.setHours(0, 0, 0, 0)
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                        ]"
+                        class="flex h-8 w-full cursor-pointer items-center justify-center rounded-md text-sm hover:bg-blue-500 hover:text-white"
+                        @click.prevent="
+                            () => {
+                                selectedMonth = index;
                                 showSelectMonth = false;
                             }
                         "
                     >
-                        {{ selectedYear }}
-                    </button>
+                        <div class="select-none px-2">
+                            {{ getMonth(index) }}
+                        </div>
+                    </div>
                 </div>
-                <button
-                    class="rounded-md px-4 hover:bg-blue-500 hover:text-white"
-                    :class="[
-                        dayjs(
-                            `${selectedYear}-${selectedMonth + 1}-01`,
-                        ).isAfter(dateOptions.maxDate)
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                    ]"
-                    @click.prevent="selectedMonth++"
-                >
-                    {{ '>' }}
-                </button>
-            </div>
-
-            <!-- Day picker -->
-            <div
-                class="flex h-64 flex-col items-center justify-center gap-2"
-                v-if="
-                    dateOptions.type === 'range' &&
-                    showRangeSelectionDialog !== false
-                "
-            >
-                <p class="pb-6 text-lg">The selected date is:</p>
-                <button
-                    class="w-40 rounded-md border-2 px-4 py-2 hover:bg-blue-500 hover:text-white"
-                    @click.prevent="
-                        () => {
-                            startDate = showRangeSelectionDialog;
-                            selectedDate = [startDate, endDate];
-                            showRangeSelectionDialog = false;
-                        }
-                    "
-                >
-                    Start date
-                </button>
-                <button
-                    class="w-40 rounded-md border-2 px-4 py-2 hover:bg-blue-500 hover:text-white"
-                    @click.prevent="
-                        () => {
-                            endDate = showRangeSelectionDialog;
-                            selectedDate = [startDate, endDate];
-                            showRangeSelectionDialog = false;
-                        }
-                    "
-                >
-                    End date
-                </button>
-            </div>
-            <div
-                v-auto-animate="{ duration: 100, easing: 'ease-in-out' }"
-                v-else-if="!showSelectMonth && !showSelectYear"
-                class="grid h-64 grid-cols-7 gap-1 text-center"
-            >
+                <!-- Year Picker -->
                 <div
-                    v-for="(day, index) in days"
-                    :key="index"
-                    class="flex h-8 w-8 items-center justify-center text-sm text-zinc-500"
+                    v-else-if="showSelectYear"
+                    class="grid h-64 grid-cols-4 pt-8 text-center"
                 >
-                    {{ day }}
-                </div>
-
-                <div
-                    v-for="n in firstDayOfMonth"
-                    :key="'empty' + n"
-                    class="h-8 w-8"
-                ></div>
-                <button
-                    v-for="day in daysOfMonth"
-                    :key="day"
-                    :class="[
-                        dayClass(day),
-                        new Date(selectedYear, selectedMonth, day) >=
-                        dateOptions.minDate.setHours(0, 0, 0, 0)
-                            ? ''
-                            : 'pointer-events-none bg-zinc-100',
-                        new Date(selectedYear, selectedMonth, day) <=
-                        dateOptions.maxDate.setHours(23, 59, 59, 999)
-                            ? ''
-                            : 'pointer-events-none bg-zinc-100',
-                    ]"
-                    class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md hover:bg-blue-500 hover:text-white"
-                    @click.prevent="selectDay(day)"
-                >
-                    {{ day }}
-                </button>
-            </div>
-
-            <!-- Month picker -->
-            <div
-                v-else-if="showSelectMonth"
-                class="grid h-64 grid-cols-3 pt-8 text-center"
-            >
-                <div
-                    v-for="(_1, index) in 12"
-                    :key="index"
-                    :class="[
-                        new Date(selectedYear, index + 1, 1) <=
-                        dateOptions.minDate.setHours(0, 0, 0, 0)
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                        new Date(selectedYear, index - 1, 1) >=
-                        dateOptions.maxDate.setHours(0, 0, 0, 0)
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                    ]"
-                    class="flex h-8 w-full cursor-pointer items-center justify-center rounded-md text-sm hover:bg-blue-500 hover:text-white"
-                    @click.prevent="
-                        () => {
-                            selectedMonth = index;
-                            showSelectMonth = false;
-                        }
-                    "
-                >
-                    <div class="select-none px-2">
-                        {{ getMonth(index) }}
+                    <div
+                        class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
+                        @click.prevent="selectYear('<')"
+                    >
+                        <div class="select-none">
+                            {{ '<' }}
+                        </div>
+                    </div>
+                    <div
+                        v-for="year in yearGrid.slice(1, 11)"
+                        :key="year"
+                        :class="[
+                            new Date(year + 1) <=
+                            dateOptions.minDate.getFullYear()
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                            new Date(year - 1) >=
+                            dateOptions.maxDate.getFullYear()
+                                ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
+                                : '',
+                        ]"
+                        class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
+                        @click.prevent="selectYear(year)"
+                    >
+                        <div class="select-none">
+                            {{ year }}
+                        </div>
+                    </div>
+                    <div
+                        class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
+                        @click.prevent="selectYear('>')"
+                    >
+                        <div class="select-none">
+                            {{ '>' }}
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Year Picker -->
             <div
-                v-else-if="showSelectYear"
-                class="grid h-64 grid-cols-4 pt-8 text-center"
+                v-if="isDatePickerVisible && !isDateMode && dateOptions.time"
+                class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
+                :style="dateFloatingStyles"
+                ref="dateElementRef"
             >
-                <div
-                    class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
-                    @click.prevent="selectYear('<')"
+                <button
+                    v-if="dateOptions.time"
+                    class="my-1 w-full rounded-md border-2 py-1 text-center hover:bg-blue-500 hover:text-white"
+                    @click.prevent="isDateMode = true"
                 >
-                    <div class="select-none">
-                        {{ '<' }}
-                    </div>
+                    Select date
+                </button>
+                <div
+                    class="my-8 flex items-center justify-center gap-1"
+                    v-if="dateOptions.type === 'date'"
+                >
+                    <input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="24"
+                        step="1"
+                        @input="
+                            (e) => {
+                                selectedTime = selectedTime.hour(
+                                    e.target.value,
+                                );
+                            }
+                        "
+                        :value="selectedTime.hour().toString().padStart(2, '0')"
+                    />:<input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="24"
+                        step="1"
+                        :value="
+                            selectedTime.minute().toString().padStart(2, '0')
+                        "
+                        @input="
+                            (e) => {
+                                selectedTime = selectedTime.minute(
+                                    e.target.value,
+                                );
+                            }
+                        "
+                    />
                 </div>
                 <div
-                    v-for="year in yearGrid.slice(1, 11)"
-                    :key="year"
-                    :class="[
-                        new Date(year + 1) <= dateOptions.minDate.getFullYear()
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                        new Date(year - 1) >= dateOptions.maxDate.getFullYear()
-                            ? 'pointer-events-none bg-zinc-100 dark:bg-zinc-600'
-                            : '',
-                    ]"
-                    class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
-                    @click.prevent="selectYear(year)"
+                    class="my-8 flex items-center justify-center gap-1"
+                    v-if="dateOptions.type === 'range'"
                 >
-                    <div class="select-none">
-                        {{ year }}
-                    </div>
+                    Start Time:
+                    <input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="24"
+                        step="1"
+                        @input="
+                            (e) => {
+                                const newTime = new Date(startTime.getTime());
+                                newTime.setHours(e.target.value);
+                                startTime = newTime;
+                            }
+                        "
+                        :value="
+                            startTime.getHours().toString().padStart(2, '0')
+                        "
+                    />:<input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="24"
+                        step="1"
+                        :value="
+                            startTime.getMinutes().toString().padStart(2, '0')
+                        "
+                        @input="
+                            (e) => {
+                                const newTime = new Date(startTime.getTime());
+                                newTime.setMinutes(e.target.value);
+                                startTime = newTime;
+                            }
+                        "
+                    />
                 </div>
                 <div
-                    class="flex h-8 cursor-pointer items-center justify-center rounded-md p-4 text-sm hover:bg-blue-500 hover:text-white"
-                    @click.prevent="selectYear('>')"
+                    class="my-8 flex items-center justify-center gap-1"
+                    v-if="dateOptions.type === 'range'"
                 >
-                    <div class="select-none">
-                        {{ '>' }}
-                    </div>
+                    End Time:
+                    <input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="23"
+                        step="1"
+                        @input="
+                            (e) => {
+                                const newTime = new Date(endTime.getTime());
+                                newTime.setHours(e.target.value);
+                                endTime = newTime;
+                            }
+                        "
+                        :value="endTime.getHours().toString().padStart(2, '0')"
+                    />:<input
+                        class="h-8 w-16 rounded-md border-2 text-center"
+                        type="number"
+                        min="0"
+                        max="24"
+                        step="1"
+                        :value="
+                            endTime.getMinutes().toString().padStart(2, '0')
+                        "
+                        @input="
+                            (e) => {
+                                const newTime = new Date(endTime.getTime());
+                                newTime.setMinutes(e.target.value);
+                                endTime = newTime;
+                            }
+                        "
+                    />
                 </div>
-            </div>
-        </div>
-        <div
-            v-if="isDatePickerVisible && !isDateMode && dateOptions.time"
-            class="absolute left-0 top-10 z-20 w-full select-none overflow-hidden rounded-md border-2 border-zinc-500/20 bg-white p-2 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
-            :style="dateFloatingStyles"
-            ref="dateElementRef"
-        >
-            <button
-                v-if="dateOptions.time"
-                class="my-1 w-full rounded-md border-2 py-1 text-center hover:bg-blue-500 hover:text-white"
-                @click.prevent="isDateMode = true"
-            >
-                Select date
-            </button>
-            <div
-                class="my-8 flex items-center justify-center gap-1"
-                v-if="dateOptions.type === 'date'"
-            >
-                <input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="24"
-                    step="1"
-                    @input="
-                        (e) => {
-                            selectedTime = selectedTime.hour(e.target.value);
-                        }
-                    "
-                    :value="selectedTime.hour().toString().padStart(2, '0')"
-                />:<input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="24"
-                    step="1"
-                    :value="selectedTime.minute().toString().padStart(2, '0')"
-                    @input="
-                        (e) => {
-                            selectedTime = selectedTime.minute(e.target.value);
-                        }
-                    "
-                />
-            </div>
-            <div
-                class="my-8 flex items-center justify-center gap-1"
-                v-if="dateOptions.type === 'range'"
-            >
-                Start Time:
-                <input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="24"
-                    step="1"
-                    @input="
-                        (e) => {
-                            const newTime = new Date(startTime.getTime());
-                            newTime.setHours(e.target.value);
-                            startTime = newTime;
-                        }
-                    "
-                    :value="startTime.getHours().toString().padStart(2, '0')"
-                />:<input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="24"
-                    step="1"
-                    :value="startTime.getMinutes().toString().padStart(2, '0')"
-                    @input="
-                        (e) => {
-                            const newTime = new Date(startTime.getTime());
-                            newTime.setMinutes(e.target.value);
-                            startTime = newTime;
-                        }
-                    "
-                />
-            </div>
-            <div
-                class="my-8 flex items-center justify-center gap-1"
-                v-if="dateOptions.type === 'range'"
-            >
-                End Time:
-                <input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="23"
-                    step="1"
-                    @input="
-                        (e) => {
-                            const newTime = new Date(endTime.getTime());
-                            newTime.setHours(e.target.value);
-                            endTime = newTime;
-                        }
-                    "
-                    :value="endTime.getHours().toString().padStart(2, '0')"
-                />:<input
-                    class="h-8 w-16 rounded-md border-2 text-center"
-                    type="number"
-                    min="0"
-                    max="24"
-                    step="1"
-                    :value="endTime.getMinutes().toString().padStart(2, '0')"
-                    @input="
-                        (e) => {
-                            const newTime = new Date(endTime.getTime());
-                            newTime.setMinutes(e.target.value);
-                            endTime = newTime;
-                        }
-                    "
-                />
             </div>
         </div>
         <!-- Errors -->
-        <span
-            class="absolute bottom-[-1.75em] left-0 w-full px-1 text-sm font-medium text-red-500"
+        <div
+            v-if="props.error"
+            class="w-full px-1 pt-1 text-sm font-medium text-red-500"
             :class="[!props.error && 'invisible']"
-            >{{ props.error }}</span
         >
+            {{ props.error }}
+        </div>
     </div>
 </template>
 
