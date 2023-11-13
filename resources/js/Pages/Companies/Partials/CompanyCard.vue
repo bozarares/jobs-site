@@ -81,8 +81,8 @@ const props = defineProps({
                     class="flex flex-row items-center gap-1 text-center text-sm font-semibold"
                 >
                     <span class="h-4 w-4"><MapPinIcon /></span
-                    >{{ company.state }},
-                    {{ company.country }}
+                    >{{ company.location.state }},
+                    {{ company.location.country }}
                 </h2>
                 <h2
                     class="mb-2 flex flex-row items-center gap-1 text-center text-sm font-semibold"

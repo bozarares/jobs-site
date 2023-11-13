@@ -237,7 +237,7 @@ const geocodeAddress = async (address) => {
 // When the component mounts, geocode the address
 onMounted(() => {
     geocodeAddress(
-        `${props.company.address}, ${props.company.town}, ${props.company.country}, ${props.company.state}`,
+        `${props.company.location.address}, ${props.company.location.town}, ${props.company.location.country}, ${props.company.location.state}`,
     );
 });
 </script>
@@ -309,27 +309,28 @@ onMounted(() => {
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><MapPinIcon /></span
-                            >{{ company.town }}, {{ company.country }} ({{
-                                company.state
+                            >{{ company.location.town }},
+                            {{ company.location.country }} ({{
+                                company.location.state
                             }})
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><MapPinIcon /></span
-                            >{{ company.address }}
+                            >{{ company.location.address }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><PhoneIcon /></span
-                            >{{ company.phone_number }}
+                            >{{ company.contact.phone_number }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><AtSymbolIcon /></span
-                            >{{ company.email }}
+                            >{{ company.contact.email }}
                         </h2>
                     </div>
                     <GoogleMap

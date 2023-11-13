@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\User\UpdateAvatarRequest;
+use App\Http\Requests\User\UpdateUserDescriptionRequest;
+use App\Http\Requests\User\UpdateUserInfoRequest;
+use App\Http\Requests\User\UpdateUserSocialsRequest;
+use App\Http\Resources\ApplicationIndexResource;
 use App\Models\UserDescription;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use Mews\Purifier\Facades\Purifier;
 
 class ProfileController extends Controller
 {
@@ -25,24 +27,15 @@ class ProfileController extends Controller
             ->applications()
             ->with([
                 'job' => function ($query) {
-                    $query->withTrashed()->with([
-                        'company' => function ($query) {
-                            $query
-                                ->select(
-                                    'id',
-                                    'slug',
-                                    'name',
-                                    'logo',
-                                    'logo_extension'
-                                )
-                                ->without('jobs');
-                        },
-                    ]);
+                    $query->withTrashed()->with(['company']);
                 },
             ])
             ->get();
+
         return Inertia::render('Profile/Applications', [
-            'applications' => $applications,
+            'applications' => ApplicationIndexResource::collection(
+                $applications
+            ),
         ]);
     }
 
@@ -111,101 +104,39 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function updateAvatar(Request $request): RedirectResponse
+    public function updateAvatar(UpdateAvatarRequest $request): RedirectResponse
     {
-        $request_validated = $request->validate([
-            'avatar' => ['required', 'string', 'max:255'],
-            'extension' => [
-                'required',
-                'string',
-                'in:png,jpg,jpeg,JPEG,PNG,JPG',
-            ],
-        ]);
-
         $user = $request->user();
-        $filename =
-            $request_validated['avatar'] .
-            '.' .
-            $request_validated['extension'];
-        $filePath = storage_path('app/tmp/' . $filename);
-        $targetDirectory = storage_path('app/public/users/avatars');
+        $user->fill($request->validated())->save();
+        return Redirect::route('profile.show');
+    }
 
-        if ($user->avatar) {
-            $currentAvatarPath =
-                $targetDirectory .
-                '/' .
-                $user->avatar .
-                '.' .
-                $user->avatar_extension;
-            if (File::exists($currentAvatarPath)) {
-                File::delete($currentAvatarPath);
-            }
-        }
+    public function updateUser(UpdateUserInfoRequest $request): RedirectResponse
+    {
+        $user = $request->user();
+        $user->fill($request->validated())->save();
+        return Redirect::route('profile.show');
+    }
 
-        if (!File::exists($targetDirectory)) {
-            File::makeDirectory($targetDirectory, 0755, true);
-        }
-        if (File::exists($filePath)) {
-            File::move($filePath, $targetDirectory . '/' . $filename);
-        }
-        $user->avatar = $request_validated['avatar'];
-        $user->avatar_extension = $request_validated['extension'];
-
-        $user->save();
+    public function updateSocials(
+        UpdateUserSocialsRequest $request
+    ): RedirectResponse {
+        $user = $request->user();
+        $user->fill($request->validated())->save();
 
         return Redirect::route('profile.show');
     }
 
-    public function updateUser(Request $request): RedirectResponse
+    public function updateDescription(UpdateUserDescriptionRequest $request)
     {
-        $request_validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'tag' => ['nullable', 'string', 'max:255'],
-        ]);
-
         $user = $request->user();
-        $user->tag = $request_validated['tag'];
-        $user->name = $request_validated['name'];
 
-        $user->save();
-
-        return Redirect::route('profile.show');
-    }
-
-    public function updateSocials(Request $request): RedirectResponse
-    {
-        $request_validated = $request->validate([
-            'phone_number' => ['nullable', 'string', 'max:255'],
-            'social_linkedin' => ['nullable', 'string', 'max:255'],
-            'social_github' => ['nullable', 'string', 'max:255'],
-            'social_facebook' => ['nullable', 'string', 'max:255'],
-        ]);
-        $user = $request->user();
-        $user->phone_number = $request_validated['phone_number'];
-        $user->social_linkedin = $request_validated['social_linkedin'];
-        $user->social_github = $request_validated['social_github'];
-        $user->social_facebook = $request_validated['social_facebook'];
-
-        $user->save();
-        return Redirect::route('profile.show');
-    }
-
-    public function updateDescription(Request $request)
-    {
-        $request_validated = $request->validate([
-            'description' => ['nullable', 'string', 'max:2048'],
-            'locale' => ['required', 'string', 'in:en,ro,ja'],
-        ]);
-        $user = $request->user();
-        $request_validated['description'] = Purifier::clean(
-            $request_validated['description']
-        );
         UserDescription::updateOrCreate(
             [
                 'user_id' => $user->id,
-                'locale' => $request_validated['locale'],
+                'locale' => $request['locale'],
             ],
-            ['description' => $request_validated['description']]
+            ['description' => $request['description']]
         );
     }
 
@@ -225,14 +156,6 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->email_verified_at = null;
         $user->save();
-    }
-
-    public function edit(Request $request): Response
-    {
-        return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
     }
 
     /**

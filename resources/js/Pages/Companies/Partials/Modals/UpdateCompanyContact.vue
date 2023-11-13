@@ -39,12 +39,12 @@ const page = usePage();
 const company = page.props.company;
 
 const form = useForm({
-    phone_number: company.phone_number,
-    email: company.email,
-    country: company.country,
-    state: company.state,
-    town: company.town,
-    address: company.address,
+    phone_number: company.contact.phone_number,
+    email: company.contact.email,
+    country: company.location.country,
+    state: company.location.state,
+    town: company.location.town,
+    address: company.location.address,
 });
 
 const submit = () => {

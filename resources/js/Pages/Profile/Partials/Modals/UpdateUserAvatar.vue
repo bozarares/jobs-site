@@ -43,7 +43,7 @@ const filePondRef = ref(null);
 
 const form = useForm({
     avatar: null,
-    extension: null,
+    avatar_extension: null,
 });
 
 const submited = ref(false);
@@ -71,7 +71,7 @@ const onProcessFile = (error, file) => {
     }
     uploaded.value = true;
     form.avatar = file.serverId;
-    form.extension = file.fileExtension;
+    form.avatar_extension = file.fileExtension;
 };
 
 const revertFiles = () => {
@@ -124,7 +124,13 @@ onBeforeUnmount(() => {
                 v-if="isClient && FilePond"
                 id="avatar-upload"
                 @processfile="onProcessFile"
-                :server="filePondServer(csrfToken, form.avatar, form.extension)"
+                :server="
+                    filePondServer(
+                        csrfToken,
+                        form.avatar,
+                        form.avatar_extension,
+                    )
+                "
                 ref="filePondRef"
                 class="w-full bg-black"
                 :label-idle="$t('labels.avatar.drop')"

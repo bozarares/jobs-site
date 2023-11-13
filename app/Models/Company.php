@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Mews\Purifier\Facades\Purifier;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -23,6 +26,45 @@ class Company extends Model
     {
         return 'slug';
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($company) {
+            $filename = $company->logo . '.' . $company->logo_extension;
+            $filePath = storage_path('app/tmp/' . $filename);
+            $targetDirectory = storage_path('app/public/logos/companies');
+            File::ensureDirectoryExists($targetDirectory, 0755, true);
+
+            if (File::exists($filePath)) {
+                File::move($filePath, $targetDirectory . '/' . $filename);
+            }
+        });
+
+        static::updated(function ($company) {
+            if ($company->isDirty('logo')) {
+                $filename = $company->logo . '.' . $company->logo_extension;
+                $filePath = storage_path('app/tmp/' . $filename);
+                $targetDirectory = storage_path('app/public/logos/companies');
+                File::ensureDirectoryExists($targetDirectory, 0755, true);
+
+                if (File::exists($filePath)) {
+                    File::move($filePath, $targetDirectory . '/' . $filename);
+                }
+
+                $current_logo_path =
+                    $targetDirectory .
+                    '/' .
+                    $company->getOriginal('logo') .
+                    '.' .
+                    $company->getOriginal('logo_extension');
+                if (File::exists($current_logo_path)) {
+                    File::delete($current_logo_path);
+                }
+            }
+        });
+    }
+
     protected $guarded = ['name', 'code'];
 
     protected $fillable = [
@@ -39,8 +81,6 @@ class Company extends Model
         'phone_number',
         'email',
     ];
-
-    // protected $with = ['jobs'];
 
     protected $hidden = ['owner', 'code', 'created_at', 'updated_at'];
     public function headRecruiter()

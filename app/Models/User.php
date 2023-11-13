@@ -7,6 +7,7 @@ use Fico7489\Laravel\Pivot\Traits\PivotEventTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -24,6 +25,29 @@ class User extends Authenticatable
                     if ($skill && $skill->users()->count() == 0) {
                         $skill->delete();
                     }
+                }
+            }
+        });
+
+        static::updated(function ($user) {
+            if ($user->isDirty('avatar')) {
+                $filename = $user->avatar . '.' . $user->avatar_extension;
+                $filePath = storage_path('app/tmp/' . $filename);
+                $targetDirectory = storage_path('app/public/users/avatars');
+                File::ensureDirectoryExists($targetDirectory, 0755, true);
+
+                if (File::exists($filePath)) {
+                    File::move($filePath, $targetDirectory . '/' . $filename);
+                }
+
+                $current_avatar_path =
+                    $targetDirectory .
+                    '/' .
+                    $user->getOriginal('avatar') .
+                    '.' .
+                    $user->getOriginal('avatar_extension');
+                if (File::exists($current_avatar_path)) {
+                    File::delete($current_avatar_path);
                 }
             }
         });

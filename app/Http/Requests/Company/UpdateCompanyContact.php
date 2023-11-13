@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCompanyRequest extends FormRequest
+class UpdateCompanyContact extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,6 @@ class UpdateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'logo' => 'string',
-            'logo_extension' => 'string|in:png,jpg,jpeg,PNG,JPG,JPEG',
-            'description' => 'string|max:1000',
             'country' => 'string|max:255',
             'state' => 'string|max:255',
             'town' => 'string|max:255',

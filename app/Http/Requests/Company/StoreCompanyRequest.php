@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Company;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Mews\Purifier\Facades\Purifier;
 
 class StoreCompanyRequest extends FormRequest
 {
@@ -12,6 +13,15 @@ class StoreCompanyRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function prepareForValidation()
+    {
+        if ($this->has('description')) {
+            $this->merge([
+                'description' => Purifier::clean($this->description),
+            ]);
+        }
     }
 
     /**
@@ -26,7 +36,7 @@ class StoreCompanyRequest extends FormRequest
             'code' => 'required|string|max:100|unique:companies,code',
             'logo' => 'required|string',
             'logo_extension' => 'required|string|in:png,jpg,jpeg,PNG,JPG,JPEG',
-            'description' => 'required|string|max:1000',
+            'description' => 'required|string|max:2048',
             'country' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'town' => 'required|string|max:255',
