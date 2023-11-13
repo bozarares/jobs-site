@@ -52,7 +52,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = ['password', 'remember_token', 'isOwner'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'isOwner',
+        'email_verified_at',
+        'updated_at',
+        'id',
+    ];
 
     /**
      * The attributes that should be cast.

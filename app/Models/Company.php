@@ -40,7 +40,9 @@ class Company extends Model
         'email',
     ];
 
-    protected $with = ['jobs'];
+    // protected $with = ['jobs'];
+
+    protected $hidden = ['owner', 'code', 'created_at', 'updated_at'];
     public function headRecruiter()
     {
         return $this->belongsTo(User::class, 'owner');
@@ -51,16 +53,16 @@ class Company extends Model
         return $this->hasMany(Job::class);
     }
 
-    public function getApplicationNumberAttribute()
-    {
-        $application_number = 0;
-        foreach ($this->jobs as $job) {
-            foreach ($job->applications as $application) {
-                if ($application->status == 'open') {
-                    $application_number++;
-                }
-            }
-        }
-        return $application_number;
-    }
+    // public function getApplicationNumberAttribute()
+    // {
+    //     $application_number = 0;
+    //     foreach ($this->jobs as $job) {
+    //         foreach ($job->applications as $application) {
+    //             if ($application->status == 'open') {
+    //                 $application_number++;
+    //             }
+    //         }
+    //     }
+    //     return $application_number;
+    // }
 }

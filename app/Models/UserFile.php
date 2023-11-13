@@ -50,6 +50,7 @@ class UserFile extends Model
         });
     }
     protected $fillable = ['user_id', 'name', 'extension', 'servername'];
+    protected $hidden = ['created_at', 'updated_at', 'user_id'];
 
     public function user()
     {

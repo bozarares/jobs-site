@@ -55,7 +55,15 @@ class Job extends Model
         'description',
     ];
 
-    protected $hidden = ['id', 'created_at', 'updated_at', 'job_type_id'];
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'job_type_id',
+        'company_id',
+        'deleted_at',
+        'applications',
+    ];
     protected $with = ['type', 'skills'];
     protected $appends = ['levels'];
 

@@ -60,8 +60,8 @@ class WelcomeController extends Controller
 
         return Inertia::render('Welcome', [
             'jobs' => $jobs,
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
+            // 'canLogin' => Route::has('login'),
+            // 'canRegister' => Route::has('register'),
         ]);
     }
 }
