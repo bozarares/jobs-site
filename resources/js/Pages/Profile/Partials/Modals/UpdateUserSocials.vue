@@ -2,25 +2,25 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
 import { PhoneIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
 import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
 import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
-const page = usePage();
-const user = page.props.auth.user;
+const currentUser = useCurrentUser();
 
 const form = useForm({
-    phone_number: user.phone_number,
-    social_linkedin: user.social_linkedin,
-    social_github: user.social_github,
-    social_facebook: user.social_facebook,
+    phone_number: currentUser.value.phone_number,
+    social_linkedin: currentUser.value.social_linkedin,
+    social_github: currentUser.value.social_github,
+    social_facebook: currentUser.value.social_facebook,
 });
 
 const submit = () => {

@@ -3,12 +3,13 @@
 // TODO: Change controller so it will send a response
 
 import { onMounted, ref, watch, computed, onBeforeUnmount } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
 import pkg from 'lodash';
 const { debounce } = pkg;
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -16,11 +17,12 @@ const props = defineProps({
 const inputTextValue = ref('');
 const searchSkillsArray = ref([]);
 
-const page = usePage();
-const user = page.props.auth.user;
+const currentUser = useCurrentUser();
 
-const initialSkills = ref([...user.skills.map((skill) => skill.name)]);
-const skills = ref(user.skills.map((skill) => skill.name));
+const initialSkills = ref([
+    ...currentUser.value.skills.map((skill) => skill.name),
+]);
+const skills = ref(currentUser.value.skills.map((skill) => skill.name));
 
 const form = useForm({
     skills: skills.value,
@@ -158,12 +160,6 @@ onMounted(() => {
         <Button
             @click="
                 () => {
-                    // if (
-                    //     JSON.stringify(initialSkills.value) ===
-                    //     JSON.stringify(skills.value)
-                    // ) {
-                    //     return;
-                    // }
                     if (inputTextValue !== '') {
                         skills.push(inputTextValue);
                     }

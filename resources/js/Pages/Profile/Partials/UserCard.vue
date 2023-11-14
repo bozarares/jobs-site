@@ -1,11 +1,13 @@
 <script setup>
 import { Avatar, LanguageSelector } from '@/Components/UI';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { languages } from '@/Languages/languages';
 import { useModalStore } from '@/Stores/modalStore';
 import { watch } from 'vue';
 import { ref } from 'vue';
 
 const modalStore = useModalStore();
+const currentUser = useCurrentUser();
 const props = defineProps({
     edit: {
         type: Boolean,
@@ -76,14 +78,7 @@ watch(
                         }
                     }
                 "
-                :src="
-                    $page.props.auth.user.avatar
-                        ? '/users/avatars/' +
-                          $page.props.auth.user.avatar +
-                          '.' +
-                          $page.props.auth.user.avatar_extension
-                        : null
-                "
+                :src="currentUser.avatarPath()"
             />
             <div class="flex flex-col items-center">
                 <h2 class="text-center text-lg font-bold uppercase">

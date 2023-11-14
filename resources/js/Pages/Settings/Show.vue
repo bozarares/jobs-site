@@ -48,7 +48,7 @@ const settings = shallowRef(AccountSettings);
         <div
             class="h-max flex-grow rounded bg-white p-4 dark:bg-zinc-800 dark:text-zinc-100"
         >
-            <component :is="settings" :user="props.user" />
+            <component :is="settings" />
         </div>
     </div>
 </template>

@@ -1,11 +1,10 @@
 <script setup>
 import { Button, Input } from '@/Components/UI';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps({
-    user: Object,
-});
+const currentUser = useCurrentUser();
 
 const email = ref('');
 
@@ -27,10 +26,12 @@ const editEmail = async () => {
                 {{ $t('labels.email.change') }}
             </h2>
             <h3 class="w-full text-sm font-bold">
-                {{ user.email }}
-                <span class="text-green-400" v-if="user.email_verified_at">{{
-                    $t('labels.email.verified')
-                }}</span>
+                {{ currentUser.email }}
+                <span
+                    class="text-green-400"
+                    v-if="currentUser.email_verified_at"
+                    >{{ $t('labels.email.verified') }}</span
+                >
                 <Link
                     v-else
                     :href="route('verification.send')"

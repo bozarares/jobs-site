@@ -10,10 +10,9 @@ import {
     Switch,
 } from '@/Components/UI';
 
-import { Link, usePage } from '@inertiajs/vue3';
-import { ref, watch, computed, onMounted } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import { ref, watch, onMounted } from 'vue';
 import Login from './Login.vue';
-import { broadcastDisconnect, broadcastListen } from '@/broadcast';
 import {
     ArrowRightOnRectangleIcon,
     Cog8ToothIcon,
@@ -29,87 +28,31 @@ import {
     BellIcon,
 } from '@heroicons/vue/24/solid';
 import { languages } from '@/Languages/languages';
-import axios from 'axios';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const localeStore = useLocaleStore();
 const cookieStore = useCookieStore();
+const currentUser = useCurrentUser();
+
 const language = ref(localeStore.locale);
-const page = usePage();
-
-const isOwner = computed(() => {
-    if (page.props.auth.user) {
-        return page.props.auth.user.isOwner;
-    }
-    return false;
-});
-
-function getCookie(cname) {
-    let name = cname + '=';
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return '';
-}
 
 watch(
     () => language.value,
     (newValue) => {
-        localeStore.setLocale(newValue);
-        localeStore.setProfileLocale(newValue);
-
-        if (page.props.auth.user) {
-            page.props.auth.user.locale = newValue;
-            axios.post(route('language'), { language: newValue });
-        } else {
-            if (
-                typeof getCookie('user_locale') === 'undefined' ||
-                getCookie('user_locale') !== newValue
-            ) {
-                document.cookie = `user_locale=${newValue};path=/;max-age=${
-                    60 * 24 * 30 * 24 * 60 * 60
-                }`;
-            }
-        }
+        cookieStore.setLocale(newValue);
     },
 );
 
 watch(
-    () => page.props.auth.user,
-    (newValue, oldValue) => {
-        if (newValue && !oldValue) {
-            const userLocale = newValue.locale || 'en';
-            localeStore.setLocale(userLocale);
-            broadcastListen(newValue.id);
-            console.log('Listening to user ' + newValue.id);
-        } else if (!newValue && oldValue) {
-            broadcastDisconnect();
-            console.log('Disconnecting from user ' + oldValue.id);
-        }
+    () => localeStore.locale,
+    (newValue) => {
+        language.value = newValue;
     },
-    { deep: true },
 );
 
 onMounted(() => {
-    const cookieValue = getCookie('user_locale');
-    if (cookieValue) {
-        localeStore.setLocale(cookieValue);
-        language.value = cookieValue;
-    } else {
-        localeStore.setLocale('en');
-        language.value = 'en';
-    }
-
-    if (page.props.auth.user === null) {
-        broadcastDisconnect();
-    }
+    const cookieValue = cookieStore.locale;
+    language.value = cookieValue;
 });
 </script>
 
@@ -201,25 +144,13 @@ onMounted(() => {
                 >
                     <template v-slot:dropdownMenuButton>
                         <Avatar
-                            :src="
-                                $page.props.auth.user &&
-                                $page.props.auth.user.avatar
-                                    ? '/users/avatars/' +
-                                      $page.props.auth.user.avatar +
-                                      '.' +
-                                      $page.props.auth.user.avatar_extension
-                                    : null
-                            "
+                            :src="currentUser.avatarPath()"
                             id="user-toggle"
                             size="small"
-                            :name="
-                                $page.props.auth.user
-                                    ? $page.props.auth.user.name
-                                    : null
-                            "
+                            :name="currentUser.name ?? null"
                         />
                     </template>
-                    <Login v-if="!$page.props.auth.user" />
+                    <Login v-if="!currentUser || !currentUser.isSet()" />
                     <div
                         v-else
                         id="navbar-user"
@@ -228,34 +159,21 @@ onMounted(() => {
                         <DropdownHeader>
                             <div class="flex items-center justify-between">
                                 <Avatar
-                                    :src="
-                                        $page.props.auth.user &&
-                                        $page.props.auth.user.avatar
-                                            ? '/users/avatars/' +
-                                              $page.props.auth.user.avatar +
-                                              '.' +
-                                              $page.props.auth.user
-                                                  .avatar_extension
-                                            : null
-                                    "
+                                    :src="currentUser.avatarPath()"
                                     id="user-toggle"
                                     size="big"
-                                    :name="
-                                        $page.props.auth.user
-                                            ? $page.props.auth.user.name
-                                            : null
-                                    "
+                                    :name="currentUser.name ?? null"
                                 />
                                 <div class="flex flex-col items-center">
                                     <p
                                         class="text-xl font-bold text-black dark:text-zinc-200"
                                     >
-                                        {{ $page.props.auth.user.name }}
+                                        {{ currentUser.name }}
                                     </p>
                                     <p
                                         class="text-sm font-bold text-black/50 dark:text-zinc-200"
                                     >
-                                        {{ $page.props.auth.user.email }}
+                                        {{ currentUser.email }}
                                     </p>
                                 </div>
                             </div>
@@ -270,7 +188,7 @@ onMounted(() => {
                                 >{{ $t('sections.profile') }}</DropdownItem
                             >
                             <DropdownItem
-                                v-if="isOwner"
+                                v-if="currentUser.isOwner"
                                 :is="Link"
                                 :href="route('companies.index')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"

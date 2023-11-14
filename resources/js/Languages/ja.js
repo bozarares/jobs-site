@@ -59,7 +59,7 @@ export const ja = {
         filter: 'フィルター',
         confidential: '機密',
         business: { self: 'ビジネス | ビジネス', center: 'ビジネスセンター' },
-        userControls: 'ユーザーコントロール',
+        userControlls: 'ユーザーコントロール',
         clickToEdit: {
             field: 'クリックして編集',
             logo: 'クリックしてロゴを編集',

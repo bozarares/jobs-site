@@ -1,8 +1,10 @@
 // cookieStore.js
-import { getCookie, setCookie, eraseCookie } from '@/cookies';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { getCookie, setCookie } from '@/cookies';
 import { usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { defineStore } from 'pinia';
+import { useLocaleStore } from './localeStore';
 
 export const useCookieStore = defineStore('cookie', {
     state: () => ({
@@ -19,6 +21,16 @@ export const useCookieStore = defineStore('cookie', {
                 setCookie('theme', newMode, 365);
             }
             this.theme = newMode;
+        },
+
+        async setLocale(newLocale) {
+            const currentUser = useCurrentUser();
+            const localeStore = useLocaleStore();
+            if (currentUser.value.isSet())
+                await axios.post(route('language'), { language: newLocale });
+            else setCookie('user_locale', newLocale, 365);
+            this.locale = newLocale;
+            localeStore.setLocale(newLocale);
         },
     },
 });

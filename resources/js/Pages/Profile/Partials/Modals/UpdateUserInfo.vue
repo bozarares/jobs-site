@@ -2,20 +2,20 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
 import { UserIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
-const page = usePage();
-const user = page.props.auth.user;
+const currentUser = useCurrentUser();
 
 const form = useForm({
-    name: user.name,
-    tag: user.tag,
+    name: currentUser.value.name,
+    tag: currentUser.value.tag,
 });
 
 const submit = () => {

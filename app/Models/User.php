@@ -80,7 +80,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'isOwner',
-        'email_verified_at',
         'updated_at',
         'id',
     ];

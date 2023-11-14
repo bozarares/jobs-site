@@ -10,6 +10,7 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useModalStore } from '@/Stores/modalStore';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -20,8 +21,9 @@ const localeStore = useLocaleStore();
 const page = usePage();
 
 const job = modalStore.args?.job ?? page.props.job;
-const user = page.props.auth.user;
-const completion = Math.round(user.profileCompletion);
+const currentUser = useCurrentUser();
+const completion = ref(Math.round(currentUser.value.profileCompletion));
+
 const files = ref([]);
 const error = ref('');
 const submit = () => {
@@ -50,9 +52,10 @@ onMounted(async () => {
     const response = await axios.post(route('get.localized.data'), {
         locale: localeStore.locale,
     });
-    user.job_history = response.data.localizedData.jobHistory;
-    user.education_history = response.data.localizedData.educationHistory;
-    user.description = response.data.localizedData.description;
+    currentUser.job_history = response.data.localizedData.jobHistory;
+    currentUser.education_history =
+        response.data.localizedData.educationHistory;
+    currentUser.description = response.data.localizedData.description;
 });
 </script>
 
@@ -78,36 +81,44 @@ onMounted(async () => {
                     class="list-inside list-disc text-sm text-red-500"
                     v-if="completion != 100"
                 >
-                    <li v-if="user.description && user.description === ''">
+                    <li
+                        v-if="
+                            currentUser.description &&
+                            currentUser.description === ''
+                        "
+                    >
                         {{ $t('messages.missingFields.description') }}
                     </li>
-                    <li v-if="user.avatar === null">
+                    <li v-if="currentUser.avatar === null">
                         {{ $t('messages.missingFields.avatar') }}
                     </li>
                     <li
-                        v-if="user.job_history && user.job_history.length === 0"
+                        v-if="
+                            currentUser.job_history &&
+                            currentUser.job_history.length === 0
+                        "
                     >
                         {{ $t('messages.missingFields.jobHistory') }}
                     </li>
                     <li
                         v-if="
-                            user.education_history &&
-                            user.education_history.length === 0
+                            currentUser.education_history &&
+                            currentUser.education_history.length === 0
                         "
                     >
                         {{ $t('messages.missingFields.educationHistory') }}
                     </li>
-                    <li v-if="user.skills.length === 0">
+                    <li v-if="currentUser.skills.length === 0">
                         {{ $t('messages.missingFields.skills') }}
                     </li>
-                    <li v-if="user.files.length === 0">
+                    <li v-if="currentUser.files.length === 0">
                         {{ $t('messages.missingFields.files') }}
                     </li>
                     <li
                         v-if="
-                            !user.social_github ||
-                            !user.social_linkedin ||
-                            !user.social_facebook
+                            !currentUser.social_github ||
+                            !currentUser.social_linkedin ||
+                            !currentUser.social_facebook
                         "
                     >
                         {{ $t('messages.missingFields.social') }}
@@ -125,7 +136,7 @@ onMounted(async () => {
                 </h2>
                 <div
                     class="mt-2 flex w-full justify-between border-b border-black/10 pb-5 first:mt-4 last:border-b-0 last:pb-0"
-                    v-for="file in user.files"
+                    v-for="file in currentUser.files"
                     :key="file.servername"
                 >
                     <div>{{ file.name }}</div>

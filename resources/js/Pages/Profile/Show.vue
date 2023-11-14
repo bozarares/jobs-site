@@ -10,12 +10,10 @@ import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
 import { onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
+const currentUser = useCurrentUser();
 const props = defineProps({
-    user: {
-        type: Object,
-        required: true,
-    },
     localizedData: {
         type: Object,
         required: true,
@@ -110,7 +108,7 @@ const edit = ref(false);
         <div class="flex w-full flex-col items-center gap-4 md:w-auto">
             <UserCard
                 :edit="edit"
-                :user="user"
+                :user="currentUser"
                 :on-language-change="
                     (newLangauage) => {
                         getLocalizedData(newLangauage);
@@ -118,9 +116,9 @@ const edit = ref(false);
                 "
                 :language="language"
             />
-            <SocialsCard :edit="edit" :user="user" />
+            <SocialsCard :edit="edit" :user="currentUser" />
             <SettingsCard
-                :user="props.user"
+                :user="currentUser"
                 :toggle-edit="
                     (value) => {
                         edit = value;
@@ -175,7 +173,7 @@ const edit = ref(false);
             >
                 <div class="flex flex-wrap gap-2">
                     <div
-                        v-for="skill in user.skills"
+                        v-for="skill in currentUser.skills"
                         :key="skill.id"
                         class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
                     >
@@ -192,7 +190,7 @@ const edit = ref(false);
                 modal="userFiles"
             >
                 <div class="flex flex-col gap-4">
-                    <div v-for="file in user.files" :key="file.id">
+                    <div v-for="file in currentUser.files" :key="file.id">
                         <FileAction
                             :file="file"
                             show-route="users.files.show"

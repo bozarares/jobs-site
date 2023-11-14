@@ -1,5 +1,9 @@
 {
-    "plugins": ["@prettier/plugin-php", "prettier-plugin-tailwindcss"],
+    "plugins": [
+        "prettier-plugin-organize-imports",
+        "@prettier/plugin-php",
+        "prettier-plugin-tailwindcss"
+    ],
     "singleQuote": true,
     "trailingComma": "all",
     "printWidth": 80,

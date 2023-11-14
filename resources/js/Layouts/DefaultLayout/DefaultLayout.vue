@@ -6,7 +6,6 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { useCookieStore } from '@/Stores/cookieStore';
 import { onMounted, watch } from 'vue';
 
-const props = defineProps({ auth: Object });
 const cookieStore = useCookieStore();
 
 watch(
@@ -16,14 +15,6 @@ watch(
         else document.documentElement.classList.remove('dark');
     },
     { immediate: true },
-);
-
-watch(
-    () => props.auth?.user,
-    (newValue) => {
-        console.log(newValue);
-        if (newValue) cookieStore.theme = newValue.theme;
-    },
 );
 
 onMounted(() => {
