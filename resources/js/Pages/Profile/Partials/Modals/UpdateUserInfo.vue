@@ -4,7 +4,7 @@
 
 import { useForm } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
-import { UserIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import mdiAccount from '~icons/mdi/account';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
@@ -38,7 +38,7 @@ const submit = () => {
             >
                 Edit User
             </h2>
-            <XMarkIcon
+            <Heroicons:xMark
                 class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
@@ -52,7 +52,7 @@ const submit = () => {
                 type="text"
                 name="name"
                 :options="{
-                    leftIcon: UserIcon,
+                    leftIcon: mdiAccount,
                     size: 'small',
                     borderStyle: 'border-bottom',
                 }"
@@ -64,7 +64,7 @@ const submit = () => {
                 type="text"
                 name="tag"
                 :options="{
-                    leftIcon: UserIcon,
+                    leftIcon: mdiAccount,
                     size: 'small',
                     borderStyle: 'border-bottom',
                 }"

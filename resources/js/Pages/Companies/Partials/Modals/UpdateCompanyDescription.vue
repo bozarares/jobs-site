@@ -2,7 +2,6 @@
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -62,7 +61,7 @@ onMounted(async () => {
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.description.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
         <div class="flex h-auto max-h-[30em] flex-col overflow-hidden pb-20">
             <QuillEditor

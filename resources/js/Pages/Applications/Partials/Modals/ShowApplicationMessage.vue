@@ -3,8 +3,6 @@ import { usePage } from '@inertiajs/vue3';
 
 import 'filepond/dist/filepond.min.css';
 
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-
 const props = defineProps({
     args: {
         type: Object,
@@ -24,7 +22,7 @@ const page = usePage();
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('common.message') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="overflow-auto">

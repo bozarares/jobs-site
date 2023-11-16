@@ -2,7 +2,6 @@
 import { router, usePage } from '@inertiajs/vue3';
 import { Button, Checkbox, Input, Radio } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 import axios from 'axios';
 
 const quillRef = ref(null);
@@ -60,7 +59,7 @@ onMounted(async () => {
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.job.create') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
         <div>
             <Input label="Job title" v-model="job.title" />

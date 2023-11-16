@@ -1,6 +1,10 @@
 <script setup>
 import { Checkbox, Input, Button } from '@/Components/UI';
-import { AtSymbolIcon, KeyIcon, UserIcon } from '@heroicons/vue/24/outline';
+import mdiAt from '~icons/mdi/at';
+import mdiKey from '~icons/mdi/key';
+import mdiEye from '~icons/mdi/eye';
+import mdiEyeOff from '~icons/mdi/eye-off';
+import mdiAccount from '~icons/mdi/account';
 import { useForm } from '@inertiajs/vue3';
 
 const form = useForm({
@@ -50,7 +54,7 @@ const submit = () => {
             type="text"
             name="name"
             :options="{
-                leftIcon: UserIcon,
+                leftIcon: mdiAccount,
                 borderStyle: 'border-bottom',
             }"
         />
@@ -61,7 +65,7 @@ const submit = () => {
             type="text"
             name="email"
             :options="{
-                leftIcon: AtSymbolIcon,
+                leftIcon: mdiAt,
                 borderStyle: 'border-bottom',
             }"
         />
@@ -71,7 +75,14 @@ const submit = () => {
             :label="$t('labels.password.self')"
             type="password"
             name="password"
-            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
+            :options="{
+                leftIcon: mdiKey,
+                borderStyle: 'border-bottom',
+                passwordIcon: {
+                    show: mdiEye,
+                    hide: mdiEyeOff,
+                },
+            }"
         />
         <Input
             v-model="form.password_confirmation"
@@ -79,7 +90,14 @@ const submit = () => {
             :label="$t('labels.password.confirm')"
             type="password"
             name="password_confirmation"
-            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
+            :options="{
+                leftIcon: mdiKey,
+                borderStyle: 'border-bottom',
+                passwordIcon: {
+                    show: mdiEye,
+                    hide: mdiEyeOff,
+                },
+            }"
         />
         <Checkbox
             v-model="agreement"

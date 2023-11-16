@@ -5,12 +5,12 @@
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button, Checkbox, DateTime } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
-import {
-    AcademicCapIcon,
-    CalendarDaysIcon,
-    DocumentIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
+
+import mdiCalendarArrowLeft from '~icons/mdi/calendar-arrow-left';
+import mdiCalendarArrowRight from '~icons/mdi/calendar-arrow-right';
+import mdiFileDocument from '~icons/mdi/file-document';
+import heroiconsAcademicCap from '~icons/heroicons/academic-cap';
+
 import dayjs from 'dayjs';
 import { useProfileStore } from '@/Stores/profileStore';
 
@@ -177,7 +177,7 @@ const endDateComputed = computed({
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.educationHistory.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-visible">
@@ -189,7 +189,7 @@ const endDateComputed = computed({
                     type="text"
                     name="institution"
                     :options="{
-                        leftIcon: AcademicCapIcon,
+                        leftIcon: heroiconsAcademicCap,
                         size: 'small',
                         borderStyle: 'border-bottom',
                     }"
@@ -201,7 +201,7 @@ const endDateComputed = computed({
                     type="text"
                     name="degree"
                     :options="{
-                        leftIcon: DocumentIcon,
+                        leftIcon: mdiFileDocument,
                         size: 'small',
                         borderStyle: 'border-bottom',
                     }"
@@ -214,7 +214,7 @@ const endDateComputed = computed({
                 type="text"
                 name="field_of_study"
                 :options="{
-                    leftIcon: AcademicCapIcon,
+                    leftIcon: heroiconsAcademicCap,
                     size: 'small',
                     borderStyle: 'border-bottom',
                 }"
@@ -229,7 +229,7 @@ const endDateComputed = computed({
                     maxDate: new Date(2025, 0, 0),
                 }"
                 :options="{
-                    leftIcon: CalendarDaysIcon,
+                    leftIcon: mdiCalendarArrowLeft,
                     borderStyle: 'border-bottom',
                 }"
             ></DateTime>
@@ -245,7 +245,7 @@ const endDateComputed = computed({
                         maxDate: new Date(2025, 0, 0),
                     }"
                     :options="{
-                        leftIcon: CalendarDaysIcon,
+                        leftIcon: mdiCalendarArrowRight,
                         borderStyle: 'border-bottom',
                     }"
                 />

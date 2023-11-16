@@ -7,15 +7,14 @@ import axios from 'axios';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
-import {
-    AtSymbolIcon,
-    BuildingOfficeIcon,
-    GlobeEuropeAfricaIcon,
-    MapPinIcon,
-    PhoneIcon,
-    RectangleStackIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
+import mdiAt from '~icons/mdi/at';
+import mdiEarth from '~icons/mdi/earth';
+import mdiMapMarker from '~icons/mdi/map-marker';
+import mdiPhone from '~icons/mdi/phone';
+import mdiOfficeBuilding from '~icons/mdi/office-building';
+import mdiOfficeBuildingCog from '~icons/mdi/office-building-cog';
+
+import heroiconsXMark from '~icons/heroicons/x-mark';
 
 const beforeUnload = () => {
     revertFiles();
@@ -260,7 +259,7 @@ const revertFiles = () => {
                     :label="$t('labels.companyDetails.name')"
                     :error="form.errors.name"
                     :options="{
-                        leftIcon: BuildingOfficeIcon,
+                        leftIcon: mdiOfficeBuilding,
 
                         borderStyle: 'border-bottom',
                     }"
@@ -271,7 +270,7 @@ const revertFiles = () => {
                     :label="$t('labels.companyDetails.registrationCode')"
                     :error="form.errors.code"
                     :options="{
-                        leftIcon: RectangleStackIcon,
+                        leftIcon: mdiOfficeBuildingCog,
 
                         borderStyle: 'border-bottom',
                     }"
@@ -284,7 +283,7 @@ const revertFiles = () => {
                     :label="$t('labels.phone.contact')"
                     :error="form.errors.phone_number"
                     :options="{
-                        leftIcon: PhoneIcon,
+                        leftIcon: mdiPhone,
 
                         borderStyle: 'border-bottom',
                     }"
@@ -295,7 +294,7 @@ const revertFiles = () => {
                     :label="$t('labels.email.contact')"
                     :error="form.errors.email"
                     :options="{
-                        leftIcon: AtSymbolIcon,
+                        leftIcon: mdiAt,
 
                         borderStyle: 'border-bottom',
                     }"
@@ -308,9 +307,9 @@ const revertFiles = () => {
                     type="text"
                     name="Company country"
                     :options="{
-                        leftIcon: GlobeEuropeAfricaIcon,
+                        leftIcon: mdiEarth,
                         borderStyle: 'bordered',
-                        xMarkIcon: XMarkIcon,
+                        heroiconsXMark: heroiconsXMark,
                         noResultMessage: 'No results found! 😢',
 
                         borderStyle: 'border-bottom',
@@ -337,9 +336,9 @@ const revertFiles = () => {
                     type="text"
                     name="Company state"
                     :options="{
-                        leftIcon: GlobeEuropeAfricaIcon,
+                        leftIcon: mdiEarth,
                         borderStyle: 'bordered',
-                        xMarkIcon: XMarkIcon,
+                        heroiconsXMark: heroiconsXMark,
                         noResultMessage: 'No results found! 😢',
 
                         borderStyle: 'border-bottom',
@@ -368,9 +367,9 @@ const revertFiles = () => {
                     type="text"
                     name="Company town"
                     :options="{
-                        leftIcon: GlobeEuropeAfricaIcon,
+                        leftIcon: mdiEarth,
                         borderStyle: 'bordered',
-                        xMarkIcon: XMarkIcon,
+                        heroiconsXMark: heroiconsXMark,
                         noResultMessage: 'No results found! 😢',
 
                         borderStyle: 'border-bottom',
@@ -393,7 +392,7 @@ const revertFiles = () => {
                         selectedTown.length === 0 || selectedTownValid === false
                     "
                     :options="{
-                        leftIcon: MapPinIcon,
+                        leftIcon: mdiMapMarker,
 
                         borderStyle: 'border-bottom',
                     }"

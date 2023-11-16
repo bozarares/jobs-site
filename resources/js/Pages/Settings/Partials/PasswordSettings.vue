@@ -1,6 +1,6 @@
 <script setup>
 import { Button, Input } from '@/Components/UI';
-import { KeyIcon } from '@heroicons/vue/24/outline';
+import mdiKey from '~icons/mdi/key';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -37,7 +37,7 @@ const submit = async () => {
                 :label="$t('labels.password.current')"
                 type="password"
                 name="current_password"
-                :options="{ leftIcon: KeyIcon }"
+                :options="{ leftIcon: mdiKey }"
             />
             <Input
                 v-model="passwordForm.password"
@@ -45,7 +45,7 @@ const submit = async () => {
                 :label="$t('labels.password.new')"
                 type="password"
                 name="new_password"
-                :options="{ leftIcon: KeyIcon }"
+                :options="{ leftIcon: mdiKey }"
             />
             <Input
                 v-model="passwordForm.password_confirmation"
@@ -53,7 +53,7 @@ const submit = async () => {
                 :label="$t('labels.password.confirmNew')"
                 type="password"
                 name="password_confirmation"
-                :options="{ leftIcon: KeyIcon }"
+                :options="{ leftIcon: mdiKey }"
             />
             <Button
                 class="w-full"

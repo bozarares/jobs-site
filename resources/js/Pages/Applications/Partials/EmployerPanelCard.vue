@@ -1,6 +1,5 @@
 <script setup>
 import { Button, Input } from '@/Components/UI';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import axios from 'axios';
 
 const props = defineProps({
@@ -116,17 +115,17 @@ watch(applicationStatus, () => {
                 isCardVisible = !isCardVisible;
             }
         "
-        class="fixed bottom-0 flex w-full flex-col items-center justify-center bg-white py-2 dark:bg-zinc-800 dark:text-zinc-100 md:hidden"
+        class="fixed bottom-0 z-[200] flex w-full flex-col items-center justify-center bg-white py-2 dark:bg-zinc-800 dark:text-zinc-100 md:hidden"
     >
-        <ChevronRightIcon v-if="isCardVisible" class="w-6" />
-        <ChevronLeftIcon v-if="!isCardVisible" class="w-6" />
-        <div>
+        <Mdi:chevronLeft v-if="isCardVisible" class="w-6" />
+        <Mdi:chevronRight v-if="!isCardVisible" class="w-6" />
+        <div class="select-none">
             {{ isCardVisible ? 'Hide' : 'Show' }}
             {{ $t('labels.owner.employer') }}
         </div>
     </div>
     <div
-        class="container absolute m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 md:relative md:block md:max-w-sm"
+        class="container absolute z-[200] m-2 flex max-h-[35em] w-full flex-col overflow-hidden rounded bg-white py-8 shadow transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 md:relative md:block md:max-w-sm"
         :class="{
             'translate-x-[150%] md:translate-x-0': !isCardVisible,
             'translate-x-0': isCardVisible,

@@ -6,7 +6,6 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const isClient = ref(false);
 
@@ -110,7 +109,7 @@ onBeforeUnmount(() => {
             >
                 {{ $t('labels.avatar.edit') }}
             </h2>
-            <XMarkIcon
+            <Heroicons:xMark
                 class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />

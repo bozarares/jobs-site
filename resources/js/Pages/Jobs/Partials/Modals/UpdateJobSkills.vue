@@ -7,7 +7,6 @@ import { Button, Input } from '@/Components/UI';
 import pkg from 'lodash';
 const { debounce } = pkg;
 import axios from 'axios';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -89,7 +88,7 @@ onMounted(() => {
                     }
                 "
             >
-                <XMarkIcon class="h-5" />
+                <Heroicons:xMark class="h-5" />
             </div>
         </div>
         <div v-else class="font-bold">
@@ -104,7 +103,10 @@ onMounted(() => {
                 {{ $t('labels.skills.editRequired') }}
             </h2>
             <div>
-                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+                <Heroicons:xMark
+                    class="h-6 cursor-pointer"
+                    @click="closeModal()"
+                />
             </div>
         </div>
 

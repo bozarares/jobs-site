@@ -1,5 +1,4 @@
 <script setup>
-import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
 import OwnerCard from './Partials/OwnerCard.vue';
 import JobCard from './Partials/JobCard.vue';
@@ -315,7 +314,7 @@ onMounted(() => {
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="h-4 w-4"><MapPinIcon /></span
+                            <span class="h-4 w-4"><Mdi:map-marker /></span
                             >{{ companyInstance.location.town }},
                             {{ companyInstance.location.country }} ({{
                                 companyInstance.location.state
@@ -324,19 +323,19 @@ onMounted(() => {
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="h-4 w-4"><MapPinIcon /></span
+                            <span class="h-4 w-4"><Mdi:map-marker /></span
                             >{{ companyInstance.location.address }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="h-4 w-4"><PhoneIcon /></span
+                            <span class="h-4 w-4"><Mdi:phone /></span
                             >{{ companyInstance.contact.phone_number }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
-                            <span class="h-4 w-4"><AtSymbolIcon /></span
+                            <span class="h-4 w-4"><Mdi:at /></span
                             >{{ companyInstance.contact.email }}
                         </h2>
                     </div>

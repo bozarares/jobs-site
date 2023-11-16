@@ -4,7 +4,6 @@
 
 import { Button } from '@/Components/UI';
 import axios from 'axios';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -46,7 +45,10 @@ const submit = () => {
                 {{ $t('actions.deleteJob') }}
             </h2>
             <div>
-                <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+                <Heroicons:xMark
+                    class="h-6 cursor-pointer"
+                    @click="closeModal()"
+                />
             </div>
         </div>
 

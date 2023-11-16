@@ -1,14 +1,11 @@
 <script setup>
 import { Button, Checkbox, DropdownHeader } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
-import {
-    EyeIcon,
-    EyeSlashIcon,
-    KeyIcon,
-    UserIcon,
-} from '@heroicons/vue/24/outline';
 import { Link, useForm } from '@inertiajs/vue3';
-
+import mdiAt from '~icons/mdi/at';
+import mdiKey from '~icons/mdi/key';
+import mdiEye from '~icons/mdi/eye';
+import mdiEyeOff from '~icons/mdi/eye-off';
 const triggerClose = ref();
 onMounted(() => {
     triggerClose.value = inject('closeDropdown');
@@ -45,7 +42,7 @@ const submit = () => {
             type="email"
             name="email"
             :options="{
-                leftIcon: UserIcon,
+                leftIcon: mdiAt,
                 size: 'small',
                 borderStyle: 'border-bottom',
             }"
@@ -59,10 +56,10 @@ const submit = () => {
             :options="{
                 size: 'small',
                 borderStyle: 'border-bottom',
-                leftIcon: KeyIcon,
+                leftIcon: mdiKey,
                 passwordIcon: {
-                    show: EyeIcon,
-                    hide: EyeSlashIcon,
+                    show: mdiEye,
+                    hide: mdiEyeOff,
                 },
             }"
         />

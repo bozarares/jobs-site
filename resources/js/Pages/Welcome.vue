@@ -2,11 +2,11 @@
 import { Button } from '@/Components/UI';
 import Input from '@/Components/UI/Input/Input.vue';
 import JobCard from '@/Components/JobCard.vue';
-import {
-    FunnelIcon,
-    GlobeEuropeAfricaIcon,
-    MagnifyingGlassIcon,
-} from '@heroicons/vue/24/outline';
+
+import mdiMagnify from '~icons/mdi/magnify';
+import mdiEarth from '~icons/mdi/earth';
+import mdiFilter from '~icons/mdi/filter';
+
 import { Head, Link } from '@inertiajs/vue3';
 import Job from '@/Models/Job';
 const props = defineProps({
@@ -44,17 +44,17 @@ const jobInstances = computed(() => {
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Input
                 :label="$t('labels.searchForAJob')"
-                :options="{ size: 'small', leftIcon: MagnifyingGlassIcon }"
+                :options="{ size: 'small', leftIcon: mdiMagnify }"
             />
             <Input
                 :label="$t('labels.location')"
-                :options="{ size: 'small', leftIcon: GlobeEuropeAfricaIcon }"
+                :options="{ size: 'small', leftIcon: mdiEarth }"
             />
             <div class="flex w-full gap-2">
                 <Button :options="{ color: 'blue' }">{{
                     $t('common.search')
                 }}</Button>
-                <Button :options="{ leftIcon: FunnelIcon }">{{
+                <Button :options="{ leftIcon: mdiFilter }">{{
                     $t('labels.filter')
                 }}</Button>
             </div>

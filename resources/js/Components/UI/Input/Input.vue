@@ -174,7 +174,7 @@ const togglePasswordVisibility = () => {
                 aria-hidden="true"
             >
                 <component
-                    class="pointer-events-none absolute left-0 h-8 select-none p-1 text-zinc-900 dark:text-zinc-400"
+                    class="h-inherit pointer-events-none absolute select-none text-zinc-900 dark:text-zinc-400"
                     :is="options.leftIcon"
                 />
             </div>

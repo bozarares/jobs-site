@@ -1,6 +1,9 @@
 <script setup>
 import { Button, Checkbox, Input } from '@/Components/UI';
-import { AtSymbolIcon, KeyIcon } from '@heroicons/vue/24/outline';
+import mdiAt from '~icons/mdi/at';
+import mdiKey from '~icons/mdi/key';
+import mdiEye from '~icons/mdi/eye';
+import mdiEyeOff from '~icons/mdi/eye-off';
 import { Link, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -40,7 +43,7 @@ const submit = () => {
             :label="$t('labels.email.self')"
             type="text"
             name="email"
-            :options="{ leftIcon: AtSymbolIcon, borderStyle: 'border-bottom' }"
+            :options="{ leftIcon: mdiAt, borderStyle: 'border-bottom' }"
         />
         <Input
             v-model="form.password"
@@ -48,7 +51,14 @@ const submit = () => {
             :label="$t('labels.password.self')"
             type="password"
             name="password"
-            :options="{ leftIcon: KeyIcon, borderStyle: 'border-bottom' }"
+            :options="{
+                leftIcon: mdiKey,
+                borderStyle: 'border-bottom',
+                passwordIcon: {
+                    show: mdiEye,
+                    hide: mdiEyeOff,
+                },
+            }"
         />
         <Checkbox :label="$t('labels.account.remember')" />
         <Button type="submit">{{ $t('common.login') }}</Button>

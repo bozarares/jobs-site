@@ -6,12 +6,16 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const IconCarbonAt: typeof import('~icons/carbon/at')['default']
+  const IconMdiAt: typeof import('~icons/mdi/at')['default']
+  const IconMdiKey: typeof import('~icons/mdi/key')['default']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const effectScope: typeof import('vue')['effectScope']
+  const false: typeof import('~icons/fa/lse')['default']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const h: typeof import('vue')['h']
@@ -20,6 +24,8 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const lang: typeof import('~icons/la/ng')['default']
+  const language: typeof import('~icons/la/nguage')['default']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
@@ -57,6 +63,7 @@ declare global {
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
   const watchSyncEffect: typeof import('vue')['watchSyncEffect']
+  const window: typeof import('~icons/wi/ndow')['default']
 }
 // for type re-export
 declare global {

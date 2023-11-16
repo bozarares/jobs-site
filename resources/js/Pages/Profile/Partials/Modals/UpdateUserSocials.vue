@@ -4,10 +4,11 @@
 
 import { useForm } from '@inertiajs/vue3';
 import { Button, Input } from '@/Components/UI';
-import { PhoneIcon, XMarkIcon } from '@heroicons/vue/24/outline';
-import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
-import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
-import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
+import mdiPhone from '~icons/mdi/phone';
+import mdiLinkedin from '~icons/mdi/linkedin';
+import mdiGithub from '~icons/mdi/github';
+import mdiFacebook from '~icons/mdi/facebook';
+
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 
 const props = defineProps({
@@ -42,7 +43,7 @@ const submit = () => {
             >
                 {{ $t('labels.social.edit') }}
             </h2>
-            <XMarkIcon
+            <Heroicons:xMark
                 class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />
@@ -56,7 +57,7 @@ const submit = () => {
                 type="text"
                 name="phone_number"
                 :options="{
-                    leftIcon: PhoneIcon,
+                    leftIcon: mdiPhone,
                     size: 'small',
                     borderStyle: 'border-bottom',
                 }"
@@ -75,7 +76,7 @@ const submit = () => {
                     :options="{
                         size: 'small',
                         borderStyle: 'border-bottom',
-                        leftIcon: LinkedinIcon,
+                        leftIcon: mdiLinkedin,
                     }"
                 />
             </div>
@@ -93,7 +94,7 @@ const submit = () => {
                     :options="{
                         size: 'small',
                         borderStyle: 'border-bottom',
-                        leftIcon: GithubIcon,
+                        leftIcon: mdiGithub,
                     }"
                 />
             </div>
@@ -111,7 +112,7 @@ const submit = () => {
                     :options="{
                         size: 'small',
                         borderStyle: 'border-bottom',
-                        leftIcon: FacebookIcon,
+                        leftIcon: mdiFacebook,
                     }"
                 />
             </div>

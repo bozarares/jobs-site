@@ -5,7 +5,6 @@
 import { router, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
 import axios from 'axios';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 import toolbarOptions from '@/quillToolBarConfig';
 
 const props = defineProps({
@@ -63,7 +62,7 @@ onMounted(async () => {
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.description.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex h-auto max-h-[30em] flex-col overflow-hidden pb-20">

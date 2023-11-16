@@ -12,20 +12,13 @@ import {
 
 import { Link } from '@inertiajs/vue3';
 import Login from './Login.vue';
-import {
-    ArrowRightOnRectangleIcon,
-    Cog8ToothIcon,
-    UserIcon,
-    BuildingOffice2Icon,
-} from '@heroicons/vue/24/outline';
+import mdiLogout from '~icons/mdi/logout';
+import mdiAccount from '~icons/mdi/account';
+import mdiCog from '~icons/mdi/cog';
+import mdiOfficeBuilding from '~icons/mdi/office-building';
+
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useCookieStore } from '@/Stores/cookieStore';
-import {
-    Cog6ToothIcon,
-    MoonIcon,
-    SunIcon,
-    BellIcon,
-} from '@heroicons/vue/24/solid';
 import { languages } from '@/Languages/languages';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 
@@ -95,7 +88,7 @@ onMounted(() => {
                     class="mt-6 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
                 >
                     <template v-slot:dropdownMenuButton>
-                        <BellIcon class="h-6 w-6 dark:text-white" />
+                        <Mdi:bell class="h-6 w-6 dark:text-white" />
                     </template>
                     <DropdownHeader>{{
                         $t('sections.notifications')
@@ -108,7 +101,7 @@ onMounted(() => {
                     class="mt-6 w-[10em] dark:border-zinc-600 dark:bg-zinc-800"
                 >
                     <template v-slot:dropdownMenuButton>
-                        <Cog6ToothIcon class="h-6 w-6 dark:text-white" />
+                        <Mdi:cog class="h-6 w-6 dark:text-white" />
                     </template>
                     <DropdownHeader class="dark:text-zinc-100">{{
                         $t('sections.settings.self')
@@ -120,7 +113,7 @@ onMounted(() => {
                         :languages="languages"
                     />
                     <div class="my-5 flex items-center justify-center gap-2">
-                        <SunIcon class="w-6 text-yellow-500" />
+                        <heroicons:sun-solid class="w-6 text-yellow-500" />
                         <Switch
                             :value="cookieStore.theme === 'dark'"
                             :on-change="
@@ -130,7 +123,7 @@ onMounted(() => {
                                     );
                                 }
                             "
-                        /><MoonIcon
+                        /><heroicons:moon-solid
                             class="w-5 text-indigo-900 dark:text-indigo-500"
                         />
                     </div>
@@ -183,7 +176,7 @@ onMounted(() => {
                                 :is="Link"
                                 :href="route('profile.show')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
-                                :leftIcon="UserIcon"
+                                :leftIcon="mdiAccount"
                                 >{{ $t('sections.profile') }}</DropdownItem
                             >
                             <DropdownItem
@@ -191,7 +184,7 @@ onMounted(() => {
                                 :is="Link"
                                 :href="route('companies.index')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
-                                :leftIcon="BuildingOffice2Icon"
+                                :leftIcon="mdiOfficeBuilding"
                                 >{{
                                     $tc('labels.business.self', 2)
                                 }}</DropdownItem
@@ -201,7 +194,7 @@ onMounted(() => {
                                 :is="Link"
                                 :href="route('companies.create')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
-                                :leftIcon="BuildingOffice2Icon"
+                                :leftIcon="mdiOfficeBuilding"
                                 >{{ $t('sections.recruit') }}</DropdownItem
                             >
                             <DropdownSeparator class="dark:bg-zinc-700" />
@@ -214,7 +207,7 @@ onMounted(() => {
                                 :is="Link"
                                 :href="route('settings.show')"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
-                                :leftIcon="Cog8ToothIcon"
+                                :leftIcon="mdiCog"
                                 >{{
                                     $t('sections.settings.self')
                                 }}</DropdownItem
@@ -224,7 +217,7 @@ onMounted(() => {
                                 :href="route('logout')"
                                 method="POST"
                                 class="text-sm font-bold dark:hover:bg-zinc-700"
-                                :leftIcon="ArrowRightOnRectangleIcon"
+                                :leftIcon="mdiLogout"
                                 >{{ $t('common.logout') }}</DropdownItem
                             >
                         </div>

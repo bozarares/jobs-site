@@ -2,14 +2,10 @@
 import { Button, LanguageSelector, Timeline } from '@/Components/UI';
 import { languages } from '@/Languages/languages';
 
-import {
-    ArrowDownTrayIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    EyeIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
+
+import mdiEye from '~icons/mdi/eye';
+import mdiDownloadBox from '~icons/mdi/download-box';
 
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
@@ -122,14 +118,14 @@ const fetchLocalizedData = async (application_id, locale) => {
             "
         />
         <div
-            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-8 shadow dark:bg-zinc-800 dark:text-zinc-100"
+            class="container relative z-50 flex max-h-[35em] max-w-[40em] flex-col rounded bg-white py-6 shadow dark:bg-zinc-800 dark:text-zinc-100"
         >
             <div class="flex items-center justify-between px-4 md:px-8">
                 <h2 class="text-lg font-bold uppercase">
                     {{ $t('labels.application') }}
                 </h2>
                 <div class="flex gap-2">
-                    <div class="flex gap-4">
+                    <div class="flex items-center justify-center gap-4">
                         <LanguageSelector
                             class=""
                             @click.prevent.stop=""
@@ -137,8 +133,8 @@ const fetchLocalizedData = async (application_id, locale) => {
                             :languages="languages"
                             v-model="locale"
                         />
-                        <ChevronLeftIcon
-                            class="h-6"
+                        <mdi:chevron-left
+                            class="h-10 w-10"
                             :class="{
                                 'cursor-not-allowed text-zinc-600':
                                     !application.previous,
@@ -158,8 +154,8 @@ const fetchLocalizedData = async (application_id, locale) => {
                                 }
                             "
                         />
-                        <ChevronRightIcon
-                            class="h-6"
+                        <mdi:chevron-right
+                            class="h-10 w-10"
                             :class="{
                                 'cursor-not-allowed text-zinc-600':
                                     !application.next,
@@ -181,13 +177,14 @@ const fetchLocalizedData = async (application_id, locale) => {
                         />
                     </div>
                     <Link
+                        class="flex items-center"
                         :href="
                             route('jobs.show', {
                                 job: application.current.job.slug,
                             })
                         "
                     >
-                        <XMarkIcon class="h-6 cursor-pointer" />
+                        <heroicons:x-mark class="h-6 w-6 cursor-pointer" />
                     </Link>
                 </div>
             </div>
@@ -215,7 +212,7 @@ const fetchLocalizedData = async (application_id, locale) => {
                             target="_blank"
                             :href="route('users.files.show', file.servername)"
                             :options="{
-                                leftIcon: EyeIcon,
+                                leftIcon: mdiEye,
                                 color: 'blue',
                                 shape: 'pill',
                             }"
@@ -228,7 +225,7 @@ const fetchLocalizedData = async (application_id, locale) => {
                                 route('users.files.download', file.servername)
                             "
                             :options="{
-                                leftIcon: ArrowDownTrayIcon,
+                                leftIcon: mdiDownloadBox,
                                 shape: 'pill',
                             }"
                         />

@@ -3,12 +3,10 @@ import RatingStars from '@/Components/RatingStars.vue';
 import { Button } from '@/Components/UI';
 import Company from '@/Models/Company';
 import { useModalStore } from '@/Stores/modalStore';
-import {
-    EyeIcon,
-    HeartIcon,
-    MapPinIcon,
-    ShareIcon,
-} from '@heroicons/vue/24/outline';
+import mdiHeart from '~icons/mdi/heart';
+import mdiShare from '~icons/mdi/share';
+import mdiEye from '~icons/mdi/eye';
+
 import { Link } from '@inertiajs/vue3';
 
 const modalStore = useModalStore();
@@ -76,7 +74,7 @@ const props = defineProps({
                 <h2
                     class="flex flex-row items-center gap-1 text-center text-sm font-semibold"
                 >
-                    <span class="h-4 w-4"><MapPinIcon /></span
+                    <span class="h-4 w-4"><Mdi:mapMarker /></span
                     >{{ company.location.state }},
                     {{ company.location.country }}
                 </h2>
@@ -95,7 +93,7 @@ const props = defineProps({
                     :options="{
                         shape: 'pill',
                         color: 'blue',
-                        leftIcon: ShareIcon,
+                        leftIcon: mdiShare,
                     }"
                     >{{ $t('common.share') }}</Button
                 >
@@ -109,7 +107,7 @@ const props = defineProps({
                     :options="{
                         shape: 'pill',
                         color: 'blue',
-                        leftIcon: EyeIcon,
+                        leftIcon: mdiEye,
                     }"
                     >{{ $t('common.view') }}</Button
                 >
@@ -118,7 +116,7 @@ const props = defineProps({
                     :options="{
                         shape: 'pill',
                         color: 'blue',
-                        leftIcon: HeartIcon,
+                        leftIcon: mdiHeart,
                     }"
                     >{{ $t('common.follow') }}</Button
                 >

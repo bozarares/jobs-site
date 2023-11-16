@@ -2,7 +2,6 @@
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
 
@@ -61,7 +60,7 @@ onMounted(async () => {
             >
                 {{ $t('labels.description.edit') }}
             </h2>
-            <XMarkIcon
+            <Heroicons:xMark
                 class="h-6 cursor-pointer text-zinc-500 dark:text-zinc-300"
                 @click="closeModal()"
             />

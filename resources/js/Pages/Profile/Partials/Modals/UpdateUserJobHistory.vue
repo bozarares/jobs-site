@@ -4,12 +4,12 @@
 
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Button, Checkbox, DateTime, Input } from '@/Components/UI';
-import {
-    CalendarDaysIcon,
-    PhoneIcon,
-    UserIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
+
+import mdiAccount from '~icons/mdi/account';
+import mdiPhone from '~icons/mdi/phone';
+import mdiCalendarArrowLeft from '~icons/mdi/calendar-arrow-left';
+import mdiCalendarArrowRight from '~icons/mdi/calendar-arrow-right';
+
 import dayjs from 'dayjs';
 import { useProfileStore } from '@/Stores/profileStore';
 
@@ -178,7 +178,7 @@ const endDateComputed = computed({
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.jobHistory.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-visible">
@@ -190,7 +190,7 @@ const endDateComputed = computed({
                     type="text"
                     name="company"
                     :options="{
-                        leftIcon: PhoneIcon,
+                        leftIcon: mdiPhone,
                         size: 'small',
                         borderStyle: 'border-bottom',
                     }"
@@ -202,7 +202,7 @@ const endDateComputed = computed({
                     type="text"
                     name="title"
                     :options="{
-                        leftIcon: UserIcon,
+                        leftIcon: mdiAccount,
                         size: 'small',
                         borderStyle: 'border-bottom',
                     }"
@@ -215,7 +215,7 @@ const endDateComputed = computed({
                 type="text"
                 name="description"
                 :options="{
-                    leftIcon: UserIcon,
+                    leftIcon: mdiAccount,
                     size: 'small',
                     borderStyle: 'border-bottom',
                 }"
@@ -231,7 +231,7 @@ const endDateComputed = computed({
                     maxDate: new Date(2025, 0, 0),
                 }"
                 :options="{
-                    leftIcon: CalendarDaysIcon,
+                    leftIcon: mdiCalendarArrowLeft,
                     borderStyle: 'border-bottom',
                 }"
             ></DateTime>
@@ -247,7 +247,7 @@ const endDateComputed = computed({
                         maxDate: new Date(2025, 0, 0),
                     }"
                     :options="{
-                        leftIcon: CalendarDaysIcon,
+                        leftIcon: mdiCalendarArrowRight,
                         borderStyle: 'border-bottom',
                     }"
                 />

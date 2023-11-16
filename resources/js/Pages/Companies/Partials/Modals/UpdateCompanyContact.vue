@@ -2,13 +2,13 @@
 import { useForm, usePage } from '@inertiajs/vue3';
 import { Input, SearchInput, Button } from '@/Components/UI';
 
-import {
-    AtSymbolIcon,
-    GlobeEuropeAfricaIcon,
-    MapPinIcon,
-    PhoneIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
+import mdiAt from '~icons/mdi/at';
+import mdiPhone from '~icons/mdi/phone';
+import mdiEarth from '~icons/mdi/earth';
+import mdiMapMarker from '~icons/mdi/map-marker';
+
+import heroiconsXMark from '~icons/heroicons/x-mark';
+
 import axios from 'axios';
 
 const props = defineProps({
@@ -128,7 +128,7 @@ onMounted(() => {
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.contact.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark class="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-auto">
@@ -137,14 +137,22 @@ onMounted(() => {
                 v-model="form.phone_number"
                 :label="$t('labels.phone.contact')"
                 :error="form.errors.phone_number"
-                :options="{ leftIcon: PhoneIcon }"
+                :options="{
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                    leftIcon: mdiPhone,
+                }"
             />
             <Input
                 name="Contact email"
                 v-model="form.email"
                 :label="$t('labels.email.contact')"
                 :error="form.errors.email"
-                :options="{ leftIcon: AtSymbolIcon }"
+                :options="{
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                    leftIcon: mdiAt,
+                }"
             />
             <SearchInput
                 v-model="selectedCountry"
@@ -152,9 +160,10 @@ onMounted(() => {
                 type="text"
                 name="Company country"
                 :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
+                    size: 'small',
+                    leftIcon: mdiEarth,
+                    borderStyle: 'border-bottom',
+                    xMarkIcon: heroiconsXMark,
                     noResultMessage: 'No results found! 😢',
                 }"
                 :search="{
@@ -176,9 +185,10 @@ onMounted(() => {
                 type="text"
                 name="Company state"
                 :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
+                    size: 'small',
+                    leftIcon: mdiEarth,
+                    borderStyle: 'border-bottom',
+                    xMarkIcon: heroiconsXMark,
                     noResultMessage: 'No results found! 😢',
                 }"
                 :search="{
@@ -200,9 +210,10 @@ onMounted(() => {
                 type="text"
                 name="Company town"
                 :options="{
-                    leftIcon: GlobeEuropeAfricaIcon,
-                    borderStyle: 'bordered',
-                    xMarkIcon: XMarkIcon,
+                    size: 'small',
+                    leftIcon: mdiEarth,
+                    borderStyle: 'border-bottom',
+                    xMarkIcon: heroiconsXMark,
                     noResultMessage: 'No results found! 😢',
                 }"
                 :search="{
@@ -220,7 +231,11 @@ onMounted(() => {
             <Input
                 name="Company address"
                 :disabled="!addressValid"
-                :options="{ leftIcon: MapPinIcon }"
+                :options="{
+                    size: 'small',
+                    borderStyle: 'border-bottom',
+                    leftIcon: mdiMapMarker,
+                }"
                 v-model="form.address"
                 :label="$t('labels.address')"
                 :error="form.errors.address"
@@ -229,7 +244,11 @@ onMounted(() => {
         <Button
             @click="submit"
             class=""
-            :options="{ color: 'blue', shape: 'pill' }"
+            :options="{
+                size: 'small',
+                color: 'blue',
+                shape: 'pill',
+            }"
             >{{ $t('common.save') }}</Button
         >
     </div>

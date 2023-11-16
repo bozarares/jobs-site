@@ -1,5 +1,4 @@
 <script setup>
-import { PlusIcon } from '@heroicons/vue/24/solid';
 import { Link } from '@inertiajs/vue3';
 </script>
 <template>
@@ -9,8 +8,8 @@ import { Link } from '@inertiajs/vue3';
     >
         <!-- Logo and Company Name -->
 
-        <PlusIcon
-            class="w-20 stroke-gray-300 stroke-1 font-bold text-zinc-300"
+        <Mdi:plus
+            class="h-20 w-20 stroke-gray-300 stroke-1 font-bold text-zinc-300"
         />
     </Link>
 </template>

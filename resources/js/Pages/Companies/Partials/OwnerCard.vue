@@ -2,7 +2,7 @@
 import { Switch } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 import { useModalStore } from '@/Stores/modalStore';
-import { SparklesIcon } from '@heroicons/vue/24/outline';
+import heroiconsSparkles from '~icons/heroicons/sparkles-solid';
 
 const modalStore = useModalStore();
 
@@ -49,7 +49,7 @@ const edit = ref(false);
                 :options="{
                     shape: 'pill',
                     color: 'gold',
-                    leftIcon: SparklesIcon,
+                    leftIcon: heroiconsSparkles,
                 }"
                 >{{ $t('common.feature') }}</Button
             >

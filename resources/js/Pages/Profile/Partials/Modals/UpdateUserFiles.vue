@@ -7,7 +7,6 @@ import filePondServer from '@/filePondConfig';
 import { Button, Input } from '@/Components/UI';
 
 import axios from 'axios';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
 const props = defineProps({
@@ -163,7 +162,7 @@ onBeforeUnmount(() => {
                 aria-label="Delete button"
                 @click="removeFile(file.id)"
             >
-                <XMarkIcon class="h-5" />
+                <Heroicons:xMark class="h-5" />
             </div>
         </div>
         <div v-else class="font-bold text-zinc-600">
@@ -177,7 +176,7 @@ onBeforeUnmount(() => {
             <h2 class="text-lg font-bold uppercase">
                 {{ $t('labels.files.edit') }}
             </h2>
-            <XMarkIcon class="h-6 cursor-pointer" @click="closeModal()" />
+            <Heroicons:xMark lass="h-6 cursor-pointer" @click="closeModal()" />
         </div>
 
         <div class="flex flex-col gap-4 overflow-auto">

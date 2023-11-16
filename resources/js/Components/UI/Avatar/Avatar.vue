@@ -1,6 +1,8 @@
 <script setup>
 import { PencilSquareIcon, UserIcon } from '@heroicons/vue/24/outline';
 import { cva } from 'class-variance-authority';
+import mdiAccount from '~icons/mdi/account';
+import mdiPencil from '~icons/mdi/pencil';
 const props = defineProps({
     id: {
         type: String,
@@ -99,14 +101,14 @@ const avatarClass = computed(() => {
             <div v-else-if="props.acronym" class="select-none leading-10">
                 {{ props.acronym }}
             </div>
-            <component v-else class="w-2/3" :is="UserIcon"></component>
+            <component v-else class="w-2/3" :is="mdiAccount"></component>
             <div
                 v-if="editMode"
                 :id="props.editButtonId"
                 @click="editClick"
-                class="pointer-events-auto absolute -bottom-2 -left-2 box-content w-5 !cursor-pointer rounded-full border-4 border-white bg-zinc-900 p-2 text-white dark:border-zinc-800 dark:bg-zinc-200 dark:text-zinc-800"
+                class="pointer-events-auto absolute -bottom-2 -left-2 box-content flex h-8 w-8 !cursor-pointer items-center justify-center rounded-full border-4 border-white bg-zinc-900 text-white dark:border-zinc-800 dark:bg-zinc-200 dark:text-zinc-800"
             >
-                <component :is="PencilSquareIcon"></component>
+                <component :is="mdiPencil" class="w-6"></component>
             </div>
         </component>
     </div>
