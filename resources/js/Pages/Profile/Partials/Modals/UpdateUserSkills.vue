@@ -3,7 +3,6 @@
 // TODO: Change controller so it will send a response
 
 import { useForm } from '@inertiajs/vue3';
-import { Button, Input } from '@/Components/UI';
 import pkg from 'lodash';
 const { debounce } = pkg;
 import axios from 'axios';

@@ -2,7 +2,6 @@
 import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
-import { Timeline } from '@/Components/UI';
 import ContentCard from '@/Components/ContentCard.vue';
 import FileAction from '@/Components/FileAction.vue';
 import { useLocaleStore } from '@/Stores/localeStore';

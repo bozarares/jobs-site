@@ -1,7 +1,6 @@
 <script setup>
 import PasswordSettings from './Partials/PasswordSettings.vue';
 import AccountSettings from './Partials/AccountSettings.vue';
-import { Button } from '@/Components/UI';
 import { Head } from '@inertiajs/vue3';
 const props = defineProps({
     user: Object,

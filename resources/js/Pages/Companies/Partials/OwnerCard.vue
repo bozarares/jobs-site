@@ -1,6 +1,4 @@
 <script setup>
-import { Switch } from '@/Components/UI';
-import Button from '@/Components/UI/Button/Button.vue';
 import { useModalStore } from '@/Stores/modalStore';
 import heroiconsSparkles from '~icons/heroicons/sparkles-solid';
 

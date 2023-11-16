@@ -1,6 +1,4 @@
 <script setup>
-import RatingStars from '@/Components/RatingStars.vue';
-import { Button } from '@/Components/UI';
 import Company from '@/Models/Company';
 import { useModalStore } from '@/Stores/modalStore';
 import mdiHeart from '~icons/mdi/heart';

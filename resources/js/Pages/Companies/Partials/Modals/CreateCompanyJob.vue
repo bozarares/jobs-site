@@ -1,6 +1,5 @@
 <script setup>
 import { router, usePage } from '@inertiajs/vue3';
-import { Button, Checkbox, Input, Radio } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
 import axios from 'axios';
 

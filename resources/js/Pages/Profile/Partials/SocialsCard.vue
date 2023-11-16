@@ -1,7 +1,4 @@
 <script setup>
-import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
-import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
-import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
 import { useModalStore } from '@/Stores/modalStore';
 
 const modalStore = useModalStore();
@@ -57,7 +54,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span class="fill-blue-700"><LinkedinIcon /></span>
+                    <span class="text-blue-600"><Mdi:Linkedin /></span>
                     LinkedIn
                 </a>
                 <a
@@ -67,7 +64,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span class="dark:fill-white"><GithubIcon /></span>
+                    <span class="dark:text-white"><Mdi:Github /></span>
 
                     Github
                 </a>
@@ -78,7 +75,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span class="fill-blue-600"><FacebookIcon /></span>
+                    <span class="text-blue-600"><Mdi:Facebook /></span>
 
                     Facebook
                 </a>

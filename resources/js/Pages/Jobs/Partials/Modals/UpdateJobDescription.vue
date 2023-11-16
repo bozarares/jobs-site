@@ -3,7 +3,6 @@
 // TODO: Change controller so it will send a response
 
 import { router, usePage } from '@inertiajs/vue3';
-import { Button } from '@/Components/UI';
 import axios from 'axios';
 import toolbarOptions from '@/quillToolBarConfig';
 

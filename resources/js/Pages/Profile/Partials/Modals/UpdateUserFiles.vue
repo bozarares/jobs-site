@@ -4,7 +4,6 @@ import { router } from '@inertiajs/vue3';
 
 import 'filepond/dist/filepond.min.css';
 import filePondServer from '@/filePondConfig';
-import { Button, Input } from '@/Components/UI';
 
 import axios from 'axios';
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';

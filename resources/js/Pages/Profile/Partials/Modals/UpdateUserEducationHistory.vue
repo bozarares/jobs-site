@@ -3,8 +3,6 @@
 // TODO: Change controller so it will send a response
 
 import { useForm, usePage } from '@inertiajs/vue3';
-import { Button, Checkbox, DateTime } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
 
 import mdiCalendarArrowLeft from '~icons/mdi/calendar-arrow-left';
 import mdiCalendarArrowRight from '~icons/mdi/calendar-arrow-right';

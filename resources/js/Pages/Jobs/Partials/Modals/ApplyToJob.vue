@@ -2,7 +2,6 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { Button, Switch } from '@/Components/UI';
 import axios from 'axios';
 import { router, usePage } from '@inertiajs/vue3';
 import { useLocaleStore } from '@/Stores/localeStore';

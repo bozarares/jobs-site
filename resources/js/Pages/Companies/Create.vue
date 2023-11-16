@@ -1,5 +1,4 @@
 <script setup>
-import { Button, Input, SearchInput } from '@/Components/UI';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import filePondServer from '@/filePondConfig';
 import axios from 'axios';

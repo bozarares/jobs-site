@@ -1,6 +1,4 @@
 <script setup>
-import { Button, Checkbox, DropdownHeader } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import mdiAt from '~icons/mdi/at';
 import mdiKey from '~icons/mdi/key';

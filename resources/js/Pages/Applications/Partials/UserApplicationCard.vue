@@ -1,9 +1,4 @@
 <script setup>
-import { Avatar } from '@/Components/UI';
-import FacebookIcon from '@/Components/UI/Icons/FacebookIcon.vue';
-import GithubIcon from '@/Components/UI/Icons/GithubIcon.vue';
-import LinkedinIcon from '@/Components/UI/Icons/LinkedinIcon.vue';
-
 const props = defineProps({
     user: {
         type: Object,
@@ -49,7 +44,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span class="fill-blue-700"><LinkedinIcon /></span>
+                    <span class="text-blue-600"><Mdi:Linkedin /></span>
                     LinkedIn
                 </a>
                 <a
@@ -59,7 +54,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span><GithubIcon class="dark:fill-zinc-100" /></span>
+                    <span><Mdi:Github class="dark:text-zinc-100" /></span>
                     Github
                 </a>
                 <a
@@ -69,7 +64,7 @@ const props = defineProps({
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    <span class="fill-blue-600"><FacebookIcon /></span>
+                    <span class="text-blue-600"><Mdi:Facebook /></span>
                     Facebook
                 </a>
             </div>

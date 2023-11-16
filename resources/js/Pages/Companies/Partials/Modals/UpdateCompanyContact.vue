@@ -1,6 +1,5 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { Input, SearchInput, Button } from '@/Components/UI';
 
 import mdiAt from '~icons/mdi/at';
 import mdiPhone from '~icons/mdi/phone';

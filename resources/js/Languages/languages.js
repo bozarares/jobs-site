@@ -1,21 +1,21 @@
-import JapanFlagVue from '@/Components/UI/Icons/Flags/JapanFlag.vue';
-import RomaniaFlagVue from '@/Components/UI/Icons/Flags/RomaniaFlag.vue';
-import USAFlagVue from '@/Components/UI/Icons/Flags/USAFlag.vue';
+import flagJP from '~icons/flag/jp-4x3';
+import flagRO from '~icons/flag/ro-4x3';
+import flagUS from '~icons/flag/us-4x3';
 
 export const languages = [
     {
         locale: 'en',
-        flag: USAFlagVue,
+        flag: flagUS,
         name: 'English',
     },
     {
         locale: 'ro',
-        flag: RomaniaFlagVue,
+        flag: flagRO,
         name: 'Română',
     },
     {
         locale: 'ja',
-        flag: JapanFlagVue,
+        flag: flagJP,
         name: '日本語',
     },
 ];

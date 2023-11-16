@@ -1,13 +1,10 @@
 <script setup>
-import { Button, LanguageSelector, Timeline } from '@/Components/UI';
 import { languages } from '@/Languages/languages';
 
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 
 import mdiEye from '~icons/mdi/eye';
 import mdiDownloadBox from '~icons/mdi/download-box';
-
-import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
 import UserApplicationCard from './Partials/UserApplicationCard.vue';
 import EmployerPanelCard from './Partials/EmployerPanelCard.vue';

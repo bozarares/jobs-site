@@ -3,7 +3,6 @@
 // TODO: Change controller so it will send a response
 
 import { useForm } from '@inertiajs/vue3';
-import { Button, Input } from '@/Components/UI';
 import mdiPhone from '~icons/mdi/phone';
 import mdiLinkedin from '~icons/mdi/linkedin';
 import mdiGithub from '~icons/mdi/github';

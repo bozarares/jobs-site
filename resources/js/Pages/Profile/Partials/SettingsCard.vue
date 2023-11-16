@@ -1,6 +1,4 @@
 <script setup>
-import { Switch } from '@/Components/UI';
-
 const props = defineProps({
     toggleEdit: {
         type: Function,

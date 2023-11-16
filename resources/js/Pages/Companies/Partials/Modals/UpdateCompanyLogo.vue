@@ -1,7 +1,6 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
 import 'filepond/dist/filepond.min.css';
-import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
 import axios from 'axios';
 

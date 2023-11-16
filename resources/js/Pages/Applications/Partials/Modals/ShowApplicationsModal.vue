@@ -1,5 +1,4 @@
 <script setup>
-import { LanguageSelector, Timeline } from '@/Components/UI';
 import { languages } from '@/Languages/languages';
 
 import axios from 'axios';

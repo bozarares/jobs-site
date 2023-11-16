@@ -31,6 +31,7 @@ export default defineConfig({
             imports: ['vue'],
         }),
         Components({
+            dirs: ['resources/js/Components'],
             directives: true,
             resolvers: [IconsResolver({ prefix: '' })],
         }),

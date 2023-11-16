@@ -110,17 +110,17 @@ const props = defineProps({
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-red-500"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-red-500"
                     >
-                        <HandThumbDownIcon
-                            class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                        <Mdi:ThumbUp
+                            class="h-full w-full fill-white px-1 text-zinc-100 transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline outline-zinc-500 transition-all duration-150 ease-in-out hover:scale-110 hover:bg-green-500"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-green-500"
                     >
-                        <HandThumbUpIcon
-                            class="fill-white text-black transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                        <Mdi:ThumbDown
+                            class="h-full w-full fill-white px-1 text-zinc-100 transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
                         />
                     </div>
                 </div>

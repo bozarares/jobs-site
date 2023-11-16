@@ -1,6 +1,5 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
-import { Button } from '@/Components/UI';
 import Job from '@/Models/Job';
 import { useModalStore } from '@/Stores/modalStore';
 import { Link } from '@inertiajs/vue3';

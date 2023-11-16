@@ -1,5 +1,4 @@
 <script setup>
-import { Avatar, LanguageSelector } from '@/Components/UI';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { languages } from '@/Languages/languages';
 import { useModalStore } from '@/Stores/modalStore';

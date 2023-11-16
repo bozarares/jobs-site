@@ -1,6 +1,4 @@
 <script setup>
-import { Button } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 // Assuming the token is passed as a prop to this component

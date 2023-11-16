@@ -1,5 +1,4 @@
 <script setup>
-import { Button, Input } from '@/Components/UI';
 import axios from 'axios';
 
 const props = defineProps({
@@ -187,9 +186,9 @@ watch(applicationStatus, () => {
                         }
                     "
                 >
-                    <ChevronRightIcon
+                    <Mdi:chevronRight
                         v-if="application.id === props.application.id"
-                        class="absolute left-0 h-6 self-start pl-6 text-green-600"
+                        class="absolute left-0 ml-6 h-6 w-6 self-start text-green-600"
                     />
                     <div
                         class="text-lg font-bold"

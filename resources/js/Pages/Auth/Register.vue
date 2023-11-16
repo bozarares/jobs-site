@@ -1,5 +1,4 @@
 <script setup>
-import { Button, Input } from '@/Components/UI';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import {
     EyeIcon,

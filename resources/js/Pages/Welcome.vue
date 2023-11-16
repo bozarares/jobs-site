@@ -1,6 +1,4 @@
 <script setup>
-import { Button } from '@/Components/UI';
-import Input from '@/Components/UI/Input/Input.vue';
 import JobCard from '@/Components/JobCard.vue';
 
 import mdiMagnify from '~icons/mdi/magnify';

@@ -1,6 +1,5 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
 
 const props = defineProps({

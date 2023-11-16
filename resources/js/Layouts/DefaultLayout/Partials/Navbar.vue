@@ -1,15 +1,4 @@
 <script setup>
-import {
-    Avatar,
-    DropdownHeader,
-    DropdownItem,
-    DropdownLabel,
-    DropdownMenu,
-    DropdownSeparator,
-    LanguageSelector,
-    Switch,
-} from '@/Components/UI';
-
 import { Link } from '@inertiajs/vue3';
 import Login from './Login.vue';
 import mdiLogout from '~icons/mdi/logout';

@@ -1,5 +1,4 @@
 <script setup>
-import { Switch } from '@/Components/UI';
 import { Link } from '@inertiajs/vue3';
 import JobApplicationCard from '@/Components/JobApplicationCard.vue';
 
