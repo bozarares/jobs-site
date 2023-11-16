@@ -1,6 +1,7 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
 import { Button } from '@/Components/UI';
+import Job from '@/Models/Job';
 import { useModalStore } from '@/Stores/modalStore';
 import { Link } from '@inertiajs/vue3';
 
@@ -8,7 +9,7 @@ const modalStore = useModalStore();
 
 const props = defineProps({
     job: {
-        type: Object,
+        type: Job,
         required: true,
     },
     alreadyApplied: {
@@ -36,9 +37,7 @@ const props = defineProps({
         <div class="relative flex flex-col items-center gap-2">
             <Link
                 class="flex w-full flex-col gap-1"
-                :href="
-                    route('companies.show', { company: props.job.company.slug })
-                "
+                :href="route('companies.show', { company: job.company.slug })"
             >
                 <img
                     @error="
@@ -47,12 +46,7 @@ const props = defineProps({
                         }
                     "
                     class="h-12 fill-current object-contain text-zinc-500"
-                    :src="
-                        '/logos/companies/' +
-                        job.company.logo +
-                        '.' +
-                        job.company.logo_extension
-                    "
+                    :src="job.company.logoPath()"
                     alt="Logo"
                 />
                 <h2 class="mb-2 text-center text-xs font-bold uppercase">
@@ -102,7 +96,6 @@ const props = defineProps({
                     :options="{
                         shape: 'pill',
                         color: 'blue',
-                        // leftIcon: ShareIcon,
                     }"
                     >{{ $t('common.apply') }}</Button
                 >

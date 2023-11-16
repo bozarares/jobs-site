@@ -1,9 +1,8 @@
 <script setup>
-import { Button, Switch, Timeline } from '@/Components/UI';
+import { Switch } from '@/Components/UI';
 import { Link } from '@inertiajs/vue3';
 import JobApplicationCard from '@/Components/JobApplicationCard.vue';
-import { ref } from 'vue';
-import { computed } from 'vue';
+
 const props = defineProps({
     applications: {
         type: Array,

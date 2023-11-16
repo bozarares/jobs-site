@@ -2,7 +2,6 @@
 import { Checkbox, Input, Button } from '@/Components/UI';
 import { AtSymbolIcon, KeyIcon, UserIcon } from '@heroicons/vue/24/outline';
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
 const form = useForm({
     name: '',

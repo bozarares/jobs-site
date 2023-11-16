@@ -2,7 +2,6 @@
 import { Button, Input } from '@/Components/UI';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
 const currentUser = useCurrentUser();
 

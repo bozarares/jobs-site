@@ -1,11 +1,8 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { markRaw, onMounted, ref } from 'vue';
 import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { onBeforeMount } from 'vue';
-import { watch } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },

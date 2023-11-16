@@ -1,7 +1,6 @@
 <script setup>
 import { CheckIcon } from '@heroicons/vue/24/outline';
 import { cva } from 'class-variance-authority';
-import { computed } from 'vue';
 
 const props = defineProps({
     label: String,

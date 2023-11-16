@@ -6,8 +6,6 @@ import { Button, Switch } from '@/Components/UI';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useModalStore } from '@/Stores/modalStore';
 import { useCurrentUser } from '@/Composables/useCurrentUser';

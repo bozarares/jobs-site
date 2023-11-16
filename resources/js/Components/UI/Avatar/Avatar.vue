@@ -1,7 +1,6 @@
 <script setup>
 import { PencilSquareIcon, UserIcon } from '@heroicons/vue/24/outline';
 import { cva } from 'class-variance-authority';
-import { computed } from 'vue';
 const props = defineProps({
     id: {
         type: String,

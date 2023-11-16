@@ -1,7 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
-import { watch } from 'vue';
 
 const modalStore = useModalStore();
 

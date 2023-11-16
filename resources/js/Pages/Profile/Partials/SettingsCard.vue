@@ -1,7 +1,5 @@
 <script setup>
 import { Switch } from '@/Components/UI';
-import { watch } from 'vue';
-import { ref } from 'vue';
 
 const props = defineProps({
     toggleEdit: {

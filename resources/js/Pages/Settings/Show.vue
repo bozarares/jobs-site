@@ -2,8 +2,6 @@
 import PasswordSettings from './Partials/PasswordSettings.vue';
 import AccountSettings from './Partials/AccountSettings.vue';
 import { Button } from '@/Components/UI';
-import { shallowRef } from 'vue';
-import { markRaw } from 'vue';
 import { Head } from '@inertiajs/vue3';
 const props = defineProps({
     user: Object,
@@ -34,7 +32,7 @@ const settings = shallowRef(AccountSettings);
                 <Button
                     @click="
                         () => {
-                            settings = markRaw(PasswordSettings);
+                            settings = PasswordSettings;
                         }
                     "
                 >

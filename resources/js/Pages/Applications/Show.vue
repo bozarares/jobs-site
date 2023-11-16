@@ -10,7 +10,6 @@ import {
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { ref, watch, computed, reactive } from 'vue';
 
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 

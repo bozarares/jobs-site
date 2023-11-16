@@ -8,11 +8,16 @@ import {
     MagnifyingGlassIcon,
 } from '@heroicons/vue/24/outline';
 import { Head, Link } from '@inertiajs/vue3';
+import Job from '@/Models/Job';
 const props = defineProps({
     jobs: {
         type: Array,
         required: true,
     },
+});
+
+const jobInstances = computed(() => {
+    return props.jobs.map((jobData) => new Job(jobData));
 });
 </script>
 
@@ -58,6 +63,6 @@ const props = defineProps({
     <div
         class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 pt-6"
     >
-        <JobCard v-for="job in jobs" :key="job.slug" :job="job" />
+        <JobCard v-for="job in jobInstances" :key="job.slug" :job="job" />
     </div>
 </template>

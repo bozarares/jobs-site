@@ -1,6 +1,5 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref, markRaw } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';

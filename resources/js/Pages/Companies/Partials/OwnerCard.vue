@@ -3,7 +3,6 @@ import { Switch } from '@/Components/UI';
 import Button from '@/Components/UI/Button/Button.vue';
 import { useModalStore } from '@/Stores/modalStore';
 import { SparklesIcon } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
 
 const modalStore = useModalStore();
 

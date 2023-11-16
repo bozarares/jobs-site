@@ -6,7 +6,6 @@ import { Button } from '@/Components/UI';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },

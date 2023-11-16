@@ -1,7 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
 import RatingStars from './RatingStars.vue';
-import Button from './UI/Button/Button.vue';
 import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -9,6 +7,7 @@ import MessageIcon from './UI/Icons/MessageIcon.vue';
 dayjs.extend(relativeTime);
 import { useModalStore } from '@/Stores/modalStore';
 import { EyeIcon } from '@heroicons/vue/24/outline';
+import Job from '@/Models/Job';
 
 const modalStore = useModalStore();
 const featured = ref(false);
@@ -19,7 +18,9 @@ const props = defineProps({
     },
 });
 
-const job = ref(props.application.job);
+const job = computed(() => {
+    return new Job(props.application.job);
+});
 
 const formattedApplicationDate = computed(() => {
     return props.application.created_at

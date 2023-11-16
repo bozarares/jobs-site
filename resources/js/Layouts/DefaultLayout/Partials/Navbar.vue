@@ -11,7 +11,6 @@ import {
 } from '@/Components/UI';
 
 import { Link } from '@inertiajs/vue3';
-import { ref, watch, onMounted } from 'vue';
 import Login from './Login.vue';
 import {
     ArrowRightOnRectangleIcon,

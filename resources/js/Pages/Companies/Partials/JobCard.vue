@@ -1,16 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
-import { Button } from '@/Components/UI';
-import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
+import Job from '@/Models/Job';
 
 const props = defineProps({
-    job: { type: Object, default: () => {} },
-});
-
-const experiences = computed(() => {
-    return props.job.levels.join(', ');
+    job: { type: Job, default: () => {} },
 });
 
 const salary = computed(() => {
@@ -48,7 +41,7 @@ function handleTouchEnd(event) {
                 {{ job.title }}
             </div>
             <div class="text-center text-xs font-bold lg:text-start">
-                {{ experiences }}
+                {{ job.experiences }}
             </div>
         </div>
 

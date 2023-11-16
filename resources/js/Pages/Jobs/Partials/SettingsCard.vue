@@ -1,7 +1,6 @@
 <script setup>
 import { Button, Switch } from '@/Components/UI';
 import { useModalStore } from '@/Stores/modalStore';
-import { ref } from 'vue';
 
 const modalStore = useModalStore();
 

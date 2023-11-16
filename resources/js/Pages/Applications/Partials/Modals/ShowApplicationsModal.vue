@@ -14,14 +14,6 @@ import EmployerPanelCard from '../EmployerPanelCard.vue';
 
 import { usePage } from '@inertiajs/vue3';
 
-import {
-    ref,
-    onBeforeUnmount,
-    reactive,
-    computed,
-    watch,
-    onBeforeMount,
-} from 'vue';
 import FileAction from '@/Components/FileAction.vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 

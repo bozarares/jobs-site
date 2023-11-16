@@ -3,12 +3,10 @@ import UserCard from './Partials/UserCard.vue';
 import SocialsCard from './Partials/SocialsCard.vue';
 import SettingsCard from './Partials/SettingsCard.vue';
 import { Timeline } from '@/Components/UI';
-import { ref, watch } from 'vue';
 import ContentCard from '@/Components/ContentCard.vue';
 import FileAction from '@/Components/FileAction.vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
-import { onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 

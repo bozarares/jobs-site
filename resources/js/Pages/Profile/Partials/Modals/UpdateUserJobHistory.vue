@@ -3,7 +3,6 @@
 // TODO: Change controller so it will send a response
 
 import { useForm, usePage } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
 import { Button, Checkbox, DateTime, Input } from '@/Components/UI';
 import {
     CalendarDaysIcon,
@@ -13,7 +12,6 @@ import {
 } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
 import { useProfileStore } from '@/Stores/profileStore';
-import { watch } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },

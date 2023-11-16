@@ -2,13 +2,11 @@
 // TODO: Change form with axios
 // TODO: Change controller so it will send a response
 
-import { onMounted, ref, watch, onBeforeMount } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/UI';
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import toolbarOptions from '@/quillToolBarConfig';
-import { markRaw } from 'vue';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },

@@ -8,9 +8,6 @@ import {
     UserIcon,
 } from '@heroicons/vue/24/outline';
 import { Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import { inject } from 'vue';
 
 const triggerClose = ref();
 onMounted(() => {

@@ -3,13 +3,10 @@
 // TODO: Change controller so it will send a response
 
 import { useForm, usePage } from '@inertiajs/vue3';
-import { markRaw, onMounted, ref } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import { Button } from '@/Components/UI';
 import filePondServer from '@/filePondConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { onBeforeUnmount } from 'vue';
-import { onBeforeMount } from 'vue';
 
 const isClient = ref(false);
 

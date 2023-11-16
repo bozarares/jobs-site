@@ -4,7 +4,6 @@ import Footer from './Partials/Footer.vue';
 import ModalWrapper from '@/Components/ModalWrapper.vue';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { useCookieStore } from '@/Stores/cookieStore';
-import { onMounted, watch } from 'vue';
 
 const cookieStore = useCookieStore();
 

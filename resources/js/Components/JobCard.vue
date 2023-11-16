@@ -1,5 +1,4 @@
 <script setup>
-import { ref, computed } from 'vue';
 import RatingStars from './RatingStars.vue';
 import {
     EyeIcon,
@@ -8,34 +7,16 @@ import {
 } from '@heroicons/vue/24/outline';
 import Button from './UI/Button/Button.vue';
 import { Link } from '@inertiajs/vue3';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { useModalStore } from '@/Stores/modalStore';
-dayjs.extend(relativeTime);
+import Job from '@/Models/Job';
 
 const modalStore = useModalStore();
 const featured = ref(false);
 const props = defineProps({
     job: {
-        type: Object,
+        type: Job,
         required: true,
     },
-});
-
-const formattedApplicationDate = computed(() => {
-    return props.job.application_date
-        ? dayjs(props.job.application_date).format('D MMM. YYYY')
-        : false;
-});
-
-const formattedSeenDate = computed(() => {
-    return props.job.seen_at
-        ? dayjs(props.seen_at).format('D MMM. YYYY')
-        : false;
-});
-
-const experiences = computed(() => {
-    return props.job.levels.join(', ');
 });
 </script>
 
@@ -57,12 +38,7 @@ const experiences = computed(() => {
                         e.target.src = '/images/logo/broken-image.png';
                     }
                 "
-                :src="
-                    '/logos/companies/' +
-                    job.company.logo +
-                    '.' +
-                    job.company.logo_extension
-                "
+                :src="job.company.logoPath()"
                 class="h-8 fill-current object-contain text-zinc-500 dark:text-zinc-300"
                 src="/images/logo/logo-black.png"
                 alt="Logo"
@@ -75,18 +51,18 @@ const experiences = computed(() => {
             <h2 class="mb-2 mt-8 text-center text-xl font-bold">
                 {{ job.title }}
             </h2>
-            <h3>{{ experiences }}</h3>
+            <h3>{{ job.experiences }}</h3>
             <div class="mt-6 flex flex-col items-center gap-1">
-                <div v-if="formattedApplicationDate" class="text-sm">
+                <div v-if="job.formattedApplicationDate" class="text-sm">
                     {{ $t('jobDates.applied') }} -
-                    {{ formattedApplicationDate }}
+                    {{ job.formattedApplicationDate }}
                 </div>
                 <div
-                    v-if="formattedSeenDate"
+                    v-if="job.formattedSeenDate"
                     class="flex items-center gap-1 text-sm text-blue-500"
                 >
                     <EyeIcon class="w-4" /> {{ $t('jobDates.seen') }} -
-                    {{ formattedSeenDate }}
+                    {{ job.formattedSeenDate }}
                 </div>
                 <div v-if="job.status" class="text-sm">
                     {{ $t('labels.status') }} -

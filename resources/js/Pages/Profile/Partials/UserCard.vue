@@ -3,8 +3,6 @@ import { Avatar, LanguageSelector } from '@/Components/UI';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { languages } from '@/Languages/languages';
 import { useModalStore } from '@/Stores/modalStore';
-import { watch } from 'vue';
-import { ref } from 'vue';
 
 const modalStore = useModalStore();
 const currentUser = useCurrentUser();

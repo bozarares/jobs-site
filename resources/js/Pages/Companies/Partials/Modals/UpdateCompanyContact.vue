@@ -1,6 +1,5 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import { computed, onMounted, ref, watch } from 'vue';
 import { Input, SearchInput, Button } from '@/Components/UI';
 
 import {

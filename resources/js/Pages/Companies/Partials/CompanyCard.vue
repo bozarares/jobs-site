@@ -1,6 +1,7 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
 import { Button } from '@/Components/UI';
+import Company from '@/Models/Company';
 import { useModalStore } from '@/Stores/modalStore';
 import {
     EyeIcon,
@@ -14,7 +15,7 @@ const modalStore = useModalStore();
 
 const props = defineProps({
     company: {
-        type: Object,
+        type: Company,
         required: true,
     },
     class: {
@@ -58,12 +59,7 @@ const props = defineProps({
                     'cursor-pointer': edit,
                 }"
                 class="h-12 fill-current object-contain text-zinc-500"
-                :src="
-                    '/logos/companies/' +
-                    company.logo +
-                    '.' +
-                    company.logo_extension
-                "
+                :src="company.logoPath()"
                 alt="Logo"
             />
             <h2

@@ -1,6 +1,5 @@
 <script setup>
 import { Button, Input, SearchInput } from '@/Components/UI';
-import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import filePondServer from '@/filePondConfig';
 import axios from 'axios';
@@ -17,7 +16,6 @@ import {
     RectangleStackIcon,
     XMarkIcon,
 } from '@heroicons/vue/24/outline';
-import { computed } from 'vue';
 
 const beforeUnload = () => {
     revertFiles();

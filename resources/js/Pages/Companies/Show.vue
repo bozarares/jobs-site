@@ -1,14 +1,14 @@
 <script setup>
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
 import CompanyCard from './Partials/CompanyCard.vue';
-import { ref, onMounted, onBeforeMount } from 'vue';
 import OwnerCard from './Partials/OwnerCard.vue';
 import JobCard from './Partials/JobCard.vue';
-import { markRaw } from 'vue';
 import { useModalStore } from '@/Stores/modalStore';
 import ContentCard from '@/Components/ContentCard.vue';
 import AddJob from './Partials/AddJob.vue';
 import { Head } from '@inertiajs/vue3';
+import Company from '@/Models/Company';
+import Job from '@/Models/Job';
 
 const modalStore = useModalStore();
 const isClient = ref(false);
@@ -40,6 +40,14 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+});
+
+const companyInstance = computed(() => {
+    return new Company(props.company);
+});
+
+const jobInstances = computed(() => {
+    return companyInstance.value.jobs.map((jobData) => new Job(jobData));
 });
 
 const edit = ref(false);
@@ -234,7 +242,6 @@ const geocodeAddress = async (address) => {
     }
 };
 
-// When the component mounts, geocode the address
 onMounted(() => {
     geocodeAddress(
         `${props.company.location.address}, ${props.company.location.town}, ${props.company.location.country}, ${props.company.location.state}`,
@@ -250,10 +257,10 @@ onMounted(() => {
     >
         <!-- Div-ul cu detaliile companiei -->
         <div class="flex w-full flex-col items-center gap-4 md:w-auto">
-            <CompanyCard :edit="isOwner && edit" :company="company" />
+            <CompanyCard :edit="isOwner && edit" :company="companyInstance" />
             <OwnerCard
                 v-if="isOwner"
-                :applications="company.application_number"
+                :applications="companyInstance.application_number"
                 :toggle-edit="
                     (value) => {
                         edit = value;
@@ -274,18 +281,18 @@ onMounted(() => {
             >
                 <div
                     class="ql-editor prose dark:!text-zinc-100"
-                    v-html="company.description"
+                    v-html="companyInstance.description"
                 />
             </ContentCard>
 
             <!-- Jobs -->
             <ContentCard :title="$tc('labels.job.self', 2)">
-                <p class="text-sm font-bold" v-if="company.jobs.length === 0">
+                <p class="text-sm font-bold" v-if="jobInstances.length === 0">
                     There are no jobs available at the moment
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-2">
                     <JobCard
-                        v-for="job in company.jobs"
+                        v-for="job in jobInstances"
                         :key="job.slug"
                         :job="job"
                     />
@@ -309,28 +316,28 @@ onMounted(() => {
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><MapPinIcon /></span
-                            >{{ company.location.town }},
-                            {{ company.location.country }} ({{
-                                company.location.state
+                            >{{ companyInstance.location.town }},
+                            {{ companyInstance.location.country }} ({{
+                                companyInstance.location.state
                             }})
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><MapPinIcon /></span
-                            >{{ company.location.address }}
+                            >{{ companyInstance.location.address }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><PhoneIcon /></span
-                            >{{ company.contact.phone_number }}
+                            >{{ companyInstance.contact.phone_number }}
                         </h2>
                         <h2
                             class="flex flex-row items-center gap-1 text-sm font-bold"
                         >
                             <span class="h-4 w-4"><AtSymbolIcon /></span
-                            >{{ company.contact.email }}
+                            >{{ companyInstance.contact.email }}
                         </h2>
                     </div>
                     <GoogleMap
@@ -352,8 +359,8 @@ onMounted(() => {
                         <Marker
                             :options="{
                                 position: center,
-                                title: company.name,
-                                label: company.name[0],
+                                title: companyInstance.name,
+                                label: companyInstance.name[0],
                             }"
                         />
                     </GoogleMap>

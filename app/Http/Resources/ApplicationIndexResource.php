@@ -18,8 +18,10 @@ class ApplicationIndexResource extends JsonResource
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'seen_at' => $this->seen_at,
             'job' => [
                 'id' => $this->job->id,
+                'deleted_at' => $this->job->deleted_at,
                 'slug' => $this->job->slug,
                 'title' => $this->job->title,
                 'salary' => $this->job->salary,

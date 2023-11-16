@@ -1,6 +1,5 @@
 <script setup>
 import { router, useForm, usePage } from '@inertiajs/vue3';
-import { markRaw, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { Button } from '@/Components/UI';
 import toolbarOptions from '@/quillToolBarConfig';
 import { XMarkIcon } from '@heroicons/vue/24/outline';

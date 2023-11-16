@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useFloating, autoPlacement, flip } from '@floating-ui/vue';
+import { useFloating, flip } from '@floating-ui/vue';
 import { cva } from 'class-variance-authority';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';

@@ -2,14 +2,12 @@
 import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 
-import { ref, onMounted, onBeforeUnmount, markRaw } from 'vue';
 import 'filepond/dist/filepond.min.css';
 import filePondServer from '@/filePondConfig';
 import { Button, Input } from '@/Components/UI';
 
 import axios from 'axios';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { onBeforeMount } from 'vue';
 import PDFIcon from '@/Components/UI/Icons/PDFIcon.vue';
 
 const props = defineProps({

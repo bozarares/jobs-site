@@ -2,7 +2,6 @@
 import { Button, Input } from '@/Components/UI';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import axios from 'axios';
-import { computed, watch, ref } from 'vue';
 
 const props = defineProps({
     application: Object,
