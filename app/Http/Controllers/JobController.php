@@ -17,6 +17,7 @@ class JobController extends Controller
     {
         $user = Auth::user();
         $already_applied = false;
+        $is_owner = $user && $job->company->owner === $user->id;
         if ($user) {
             $already_applied = $user->alreadyApplied($job);
         }
@@ -34,6 +35,7 @@ class JobController extends Controller
         return Inertia::render('Jobs/Show', [
             'job' => $job,
             'applied' => $already_applied,
+            'is_owner' => $is_owner,
         ]);
     }
     public function store(Request $request, Company $company)

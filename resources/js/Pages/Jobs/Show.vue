@@ -14,6 +14,10 @@ const props = defineProps({
         type: Object,
         default: () => {},
     },
+    is_owner: {
+        type: Boolean,
+        default: false,
+    },
 });
 const jobInstance = computed(() => {
     return new Job(props.job);

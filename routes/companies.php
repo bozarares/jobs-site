@@ -38,39 +38,41 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    // Job application management routes
-    Route::controller(ApplicationController::class)->group(function () {
-        Route::post('/job/{job}/application', 'get')->name(
-            'job.get.application'
-        );
-        Route::patch('/job/{job}/application/{application}', 'setStatus')->name(
-            'application.set.status'
-        );
-        Route::post('/job/{job}/application/load', 'load')->name(
-            'job.load.application'
-        );
-        Route::post(
-            '/job/{job}/application/getLocalizedData',
-            'getLocalizedData'
-        )->name('application.get.localized.data');
-        Route::get('/jobs/{job}/application/{application}', 'show')->name(
-            'job.show.application'
-        );
-    });
+    Route::middleware('can.edit.job')->group(function () {
+        // Job application management routes
+        Route::controller(ApplicationController::class)->group(function () {
+            Route::post('/job/{job}/application', 'get')->name(
+                'job.get.application'
+            );
+            Route::patch(
+                '/job/{job}/application/{application}',
+                'setStatus'
+            )->name('application.set.status');
+            Route::post('/job/{job}/application/load', 'load')->name(
+                'job.load.application'
+            );
+            Route::post(
+                '/job/{job}/application/getLocalizedData',
+                'getLocalizedData'
+            )->name('application.get.localized.data');
+            Route::get('/jobs/{job}/application/{application}', 'show')->name(
+                'job.show.application'
+            );
+        });
 
-    // Job management routes
-    // TODO - add 'can.edit.job' middleware
-    Route::controller(JobController::class)->group(function () {
-        Route::patch(
-            '/job/{job}/update/description',
-            'updateDescription'
-        )->name('job.update.description');
-        Route::delete('/job/{job}', 'delete')->name('job.delete');
-    });
-    Route::controller(SkillController::class)->group(function () {
-        Route::post('/job/{job}/update/skills', 'editJobSkills')->name(
-            'job.update.skills'
-        );
+        // Job management routes
+        Route::controller(JobController::class)->group(function () {
+            Route::patch(
+                '/job/{job}/update/description',
+                'updateDescription'
+            )->name('job.update.description');
+            Route::delete('/job/{job}', 'delete')->name('job.delete');
+        });
+        Route::controller(SkillController::class)->group(function () {
+            Route::post('/job/{job}/update/skills', 'editJobSkills')->name(
+                'job.update.skills'
+            );
+        });
     });
 
     // Application submission route
