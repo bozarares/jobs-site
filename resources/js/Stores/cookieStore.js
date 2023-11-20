@@ -15,6 +15,7 @@ export const useCookieStore = defineStore('cookie', {
         async setDarkMode(newMode) {
             const page = usePage();
             const user = page.props.auth.user;
+            console.log('Set dark mode', newMode);
             if (user !== null) {
                 await axios.post(route('changeTheme'), { theme: newMode });
             } else {

@@ -45,6 +45,13 @@ watch(
     },
 );
 
+watch(
+    () => localeStore.profileLocale,
+    async (newValue) => {
+        await getLocalizedData(newValue);
+    },
+);
+
 const getLocalizedData = async (newLangauage) => {
     const response = await axios.post(route('get.localized.data'), {
         locale: newLangauage,

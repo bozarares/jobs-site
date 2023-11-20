@@ -26,6 +26,12 @@ const props = defineProps({
 
 const language = ref(props.language);
 watch(
+    () => props.language,
+    (newValue) => {
+        language.value = newValue;
+    },
+);
+watch(
     () => language.value,
     (newValue) => {
         props.onLanguageChange(newValue);

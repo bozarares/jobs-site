@@ -1,8 +1,8 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
 import toolbarOptions from '@/quillToolBarConfig';
-import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUpdateUserData } from '@/Composables/useUpdateUserData';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -10,18 +10,11 @@ const props = defineProps({
 const quillRef = ref(null);
 
 const profileStore = useProfileStore();
-const localeStore = useLocaleStore();
-const page = usePage();
-const localizedData = page.props.localizedData;
+const currentUser = useCurrentUser();
+const { updateDescription } = useUpdateUserData(currentUser.value);
 
 const submit = async () => {
-    const htmlContent = quillRef.value.getHTML();
-    const locale = localeStore.profileLocale;
-    const response = await axios.post(route('profile.update.description'), {
-        description: htmlContent,
-        locale,
-    });
-    profileStore.setProfileWatcher(locale);
+    updateDescription(quillRef.value.getHTML());
     props.closeModal();
 };
 

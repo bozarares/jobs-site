@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'type' => 'On-Site',
         ]);
 
-        \App\Models\Job::factory(3)->create();
+        \App\Models\Job::factory(7)->create();
         // \App\Models\Application::factory(100)->create();
     }
 }

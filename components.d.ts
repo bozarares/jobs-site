@@ -47,6 +47,7 @@ declare module 'vue' {
     'Mdi:chevronLeft': typeof import('~icons/mdi/chevron-left')['default']
     'Mdi:chevronRight': typeof import('~icons/mdi/chevron-right')['default']
     'Mdi:cog': typeof import('~icons/mdi/cog')['default']
+    'Mdi:Eye': typeof import('~icons/mdi/eye')['default']
     'Mdi:Facebook': typeof import('~icons/mdi/facebook')['default']
     'Mdi:Github': typeof import('~icons/mdi/github')['default']
     'Mdi:HandThumbDownIcon': typeof import('~icons/mdi/hand-thumb-down-icon')['default']

@@ -23,6 +23,16 @@ const emits = defineEmits(['update:modelValue']);
 const selectedLanguage = shallowRef(
     props.languages.find((lang) => lang.locale === props.modelValue),
 );
+
+watch(
+    () => props.modelValue,
+    (newValue) => {
+        selectedLanguage.value = props.languages.find(
+            (lang) => lang.locale === newValue,
+        );
+    },
+);
+
 const isSelectVisible = ref(false);
 const containerElementRef = ref(null);
 const selectElementRef = ref(null);

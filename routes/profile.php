@@ -71,18 +71,4 @@ Route::middleware('auth')->group(function () {
             Route::post('/', 'addFile')->name('add');
             Route::delete('/', 'deleteFile')->name('delete');
         });
-
-    Route::post('/language', [
-        ProfileController::class,
-        'changeLanguage',
-    ])->name('language');
-
-    Route::post('/theme', [ProfileController::class, 'changeTheme'])->name(
-        'changeTheme'
-    );
-
-    Route::post('/profile/getLocalizedData', [
-        ProfileController::class,
-        'getLocalizedData',
-    ])->name('get.localized.data');
 });

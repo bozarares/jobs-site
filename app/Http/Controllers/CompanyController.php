@@ -32,8 +32,9 @@ class CompanyController extends Controller
 
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
-        $request['owner'] = Auth::user()->id;
-        Company::create($request);
+        $request_validated = $request->validated();
+        $request_validated['owner'] = Auth::user()->id;
+        Company::create($request_validated);
         return redirect()->route('welcome');
     }
     public function show(Company $company): \Inertia\Response

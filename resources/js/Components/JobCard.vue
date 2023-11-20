@@ -1,15 +1,10 @@
 <script setup>
-import RatingStars from './RatingStars.vue';
-import {
-    EyeIcon,
-    HandThumbDownIcon,
-    HandThumbUpIcon,
-} from '@heroicons/vue/24/outline';
-import Button from './UI/Button/Button.vue';
 import { Link } from '@inertiajs/vue3';
 import { useModalStore } from '@/Stores/modalStore';
 import Job from '@/Models/Job';
+import { useCurrentUser } from '@/Composables/useCurrentUser';
 
+const currentUser = useCurrentUser();
 const modalStore = useModalStore();
 const featured = ref(false);
 const props = defineProps({
@@ -61,7 +56,7 @@ const props = defineProps({
                     v-if="job.formattedSeenDate"
                     class="flex items-center gap-1 text-sm text-blue-500"
                 >
-                    <EyeIcon class="w-4" /> {{ $t('jobDates.seen') }} -
+                    <Mdi:Eye class="w-4" /> {{ $t('jobDates.seen') }} -
                     {{ job.formattedSeenDate }}
                 </div>
                 <div v-if="job.status" class="text-sm">
@@ -95,9 +90,10 @@ const props = defineProps({
                     :disabled="!!job.application_date"
                     @click.stop.prevent="
                         () => {
-                            modalStore.openModal('jobApply', {
-                                job: job,
-                            });
+                            if (currentUser.isSet())
+                                modalStore.openModal('jobApply', {
+                                    job: job,
+                                });
                         }
                     "
                     :options="{
@@ -110,17 +106,17 @@ const props = defineProps({
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-red-500"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-green-500"
                     >
                         <Mdi:ThumbUp
-                            class="h-full w-full fill-white px-1 text-zinc-100 transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                            class="h-full w-full fill-white px-1 text-zinc-800 transition-all duration-300 ease-in-out group-hover/ratings:scale-110 group-hover/ratings:text-zinc-100 dark:text-zinc-100"
                         />
                     </div>
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-green-500"
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-red-500"
                     >
                         <Mdi:ThumbDown
-                            class="h-full w-full fill-white px-1 text-zinc-100 transition-all duration-500 ease-in-out group-hover/ratings:scale-110"
+                            class="h-full w-full fill-white px-1 text-zinc-800 transition-all duration-300 ease-in-out group-hover/ratings:scale-110 group-hover/ratings:text-zinc-100 dark:text-zinc-100"
                         />
                     </div>
                 </div>

@@ -19,8 +19,9 @@ export function useCurrentUser() {
                 currentUser.value = new User();
                 broadcastDisconnect();
             } else {
-                localeStore.setLocale(newValue.user.locale || 'en');
-                cookieStore.theme = newValue.user.theme || 'light';
+                console.log(newValue.user.preferences.locale);
+                localeStore.setLocale(newValue.user.preferences.locale || 'en');
+                cookieStore.theme = newValue.user.preferences.theme || 'light';
                 broadcastListen(newValue.user.id);
                 currentUser.value = new User(newValue.user);
             }

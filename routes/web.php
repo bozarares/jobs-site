@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/profile.php';
+require __DIR__ . '/preferences.php';
 require __DIR__ . '/settings.php';
 require __DIR__ . '/companies.php';
 require __DIR__ . '/auth.php';

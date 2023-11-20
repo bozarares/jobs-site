@@ -34,8 +34,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        $locale = $request->user()->locale ?? 'en';
-        $theme = $request->user()->theme ?? 'light';
+        $locale = $request->user()->preferences->locale ?? 'en';
+        $theme = $request->user()->preferences->theme ?? 'light';
         Cookie::queue(
             Cookie::make(
                 'user_locale',

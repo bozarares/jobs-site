@@ -92,7 +92,7 @@ onMounted(() => {
                 <Heroicons:xMark class="h-5" />
             </div>
         </div>
-        <div v-else class="font-bold text-zinc-600">
+        <div v-else class="font-bold text-zinc-800 dark:text-zinc-200">
             {{ $t('fallbacks.skills') }}
         </div>
     </div>

@@ -69,6 +69,7 @@ const onProcessFile = (error, file) => {
     form.avatar_extension = file.fileExtension;
 };
 
+// TODO: Add composible for revert process file
 const revertFiles = () => {
     if (uploaded.value === true && filePondRef.value) {
         const filepondFile = filePondRef.value.getFile();

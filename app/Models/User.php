@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Fico7489\Laravel\Pivot\Traits\PivotEventTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, PivotEventTrait;
 
@@ -27,6 +27,10 @@ class User extends Authenticatable
                     }
                 }
             }
+        });
+
+        static::created(function ($user) {
+            $user->preferences()->create();
         });
 
         static::updated(function ($user) {
@@ -94,7 +98,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['skills', 'files'];
+    protected $with = ['skills', 'files', 'preferences'];
 
     protected $appends = ['profileCompletion'];
 
@@ -196,5 +200,10 @@ class User extends Authenticatable
         }
 
         return ($completedFields / $totalFields) * 100;
+    }
+
+    public function preferences()
+    {
+        return $this->hasOne(UserPreference::class);
     }
 }

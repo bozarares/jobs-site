@@ -11,6 +11,7 @@ export const useLocaleStore = defineStore('locale', {
     actions: {
         async setLocale(newLocale) {
             await loadLanguageAsync(newLocale);
+            this.setProfileLocale(newLocale);
             this.locale = newLocale;
         },
         setProfileLocale(newLocale) {

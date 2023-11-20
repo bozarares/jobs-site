@@ -39,60 +39,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function changeLanguage(Request $request)
-    {
-        $request->validate([
-            'language' => ['required', 'string', 'in:en,ro,ja'],
-        ]);
-        $user = Auth::user();
-        $user->locale = $request->language;
-        Cookie::queue(
-            Cookie::make(
-                'user_locale',
-                $request->language,
-                60 * 24 * 30,
-                '/',
-                null,
-                false,
-                false
-            )
-        );
-        $user->save();
-    }
-
-    public function changeTheme(Request $request)
-    {
-        $request->validate([
-            'theme' => ['required', 'in:light,dark'],
-        ]);
-        $user = Auth::user();
-        $user->theme = $request->theme;
-        Cookie::queue(
-            Cookie::make(
-                'theme',
-                $request->theme,
-                60 * 24 * 30,
-                '/',
-                null,
-                false,
-                false
-            )
-        );
-        $user->save();
-    }
-
-    public function getLocalizedData(Request $request)
-    {
-        $request->validate([
-            'locale' => ['required', 'string', 'in:en,ro,ja'],
-        ]);
-
-        $user = Auth::user();
-        $localizedData = $user->getLocalizedDataAttribute($request->locale);
-        return response()->json([
-            'localizedData' => $localizedData,
-        ]);
-    }
     public function show(): Response
     {
         $user = Auth::user();
