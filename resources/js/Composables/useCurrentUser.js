@@ -14,12 +14,11 @@ export function useCurrentUser() {
 
     watch(
         () => page.props.auth,
-        (newValue, oldValue) => {
+        (newValue) => {
             if (newValue.user === null) {
                 currentUser.value = new User();
                 broadcastDisconnect();
             } else {
-                console.log(newValue.user.preferences.locale);
                 localeStore.setLocale(newValue.user.preferences.locale || 'en');
                 cookieStore.theme = newValue.user.preferences.theme || 'light';
                 broadcastListen(newValue.user.id);

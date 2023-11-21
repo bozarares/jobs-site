@@ -57,7 +57,7 @@ const buttonClass = computed(() => {
                     text: 'bg-transparent text-zinc-700 hover:bg-zinc-200 hover:text-zinc-900 focus:ring-gray-300',
                 },
                 disabled: {
-                    true: '!cursor-not-allowed bg-zinc-300 text-zinc-500 hover:bg-zinc-300 focus:ring-gray-200',
+                    true: '!cursor-not-allowed bg-zinc-300 text-zinc-100 hover:bg-zinc-300 focus:ring-gray-200',
                 },
                 shape: {
                     pill: 'rounded-full',

@@ -9,17 +9,42 @@ use App\Http\Requests\User\UpdateUserDescriptionRequest;
 use App\Http\Requests\User\UpdateUserInfoRequest;
 use App\Http\Requests\User\UpdateUserSocialsRequest;
 use App\Http\Resources\ApplicationIndexResource;
+use App\Http\Resources\JobMinimalResource;
+use App\Models\Job;
 use App\Models\UserDescription;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function likes(Request $request)
+    {
+        $user = Auth::user();
+        $jobs = Job::whereHas('likes', function ($query) use ($user) {
+            $query->where('user_id', $user->id)->where('like_status', 1);
+        })
+            ->with('company')
+            ->with([
+                'applications' => function ($query) {
+                    $query->where('user_id', Auth::id());
+                },
+            ])
+            ->with([
+                'likes' => function ($query) {
+                    $query->where('user_id', Auth::id());
+                },
+            ])
+            ->latest()
+            ->get();
+        return Inertia::render('Profile/Likes', [
+            'jobs' => JobMinimalResource::collection($jobs),
+        ]);
+    }
+
     public function applications(Request $request)
     {
         $user = Auth::user();

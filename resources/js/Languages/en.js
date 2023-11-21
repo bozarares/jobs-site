@@ -5,7 +5,12 @@ export const en = {
         cancel: 'Cancel',
         save: 'Save',
         add: 'Add',
-        apply: 'Apply',
+        apply: {
+            self: 'Apply',
+            login: 'Login to apply',
+            fast: 'Fast Apply',
+            applied: 'Applied',
+        },
         view: 'View',
         create: 'Create',
         search: 'Search',
@@ -196,7 +201,7 @@ export const en = {
         editJob: 'Edit Job',
         createJob: 'Create Job',
         deleteJob: 'Delete Job',
-        showClosedJobs: 'Show closed jobs',
+        showClosedJobs: 'Show closed applications',
     },
     statuses: {
         open: 'Open',

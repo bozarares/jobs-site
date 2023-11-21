@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Profile\SkillController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/try-recruiting', 'create')->name('companies.create');
         Route::post('/try-recruiting', 'store')->name('companies.store');
         Route::get('/my-companies', 'index')->name('companies.index');
+    });
+
+    Route::controller(LikeController::class)->group(function () {
+        Route::post('/like', 'like')->name('like');
     });
 
     // Company and job management routes with additional 'can.edit.company' middleware

@@ -65,7 +65,6 @@ const addFile = () => {
             if (response.data.success === true) {
                 router.reload({
                     preserveState: true,
-                    only: ['user'],
                 });
                 fileName.value = '';
                 fileExtension.value = '';
@@ -90,7 +89,6 @@ const removeFile = (fileId) => {
                 });
                 router.reload({
                     preserveState: true,
-                    only: ['user'],
                 });
             }
         })

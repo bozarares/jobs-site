@@ -29,6 +29,7 @@ const isLabelFloating = ref(false);
 const options = computed(() => {
     const defaultOptions = {
         borderStyle: 'bordered',
+        background: 'default',
         leftIcon: null,
         passwordIcon: { show: ShowPasswordIcon, hide: HidePasswordIcon },
         size: 'default',
@@ -95,9 +96,13 @@ const inputId = computed(() => props.name + '-' + crypto.randomUUID());
 // A CVA instance for borderStyle variants
 const inputClass = computed(() =>
     cva(
-        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-zinc-100 dark:caret-zinc-200',
+        'w-full flex-shrink-0 pl-12 tracking-wider caret-gray-700 outline-none transition-all duration-300 ease-in-out  dark:text-zinc-100 dark:caret-zinc-200',
         {
             variants: {
+                background: {
+                    default: 'dark:bg-zinc-800',
+                    none: 'bg-transparent dark:bg-transparent',
+                },
                 borderStyle: {
                     bordered:
                         'rounded-md border-2 border-zinc-200 shadow focus:border-blue-500 focus:outline-none focus:ring-0 dark:border-zinc-500 focus:dark:border-blue-500',
@@ -121,6 +126,7 @@ const inputClass = computed(() =>
             },
         },
     )({
+        background: options.value.background,
         borderStyle: options.value.borderStyle,
         disabled: props.disabled,
         password: props.type === 'password',

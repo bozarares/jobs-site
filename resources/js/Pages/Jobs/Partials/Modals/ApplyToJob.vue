@@ -61,7 +61,7 @@ onMounted(async () => {
     >
         <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold uppercase">
-                {{ $t('common.apply') }}
+                {{ $t('common.apply.self') }}
             </h2>
             <div>
                 <Heroicons:xMark
@@ -164,7 +164,7 @@ onMounted(async () => {
             "
             class=""
             :options="{ color: 'blue', shape: 'pill' }"
-            >{{ $t('common.apply') }}</Button
+            >{{ $t('common.apply.self') }}</Button
         >
     </div>
 </template>

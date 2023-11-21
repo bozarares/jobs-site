@@ -120,4 +120,24 @@ class Job extends Model
             ->orWhere('status', 'accepted')
             ->count();
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function getLikedAttribute()
+    {
+        if (auth()->check()) {
+            $like = $this->likes()
+                ->where('user_id', auth()->user()->id)
+                ->first();
+            if ($like) {
+                return $like->like_status;
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
 }

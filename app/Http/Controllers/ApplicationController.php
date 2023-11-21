@@ -47,7 +47,7 @@ class ApplicationController extends Controller
         );
     }
 
-    public function getLocalizedData(Request $request)
+    public function getLocalizedData(Request $request, Job $job)
     {
         $request->validate([
             'application_id' => 'required|exists:applications,id',

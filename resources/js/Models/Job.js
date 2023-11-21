@@ -11,16 +11,28 @@ export default class Job {
     }
 
     get formattedApplicationDate() {
-        return this.application_date
-            ? dayjs(this.application_date).format('D MMM. YYYY')
+        return this.application && this.application.application_date
+            ? dayjs(this.application.application_date).format('D MMM. YYYY')
             : null;
     }
 
     get formattedSeenDate() {
-        return this.seen_at ? dayjs(this.seen_at).format('D MMM. YYYY') : null;
+        return this.application && this.application.seen_at
+            ? dayjs(this.application.seen_at).format('D MMM. YYYY')
+            : null;
     }
 
     get experiences() {
         return this.levels?.join(', ');
+    }
+
+    get getApplication() {
+        return this.application
+            ? this.application
+            : {
+                  application_date: null,
+                  seen_at: null,
+                  status: null,
+              };
     }
 }

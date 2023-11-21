@@ -5,7 +5,12 @@ export const ja = {
         cancel: 'キャンセル',
         save: '保存',
         add: '追加',
-        apply: '適用',
+        apply: {
+            self: '適用',
+            login: 'ログインして適用',
+            fast: '高速適用',
+            applied: '適用済み',
+        },
         view: '表示',
         create: '作成',
         search: '検索',

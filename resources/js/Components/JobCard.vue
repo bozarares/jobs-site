@@ -1,8 +1,10 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { useModalStore } from '@/Stores/modalStore';
 import Job from '@/Models/Job';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
+import axios from 'axios';
+import { throttle } from 'lodash';
 
 const currentUser = useCurrentUser();
 const modalStore = useModalStore();
@@ -13,6 +15,19 @@ const props = defineProps({
         required: true,
     },
 });
+
+const liked = ref(props.job.like_status);
+
+const like = throttle(async (like_status) => {
+    const response = await axios.post(route('like'), {
+        job_slug: props.job.slug,
+        like_status: like_status,
+    });
+    if (response.status === 200) {
+        router.reload({ preserveState: true });
+        liked.value = like_status;
+    }
+}, 500);
 </script>
 
 <template>
@@ -59,9 +74,9 @@ const props = defineProps({
                     <Mdi:Eye class="w-4" /> {{ $t('jobDates.seen') }} -
                     {{ job.formattedSeenDate }}
                 </div>
-                <div v-if="job.status" class="text-sm">
+                <div v-if="job.getApplication.status" class="text-sm">
                     {{ $t('labels.status') }} -
-                    {{ $t(`statuses.${job.status}`) }}
+                    {{ $t(`statuses.${job.getApplication.status}`) }}
                 </div>
             </div>
         </div>
@@ -87,36 +102,70 @@ const props = defineProps({
         >
             <div class="flex items-center justify-center gap-4">
                 <Button
-                    :disabled="!!job.application_date"
+                    class="text-zinc-100"
+                    :disabled="!!job.getApplication.application_date"
                     @click.stop.prevent="
                         () => {
                             if (currentUser.isSet())
                                 modalStore.openModal('jobApply', {
                                     job: job,
                                 });
+                            else router.visit(route('connect'));
                         }
                     "
                     :options="{
                         shape: 'pill',
-                        color: job.application_date ? 'gray' : 'blue',
+                        color: job.getApplication.application_date
+                            ? 'gray'
+                            : 'blue',
                     }"
                     >{{
-                        job.application_date ? 'Applied' : 'Fast Apply'
+                        job.getApplication.application_date
+                            ? $t('common.apply.applied')
+                            : $t('common.apply.fast')
                     }}</Button
                 >
                 <div class="flex h-20 w-20 items-center gap-4">
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-green-500"
+                        @click="
+                            () => {
+                                if (liked === 1) like(0);
+                                else like(1);
+                            }
+                        "
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
+                        :class="
+                            liked === 1 ? 'bg-green-500' : 'hover:bg-green-500'
+                        "
                     >
                         <Mdi:ThumbUp
-                            class="h-full w-full fill-white px-1 text-zinc-800 transition-all duration-300 ease-in-out group-hover/ratings:scale-110 group-hover/ratings:text-zinc-100 dark:text-zinc-100"
+                            class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                            :class="
+                                liked === 1
+                                    ? 'text-zinc-100'
+                                    : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                            "
                         />
                     </div>
                     <div
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-red-500"
+                        @click="
+                            () => {
+                                if (liked === -1) like(0);
+                                else like(-1);
+                            }
+                        "
+                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
+                        :class="
+                            liked === -1 ? 'bg-red-500' : 'hover:bg-red-500'
+                        "
                     >
                         <Mdi:ThumbDown
-                            class="h-full w-full fill-white px-1 text-zinc-800 transition-all duration-300 ease-in-out group-hover/ratings:scale-110 group-hover/ratings:text-zinc-100 dark:text-zinc-100"
+                            class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                            :class="
+                                liked === -1
+                                    ? 'text-zinc-100'
+                                    : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                            "
                         />
                     </div>
                 </div>

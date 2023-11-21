@@ -23,7 +23,7 @@ const filteredApplication = computed(() => {
         <Link :href="route('profile.applications')">{{
             $t('sections.applications')
         }}</Link>
-        <Link>{{ $t('sections.likes') }}</Link>
+        <Link :href="route('profile.likes')">{{ $t('sections.likes') }}</Link>
     </div>
     <div
         class="flex w-full items-center justify-center gap-2 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"

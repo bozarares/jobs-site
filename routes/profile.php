@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
             Route::patch('/', 'update')->name('update');
             Route::delete('/', 'destroy')->name('destroy');
             Route::get('/applications', 'applications')->name('applications');
+            Route::get('/likes', 'likes')->name('likes');
         });
 
     // Update profile details

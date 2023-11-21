@@ -38,6 +38,7 @@ const edit = ref(false);
                 :edit="edit"
             />
             <SettingsCard
+                v-if="props.is_owner"
                 :job="jobInstance"
                 :toggle-edit="
                     (value) => {

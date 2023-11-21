@@ -5,7 +5,12 @@ export const ro = {
         cancel: 'Anulează',
         save: 'Salvează',
         add: 'Adaugă',
-        apply: 'Aplică',
+        apply: {
+            self: 'Aplică',
+            login: 'Conectează-te',
+            fast: 'Aplică Rapid',
+            applied: 'Aplicat',
+        },
         view: 'Vizualizează',
         create: 'Creează',
         search: 'Caută',

@@ -27,9 +27,7 @@ const jobInstances = computed(() => {
         <Link :href="route('profile.applications')">{{
             $t('sections.applications')
         }}</Link>
-        <Link :href="route('profile.applications')">{{
-            $t('sections.likes')
-        }}</Link>
+        <Link :href="route('profile.likes')">{{ $t('sections.likes') }}</Link>
     </div>
     <div
         class="flex w-full flex-col items-center space-y-4 bg-zinc-50 p-6 dark:bg-zinc-800/90 dark:text-zinc-100"
@@ -42,11 +40,21 @@ const jobInstances = computed(() => {
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Input
                 :label="$t('labels.searchForAJob')"
-                :options="{ size: 'small', leftIcon: mdiMagnify }"
+                :options="{
+                    background: 'none',
+                    size: 'small',
+                    leftIcon: mdiMagnify,
+                    borderStyle: 'border-bottom',
+                }"
             />
             <Input
                 :label="$t('labels.location')"
-                :options="{ size: 'small', leftIcon: mdiEarth }"
+                :options="{
+                    background: 'none',
+                    size: 'small',
+                    leftIcon: mdiEarth,
+                    borderStyle: 'border-bottom',
+                }"
             />
             <div class="flex w-full gap-2">
                 <Button :options="{ color: 'blue' }">{{
