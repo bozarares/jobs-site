@@ -113,7 +113,7 @@ const jobInstances = computed(() => {
     </div>
     <div
         class="mt-12 text-2xl font-bold text-zinc-800 dark:text-zinc-100"
-        v-if="page === lastPage"
+        v-if="page === lastPage && loading === false"
     >
         Thats all folks 😁
     </div>

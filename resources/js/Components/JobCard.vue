@@ -86,91 +86,99 @@ const like = throttle(async (like_status) => {
 
         <!-- Location and Salary -->
         <div class="mt-4 flex items-center justify-between">
-            <div class="flex flex-col items-center justify-center text-sm">
-                <span class="text-center font-bold uppercase"
-                    >{{ $t('labels.location') }}
-                </span>
-                {{ job.location }}
-            </div>
-            <div class="flex flex-col items-center text-sm">
-                <span class="font-bold uppercase">{{
-                    $t('labels.salary')
-                }}</span>
-                {{ job.salary ? `$${job.salary}` : 'Confidential' }}
-            </div>
-        </div>
-        <div
-            @click.stop.prevent="() => {}"
-            class="h-18 absolute bottom-0 left-0 flex w-full translate-y-24 cursor-default items-center justify-center rounded-b-md border-t-2 bg-inherit transition-transform duration-300 group-hover:translate-y-0 dark:border-zinc-600"
-        >
-            <div class="hidden items-center justify-center gap-4 md:flex">
-                <Button
-                    class="text-zinc-100"
-                    :disabled="!!job.getApplication.application_date"
-                    @click.stop.prevent="
-                        () => {
-                            if (currentUser.isSet())
-                                modalStore.openModal('jobApply', {
-                                    job: job,
-                                });
-                            else router.visit(route('connect'));
-                        }
-                    "
-                    :options="{
-                        shape: 'pill',
-                        color: job.getApplication.application_date
-                            ? 'gray'
-                            : 'blue',
-                    }"
-                    >{{
-                        job.getApplication.application_date
-                            ? $t('common.apply.applied')
-                            : $t('common.apply.fast')
-                    }}</Button
+            <div
+                @click.stop.prevent="() => {}"
+                class="h-18 bottom-0 left-0 flex cursor-default items-center justify-center bg-white transition-transform duration-300 group-hover:translate-y-0 dark:border-zinc-600 dark:bg-zinc-800 sm:absolute sm:w-full sm:translate-y-24 sm:rounded-b-md sm:border-t-2"
+            >
+                <div
+                    class="flex flex-col items-center justify-between gap-2 sm:flex-row sm:py-6"
                 >
-                <div class="flex h-20 w-20 items-center gap-4">
-                    <div
-                        @click="
+                    <Button
+                        class="text-zinc-100"
+                        :disabled="!!job.getApplication.application_date"
+                        @click.stop.prevent="
                             () => {
-                                if (liked === 1) like(0);
-                                else like(1);
+                                if (currentUser.isSet())
+                                    modalStore.openModal('jobApply', {
+                                        job: job,
+                                    });
+                                else router.visit(route('connect'));
                             }
                         "
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
-                        :class="
-                            liked === 1 ? 'bg-green-500' : 'hover:bg-green-500'
-                        "
+                        :options="{
+                            shape: 'pill',
+                            color: job.getApplication.application_date
+                                ? 'gray'
+                                : 'blue',
+                        }"
+                        >{{
+                            job.getApplication.application_date
+                                ? $t('common.apply.applied')
+                                : $t('common.apply.fast')
+                        }}</Button
                     >
-                        <Mdi:ThumbUp
-                            class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                    <div class="flex items-center gap-4">
+                        <div
+                            @click="
+                                () => {
+                                    if (liked === 1) like(0);
+                                    else like(1);
+                                }
+                            "
+                            class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
                             :class="
                                 liked === 1
-                                    ? 'text-zinc-100'
-                                    : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                                    ? 'bg-green-500'
+                                    : 'hover:bg-green-500'
                             "
-                        />
-                    </div>
-                    <div
-                        @click="
-                            () => {
-                                if (liked === -1) like(0);
-                                else like(-1);
-                            }
-                        "
-                        class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
-                        :class="
-                            liked === -1 ? 'bg-red-500' : 'hover:bg-red-500'
-                        "
-                    >
-                        <Mdi:ThumbDown
-                            class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                        >
+                            <Mdi:ThumbUp
+                                class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                                :class="
+                                    liked === 1
+                                        ? 'text-zinc-100'
+                                        : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                                "
+                            />
+                        </div>
+                        <div
+                            @click="
+                                () => {
+                                    if (liked === -1) like(0);
+                                    else like(-1);
+                                }
+                            "
+                            class="group/ratings h-8 w-8 cursor-pointer rounded-full p-0.5 outline-[2px] outline-zinc-500 transition-all duration-300 ease-in-out hover:scale-110"
                             :class="
-                                liked === -1
-                                    ? 'text-zinc-100'
-                                    : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                                liked === -1 ? 'bg-red-500' : 'hover:bg-red-500'
                             "
-                        />
+                        >
+                            <Mdi:ThumbDown
+                                class="h-full w-full fill-white px-1 transition-all duration-300 ease-in-out group-hover/ratings:scale-110"
+                                :class="
+                                    liked === -1
+                                        ? 'text-zinc-100'
+                                        : 'text-zinc-800 group-hover/ratings:text-zinc-100 dark:text-zinc-100'
+                                "
+                            />
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div
+                class="flex flex-col items-center justify-between gap-4 sm:w-full sm:flex-row"
+            >
+                <div class="flex flex-col items-center text-sm">
+                    <span class="font-bold uppercase">{{
+                        $t('labels.salary')
+                    }}</span>
+                    {{ job.salary ? `$${job.salary}` : 'Confidential' }}
+                </div>
+                <div class="flex flex-col items-center justify-center text-sm">
+                    <span class="text-center font-bold uppercase"
+                        >{{ $t('labels.location') }}
+                    </span>
+                    {{ job.location }}
                 </div>
             </div>
         </div>
