@@ -5,17 +5,57 @@ import mdiMagnify from '~icons/mdi/magnify';
 import mdiEarth from '~icons/mdi/earth';
 import mdiFilter from '~icons/mdi/filter';
 
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Job from '@/Models/Job';
+import axios from 'axios';
 const props = defineProps({
     jobs: {
         type: Array,
         required: true,
     },
+    lastPage: Number,
+});
+
+const jobs = ref(props.jobs);
+const loading = ref(false);
+const page = ref(1);
+
+const handleScroll = () => {
+    if (
+        window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - 1000 &&
+        !loading.value
+    ) {
+        if (page.value < props.lastPage) {
+            page.value++;
+            loadMore();
+        }
+    }
+};
+
+const loadMore = async () => {
+    loading.value = true;
+    const response = await axios.get(
+        route('api.load.jobs', {
+            page: page.value,
+        }),
+    );
+    if (response.data.length > 0) {
+        jobs.value = [...jobs.value, ...response.data];
+    }
+    loading.value = false;
+};
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
 });
 
 const jobInstances = computed(() => {
-    return props.jobs.map((jobData) => new Job(jobData));
+    return jobs.value.map((jobData) => new Job(jobData));
 });
 </script>
 
@@ -56,7 +96,7 @@ const jobInstances = computed(() => {
                     borderStyle: 'border-bottom',
                 }"
             />
-            <div class="flex w-full gap-2">
+            <div class="flex w-full items-center justify-center gap-2">
                 <Button :options="{ color: 'blue' }">{{
                     $t('common.search')
                 }}</Button>
@@ -70,5 +110,11 @@ const jobInstances = computed(() => {
         class="flex w-full max-w-screen-lg flex-wrap justify-center gap-2 pt-6"
     >
         <JobCard v-for="job in jobInstances" :key="job.slug" :job="job" />
+    </div>
+    <div
+        class="mt-12 text-2xl font-bold text-zinc-800 dark:text-zinc-100"
+        v-if="page === lastPage"
+    >
+        Thats all folks 😁
     </div>
 </template>

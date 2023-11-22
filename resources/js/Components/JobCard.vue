@@ -19,6 +19,9 @@ const props = defineProps({
 const liked = ref(props.job.like_status);
 
 const like = throttle(async (like_status) => {
+    if (currentUser.value.isSet() === false) {
+        return;
+    }
     const response = await axios.post(route('like'), {
         job_slug: props.job.slug,
         like_status: like_status,
@@ -100,7 +103,7 @@ const like = throttle(async (like_status) => {
             @click.stop.prevent="() => {}"
             class="h-18 absolute bottom-0 left-0 flex w-full translate-y-24 cursor-default items-center justify-center rounded-b-md border-t-2 bg-inherit transition-transform duration-300 group-hover:translate-y-0 dark:border-zinc-600"
         >
-            <div class="flex items-center justify-center gap-4">
+            <div class="hidden items-center justify-center gap-4 md:flex">
                 <Button
                     class="text-zinc-100"
                     :disabled="!!job.getApplication.application_date"

@@ -14,6 +14,9 @@ Route::delete('upload/delete', [FileUploadController::class, 'destroy'])->name(
 );
 
 Route::get('/', [WelcomeController::class, 'show'])->name('welcome');
+Route::get('/api/load', [WelcomeController::class, 'loadMoreJobs'])->name(
+    'api.load.jobs'
+);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
