@@ -14,8 +14,11 @@ Route::delete('upload/delete', [FileUploadController::class, 'destroy'])->name(
 );
 
 Route::get('/', [WelcomeController::class, 'show'])->name('welcome');
-Route::get('/api/load', [WelcomeController::class, 'loadMoreJobs'])->name(
+Route::post('/api/load', [WelcomeController::class, 'loadMoreJobs'])->name(
     'api.load.jobs'
+);
+Route::post('/api/search', [WelcomeController::class, 'search'])->name(
+    'api.search.jobs'
 );
 
 Route::get('/dashboard', function () {

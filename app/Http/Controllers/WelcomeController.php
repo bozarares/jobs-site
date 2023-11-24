@@ -47,4 +47,35 @@ class WelcomeController extends Controller
 
         return JobMinimalResource::collection($jobs->items());
     }
+
+    public function search(Request $request)
+    {
+        $request_validated = $request->validate([
+            'query' => 'nullable|string',
+            'location' => 'nullable|string',
+        ]);
+
+        $query = $request_validated['query'];
+        $location = $request_validated['location'];
+
+        $jobs = Job::with('company');
+
+        if ($query) {
+            $jobs = $jobs->where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")->orWhere(
+                    'description',
+                    'LIKE',
+                    "%{$query}%"
+                );
+            });
+        }
+
+        if ($location) {
+            $jobs = $jobs->where('location', 'LIKE', "%{$location}%");
+        }
+
+        $jobs = $jobs->latest()->paginate(20);
+
+        return JobMinimalResource::collection($jobs->items());
+    }
 }

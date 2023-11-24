@@ -19,8 +19,28 @@ const props = defineProps({
 const jobs = ref(props.jobs);
 const loading = ref(false);
 const page = ref(1);
+const query = ref('');
+const location = ref('');
+
+// watch([query, location], () => {
+//     page.value = 1;
+//     search();
+// });
+
+const search = async () => {
+    loading.value = true;
+    const response = await axios.post(route('api.search.jobs'), {
+        query: query.value,
+        location: location.value,
+    });
+    jobs.value = response.data;
+    loading.value = false;
+};
 
 const handleScroll = () => {
+    if (query.value !== '' || location.value !== '') {
+        return;
+    }
     if (
         window.innerHeight + window.scrollY >=
             document.body.offsetHeight - 1000 &&
@@ -35,11 +55,9 @@ const handleScroll = () => {
 
 const loadMore = async () => {
     loading.value = true;
-    const response = await axios.get(
-        route('api.load.jobs', {
-            page: page.value,
-        }),
-    );
+    const response = await axios.post(route('api.load.jobs'), {
+        page: page.value,
+    });
     if (response.data.length > 0) {
         jobs.value = [...jobs.value, ...response.data];
     }
@@ -80,6 +98,7 @@ const jobInstances = computed(() => {
         <div class="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Input
                 :label="$t('labels.searchForAJob')"
+                v-model="query"
                 :options="{
                     background: 'none',
                     size: 'small',
@@ -89,6 +108,7 @@ const jobInstances = computed(() => {
             />
             <Input
                 :label="$t('labels.location')"
+                v-model="location"
                 :options="{
                     background: 'none',
                     size: 'small',
@@ -97,9 +117,16 @@ const jobInstances = computed(() => {
                 }"
             />
             <div class="flex w-full items-center justify-center gap-2">
-                <Button :options="{ color: 'blue' }">{{
-                    $t('common.search')
-                }}</Button>
+                <Button
+                    :options="{ color: 'blue' }"
+                    @click="
+                        () => {
+                            page = 1;
+                            search();
+                        }
+                    "
+                    >{{ $t('common.search') }}</Button
+                >
                 <Button :options="{ leftIcon: mdiFilter }">{{
                     $t('labels.filter')
                 }}</Button>

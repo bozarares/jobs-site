@@ -6,7 +6,7 @@ const cookieStore = useCookieStore();
 </script>
 
 <template>
-    <header
+    <footer
         class="z-50 mt-12 w-full items-center bg-white py-2 shadow dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-zinc-700"
     >
         <div
@@ -35,5 +35,5 @@ const cookieStore = useCookieStore();
                 <a target="_blank" href="https://icons8.com">Icons8</a>
             </div>
         </div>
-    </header>
+    </footer>
 </template>
