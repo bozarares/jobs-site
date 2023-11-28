@@ -1,12 +1,12 @@
 <script setup>
 import RatingStars from '@/Components/RatingStars.vue';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
 import Job from '@/Models/Job';
 import { useModalStore } from '@/Stores/modalStore';
+import { useUserStore } from '@/Stores/userStore';
 import { Link, router } from '@inertiajs/vue3';
 
 const modalStore = useModalStore();
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 
 const props = defineProps({
     job: {
@@ -90,7 +90,7 @@ const props = defineProps({
                 <Button
                     @click="
                         () => {
-                            if (currentUser.isSet()) {
+                            if (userStore.currentUser.isSet()) {
                                 modalStore.openModal('jobApply');
                             } else {
                                 router.visit(route('connect'));
@@ -103,7 +103,7 @@ const props = defineProps({
                         color: 'blue',
                     }"
                     >{{
-                        currentUser.isSet()
+                        userStore.currentUser.isSet()
                             ? $t('common.apply.self')
                             : $t('common.apply.login')
                     }}</Button

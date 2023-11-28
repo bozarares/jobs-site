@@ -1,5 +1,6 @@
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { useUserStore } from './Stores/userStore';
 window.Pusher = Pusher;
 
 let laravelEcho = null;
@@ -21,8 +22,9 @@ function broadcastListen(id) {
     });
     laravelEcho
         .private(`App.Models.User.${id}`)
-        .notification((notification) => {
-            console.log(notification.message);
+        .notification(async (notification) => {
+            const userStore = useUserStore();
+            userStore.currentUser.initializeNotifications();
         });
 }
 
@@ -33,4 +35,4 @@ function broadcastDisconnect() {
     }
 }
 
-export { broadcastListen, broadcastDisconnect };
+export { broadcastDisconnect, broadcastListen };

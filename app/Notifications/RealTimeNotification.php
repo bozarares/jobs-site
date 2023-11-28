@@ -23,7 +23,7 @@ class RealTimeNotification extends Notification implements ShouldBroadcast
     public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
-            'message' => "$this->message (Message for $notifiable->name))",
+            'message' => "$this->message",
         ]);
     }
 }

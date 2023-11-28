@@ -6,7 +6,7 @@ import axios from 'axios';
 import { router, usePage } from '@inertiajs/vue3';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useModalStore } from '@/Stores/modalStore';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -14,11 +14,11 @@ const props = defineProps({
 
 const modalStore = useModalStore();
 const localeStore = useLocaleStore();
+const userStore = useUserStore();
 const page = usePage();
 
 const job = modalStore.args?.job ?? page.props.job;
-const currentUser = useCurrentUser();
-const completion = ref(Math.round(currentUser.value.profileCompletion));
+const completion = ref(Math.round(userStore.currentUser.profileCompletion));
 
 const files = ref([]);
 const error = ref('');
@@ -48,10 +48,10 @@ onMounted(async () => {
     const response = await axios.post(route('get.localized.data'), {
         locale: localeStore.locale,
     });
-    currentUser.job_history = response.data.localizedData.jobHistory;
-    currentUser.education_history =
+    userStore.currentUser.job_history = response.data.localizedData.jobHistory;
+    userStore.currentUser.education_history =
         response.data.localizedData.educationHistory;
-    currentUser.description = response.data.localizedData.description;
+    userStore.currentUser.description = response.data.localizedData.description;
 });
 </script>
 
@@ -82,42 +82,42 @@ onMounted(async () => {
                 >
                     <li
                         v-if="
-                            currentUser.description &&
-                            currentUser.description === ''
+                            userStore.currentUser.description &&
+                            userStore.currentUser.description === ''
                         "
                     >
                         {{ $t('messages.missingFields.description') }}
                     </li>
-                    <li v-if="currentUser.avatar === null">
+                    <li v-if="userStore.currentUser.avatar === null">
                         {{ $t('messages.missingFields.avatar') }}
                     </li>
                     <li
                         v-if="
-                            currentUser.job_history &&
-                            currentUser.job_history.length === 0
+                            userStore.currentUser.job_history &&
+                            userStore.currentUser.job_history.length === 0
                         "
                     >
                         {{ $t('messages.missingFields.jobHistory') }}
                     </li>
                     <li
                         v-if="
-                            currentUser.education_history &&
-                            currentUser.education_history.length === 0
+                            userStore.currentUser.education_history &&
+                            userStore.currentUser.education_history.length === 0
                         "
                     >
                         {{ $t('messages.missingFields.educationHistory') }}
                     </li>
-                    <li v-if="currentUser.skills.length === 0">
+                    <li v-if="userStore.currentUser.skills.length === 0">
                         {{ $t('messages.missingFields.skills') }}
                     </li>
-                    <li v-if="currentUser.files.length === 0">
+                    <li v-if="userStore.currentUser.files.length === 0">
                         {{ $t('messages.missingFields.files') }}
                     </li>
                     <li
                         v-if="
-                            !currentUser.social_github ||
-                            !currentUser.social_linkedin ||
-                            !currentUser.social_facebook
+                            !userStore.currentUser.social_github ||
+                            !userStore.currentUser.social_linkedin ||
+                            !userStore.currentUser.social_facebook
                         "
                     >
                         {{ $t('messages.missingFields.social') }}
@@ -135,7 +135,7 @@ onMounted(async () => {
                 </h2>
                 <div
                     class="mt-2 flex w-full justify-between border-b border-black/10 pb-5 first:mt-4 last:border-b-0 last:pb-0"
-                    v-for="file in currentUser.files"
+                    v-for="file in userStore.currentUser.files"
                     :key="file.servername"
                 >
                     <div>{{ file.name }}</div>

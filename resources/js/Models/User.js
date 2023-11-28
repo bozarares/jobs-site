@@ -1,6 +1,22 @@
 export default class User {
     constructor(attibutes = {}) {
         Object.assign(this, attibutes);
+        this.notifications = { page: 1, data: [], lastPage: 1 };
+    }
+
+    async initializeNotifications(page = this.page) {
+        console.log('page', page, this.notifications.lastPage);
+        const response = await axios.post(route('api.notifications'), {
+            page: page,
+        });
+        this.notifications.lastPage = response.data.last_page;
+        this.notifications.page = response.data.current_page;
+        this.notifications.data = response.data.notifications;
+    }
+
+    async getNotifications() {
+        const response = await axios.post(route('api.notifications'));
+        return response.data;
     }
 
     avatarPath() {

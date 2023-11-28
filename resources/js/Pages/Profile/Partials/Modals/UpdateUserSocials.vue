@@ -7,20 +7,19 @@ import mdiPhone from '~icons/mdi/phone';
 import mdiLinkedin from '~icons/mdi/linkedin';
 import mdiGithub from '~icons/mdi/github';
 import mdiFacebook from '~icons/mdi/facebook';
-
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 
 const form = useForm({
-    phone_number: currentUser.value.phone_number,
-    social_linkedin: currentUser.value.social_linkedin,
-    social_github: currentUser.value.social_github,
-    social_facebook: currentUser.value.social_facebook,
+    phone_number: userStore.currentUser.phone_number,
+    social_linkedin: userStore.currentUser.social_linkedin,
+    social_github: userStore.currentUser.social_github,
+    social_facebook: userStore.currentUser.social_facebook,
 });
 
 const submit = () => {

@@ -2,11 +2,11 @@
 import { Link, router } from '@inertiajs/vue3';
 import { useModalStore } from '@/Stores/modalStore';
 import Job from '@/Models/Job';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
 import axios from 'axios';
 import { throttle } from 'lodash';
+import { useUserStore } from '@/Stores/userStore';
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 const modalStore = useModalStore();
 const featured = ref(false);
 const props = defineProps({
@@ -19,7 +19,7 @@ const props = defineProps({
 const liked = ref(props.job.like_status);
 
 const like = throttle(async (like_status) => {
-    if (currentUser.value.isSet() === false) {
+    if (userStore.currentUser.isSet() === false) {
         return;
     }
     const response = await axios.post(route('like'), {
@@ -98,7 +98,7 @@ const like = throttle(async (like_status) => {
                         :disabled="!!job.getApplication.application_date"
                         @click.stop.prevent="
                             () => {
-                                if (currentUser.isSet())
+                                if (userStore.currentUser.isSet())
                                     modalStore.openModal('jobApply', {
                                         job: job,
                                     });

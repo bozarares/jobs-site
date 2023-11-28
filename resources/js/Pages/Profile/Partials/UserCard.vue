@@ -1,10 +1,10 @@
 <script setup>
-import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { languages } from '@/Languages/languages';
 import { useModalStore } from '@/Stores/modalStore';
+import { useUserStore } from '@/Stores/userStore';
 
 const modalStore = useModalStore();
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 const props = defineProps({
     edit: {
         type: Boolean,
@@ -81,7 +81,7 @@ watch(
                         }
                     }
                 "
-                :src="currentUser.avatarPath()"
+                :src="userStore.currentUser.avatarPath()"
             />
             <div class="flex flex-col items-center">
                 <h2 class="text-center text-lg font-bold uppercase">

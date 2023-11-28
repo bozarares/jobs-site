@@ -10,9 +10,11 @@ import { useLocaleStore } from '@/Stores/localeStore';
 import { useCookieStore } from '@/Stores/cookieStore';
 import { languages } from '@/Languages/languages';
 import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
 const localeStore = useLocaleStore();
 const cookieStore = useCookieStore();
+const userStore = useUserStore();
 const currentUser = useCurrentUser();
 
 const language = ref(localeStore.locale);
@@ -30,6 +32,17 @@ watch(
         language.value = newValue;
     },
 );
+
+const loadNotifications = (type) => {
+    let page = userStore.currentUser.notifications.page;
+    if (type === 'prev') {
+        if (page === 1) return;
+        userStore.currentUser.initializeNotifications(page - 1);
+    } else if (type === 'next') {
+        if (page === userStore.currentUser.notifications.lastPage) return;
+        userStore.currentUser.initializeNotifications(page + 1);
+    }
+};
 
 onMounted(() => {
     const cookieValue = cookieStore.locale;
@@ -73,6 +86,7 @@ onMounted(() => {
 
                 <!-- Notification Panel -->
                 <DropdownMenu
+                    v-if="currentUser && currentUser.isSet()"
                     align="right"
                     class="mt-6 w-[20em] dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100"
                 >
@@ -82,6 +96,31 @@ onMounted(() => {
                     <DropdownHeader>{{
                         $t('sections.notifications')
                     }}</DropdownHeader>
+                    <div
+                        v-for="notification in userStore.currentUser
+                            .notifications.data"
+                        :key="notification.id"
+                    >
+                        {{ notification.message }}
+                    </div>
+                    <div>
+                        <Button
+                            @click="
+                                () => {
+                                    loadNotifications('prev');
+                                }
+                            "
+                            >Prev</Button
+                        >
+                        <Button
+                            @click="
+                                () => {
+                                    loadNotifications('next');
+                                }
+                            "
+                            >Next</Button
+                        >
+                    </div>
                 </DropdownMenu>
 
                 <!-- Settings Panel -->

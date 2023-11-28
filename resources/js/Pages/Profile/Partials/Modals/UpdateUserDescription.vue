@@ -1,8 +1,8 @@
 <script setup>
 import toolbarOptions from '@/quillToolBarConfig';
 import { useProfileStore } from '@/Stores/profileStore';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
 import { useUpdateUserData } from '@/Composables/useUpdateUserData';
+import { useUserStore } from '@/Stores/userStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -10,8 +10,8 @@ const props = defineProps({
 const quillRef = ref(null);
 
 const profileStore = useProfileStore();
-const currentUser = useCurrentUser();
-const { updateDescription } = useUpdateUserData(currentUser.value);
+const userStore = useUserStore();
+const { updateDescription } = useUpdateUserData(userStore.currentUser);
 
 const submit = async () => {
     updateDescription(quillRef.value.getHTML());

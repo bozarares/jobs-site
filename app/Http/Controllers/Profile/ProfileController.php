@@ -67,7 +67,7 @@ class ProfileController extends Controller
     public function show(): Response
     {
         $user = Auth::user();
-        $locale = $user->locale;
+        $locale = $user->preferences->locale;
         $localizedData = $user->getLocalizedDataAttribute($locale);
         return Inertia::render('Profile/Show', [
             'user' => $user,

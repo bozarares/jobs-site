@@ -21,6 +21,13 @@ Route::post('/api/search', [WelcomeController::class, 'search'])->name(
     'api.search.jobs'
 );
 
+Route::post('api/notifications', [
+    App\Http\Controllers\NotificationController::class,
+    'get',
+])
+    ->middleware(['auth'])
+    ->name('api.notifications');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })

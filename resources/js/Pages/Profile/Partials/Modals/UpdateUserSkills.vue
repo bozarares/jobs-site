@@ -6,7 +6,7 @@ import { useForm } from '@inertiajs/vue3';
 import pkg from 'lodash';
 const { debounce } = pkg;
 import axios from 'axios';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
@@ -14,12 +14,12 @@ const props = defineProps({
 const inputTextValue = ref('');
 const searchSkillsArray = ref([]);
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 
 const initialSkills = ref([
-    ...currentUser.value.skills.map((skill) => skill.name),
+    ...userStore.currentUser.skills.map((skill) => skill.name),
 ]);
-const skills = ref(currentUser.value.skills.map((skill) => skill.name));
+const skills = ref(userStore.currentUser.skills.map((skill) => skill.name));
 
 const form = useForm({
     skills: skills.value,

@@ -7,9 +7,9 @@ import FileAction from '@/Components/FileAction.vue';
 import { useLocaleStore } from '@/Stores/localeStore';
 import { useProfileStore } from '@/Stores/profileStore';
 import { Head } from '@inertiajs/vue3';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 const props = defineProps({
     localizedData: {
         type: Object,
@@ -112,7 +112,7 @@ const edit = ref(false);
         <div class="flex w-full flex-col items-center gap-4 md:w-auto">
             <UserCard
                 :edit="edit"
-                :user="currentUser"
+                :user="userStore.currentUser"
                 :on-language-change="
                     (newLangauage) => {
                         getLocalizedData(newLangauage);
@@ -120,9 +120,9 @@ const edit = ref(false);
                 "
                 :language="language"
             />
-            <SocialsCard :edit="edit" :user="currentUser" />
+            <SocialsCard :edit="edit" :user="userStore.currentUser" />
             <SettingsCard
-                :user="currentUser"
+                :user="userStore.currentUser"
                 :toggle-edit="
                     (value) => {
                         edit = value;
@@ -177,7 +177,7 @@ const edit = ref(false);
             >
                 <div class="flex flex-wrap gap-2">
                     <div
-                        v-for="skill in currentUser.skills"
+                        v-for="skill in userStore.currentUser.skills"
                         :key="skill.id"
                         class="select-none rounded-full px-3 py-1 outline outline-zinc-400 transition-all duration-150 ease-in-out hover:scale-105"
                     >
@@ -194,7 +194,10 @@ const edit = ref(false);
                 modal="userFiles"
             >
                 <div class="flex flex-col gap-4">
-                    <div v-for="file in currentUser.files" :key="file.id">
+                    <div
+                        v-for="file in userStore.currentUser.files"
+                        :key="file.id"
+                    >
                         <FileAction
                             :file="file"
                             show-route="users.files.show"

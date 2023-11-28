@@ -4,17 +4,17 @@
 
 import { useForm } from '@inertiajs/vue3';
 import mdiAccount from '~icons/mdi/account';
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 
 const props = defineProps({
     closeModal: { type: Function, default: () => {} },
 });
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 
 const form = useForm({
-    name: currentUser.value.name,
-    tag: currentUser.value.tag,
+    name: userStore.currentUser.name,
+    tag: userStore.currentUser.tag,
 });
 
 const submit = () => {

@@ -1,8 +1,8 @@
 <script setup>
-import { useCurrentUser } from '@/Composables/useCurrentUser';
+import { useUserStore } from '@/Stores/userStore';
 import { Link, router } from '@inertiajs/vue3';
 
-const currentUser = useCurrentUser();
+const userStore = useUserStore();
 
 const email = ref('');
 
@@ -24,10 +24,10 @@ const editEmail = async () => {
                 {{ $t('labels.email.change') }}
             </h2>
             <h3 class="w-full text-sm font-bold">
-                {{ currentUser.email }}
+                {{ userStore.currentUser.email }}
                 <span
                     class="text-green-400"
-                    v-if="currentUser.email_verified_at"
+                    v-if="userStore.currentUser.email_verified_at"
                     >{{ $t('labels.email.verified') }}</span
                 >
                 <Link

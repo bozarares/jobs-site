@@ -14,7 +14,25 @@ class Application extends Model
         parent::boot();
 
         static::updated(function ($application) {
+            if ($application->isDirty('seen_at')) {
+                Notification::create([
+                    'user_id' => $application->user_id,
+                    'message' =>
+                        'Application for job ' .
+                        $application->job->title .
+                        ' was seen by emaployer.',
+                ]);
+            }
             if ($application->isDirty('status')) {
+                Notification::create([
+                    'user_id' => $application->user_id,
+                    'message' =>
+                        'Application status changed to ' .
+                        $application->status .
+                        ' for job ' .
+                        $application->job->title .
+                        '.',
+                ]);
                 if ($application->status === 'hired') {
                     $application->files()->detach();
                 }

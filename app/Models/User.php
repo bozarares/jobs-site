@@ -80,13 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'isOwner',
-        'updated_at',
-        'id',
-    ];
+    protected $hidden = ['password', 'remember_token', 'isOwner', 'updated_at'];
 
     /**
      * The attributes that should be cast.
@@ -98,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    protected $with = ['skills', 'files', 'preferences'];
+    protected $with = ['skills', 'files', 'preferences', 'notifications'];
 
     protected $appends = ['profileCompletion'];
 
@@ -210,5 +204,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 }
