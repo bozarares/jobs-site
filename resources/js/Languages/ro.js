@@ -148,6 +148,10 @@ export const ro = {
             self: 'Contact',
             edit: 'Editează Contactul',
         },
+        notifications: {
+            self: 'Notificări',
+            no: 'Nu ai nicio notificare',
+        },
     },
     sections: {
         profile: 'Profil',

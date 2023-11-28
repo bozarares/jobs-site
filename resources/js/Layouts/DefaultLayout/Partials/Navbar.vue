@@ -44,6 +44,22 @@ const loadNotifications = (type) => {
     }
 };
 
+const readNotification = async (id, read) => {
+    let page = userStore.currentUser.notifications.page;
+    await axios.put(route('api.notifications'), {
+        id,
+        read,
+    });
+    userStore.currentUser.initializeNotifications(page);
+};
+const deleteNotification = async (id) => {
+    let page = userStore.currentUser.notifications.page;
+    await axios.post(route('api.notifications.delete'), {
+        id,
+    });
+    userStore.currentUser.initializeNotifications(page);
+};
+
 onMounted(() => {
     const cookieValue = cookieStore.locale;
     language.value = cookieValue;
@@ -97,13 +113,58 @@ onMounted(() => {
                         $t('sections.notifications')
                     }}</DropdownHeader>
                     <div
+                        v-if="
+                            userStore.currentUser.notifications.data.length !==
+                            0
+                        "
+                        class="flex items-center gap-4 px-1 py-1 text-justify text-sm"
+                        :class="{
+                            'font-extrabold': notification.read === 0,
+                            'font-normal': notification.read === 1,
+                        }"
                         v-for="notification in userStore.currentUser
                             .notifications.data"
                         :key="notification.id"
                     >
-                        {{ notification.message }}
+                        <div>{{ notification.message }}</div>
+                        <div class="flex gap-1">
+                            <Mdi:Eye
+                                @click="
+                                    () => {
+                                        readNotification(notification.id, 1);
+                                    }
+                                "
+                                v-if="notification.read === 0"
+                                class="text-xl"
+                            />
+                            <Mdi:EyeOff
+                                @click="
+                                    () => {
+                                        readNotification(notification.id, 0);
+                                    }
+                                "
+                                v-if="notification.read === 1"
+                                class="text-xl"
+                            />
+                            <Mdi:Delete
+                                @click="
+                                    () => {
+                                        deleteNotification(notification.id);
+                                    }
+                                "
+                                class="text-xl"
+                            />
+                        </div>
                     </div>
-                    <div>
+                    <div v-else>
+                        {{ $t('labels.notifications.no') }}
+                    </div>
+                    <div
+                        v-if="
+                            userStore.currentUser.notifications.data.length !==
+                            0
+                        "
+                    >
                         <Button
                             @click="
                                 () => {

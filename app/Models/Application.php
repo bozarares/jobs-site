@@ -20,7 +20,7 @@ class Application extends Model
                     'message' =>
                         'Application for job ' .
                         $application->job->title .
-                        ' was seen by emaployer.',
+                        ' was seen by employer.',
                 ]);
             }
             if ($application->isDirty('status')) {

@@ -27,6 +27,18 @@ Route::post('api/notifications', [
 ])
     ->middleware(['auth'])
     ->name('api.notifications');
+Route::put('api/notifications', [
+    App\Http\Controllers\NotificationController::class,
+    'read',
+])
+    ->middleware(['auth'])
+    ->name('api.notifications');
+Route::post('api/notifications/delete', [
+    App\Http\Controllers\NotificationController::class,
+    'destroy',
+])
+    ->middleware(['auth'])
+    ->name('api.notifications.delete');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

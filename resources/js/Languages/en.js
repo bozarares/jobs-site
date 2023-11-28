@@ -149,6 +149,10 @@ export const en = {
             self: 'Contact',
             edit: 'Edit Contact',
         },
+        notifications: {
+            self: 'Notifications',
+            no: "You don't have any notifications",
+        },
     },
     sections: {
         profile: 'Profile',

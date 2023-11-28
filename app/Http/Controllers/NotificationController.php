@@ -29,4 +29,38 @@ class NotificationController extends Controller
             'unread' => $total_unread,
         ];
     }
+
+    public function read(Request $request)
+    {
+        $requet_validated = $request->validate([
+            'id' => 'required|integer|exists:notifications,id',
+            'read' => 'required|boolean',
+        ]);
+        $user = Auth::user();
+        $notification = $user
+            ->notifications()
+            ->where('id', $requet_validated['id'])
+            ->first();
+
+        if ($notification) {
+            $notification->read = $requet_validated['read'];
+            $notification->save();
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        $requet_validated = $request->validate([
+            'id' => 'required|integer|exists:notifications,id',
+        ]);
+        $user = Auth::user();
+        $notification = $user
+            ->notifications()
+            ->where('id', $requet_validated['id'])
+            ->first();
+
+        if ($notification) {
+            $notification->delete();
+        }
+    }
 }

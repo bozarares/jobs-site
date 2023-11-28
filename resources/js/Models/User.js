@@ -5,7 +5,6 @@ export default class User {
     }
 
     async initializeNotifications(page = this.page) {
-        console.log('page', page, this.notifications.lastPage);
         const response = await axios.post(route('api.notifications'), {
             page: page,
         });

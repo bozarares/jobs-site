@@ -148,6 +148,10 @@ export const ja = {
             self: '連絡先',
             edit: '連絡先を編集',
         },
+        notifications: {
+            self: '通知',
+            no: '通知はありません',
+        },
     },
     sections: {
         profile: 'プロフィール',
