@@ -178,7 +178,7 @@ const like = throttle(async (like_status) => {
                     <span class="text-center font-bold uppercase"
                         >{{ $t('labels.location') }}
                     </span>
-                    {{ job.location }}
+                    <span class="text-center">{{ job.location }}</span>
                 </div>
             </div>
         </div>
