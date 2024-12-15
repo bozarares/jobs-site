@@ -55,7 +55,7 @@
         "loadash": "^1.0.0",
         "lodash": "^4.17.21",
         "pinia": "^2.1.7",
-        "tinymce": "^6.8.5",
+        "tinymce": "^7.6.0",
         "vite-plugin-mkcert": "^1.16.0",
         "vue-filepond": "^7.0.4",
         "vue-i18n": "^10.0.5",
